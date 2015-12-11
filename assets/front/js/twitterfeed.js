@@ -11,7 +11,7 @@ $(document).ready(function () {
  
     var headerHTML = '';
     var loadingHTML = '';
-    loadingHTML += '<div id="loading-container"><img src="/img/loader.gif" alt="tweet loader" /></div>';
+    loadingHTML += '<div id="loading-container"><img src="assets/front/img/loader.gif" alt="tweet loader" /></div>';
  
     $('#twitter-feed').html(headerHTML + loadingHTML);
  

@@ -62,7 +62,7 @@ class Index extends CI_Controller
                 }
 
                 // account activated
-                $is_valid = $model->is_exists('user_id, username, user_status', TABLE_USERS, array('user_email' => $user_email, 'user_password' => md5($user_password)));
+                $is_valid = $model->is_exists('user_id, user_username, user_status', TABLE_USERS, array('user_email' => $user_email, 'user_password' => md5($user_password)));
                 if (!empty($is_valid))
                 {
                     // valid
