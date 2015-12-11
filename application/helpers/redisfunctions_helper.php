@@ -1,0 +1,116 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Redisfunctions
+{
+
+    public function __construct()
+    {
+        $this->ci = & get_instance();
+        $this->ci->load->database();
+        $this->ci->load->model('Common_model');
+        $this->ci->redis = new CI_Redis();
+    }
+
+    public function set_site_settings()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('setting_key, setting_value', TABLE_SETTINGS);
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $setting_value = $value["setting_value"];
+                $setting_key = $value["setting_key"];
+
+                $this->ci->redis->hSet('site_settings', strtoupper($setting_key), $setting_value);
+            }
+        }
+
+        return $records;
+    }
+
+    public function get_site_setting($key_name)
+    {
+        $key_name = strtoupper($key_name);
+        if ($this->ci->redis->hExists('site_settings', $key_name) == TRUE)
+        {
+            $output = $this->ci->redis->hGet('site_settings', $key_name);
+        }
+        else
+        {
+//            setting all the site constants again
+            $this->set_site_settings();
+            $output = $this->get_site_setting($key_name);
+        }
+        return $output;
+    }
+
+    public function set_static_page_content()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('sp_key, sp_text', TABLE_STATIC_PAGES);
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $sp_key = $value["sp_key"];
+                $sp_text = $value["sp_text"];
+
+                $this->ci->redis->hSet('static_pages', strtolower($sp_key), json_encode($sp_text));
+            }
+        }
+
+        return $records;
+    }
+
+    public function get_static_page_content($key_name)
+    {
+        $key_name = strtolower($key_name);
+        if ($this->ci->redis->hExists('static_pages', $key_name) == TRUE)
+        {
+            $output = json_decode($this->ci->redis->hGet('static_pages', $key_name));
+        }
+        else
+        {
+//            setting all the static page contents again
+            $this->set_static_page_content();
+            $output = $this->get_site_setting($key_name);
+        }
+        return $output;
+    }
+
+    public function set_user_profile_data($username, $fields = NULL)
+    {
+        if ($fields == NULL)
+        {
+            $fields = 'user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
+        }
+        
+        $model = new Common_model();
+        $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
+        if (!empty($records))
+        {
+            $records = $records[0];
+            $this->ci->redis->hSet('user_profile', $records['user_username'], json_encode($records));
+        }
+        return $records;
+    }
+
+    public function get_user_profile_data($username)
+    {
+        if ($this->ci->redis->hExists('user_profile', $username) == TRUE)
+        {
+            $output = json_decode($this->ci->redis->hGet('user_profile', $username));
+        }
+        else
+        {
+            $this->set_user_profile_data($username);
+            $output = $this->get_user_profile_data($username);
+        }
+        return $output;
+    }
+
+}
