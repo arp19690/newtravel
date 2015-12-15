@@ -41,6 +41,7 @@ $path = $controller . "/" . $action;
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/style.css" />
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/custom.css" />
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,600,700,800' rel='stylesheet' type='text/css'>
@@ -57,18 +58,33 @@ $path = $controller . "/" . $action;
             echo '<div class="overlay"></div>';
             $this->load->view('layout/authorize-popups');
         }
+
+        $addressee_name = 'there';
+        if (isset($this->session->userdata["user_fullname"]) && !empty($this->session->userdata["user_fullname"]))
+        {
+            $split_name = explode(' ', $this->session->userdata["user_fullname"]);
+            $addressee_name = ucwords($split_name[0]);
+        }
         ?>
 
         <header id="top">
             <div class="header-a">
                 <div class="wrapper-padding">			
+                    <div class="header-phone hidden">
+                        <div id="late-night">
+                            <span style="background: none;padding: 0;">&nbsp;&nbsp;Hey <?php echo $addressee_name; ?>, we love these late hours too!</span>
+                        </div>
+                        <div id="early-morning">
+                            <span style="background: none;padding: 0;">&nbsp;&nbsp;Good morning <?php echo $addressee_name; ?>, let's go running?</span>
+                        </div>
+                    </div>
                     <div class="header-account">
                         <?php
                         if (isset($this->session->userdata['user_id']))
                         {
                             ?>
                             <a href="<?php echo base_url('logout'); ?>" onclick="event.preventDefault();
-                                    window.location.href = $(this).attr('href');">Logout</a>
+                                        window.location.href = $(this).attr('href');">Logout</a>
                                <?php
                            }
                            else

@@ -1,3 +1,12 @@
+function getClientLocalTime()
+{
+    var currentTime = new Date()
+    var hours = currentTime.getHours()
+    var minutes = currentTime.getMinutes()
+
+    return hours + "." + minutes;
+}
+
 $(document).ready(function () {
     $('.date-inpt').datepicker();
     $('.custom-select').customSelect();
@@ -33,4 +42,9 @@ $(document).ready(function () {
         }
     });
     $slideHover();
+
+    var e = parseFloat(getClientLocalTime());
+    if ((e >= 0 && e <= 4.3) || (e >= 5 && e <= 7.3)) {
+        $(".header-phone").removeClass("hide")
+    }
 });
