@@ -270,7 +270,7 @@ $(document).ready(function () {
                 google.maps.event.addListenerOnce(map, 'idle', function () {
 
                     var place = new google.maps.LatLng(52.569334, 13.380216);
-                    var image = new google.maps.MarkerImage('img/map.png',
+                    var image = new google.maps.MarkerImage('assets/front/img/map.png',
                             new google.maps.Size(19, 29),
                             new google.maps.Point(0, 0),
                             new google.maps.Point(0, 32));
