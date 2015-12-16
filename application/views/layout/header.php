@@ -1,12 +1,14 @@
 <?php
+$redis_functions = new Redisfunctions();
+
 if (!isset($meta_title))
-    $meta_title = SITE_TITLE;
+    $meta_title = $redis_functions->get_site_setting('SITE_TITLE');
 
 if (!isset($meta_keywords))
-    $meta_keywords = SEO_KEYWORDS;
+    $meta_keywords = $redis_functions->get_site_setting('SEO_KEYWORDS');
 
 if (!isset($meta_description))
-    $meta_description = SEO_DESCRIPTION;
+    $meta_description = $redis_functions->get_site_setting('SEO_DESCRIPTION');
 
 if (!isset($meta_logo_image))
     $meta_logo_image = IMAGES_PATH . "/logo.jpg";
@@ -19,7 +21,6 @@ $this->output->set_header('Cache-Control: post-check=0, pre-check=0', false);
 $this->output->set_header('Pragma: no-cache');
 //    prd($meta_logo_image);
 
-$redis_functions = new Redisfunctions();
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 $path = $controller . "/" . $action;
@@ -32,9 +33,9 @@ $path = $controller . "/" . $action;
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title><?php echo $redis_functions->get_site_setting('SITE_TITLE'); ?></title>
-        <meta name="keywords" content="<?php echo $redis_functions->get_site_setting('SEO_KEYWORDS'); ?>" />
-        <meta name="description" content="<?php echo $redis_functions->get_site_setting('SEO_DESCRIPTION'); ?>" />
+        <title><?php echo $meta_title; ?></title>
+        <meta name="keywords" content="<?php echo $meta_keywords; ?>" />
+        <meta name="description" content="<?php echo $meta_description; ?>" />
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css">
@@ -51,7 +52,7 @@ $path = $controller . "/" . $action;
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
-    <body class="<?php echo $path == 'index/index' ? 'index-page' : 'inner-body'; ?>">
+    <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
         <?php
         if (!isset($this->session->userdata['user_id']))
         {
@@ -84,7 +85,7 @@ $path = $controller . "/" . $action;
                         {
                             ?>
                             <a href="<?php echo base_url('logout'); ?>" onclick="event.preventDefault();
-                                        window.location.href = $(this).attr('href');">Logout</a>
+                                    window.location.href = $(this).attr('href');">Logout</a>
                                <?php
                            }
                            else
