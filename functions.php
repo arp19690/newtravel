@@ -1,5 +1,26 @@
 <?php
 
+function get_breadcrumbs($input_arr)
+{
+    $i = 1;
+    $str = '<div class="breadcrumbs">';
+    foreach ($input_arr as $url => $title)
+    {
+        if (count($input_arr) > $i)
+        {
+            $str.='<a href="' . $url . '">' . $title . '</a>';
+            $str.=' / ';
+        }
+        else
+        {
+            $str.='<span>' . $title . '</span>';
+        }
+        $i++;
+    }
+    $str.='</div>';
+    return $str;
+}
+
 function get_external_url($url)
 {
     $output = base_url('r?url=' . stripslashes($url));
