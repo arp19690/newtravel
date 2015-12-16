@@ -54,6 +54,20 @@ $(document).ready(function () {
         $('.new-region-div-here').append(new_div);
     });
 
+    $(document).on('change', '.post-media-type', function () {
+        var media_type = $(this).val();
+        if (media_type == 'image')
+        {
+            $(this).parent().parent().parent().parent().find('.post-image').removeClass('hidden');
+            $(this).parent().parent().parent().parent().find('.post-video').addClass('hidden');
+        }
+        else if (media_type == 'video')
+        {
+            $(this).parent().parent().parent().parent().find('.post-image').addClass('hidden');
+            $(this).parent().parent().parent().parent().find('.post-video').removeClass('hidden');
+        }
+    });
+
     var num_of_inputs = jQuery(".gMapLocation-cities").length;
     var i;
     var loop = num_of_inputs - 1;

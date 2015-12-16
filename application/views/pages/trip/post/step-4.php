@@ -8,7 +8,7 @@ $redis_functions = new Redisfunctions();
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title"><?php echo $page_title; ?> - <span>Budgets</span></div>
+                <div class="page-title"><?php echo $page_title; ?> - <span>Photos / Videos</span></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
@@ -31,24 +31,25 @@ $redis_functions = new Redisfunctions();
                                                 <div class="bookin-three-coll">
                                                     <div class="booking-form-i">
                                                         <label>Title:</label>
-                                                        <div class="input"><input type="text" name="cost_title[]" required="required" placeholder="Enter Title"/></div>
+                                                        <div class="input"><input type="text" name="media_title[]" required="required" placeholder="Enter Title"/></div>
                                                     </div>
                                                     <div class="booking-form-i">
-                                                        <label>Amount:</label>
-                                                        <div class="input"><input type="number" name="cost_amount[]" required="required" placeholder="Enter Amount" step="any"/></div>
+                                                        <span class="post-image">
+                                                            <label>Select Image:</label>
+                                                            <div class="input"><input type="file" name="media_image[]"/></div>
+                                                        </span>
+                                                        <span class="post-video hidden">
+                                                            <label>Enter Youtube / Vimeo URL:</label>
+                                                            <div class="input"><input type="text" name="media_video[]" placeholder="Enter Youtube / Vimeo URL"/></div>
+                                                        </span>
                                                     </div>
                                                     <div class="booking-form-i">
                                                         <div class="form-calendar" style="float: none;">
-                                                            <label>Currency:</label>
+                                                            <label>Type:</label>
                                                             <div class="form-calendar-b">
-                                                                <select class="custom-select" required="required" name="cost_currency[]">
-                                                                    <?php
-                                                                    $currencies = (array) json_decode(CURRENCIES);
-                                                                    foreach ($currencies as $key => $value)
-                                                                    {
-                                                                        echo '<option value="' . $key . '">' . strtoupper($key) . '</option>';
-                                                                    }
-                                                                    ?>
+                                                                <select class="custom-select post-media-type" required="required" name="media_type[]">
+                                                                    <option value="image">Image</option>
+                                                                    <option value="video">Video</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -62,12 +63,12 @@ $redis_functions = new Redisfunctions();
                                         </div>
 
                                         <span class="new-region-div-here"></span>	
-                                        <a href="#" class="add-passanger add-region-click">Add to budgets</a>
+                                        <a href="#" class="add-passanger add-region-click">Add photos / videos</a>
 
                                         <div class="clear"></div>
 
                                         <div class="booking-complete">
-                                            <button type="submit" class="booking-complete-btn">NEXT</button>
+                                            <button type="submit" class="booking-complete-btn">REVIEW</button>
                                         </div>
                                     </form>
                                 </div>
