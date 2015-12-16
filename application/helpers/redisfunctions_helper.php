@@ -17,7 +17,7 @@ class Redisfunctions
     public function set_travel_mediums()
     {
         $model = new Common_model();
-        $records = $model->fetchSelectedData('*', TABLE_TRAVEL_MEDIUMS, NULL, 'tm_title');
+        $records = $model->fetchSelectedData('*', TABLE_TRAVEL_MEDIUMS, array('tm_status' => '1'), 'tm_title');
         if (count($records) > 0)
         {
             $this->ci->redis->set('travel_mediums', json_encode($records));
