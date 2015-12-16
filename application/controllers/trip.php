@@ -141,6 +141,7 @@ class Trip extends CI_Controller
 
             if (isset($arr['post_source']) && !empty($arr['post_source']))
             {
+                $model->deleteData(TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
                 $i = 1;
                 foreach ($arr['post_source'] as $key => $source_value)
                 {
@@ -220,6 +221,7 @@ class Trip extends CI_Controller
 
             if (isset($arr['cost_amount']) && !empty($arr['cost_amount']))
             {
+                $model->deleteData(TABLE_POST_COSTS, array('cost_post_id' => $post_id));
                 foreach ($arr['cost_amount'] as $key => $amount)
                 {
                     $post_cost = round($amount, 2);
