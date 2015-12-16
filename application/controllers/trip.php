@@ -23,10 +23,11 @@ class Trip extends CI_Controller
         switch ($step)
         {
             case 1:
-                    $this->add_new_step_one();
-                    break;
+                $this->add_new_step_one();
+                break;
             case 2:
-                prd('how are you?');
+                $this->add_new_step_two($url_key);
+                break;
         }
     }
 
@@ -64,6 +65,9 @@ class Trip extends CI_Controller
                 }
             }
 
+            // setting post details to redis
+            $this->redis_functions->set_post_details($trip_url_key);
+
             redirect(base_url('trip/post/edit/2/' . $trip_url_key));
         }
         else
@@ -73,7 +77,7 @@ class Trip extends CI_Controller
             $input_arr = array(
                 base_url() => 'Home',
                 base_url('trips') => 'Trips',
-                base_url('trips/post/new') => 'Post new trip',
+                '#' => 'Post new trip',
             );
             $breadcrumbs = get_breadcrumbs($input_arr);
 
@@ -82,6 +86,42 @@ class Trip extends CI_Controller
             $data["page_title"] = "Post new trip";
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/post/step-1", $data);
+            $this->template->render();
+        }
+    }
+
+    public function add_new_step_two($url_key)
+    {
+        $data = array();
+        $user_id = $this->session->userdata["user_id"];
+        $model = new Common_model();
+
+        if ($this->input->post() && isset($user_id))
+        {
+            $arr = $this->input->post();
+            prd($arr);
+
+            // setting post details to redis
+            $this->redis_functions->set_post_details($url_key);
+
+            redirect(base_url('trip/post/edit/3/' . $url_key));
+        }
+        else
+        {
+            $post_details = $this->redis_functions->set_post_details($url_key);
+            $post_title = stripslashes($post_details['post_title']);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $post_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $post_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/post/step-2", $data);
             $this->template->render();
         }
     }

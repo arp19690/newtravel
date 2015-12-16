@@ -47,4 +47,19 @@ $(document).ready(function () {
     if ((e >= 0 && e <= 4.3) || (e >= 5 && e <= 7.3)) {
         $(".header-phone").removeClass("hide")
     }
+
+    $('.add-region-click').click(function (e) {
+        e.preventDefault();
+        var new_div = $('.region-info').html();
+        $('.new-region-div-here').append(new_div);
+    });
+
+    var num_of_inputs = jQuery(".gMapLocation-cities").length;
+    var i;
+    var loop = num_of_inputs - 1;
+    for (i = "0"; i <= loop; i++) {
+        var options = {types: ["(cities)"]};
+        var input = jQuery(".gMapLocation-cities")[i];
+        var autocomplete = new google.maps.places.Autocomplete(input, options)
+    }
 });

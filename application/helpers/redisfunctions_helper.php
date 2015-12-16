@@ -14,6 +14,33 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function set_travel_mediums()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('*', TABLE_TRAVEL_MEDIUMS, NULL, 'tm_title');
+        if (count($records) > 0)
+        {
+            $this->ci->redis->set('travel_mediums', json_encode($records));
+        }
+
+        return $records;
+    }
+
+    public function get_travel_mediums()
+    {
+        $output = array();
+        if ($this->ci->redis->exists('travel_mediums') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('travel_mediums'));
+        }
+        else
+        {
+            $this->set_travel_mediums();
+        }
+
+        return $output;
+    }
+
     public function set_post_details($url_key)
     {
         $custom_model = new Custom_model();
@@ -55,7 +82,15 @@ class Redisfunctions
 
     public function get_activity_master()
     {
-        $output = (array) json_decode($this->ci->redis->get('activities_master'));
+        $output = array();
+        if ($this->ci->redis->exists('activities_master') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('activities_master'));
+        }
+        else
+        {
+            $this->set_activity_master();
+        }
         return $output;
     }
 
