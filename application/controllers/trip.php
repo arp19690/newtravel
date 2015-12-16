@@ -29,7 +29,6 @@ class Trip extends CI_Controller
                 $this->add_new_step_two($url_key);
                 break;
             case 3:
-                prd('how are you man?');
                 $this->add_new_step_three($url_key);
                 break;
         }
@@ -169,6 +168,42 @@ class Trip extends CI_Controller
             $data["page_title"] = $post_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/post/step-2", $data);
+            $this->template->render();
+        }
+    }
+
+    public function add_new_step_three($url_key)
+    {
+        $data = array();
+        $user_id = $this->session->userdata["user_id"];
+        $model = new Common_model();
+        $post_details = $this->redis_functions->get_post_details($url_key);
+        $post_title = stripslashes($post_details->post_title);
+        $post_id = $post_details->post_id;
+
+        if ($this->input->post() && isset($user_id))
+        {
+            $arr = $this->input->post();
+            prd($arr);
+
+            // setting post details to redis
+            $this->redis_functions->set_post_details($url_key);
+
+            redirect(base_url('trip/post/edit/4/' . $url_key));
+        }
+        else
+        {
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $post_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $post_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/post/step-3", $data);
             $this->template->render();
         }
     }

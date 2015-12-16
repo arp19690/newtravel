@@ -1889,7 +1889,11 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .booking-form-i:nth-child(2n) {float:right;}
 
 .booking-form-i .input {padding:6px 10px 6px 10px; border:1px solid #e3e3e3; -webkit-box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.04);-moz-box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.04); box-shadow: 0px 1px 2px 0px rgba(50, 50, 50, 0.04); border-radius:2px;}
-.booking-form-i .input input[type='text'] {border:0px; width:100%; font-size:14px; font-family:'Raleway';}
+/*.booking-form-i .input input[type='text'] {border:0px; width:100%; font-size:14px; font-family:'Raleway';}*/
+.booking-form-i .input input[type='text'], 
+.booking-form-i .input input[type='number'], 
+.booking-form-i .input input[type='email'] 
+{border:0px; width:100%; font-size:14px; font-family:'Raleway';}
 .booking-form .checkbox {margin-top:2px;}
 .booking-form .checkbox label {font-size:12px; font-weight:500; color:#848484; font-family:'Raleway'; cursor:pointer;}
 .booking-form .checkbox .jq-checkbox {margin-right:7px;}
