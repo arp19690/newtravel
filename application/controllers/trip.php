@@ -28,6 +28,10 @@ class Trip extends CI_Controller
             case 2:
                 $this->add_new_step_two($url_key);
                 break;
+            case 3:
+                prd('how are you man?');
+                $this->add_new_step_three($url_key);
+                break;
         }
     }
 
@@ -95,11 +99,57 @@ class Trip extends CI_Controller
         $data = array();
         $user_id = $this->session->userdata["user_id"];
         $model = new Common_model();
+        $post_details = $this->redis_functions->get_post_details($url_key);
+        $post_title = stripslashes($post_details->post_title);
+        $post_id = $post_details->post_id;
 
         if ($this->input->post() && isset($user_id))
         {
             $arr = $this->input->post();
-            prd($arr);
+
+            if (isset($arr['post_source']) && !empty($arr['post_source']))
+            {
+                $i = 1;
+                foreach ($arr['post_source'] as $key => $source_value)
+                {
+                    $post_source = $source_value;
+                    $post_destination = $arr['post_destination'][$key];
+                    $from_date = $arr['date_from_yy'][$key] . '-' . $arr['date_from_mm'][$key] . '-' . $arr['date_from_dd'][$key];
+                    $to_date = $arr['date_to_yy'][$key] . '-' . $arr['date_to_mm'][$key] . '-' . $arr['date_to_dd'][$key];
+                    $travel_medium = $arr['travel_medium'][$key];
+
+                    // now fetching LAT-LONG
+                    $post_source_lat_long = getLatLonByAddress($post_source);
+                    $post_destination_lat_long = getLatLonByAddress($post_destination);
+
+                    // fetching address details from google
+                    $post_source_address_details = get_location_details_from_google($post_source);
+                    $post_destination_address_details = get_location_details_from_google($post_destination);
+
+                    $data_array = array(
+                        'pr_post_id' => $post_id,
+                        'pr_order_number' => $i,
+                        'pr_source_location' => addslashes($post_source),
+                        'pr_destination_location' => addslashes($post_destination),
+                        'pr_source_city' => addslashes($post_source_address_details['city']),
+                        'pr_source_region' => addslashes($post_source_address_details['state']),
+                        'pr_source_country' => addslashes($post_source_address_details['country']),
+                        'pr_source_latitude' => addslashes($post_source_lat_long['latitude']),
+                        'pr_source_longitude' => addslashes($post_source_lat_long['longitude']),
+                        'pr_destination_city' => addslashes($post_destination_address_details['city']),
+                        'pr_destination_region' => addslashes($post_destination_address_details['state']),
+                        'pr_destination_country' => addslashes($post_destination_address_details['country']),
+                        'pr_destination_latitude' => addslashes($post_destination_lat_long['latitude']),
+                        'pr_destination_longitude' => addslashes($post_destination_lat_long['longitude']),
+                        'pr_from_date' => $from_date,
+                        'pr_to_date' => $to_date,
+                        'pr_travel_medium' => $travel_medium
+                    );
+                    $model->insertData(TABLE_POST_REGIONS, $data_array);
+
+                    $i++;
+                }
+            }
 
             // setting post details to redis
             $this->redis_functions->set_post_details($url_key);
@@ -108,9 +158,6 @@ class Trip extends CI_Controller
         }
         else
         {
-            $post_details = $this->redis_functions->set_post_details($url_key);
-            $post_title = stripslashes($post_details['post_title']);
-
             $input_arr = array(
                 base_url() => 'Home',
                 base_url('trips') => 'Trips',

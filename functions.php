@@ -144,6 +144,45 @@ function getMapMidpoint($lat1, $lng1, $lat2, $lng2)
     );
 }
 
+function get_location_details_from_google($address)
+{
+    $url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' . urlencode($address);
+    $results = json_decode(file_get_contents($url), 1);
+//        die('<pre>' . print_r($results, true));
+    $parts = array(
+        'address' => array('street_number', 'route'),
+        'city' => array('locality'),
+        'state' => array('administrative_area_level_1'),
+        'country' => array('country'),
+        'zip' => array('postal_code'),
+    );
+    if (!empty($results['results'][0]['address_components']))
+    {
+        $ac = $results['results'][0]['address_components'];
+        foreach ($parts as $need => &$types)
+        {
+            foreach ($ac as &$a)
+            {
+                if (in_array($a['types'][0], $types))
+                {
+                    $address_out[$need] = $a['long_name'];
+                }
+                elseif (empty($address_out[$need]))
+                {
+                    $address_out[$need] = '';
+                }
+            }
+        }
+    }
+    else
+    {
+        echo 'empty results';
+    }
+
+//        prd($address_out);
+    return $address_out;
+}
+
 function getLatLonByIPAddress($ipaddress = USER_IP)
 {
     // Get lat and long by ipaddress         
