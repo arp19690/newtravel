@@ -14,6 +14,33 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function set_post_details($url_key)
+    {
+        $custom_model = new Custom_model();
+        $post_details = $custom_model->get_post_detail($url_key);
+        if (count($post_details) > 0)
+        {
+            $this->ci->redis->hSet('posts', $url_key, json_encode($post_details));
+        }
+
+        return $post_details;
+    }
+
+    public function get_post_details($url_key)
+    {
+        $output = array();
+        if ($this->ci->redis->hExists('posts', $url_key) == TRUE)
+        {
+            $output = json_decode($this->ci->redis->hGet('posts', $url_key));
+        }
+        else
+        {
+            $this->set_post_details($url_key);
+        }
+
+        return $output;
+    }
+
     public function set_activity_master()
     {
         $model = new Common_model();
