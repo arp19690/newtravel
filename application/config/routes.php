@@ -51,28 +51,15 @@
     $route['privacy-policy'] = 'staticpage/index/privacy';
     $route['terms'] = 'staticpage/index/terms';
     $route['my-blogs'] = 'blog/myBlogs';
+    $route['login/facebook'] = 'index/loginwithfacebook';
     $route['login'] = 'index/login';
+    $route['logout'] = 'index/logout';
     $route['register'] = 'index/register';
     $route['forgot-password'] = 'index/forgotPassword';
     $route['change-password'] = 'user/changePassword';
     $route['activate'] = 'index/activate';
 
-    $route['my-albums'] = 'user/myAlbums';
-    $route['albums/(:any)'] = 'user/myAlbums/$1';
-    $route['view/album/(:any)'] = 'user/viewAlbum/$1';
-    $route['delete/album/(:any)'] = 'user/deleteAlbum/$1';
-    $route['view/photo/(:any)'] = 'user/viewPhoto/$1';
-    $route['delete/photo/(:any)/(:any)'] = 'user/deletePhotoAjax/$1/$2';
-    $route['delete/photo-noax/(:any)'] = 'user/deletePhoto/$1';
-    $route['delete/comment/(:any)'] = 'user/deleteCommentAjax/$1';
-    $route['upload/album/(:any)'] = 'user/uploadPhotos/$1';
-    $route['my-account'] = 'user/myAccount';
-    $route['profile/(:any)'] = 'user/viewProfile/$1';
-    $route['connect/(:any)'] = 'user/connectWith/$1';
-
-    $route['map-view'] = 'index/map';
-    $route['login/facebook'] = 'index/loginwithfacebook';
-    $route['logout'] = 'index/logout';
+    $route['trip/post/add'] = 'trip/add_new';
 
     /* End of file routes.php */
 /* Location: ./application/config/routes.php */
