@@ -24,7 +24,7 @@ class Trip extends CI_Controller
         {
             case 1:
                 // meta info
-                $this->add_new_step_one();
+                $this->add_new_step_one($url_key);
                 break;
             case 2:
                 // regions
@@ -41,7 +41,7 @@ class Trip extends CI_Controller
         }
     }
 
-    public function add_new_step_one()
+    public function add_new_step_one($url_key = NULL)
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
@@ -53,7 +53,14 @@ class Trip extends CI_Controller
 
             $trip_title = addslashes($arr['trip_title']);
             $trip_description = addslashes($arr['trip_description']);
-            $trip_url_key = get_trip_url_key($trip_title);
+
+            $post_id = NULL;
+            if ($url_key != NULL)
+            {
+                $post_records = (array) $this->redis_functions->get_post_details($url_key);
+                $post_id = $post_records['post_id'];
+            }
+            $trip_url_key = get_trip_url_key($trip_title, $post_id);
 
             $trip_data_array = array(
                 'post_user_id' => $user_id,
@@ -64,7 +71,15 @@ class Trip extends CI_Controller
                 'post_useragent' => USER_AGENT,
                 'post_url_key' => $trip_url_key
             );
-            $post_id = $model->insertData(TABLE_POSTS, $trip_data_array);
+
+            if ($url_key == NULL)
+            {
+                $post_id = $model->insertData(TABLE_POSTS, $trip_data_array);
+            }
+            else
+            {
+                $model->updateData(TABLE_POSTS, $trip_data_array, array('post_url_key' => $trip_url_key, 'post_id' => $post_id));
+            }
 
             if (!empty($arr['activities']))
             {
@@ -84,16 +99,27 @@ class Trip extends CI_Controller
         {
             $activity_master = $this->redis_functions->get_activity_master();
 
+            if ($url_key == NULL)
+            {
+                $page_title = 'Post new trip';
+            }
+            else
+            {
+                $post_records = (array) $this->redis_functions->get_post_details($url_key);
+                $page_title = $post_records['post_title'];
+                $data["post_records"] = $post_records;
+            }
+
             $input_arr = array(
                 base_url() => 'Home',
                 base_url('trips') => 'Trips',
-                '#' => 'Post new trip',
+                '#' => $page_title,
             );
             $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["activity_master"] = $activity_master;
             $data["breadcrumbs"] = $breadcrumbs;
-            $data["page_title"] = "Post new trip";
+            $data["page_title"] = $page_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/post/step-1", $data);
             $this->template->render();
