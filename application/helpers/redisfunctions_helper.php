@@ -14,6 +14,24 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function set_activity_master()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('*', TABLE_ACTIVITIES_MASTER);
+        if (count($records) > 0)
+        {
+            $this->ci->redis->set('activities_master', json_encode($records));
+        }
+
+        return $records;
+    }
+
+    public function get_activity_master()
+    {
+        $output = (array) json_decode($this->ci->redis->get('activities_master'));
+        return $output;
+    }
+
     public function set_site_settings()
     {
         $model = new Common_model();
@@ -88,7 +106,7 @@ class Redisfunctions
         {
             $fields = 'user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
         }
-        
+
         $model = new Common_model();
         $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
         if (!empty($records))
