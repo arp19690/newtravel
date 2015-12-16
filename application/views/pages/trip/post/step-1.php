@@ -45,7 +45,7 @@
                                                     {
                                                         ?>
                                                         <div class="checkbox">
-                                                            <label><input type="checkbox" value="<?php echo $value->am_id; ?>" /><?php echo $value->am_title; ?></label>
+                                                            <label><input name="activities[]" type="checkbox" value="<?php echo $value->am_id; ?>" /><?php echo $value->am_title; ?></label>
                                                         </div> 
                                                         <?php
                                                     }

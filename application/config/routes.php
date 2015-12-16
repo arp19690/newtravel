@@ -60,6 +60,7 @@
     $route['activate'] = 'index/activate';
 
     $route['trip/post/add'] = 'trip/add_new';
+    $route['trip/post/edit/(:any)/(:any)'] = 'trip/add_new/$1/$2';
 
     /* End of file routes.php */
 /* Location: ./application/config/routes.php */

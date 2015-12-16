@@ -1,5 +1,21 @@
 <?php
 
+function get_trip_url_key($trip_title)
+{
+    $trip_title = str_replace(' ', '-', $trip_title);
+    $trip_title = str_replace('"', '', $trip_title);
+    $trip_title = str_replace("'", '', $trip_title);
+    $trip_title = str_replace('/', '', $trip_title);
+    $trip_title = str_replace('&', '', $trip_title);
+    $trip_title = str_replace('!', '', $trip_title);
+    $trip_title = str_replace('@', '', $trip_title);
+    $trip_title = str_replace('#', '', $trip_title);
+    $trip_title = str_replace('%', '', $trip_title);
+    $trip_title = str_replace('*', '', $trip_title);
+    $trip_title = str_replace('$', '', $trip_title);
+    return strtolower($trip_title);
+}
+
 function get_breadcrumbs($input_arr)
 {
     $i = 1;

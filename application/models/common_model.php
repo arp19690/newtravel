@@ -19,6 +19,7 @@
         public function insertData($tablename, $data_array)
         {
             $this->db->insert($tablename, $data_array);
+            return $this->db->insert_id();
         }
 
         public function updateData($tablename, $data_array, $whereCondArr)
