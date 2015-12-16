@@ -92,7 +92,7 @@ class Index extends CI_Controller
             }
             else
             {
-                $data['meta_title'] = 'Login | ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $data['meta_title'] = 'Login - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/login", $data);
                 $this->template->render();
             }
@@ -168,7 +168,7 @@ class Index extends CI_Controller
                             $EmailTemplates = new EmailTemplates();
                             $messageText = $EmailTemplates->registerEmail(ucwords($arr['first_name'] . " " . $arr['last_name']), $verification_url);
                             $email_model = new Email_model();
-                            $email_model->sendMail($arr['user_email'], 'Verification Email | ' . SITE_NAME, $messageText);
+                            $email_model->sendMail($arr['user_email'], 'Verification Email - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageText);
                         }
 
                         $this->session->set_flashdata('success', '<strong>Success!</strong> We have sent you an email. Please verify your email address');
@@ -192,7 +192,7 @@ class Index extends CI_Controller
             }
             else
             {
-                $data['meta_title'] = 'Register | ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $data['meta_title'] = 'Register - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/register", $data);
                 $this->template->render();
             }
@@ -270,7 +270,7 @@ class Index extends CI_Controller
                             $emailTemplate = new EmailTemplates();
                             $messageContent = $emailTemplate->forgotPassword($full_name, $new_password);
                             $email_model = new Email_model();
-                            $email_model->sendMail($user_email, 'Forgot Password | ' . SITE_NAME, $messageContent);
+                            $email_model->sendMail($user_email, 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                         }
 
                         $this->session->set_flashdata('error', '<strong>Success!</strong> We have sent you a new password on your email. Please check');
@@ -292,7 +292,7 @@ class Index extends CI_Controller
             }
             else
             {
-                $data['meta_title'] = 'Forgot Password | ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $data['meta_title'] = 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/forgot-password", $data);
                 $this->template->render();
             }
@@ -344,7 +344,7 @@ class Index extends CI_Controller
     {
         $data = array();
 
-        $data['meta_title'] = 'Page Not Found | ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $data['meta_title'] = 'Page Not Found - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/index/page-not-found", $data);
         $this->template->render();
     }

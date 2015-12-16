@@ -29,7 +29,7 @@ class Trip extends CI_Controller
 
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = "Post new trip";
-        $data['meta_title'] = $data["page_title"] . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/post", $data);
         $this->template->render();
     }

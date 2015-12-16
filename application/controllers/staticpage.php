@@ -7,6 +7,7 @@ class Staticpage extends CI_Controller
     {
         parent::__construct();
         $this->ci->redis = new CI_Redis();
+        $this->redis_functions = new Redisfunctions();
     }
 
     public function index($pageName = 'about')
@@ -20,26 +21,26 @@ class Staticpage extends CI_Controller
             case "about":
                 {
                     $viewFile = "about";
-                    $data["meta_title"] = "About Us | " . SITE_NAME;
+                    $data["meta_title"] = "About Us - " . $this->redis_functions->get_site_setting('SITE_NAME');
                     $data["content"] = stripslashes($this->ci->redis->get_static_page_content('about_us'));
                     break;
                 }
             case "how-it-works":
                 {
                     $viewFile = "how-it-works";
-                    $data["meta_title"] = "How it works | " . SITE_NAME;
+                    $data["meta_title"] = "How it works - " . $this->redis_functions->get_site_setting('SITE_NAME');
                     break;
                 }
             case "privacy":
                 {
                     $viewFile = "privacy";
-                    $data["meta_title"] = "Privacy Policy | " . SITE_NAME;
+                    $data["meta_title"] = "Privacy Policy - " . $this->redis_functions->get_site_setting('SITE_NAME');
                     break;
                 }
             case "terms":
                 {
                     $viewFile = "terms";
-                    $data["meta_title"] = "Terms &amp; Conditions | " . SITE_NAME;
+                    $data["meta_title"] = "Terms &amp; Conditions - " . $this->redis_functions->get_site_setting('SITE_NAME');
                     break;
                 }
         }
@@ -100,13 +101,13 @@ class Staticpage extends CI_Controller
                                                 <strong>Request ID: </strong>' . $request_id . '<br/><br/>
                                                 <strong>Message: </strong>' . $arr["user_message"] . '<br/>
                                                 ';
-                        $email_model->sendMail(SITE_EMAIL, "New message via " . SITE_NAME, $message);
+                        $email_model->sendMail(SITE_EMAIL, "New message via " . $this->redis_functions->get_site_setting('SITE_NAME'), $message);
 
                         // message to the user                            
                         $this->load->library('EmailTemplates');
                         $emailTemplate = new EmailTemplates();
                         $messageContent = $emailTemplate->contactUsEmail(ucwords($arr["full_name"]), $request_id);
-                        $email_model->sendMail($arr["user_email"], "Thank you for contacting us | " . SITE_NAME, $messageContent);
+                        $email_model->sendMail($arr["user_email"], "Thank you for contacting us - " . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                     }
 
                     $this->session->set_flashdata('success', 'Your message has been delivered successfully');
@@ -117,7 +118,7 @@ class Staticpage extends CI_Controller
         else
         {
             $data = array();
-            $data["meta_title"] = "Contact Us | " . SITE_NAME;
+            $data["meta_title"] = "Contact Us - " . $this->redis_functions->get_site_setting('SITE_NAME');
 
             $this->template->write_view("content", "pages/staticpage/contact", $data);
             $this->template->render();
