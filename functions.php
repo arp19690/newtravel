@@ -13,7 +13,10 @@ function get_trip_url_key($trip_title)
     $trip_title = str_replace('%', '', $trip_title);
     $trip_title = str_replace('*', '', $trip_title);
     $trip_title = str_replace('$', '', $trip_title);
-    return strtolower($trip_title);
+
+    $trip_title = strtolower($trip_title);
+    $trip_url_key = checkIfTripURLKeyUnique($trip_title);
+    return $trip_url_key;
 }
 
 function get_breadcrumbs($input_arr)
@@ -41,6 +44,20 @@ function get_external_url($url)
 {
     $output = base_url('r?url=' . stripslashes($url));
     return $output;
+}
+
+function checkIfTripURLKeyUnique($trip_url_key)
+{
+    require_once APPPATH . '/models/common_model.php';
+    $model = new Common_model();
+    $is_exists = $model->is_exists('post_id', TABLE_POSTS, array('post_url_key' => $trip_url_key));
+    if (!empty($is_exists))
+    {
+        $new_trip_url_key = $trip_url_key . '-' . rand(10, 999);
+        $trip_url_key = checkIfTripURLKeyUnique($new_trip_url_key);
+    }
+
+    return $trip_url_key;
 }
 
 function getUniqueBlogURLKey($random_number = NULL, $string_lenth = 10)
