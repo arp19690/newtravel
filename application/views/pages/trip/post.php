@@ -4,9 +4,12 @@
         <div class="wrapper-padding">
             <div class="page-head">
                 <div class="page-title">Tours - <span>booking</span></div>
-                <div class="breadcrumbs">
-                    <a href="#">Home</a> / <a href="#">Tours</a> / <span>booking</span>
-                </div>
+                <?php
+                if (isset($breadcrumbs) && !empty($breadcrumbs))
+                {
+                    echo $breadcrumbs;
+                }
+                ?>
                 <div class="clear"></div>
             </div>
 
