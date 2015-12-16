@@ -1,12 +1,14 @@
 <?php
+$redis_functions = new Redisfunctions();
+
 if (!isset($meta_title))
-    $meta_title = SITE_TITLE;
+    $meta_title = $redis_functions->get_site_setting('SITE_TITLE');
 
 if (!isset($meta_keywords))
-    $meta_keywords = SEO_KEYWORDS;
+    $meta_keywords = $redis_functions->get_site_setting('SEO_KEYWORDS');
 
 if (!isset($meta_description))
-    $meta_description = SEO_DESCRIPTION;
+    $meta_description = $redis_functions->get_site_setting('SEO_DESCRIPTION');
 
 if (!isset($meta_logo_image))
     $meta_logo_image = IMAGES_PATH . "/logo.jpg";
@@ -19,7 +21,6 @@ $this->output->set_header('Cache-Control: post-check=0, pre-check=0', false);
 $this->output->set_header('Pragma: no-cache');
 //    prd($meta_logo_image);
 
-$redis_functions = new Redisfunctions();
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 $path = $controller . "/" . $action;
@@ -32,15 +33,16 @@ $path = $controller . "/" . $action;
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title><?php echo $redis_functions->get_site_setting('SITE_TITLE'); ?></title>
-        <meta name="keywords" content="<?php echo $redis_functions->get_site_setting('SEO_KEYWORDS'); ?>" />
-        <meta name="description" content="<?php echo $redis_functions->get_site_setting('SEO_DESCRIPTION'); ?>" />
+        <title><?php echo $meta_title; ?></title>
+        <meta name="keywords" content="<?php echo $meta_keywords; ?>" />
+        <meta name="description" content="<?php echo $meta_description; ?>" />
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/style.css" />
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/custom.css" />
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,600,700,800' rel='stylesheet' type='text/css'>
@@ -50,18 +52,33 @@ $path = $controller . "/" . $action;
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
-    <body class="<?php echo $path == 'index/index' ? 'index-page' : 'inner-body'; ?>">
+    <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
         <?php
         if (!isset($this->session->userdata['user_id']))
         {
             echo '<div class="overlay"></div>';
             $this->load->view('layout/authorize-popups');
         }
+
+        $addressee_name = 'there';
+        if (isset($this->session->userdata["user_fullname"]) && !empty($this->session->userdata["user_fullname"]))
+        {
+            $split_name = explode(' ', $this->session->userdata["user_fullname"]);
+            $addressee_name = ucwords($split_name[0]);
+        }
         ?>
 
         <header id="top">
             <div class="header-a">
                 <div class="wrapper-padding">			
+                    <div class="header-phone hidden">
+                        <div id="late-night">
+                            <span style="background: none;padding: 0;">&nbsp;&nbsp;Hey <?php echo $addressee_name; ?>, we love these late hours too!</span>
+                        </div>
+                        <div id="early-morning">
+                            <span style="background: none;padding: 0;">&nbsp;&nbsp;Good morning <?php echo $addressee_name; ?>, let's go running?</span>
+                        </div>
+                    </div>
                     <div class="header-account">
                         <?php
                         if (isset($this->session->userdata['user_id']))

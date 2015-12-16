@@ -1,9 +1,63 @@
 <?php
 
+function get_trip_url_key($trip_title)
+{
+    $trip_title = str_replace(' ', '-', $trip_title);
+    $trip_title = str_replace('"', '', $trip_title);
+    $trip_title = str_replace("'", '', $trip_title);
+    $trip_title = str_replace('/', '', $trip_title);
+    $trip_title = str_replace('&', '', $trip_title);
+    $trip_title = str_replace('!', '', $trip_title);
+    $trip_title = str_replace('@', '', $trip_title);
+    $trip_title = str_replace('#', '', $trip_title);
+    $trip_title = str_replace('%', '', $trip_title);
+    $trip_title = str_replace('*', '', $trip_title);
+    $trip_title = str_replace('$', '', $trip_title);
+
+    $trip_title = strtolower($trip_title);
+    $trip_url_key = checkIfTripURLKeyUnique($trip_title);
+    return $trip_url_key;
+}
+
+function get_breadcrumbs($input_arr)
+{
+    $i = 1;
+    $str = '<div class="breadcrumbs">';
+    foreach ($input_arr as $url => $title)
+    {
+        if (count($input_arr) > $i)
+        {
+            $str.='<a href="' . $url . '">' . $title . '</a>';
+            $str.=' / ';
+        }
+        else
+        {
+            $str.='<span>' . $title . '</span>';
+        }
+        $i++;
+    }
+    $str.='</div>';
+    return $str;
+}
+
 function get_external_url($url)
 {
     $output = base_url('r?url=' . stripslashes($url));
     return $output;
+}
+
+function checkIfTripURLKeyUnique($trip_url_key)
+{
+    require_once APPPATH . '/models/common_model.php';
+    $model = new Common_model();
+    $is_exists = $model->is_exists('post_id', TABLE_POSTS, array('post_url_key' => $trip_url_key));
+    if (!empty($is_exists))
+    {
+        $new_trip_url_key = $trip_url_key . '-' . rand(10, 999);
+        $trip_url_key = checkIfTripURLKeyUnique($new_trip_url_key);
+    }
+
+    return $trip_url_key;
 }
 
 function getUniqueBlogURLKey($random_number = NULL, $string_lenth = 10)
@@ -88,6 +142,45 @@ function getMapMidpoint($lat1, $lng1, $lat2, $lng2)
         "latitude" => ($lat3 * 180) / $pi,
         "longitude" => ($lng3 * 180) / $pi
     );
+}
+
+function get_location_details_from_google($address)
+{
+    $url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' . urlencode($address);
+    $results = json_decode(file_get_contents($url), 1);
+//        die('<pre>' . print_r($results, true));
+    $parts = array(
+        'address' => array('street_number', 'route'),
+        'city' => array('locality'),
+        'state' => array('administrative_area_level_1'),
+        'country' => array('country'),
+        'zip' => array('postal_code'),
+    );
+    if (!empty($results['results'][0]['address_components']))
+    {
+        $ac = $results['results'][0]['address_components'];
+        foreach ($parts as $need => &$types)
+        {
+            foreach ($ac as &$a)
+            {
+                if (in_array($a['types'][0], $types))
+                {
+                    $address_out[$need] = $a['long_name'];
+                }
+                elseif (empty($address_out[$need]))
+                {
+                    $address_out[$need] = '';
+                }
+            }
+        }
+    }
+    else
+    {
+        echo 'empty results';
+    }
+
+//        prd($address_out);
+    return $address_out;
 }
 
 function getLatLonByIPAddress($ipaddress = USER_IP)

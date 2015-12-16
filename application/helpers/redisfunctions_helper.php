@@ -14,6 +14,86 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function set_travel_mediums()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('*', TABLE_TRAVEL_MEDIUMS, array('tm_status' => '1'), 'tm_title');
+        if (count($records) > 0)
+        {
+            $this->ci->redis->set('travel_mediums', json_encode($records));
+        }
+
+        return $records;
+    }
+
+    public function get_travel_mediums()
+    {
+        $output = array();
+        if ($this->ci->redis->exists('travel_mediums') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('travel_mediums'));
+        }
+        else
+        {
+            $this->set_travel_mediums();
+        }
+
+        return $output;
+    }
+
+    public function set_post_details($url_key)
+    {
+        $custom_model = new Custom_model();
+        $post_details = $custom_model->get_post_detail($url_key);
+        if (count($post_details) > 0)
+        {
+            $this->ci->redis->hSet('posts', $url_key, json_encode($post_details));
+        }
+
+        return $post_details;
+    }
+
+    public function get_post_details($url_key)
+    {
+        $output = array();
+        if ($this->ci->redis->hExists('posts', $url_key) == TRUE)
+        {
+            $output = json_decode($this->ci->redis->hGet('posts', $url_key));
+        }
+        else
+        {
+            $this->set_post_details($url_key);
+        }
+
+        return $output;
+    }
+
+    public function set_activity_master()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('*', TABLE_ACTIVITIES_MASTER);
+        if (count($records) > 0)
+        {
+            $this->ci->redis->set('activities_master', json_encode($records));
+        }
+
+        return $records;
+    }
+
+    public function get_activity_master()
+    {
+        $output = array();
+        if ($this->ci->redis->exists('activities_master') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('activities_master'));
+        }
+        else
+        {
+            $this->set_activity_master();
+        }
+        return $output;
+    }
+
     public function set_site_settings()
     {
         $model = new Common_model();
@@ -88,7 +168,7 @@ class Redisfunctions
         {
             $fields = 'user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
         }
-        
+
         $model = new Common_model();
         $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
         if (!empty($records))
