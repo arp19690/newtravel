@@ -30,11 +30,11 @@ $redis_functions = new Redisfunctions();
                                             <div class="booking-form">
                                                 <div class="booking-form-i">
                                                     <label>Origin:</label>
-                                                    <div class="input"><input type="text" name="post_source" required="required" placeholder="Enter your Origin" class="gMapLocation-cities"/></div>
+                                                    <div class="input"><input type="text" name="post_source[]" required="required" placeholder="Enter your Origin" class="gMapLocation-cities"/></div>
                                                 </div>
                                                 <div class="booking-form-i">
                                                     <label>Destination:</label>
-                                                    <div class="input"><input type="text" name="post_destination" required="required" placeholder="Enter your Destination" class="gMapLocation-cities"/></div>
+                                                    <div class="input"><input type="text" name="post_destination[]" required="required" placeholder="Enter your Destination" class="gMapLocation-cities"/></div>
                                                 </div>
                                                 <div class="clear"></div>
                                                 <div class="bookin-three-coll">
@@ -42,7 +42,7 @@ $redis_functions = new Redisfunctions();
                                                         <div class="form-calendar" style="float: none;">
                                                             <label>From:</label>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_from_dd">
+                                                                <select class="custom-select" required="required" name="date_from_dd[]">
                                                                     <option value="">dd</option>
                                                                     <?php
                                                                     for ($dd_i = 1; $dd_i <= 31; $dd_i++)
@@ -53,7 +53,7 @@ $redis_functions = new Redisfunctions();
                                                                 </select>
                                                             </div>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_from_mm">
+                                                                <select class="custom-select" required="required" name="date_from_mm[]">
                                                                     <option value="">mm</option>
                                                                     <?php
                                                                     for ($mm_i = 1; $mm_i <= 12; $mm_i++)
@@ -64,7 +64,7 @@ $redis_functions = new Redisfunctions();
                                                                 </select>
                                                             </div>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_from_yy">
+                                                                <select class="custom-select" required="required" name="date_from_yy[]">
                                                                     <option value="">year</option>
                                                                     <?php
                                                                     for ($yy_i = date('Y'); $yy_i <= (date('Y') + 10); $yy_i++)
@@ -81,7 +81,7 @@ $redis_functions = new Redisfunctions();
                                                         <div class="form-calendar" style="float: none;">
                                                             <label>To:</label>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_to_dd">
+                                                                <select class="custom-select" required="required" name="date_to_dd[]">
                                                                     <option value="">dd</option>
                                                                     <?php
                                                                     for ($dd_i = 1; $dd_i <= 31; $dd_i++)
@@ -92,7 +92,7 @@ $redis_functions = new Redisfunctions();
                                                                 </select>
                                                             </div>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_to_mm">
+                                                                <select class="custom-select" required="required" name="date_to_mm[]">
                                                                     <option value="">mm</option>
                                                                     <?php
                                                                     for ($mm_i = 1; $mm_i <= 12; $mm_i++)
@@ -103,7 +103,7 @@ $redis_functions = new Redisfunctions();
                                                                 </select>
                                                             </div>
                                                             <div class="form-calendar-a">
-                                                                <select class="custom-select" required="required" name="date_to_yy">
+                                                                <select class="custom-select" required="required" name="date_to_yy[]">
                                                                     <option value="">year</option>
                                                                     <?php
                                                                     for ($yy_i = date('Y'); $yy_i <= (date('Y') + 10); $yy_i++)
@@ -120,7 +120,7 @@ $redis_functions = new Redisfunctions();
                                                         <div class="form-calendar" style="float: none;">
                                                             <label>Travel via:</label>
                                                             <div class="form-calendar-b">
-                                                                <select class="custom-select" required="required" name="travel_medium">
+                                                                <select class="custom-select" required="required" name="travel_medium[]">
                                                                     <option value="">--</option>
                                                                     <?php
                                                                     $travel_mediums = $redis_functions->get_travel_mediums();
