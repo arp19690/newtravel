@@ -126,7 +126,7 @@ $redis_functions = new Redisfunctions();
                                                                     $travel_mediums = $redis_functions->get_travel_mediums();
                                                                     foreach ($travel_mediums as $key => $value)
                                                                     {
-                                                                        echo '<option value="' . $value->tm_id . '">' . $value->tm_title . '</option>';
+                                                                        echo '<option value="' . $value->tm_title . '">' . $value->tm_title . '</option>';
                                                                     }
                                                                     ?>
                                                                 </select>
