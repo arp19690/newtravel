@@ -3,7 +3,7 @@
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title">Tours - <span>booking</span></div>
+                <div class="page-title">Trips - <span>Post new</span></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
