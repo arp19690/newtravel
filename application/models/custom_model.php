@@ -35,8 +35,11 @@ class Custom_model extends CI_Model
             $post_travelers_records = $model->fetchSelectedData('*', TABLE_POST_TRAVELERS, array('pt_post_id' => $post_id));
             $output['post_travelers'] = $post_travelers_records;
 
-            $post_media_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id));
-            $output['post_media'] = $post_media_records;
+            $post_images_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'image', 'pm_status' => '1'));
+            $output['post_media']['images'] = $post_images_records;
+
+            $post_videos_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'video', 'pm_status' => '1'));
+            $output['post_media']['videos'] = $post_videos_records;
         }
         return $output;
     }
