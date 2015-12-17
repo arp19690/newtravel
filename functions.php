@@ -1,5 +1,17 @@
 <?php
 
+function isValidImageExt($ext)
+{
+    $valid_ext_Arr = array('jpg', 'jpeg', 'png', 'gif');
+    $returnValue = TRUE;
+    if (!in_array(strtolower($ext), $valid_ext_Arr))
+    {
+        $returnValue = FALSE;
+    }
+
+    return $returnValue;
+}
+
 function uploadImage($fileTmpname, $destFilePathAndName, $width, $height = NULL)
 {
     require_once APPPATH . '/libraries/SimpleImage.php';
