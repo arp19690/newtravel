@@ -41,6 +41,7 @@ $path = $controller . "/" . $action;
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css">
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css">
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css">  
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/style.css" />
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/custom.css" />
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -50,6 +51,7 @@ $path = $controller . "/" . $action;
         <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>	
         <link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
     <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
