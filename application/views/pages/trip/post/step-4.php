@@ -24,14 +24,14 @@ $redis_functions = new Redisfunctions();
                         <div class="sp-page-lb">
                             <div class="sp-page-p">
                                 <div class="booking-left">
-                                    <form method="POST" action="">
+                                    <form method="POST" action="" enctype="multipart/form-data">
                                         <h2>Budget Information</h2>
                                         <div class="region-info">
                                             <div class="booking-form">
                                                 <div class="bookin-three-coll">
                                                     <div class="booking-form-i">
                                                         <label>Title:</label>
-                                                        <div class="input"><input type="text" name="media_title[]" required="required" placeholder="Enter Title"/></div>
+                                                        <div class="input"><input type="text" name="media_title[]" placeholder="Enter Title"/></div>
                                                     </div>
                                                     <div class="booking-form-i">
                                                         <span class="post-image">

@@ -273,7 +273,54 @@ class Trip extends CI_Controller
         if ($this->input->post() && isset($user_id))
         {
             $arr = $this->input->post();
-            prd($arr);
+
+            if (!empty($arr['media_type']) && isset($arr['media_type']))
+            {
+                $this->removeAllPostMedia($url_key);
+                foreach ($arr['media_type'] as $key => $media_type)
+                {
+                    $media_filename = NULL;
+                    if ($media_type == 'image')
+                    {
+                        $file_tmpSource = $_FILES['media_image']['tmp_name'][$key];
+                        if (!empty($file_tmpSource) && isset($file_tmpSource))
+                        {
+                            $ext = getFileExtension($_FILES['media_image']['name'][$key]);
+                            if (isValidImageExt($ext))
+                            {
+                                $random_number = rand(1000, 9999999);
+                                $media_filename = str_replace('//', '/', $this->redis_functions->get_site_setting('POST_IMAGE_PATH') . $url_key . '-' . $random_number . '.' . $ext);
+
+                                if (uploadImage($file_tmpSource, $media_filename, $this->redis_functions->get_site_setting('POST_IMAGE_WIDTH'), $this->redis_functions->get_site_setting('POST_IMAGE_HEIGHT')))
+                                {
+                                    $new_filename = NULL;
+                                }
+                            }
+                        }
+                    }
+                    elseif ($media_type == 'video')
+                    {
+                        if (!empty($arr['media_video'][$key]))
+                        {
+                            $media_filename = $arr['media_video'][$key];
+                        }
+                    }
+
+                    // inserting data here
+                    if ($media_filename != NULL)
+                    {
+                        $data_array = array(
+                            'pm_post_id' => $post_id,
+                            'pm_media_type' => strtolower($media_type),
+                            'pm_media_url' => $media_filename,
+                            'pm_ipaddress' => USER_IP,
+                            'pm_useragent' => USER_AGENT,
+                            'pm_created_on' => date('Y-m-d H:i:s')
+                        );
+                        $model->insertData(TABLE_POST_MEDIA, $data_array);
+                    }
+                }
+            }
 
             // setting post details to redis
             $this->redis_functions->set_post_details($url_key);
@@ -300,6 +347,33 @@ class Trip extends CI_Controller
     public function review($url_key)
     {
         
+    }
+
+    public function removeAllPostMedia($url_key)
+    {
+        $model = new Common_model();
+        $post_records = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key));
+        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, array('pm_post_id' => $post_records[0]['post_id']));
+        if (!empty($post_media_records))
+        {
+            foreach ($post_media_records as $key => $value)
+            {
+                if ($value['media_type'] == 'image')
+                {
+                    $new_path = $this->redis_function->get_site_setting('POST_IMAGE_DELETED_PATH');
+                    $original_filename = explode('/', $value['pm_media_url']);
+                    $count_exploded = count($original_filename);
+                    $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
+                    copy($value['pm_media_url'], $new_filename);
+                    @unlink($value['pm_media_url']);
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename), array('pm_post_id' => $post_records[0]['post_id']));
+                }
+
+                // updating the status as deleted for both video and image here itself
+                $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+            }
+        }
+        return TRUE;
     }
 
 }
