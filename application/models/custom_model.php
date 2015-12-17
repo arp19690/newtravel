@@ -44,4 +44,22 @@ class Custom_model extends CI_Model
         return $output;
     }
 
+    public function verify_post_status($url_key)
+    {
+        $model = new Common_model();
+        $post_details = $this->get_post_detail($url_key);
+
+        if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
+        {
+            $post_published = 1;
+            if (empty($post_details['post_title']) || empty($post_details['post_url_key']) || empty($post_details['post_regions']) || empty($post_details['post_user_id']))
+            {
+                $post_published = 0;
+            }
+            $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
+            $this->redis_functions->set_post_details($url_key);
+        }
+        return TRUE;
+    }
+
 }

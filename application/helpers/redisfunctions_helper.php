@@ -44,6 +44,7 @@ class Redisfunctions
     public function set_post_details($url_key)
     {
         $custom_model = new Custom_model();
+        $custom_model->verify_post_status($url_key);
         $post_details = $custom_model->get_post_detail($url_key);
         if (count($post_details) > 0)
         {
