@@ -1,5 +1,27 @@
 <?php
 
+function get_currency_symbol($string)
+{
+    $output = '$';
+    $string = strtolower($string);
+    switch ($string)
+    {
+        case 'usd':
+            $output = '$';
+            break;
+        case 'eur':
+            $output = '€';
+            break;
+        case 'gbp':
+            $output = '£';
+            break;
+        case 'inr':
+            $output = '₹';
+            break;
+    }
+    return $output;
+}
+
 function display_404_page()
 {
     require_once APPPATH . 'controllers/index.php';
