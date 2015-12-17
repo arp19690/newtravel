@@ -280,6 +280,7 @@ class Trip extends CI_Controller
                 foreach ($arr['media_type'] as $key => $media_type)
                 {
                     $media_filename = NULL;
+                    $image_i = 0;
                     if ($media_type == 'image')
                     {
                         $file_tmpSource = $_FILES['media_image']['tmp_name'][$key];
@@ -297,6 +298,7 @@ class Trip extends CI_Controller
                                 }
                             }
                         }
+                        $image_i++;
                     }
                     elseif ($media_type == 'video')
                     {
@@ -311,6 +313,7 @@ class Trip extends CI_Controller
                     {
                         $data_array = array(
                             'pm_post_id' => $post_id,
+                            'pm_primary' => (($image_i == 1 && strtolower($media_type) == 'image') ? '1' : '0'),
                             'pm_media_type' => strtolower($media_type),
                             'pm_media_url' => $media_filename,
                             'pm_ipaddress' => USER_IP,
