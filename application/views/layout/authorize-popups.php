@@ -8,7 +8,7 @@
     </div>
     <section class="autorize-tab-content">
         <div class="autorize-padding">
-            <form action="<?php echo base_url('login'); ?>" method="POST">
+            <form action="<?php echo base_url('login?next=' . current_url()); ?>" method="POST">
                 <h6 class="autorize-lbl">Welcome! Login to Your Account</h6>
                 <input type="email" name="user_email" required="required" placeholder="Email"/>
                 <input type="password" name="user_password" required="required" placeholder="Password"/>
