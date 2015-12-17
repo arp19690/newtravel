@@ -52,10 +52,23 @@ class Custom_model extends CI_Model
         if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
         {
             $post_published = 1;
-            if (empty($post_details['post_title']) || empty($post_details['post_url_key']) || empty($post_details['post_regions']) || empty($post_details['post_user_id']))
+
+            $required_keys = array(
+                'post_title' => 'Please enter a title',
+                'post_url_key' => 'Please enter a title',
+                'post_regions' => 'Please enter your itinerary information',
+            );
+
+            foreach ($required_keys as $key => $error_message)
             {
-                $post_published = 0;
+                if (empty($key))
+                {
+                    $post_published = 0;
+                    $this->session->set_flashdata('warning', $error_message);
+                    break;
+                }
             }
+
             $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
             $this->redis_functions->set_post_details($url_key);
         }
