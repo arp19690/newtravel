@@ -346,7 +346,38 @@ class Trip extends CI_Controller
 
     public function review($url_key)
     {
-        
+        $model = new Common_model();
+        $user_id = $this->session->userdata["user_id"];
+        $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
+        if (!empty($is_valid))
+        {
+            $post_details = $this->redis_functions->get_post_details($url_key);
+            $post_title = stripslashes($post_details->post_title);
+            if (!empty($post_details))
+            {
+                $input_arr = array(
+                    base_url() => 'Home',
+                    base_url('trips') => 'Trips',
+                    '#' => 'Review - ' . $post_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["post_details"] = $post_details;
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $post_title;
+                $data['meta_title'] = 'Review - ' . $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $this->template->write_view("content", "pages/trip/post/review", $data);
+                $this->template->render();
+            }
+            else
+            {
+                display_404_page();
+            }
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
     public function removeAllPostMedia($url_key)
@@ -360,7 +391,7 @@ class Trip extends CI_Controller
             {
                 if ($value['media_type'] == 'image')
                 {
-                    $new_path = $this->redis_function->get_site_setting('POST_IMAGE_DELETED_PATH');
+                    $new_path = $this->redis_functions->get_site_setting('POST_IMAGE_DELETED_PATH');
                     $original_filename = explode('/', $value['pm_media_url']);
                     $count_exploded = count($original_filename);
                     $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
