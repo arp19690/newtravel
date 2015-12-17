@@ -1,5 +1,25 @@
 <?php
 
+function uploadImage($fileTmpname, $destFilePathAndName, $width, $height = NULL)
+{
+    require_once APPPATH . '/libraries/SimpleImage.php';
+    $img = new SimpleImage();
+    $img->load($fileTmpname);
+
+    if ($height == NULL || empty($height))
+    {
+        $img->resizeToWidth($width);
+    }
+    else
+    {
+        $img->resize($width, $height);
+    }
+
+    //save image
+    $path = $destFilePathAndName;
+    $img->save($path);
+}
+
 function get_trip_url_key($trip_title, $post_id = NULL)
 {
     $trip_title = str_replace(' ', '-', $trip_title);
