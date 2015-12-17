@@ -60,6 +60,27 @@ $path = $controller . "/" . $action;
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
     <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '<?php echo $redis_functions->get_site_setting('FACEBOOK_APP_ID'); ?>',
+                    xfbml: true,
+                    version: 'v2.5'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
         <?php
         if (!isset($this->session->userdata['user_id']))
         {
@@ -111,6 +132,6 @@ $path = $controller . "/" . $action;
                 </div>
             </div>
             <div class="header-b">
-                <?php $this->load->view('layout/navigation'); ?>
+<?php $this->load->view('layout/navigation'); ?>
             </div>	
         </header>
