@@ -61,6 +61,7 @@ $path = $controller . "/" . $action;
     </head>
     <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
         <script>
+            var js_base_url = '<?php echo base_url(); ?>';
             window.fbAsyncInit = function () {
                 FB.init({
                     appId: '<?php echo $redis_functions->get_site_setting('FACEBOOK_APP_ID'); ?>',
@@ -132,6 +133,6 @@ $path = $controller . "/" . $action;
                 </div>
             </div>
             <div class="header-b">
-<?php $this->load->view('layout/navigation'); ?>
+                <?php $this->load->view('layout/navigation'); ?>
             </div>	
         </header>
