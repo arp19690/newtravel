@@ -448,13 +448,18 @@ function getAddThis()
                     <!-- AddThis Button END -->';
 }
 
-function getAge($user_birthday, $format = "mm-dd-yyy")
+function getAge($user_birthday)
 {
-    $explodeBirth = explode("-", $user_birthday);
-    $countExplode = count($explodeBirth);
-    $birthYear = $explodeBirth[$countExplode - 1];
-    $current_year = date("Y", time());
-    return $current_year - $birthYear;
+    if (!empty($user_birthday))
+    {
+        $birthYear = date('Y', strtotime($user_birthday));
+        $current_year = date("Y", time());
+        return $current_year - $birthYear;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 function getPublicProfileUrl($username)
