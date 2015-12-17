@@ -26,7 +26,7 @@ $redis_functions = new Redisfunctions();
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
-                                            <span>Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</span>
+                                            <span>Let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
                                         </div>
                                     </div>
 
@@ -72,7 +72,7 @@ $redis_functions = new Redisfunctions();
                                             </div>
                                             <?php
                                         }
-                                        
+
                                         if (!empty($post_details->post_costs))
                                         {
                                             ?>
