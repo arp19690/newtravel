@@ -75,6 +75,8 @@ class Trip extends CI_Controller
             if ($url_key == NULL)
             {
                 $post_id = $model->insertData(TABLE_POSTS, $trip_data_array);
+                // adding self to the travelers list
+                $this->add_user_as_traveler_to_post($post_id, $user_id);
             }
             else
             {
@@ -407,6 +409,29 @@ class Trip extends CI_Controller
                 $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
             }
         }
+        return TRUE;
+    }
+
+    public function add_user_as_traveler_to_post($post_id, $user_id)
+    {
+        $model = new Common_model();
+        $fields = 'user_fullname, user_email, user_dob, user_gender, user_city, user_region, user_country, user_location, user_languages_known';
+        $user_record = $model->fetchSelectedData($fields, TABLE_USERS, array('user_id' => $user_id));
+        $data_array = array(
+            'pt_post_id' => $post_id,
+            'pt_traveler_name' => $user_record[0]['user_fullname'],
+            'pt_traveler_email' => $user_record[0]['user_email'],
+            'pt_traveler_age' => getAge($user_record[0]['user_dob']),
+            'pt_traveler_gender' => $user_record[0]['user_gender'],
+            'pt_traveler_user_id' => $user_id,
+            'pt_traveler_city' => $user_record[0]['user_city'],
+            'pt_traveler_region' => $user_record[0]['user_region'],
+            'pt_traveler_country' => $user_record[0]['user_country'],
+            'pt_traveler_location' => $user_record[0]['user_location'],
+            'pt_traveler_languages_known' => $user_record[0]['user_languages_known'],
+            'pt_added_by' => $user_id
+        );
+        $model->insertData(TABLE_POST_TRAVELERS, $data_array);
         return TRUE;
     }
 
