@@ -1,6 +1,45 @@
 <?php
 
-function get_trip_url_key($trip_title)
+function display_404_page()
+{
+    require_once APPPATH . 'controllers/index.php';
+    $index_controller = new Index();
+    $index_controller->pagenotfound();
+}
+
+function isValidImageExt($ext)
+{
+    $valid_ext_Arr = array('jpg', 'jpeg', 'png', 'gif');
+    $returnValue = TRUE;
+    if (!in_array(strtolower($ext), $valid_ext_Arr))
+    {
+        $returnValue = FALSE;
+    }
+
+    return $returnValue;
+}
+
+function uploadImage($fileTmpname, $destFilePathAndName, $width, $height = NULL)
+{
+    require_once APPPATH . '/libraries/SimpleImage.php';
+    $img = new SimpleImage();
+    $img->load($fileTmpname);
+
+    if ($height == NULL || empty($height))
+    {
+        $img->resizeToWidth($width);
+    }
+    else
+    {
+        $img->resize($width, $height);
+    }
+
+    //save image
+    $path = $destFilePathAndName;
+    $img->save($path);
+}
+
+function get_trip_url_key($trip_title, $post_id = NULL)
 {
     $trip_title = str_replace(' ', '-', $trip_title);
     $trip_title = str_replace('"', '', $trip_title);
@@ -15,7 +54,7 @@ function get_trip_url_key($trip_title)
     $trip_title = str_replace('$', '', $trip_title);
 
     $trip_title = strtolower($trip_title);
-    $trip_url_key = checkIfTripURLKeyUnique($trip_title);
+    $trip_url_key = checkIfTripURLKeyUnique($trip_title, $post_id);
     return $trip_url_key;
 }
 
@@ -46,11 +85,16 @@ function get_external_url($url)
     return $output;
 }
 
-function checkIfTripURLKeyUnique($trip_url_key)
+function checkIfTripURLKeyUnique($trip_url_key, $post_id = NULL)
 {
     require_once APPPATH . '/models/common_model.php';
     $model = new Common_model();
-    $is_exists = $model->is_exists('post_id', TABLE_POSTS, array('post_url_key' => $trip_url_key));
+    $whereCondArr = array('post_url_key' => $trip_url_key);
+    if ($post_id != NULL)
+    {
+        $whereCondArr['post_id !='] = $post_id;
+    }
+    $is_exists = $model->is_exists('post_id', TABLE_POSTS, $whereCondArr);
     if (!empty($is_exists))
     {
         $new_trip_url_key = $trip_url_key . '-' . rand(10, 999);

@@ -23,19 +23,25 @@ class Trip extends CI_Controller
         switch ($step)
         {
             case 1:
-                $this->add_new_step_one();
+                // meta info
+                $this->add_new_step_one($url_key);
                 break;
             case 2:
+                // regions
                 $this->add_new_step_two($url_key);
                 break;
             case 3:
-                prd('how are you man?');
+                // budgets
                 $this->add_new_step_three($url_key);
+                break;
+            case 4:
+                // media
+                $this->add_new_step_four($url_key);
                 break;
         }
     }
 
-    public function add_new_step_one()
+    public function add_new_step_one($url_key = NULL)
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
@@ -47,7 +53,14 @@ class Trip extends CI_Controller
 
             $trip_title = addslashes($arr['trip_title']);
             $trip_description = addslashes($arr['trip_description']);
-            $trip_url_key = get_trip_url_key($trip_title);
+
+            $post_id = NULL;
+            if ($url_key != NULL)
+            {
+                $post_records = (array) $this->redis_functions->get_post_details($url_key);
+                $post_id = $post_records['post_id'];
+            }
+            $trip_url_key = get_trip_url_key($trip_title, $post_id);
 
             $trip_data_array = array(
                 'post_user_id' => $user_id,
@@ -58,7 +71,15 @@ class Trip extends CI_Controller
                 'post_useragent' => USER_AGENT,
                 'post_url_key' => $trip_url_key
             );
-            $post_id = $model->insertData(TABLE_POSTS, $trip_data_array);
+
+            if ($url_key == NULL)
+            {
+                $post_id = $model->insertData(TABLE_POSTS, $trip_data_array);
+            }
+            else
+            {
+                $model->updateData(TABLE_POSTS, $trip_data_array, array('post_url_key' => $trip_url_key, 'post_id' => $post_id));
+            }
 
             if (!empty($arr['activities']))
             {
@@ -78,16 +99,27 @@ class Trip extends CI_Controller
         {
             $activity_master = $this->redis_functions->get_activity_master();
 
+            if ($url_key == NULL)
+            {
+                $page_title = 'Post new trip';
+            }
+            else
+            {
+                $post_records = (array) $this->redis_functions->get_post_details($url_key);
+                $page_title = $post_records['post_title'];
+                $data["post_records"] = $post_records;
+            }
+
             $input_arr = array(
                 base_url() => 'Home',
                 base_url('trips') => 'Trips',
-                '#' => 'Post new trip',
+                '#' => $page_title,
             );
             $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["activity_master"] = $activity_master;
             $data["breadcrumbs"] = $breadcrumbs;
-            $data["page_title"] = "Post new trip";
+            $data["page_title"] = $page_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/post/step-1", $data);
             $this->template->render();
@@ -109,6 +141,7 @@ class Trip extends CI_Controller
 
             if (isset($arr['post_source']) && !empty($arr['post_source']))
             {
+                $model->deleteData(TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
                 $i = 1;
                 foreach ($arr['post_source'] as $key => $source_value)
                 {
@@ -171,6 +204,207 @@ class Trip extends CI_Controller
             $this->template->write_view("content", "pages/trip/post/step-2", $data);
             $this->template->render();
         }
+    }
+
+    public function add_new_step_three($url_key)
+    {
+        $data = array();
+        $user_id = $this->session->userdata["user_id"];
+        $model = new Common_model();
+        $post_details = $this->redis_functions->get_post_details($url_key);
+        $post_title = stripslashes($post_details->post_title);
+        $post_id = $post_details->post_id;
+
+        if ($this->input->post() && isset($user_id))
+        {
+            $arr = $this->input->post();
+
+            if (isset($arr['cost_amount']) && !empty($arr['cost_amount']))
+            {
+                $model->deleteData(TABLE_POST_COSTS, array('cost_post_id' => $post_id));
+                foreach ($arr['cost_amount'] as $key => $amount)
+                {
+                    $post_cost = round($amount, 2);
+                    $post_title = addslashes($arr['cost_title'][$key]);
+                    $post_currency = addslashes($arr['cost_currency'][$key]);
+
+                    $data_array = array(
+                        'cost_post_id' => $post_id,
+                        'cost_title' => $post_title,
+                        'cost_title' => $post_title,
+                        'cost_amount' => $post_cost,
+                        'cost_currency' => $post_currency,
+                    );
+                    $model->insertData(TABLE_POST_COSTS, $data_array);
+                }
+            }
+
+            // setting post details to redis
+            $this->redis_functions->set_post_details($url_key);
+
+            redirect(base_url('trip/post/edit/4/' . $url_key));
+        }
+        else
+        {
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $post_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $post_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/post/step-3", $data);
+            $this->template->render();
+        }
+    }
+
+    public function add_new_step_four($url_key)
+    {
+        $data = array();
+        $user_id = $this->session->userdata["user_id"];
+        $model = new Common_model();
+        $post_details = $this->redis_functions->get_post_details($url_key);
+        $post_title = stripslashes($post_details->post_title);
+        $post_id = $post_details->post_id;
+
+        if ($this->input->post() && isset($user_id))
+        {
+            $arr = $this->input->post();
+
+            if (!empty($arr['media_type']) && isset($arr['media_type']))
+            {
+                $this->removeAllPostMedia($url_key);
+                foreach ($arr['media_type'] as $key => $media_type)
+                {
+                    $media_filename = NULL;
+                    if ($media_type == 'image')
+                    {
+                        $file_tmpSource = $_FILES['media_image']['tmp_name'][$key];
+                        if (!empty($file_tmpSource) && isset($file_tmpSource))
+                        {
+                            $ext = getFileExtension($_FILES['media_image']['name'][$key]);
+                            if (isValidImageExt($ext))
+                            {
+                                $random_number = rand(1000, 9999999);
+                                $media_filename = str_replace('//', '/', $this->redis_functions->get_site_setting('POST_IMAGE_PATH') . $url_key . '-' . $random_number . '.' . $ext);
+
+                                if (uploadImage($file_tmpSource, $media_filename, $this->redis_functions->get_site_setting('POST_IMAGE_WIDTH'), $this->redis_functions->get_site_setting('POST_IMAGE_HEIGHT')))
+                                {
+                                    $new_filename = NULL;
+                                }
+                            }
+                        }
+                    }
+                    elseif ($media_type == 'video')
+                    {
+                        if (!empty($arr['media_video'][$key]))
+                        {
+                            $media_filename = $arr['media_video'][$key];
+                        }
+                    }
+
+                    // inserting data here
+                    if ($media_filename != NULL)
+                    {
+                        $data_array = array(
+                            'pm_post_id' => $post_id,
+                            'pm_media_type' => strtolower($media_type),
+                            'pm_media_url' => $media_filename,
+                            'pm_ipaddress' => USER_IP,
+                            'pm_useragent' => USER_AGENT,
+                            'pm_created_on' => date('Y-m-d H:i:s')
+                        );
+                        $model->insertData(TABLE_POST_MEDIA, $data_array);
+                    }
+                }
+            }
+
+            // setting post details to redis
+            $this->redis_functions->set_post_details($url_key);
+
+            redirect(base_url('trip/review/' . $url_key));
+        }
+        else
+        {
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $post_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $post_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/post/step-4", $data);
+            $this->template->render();
+        }
+    }
+
+    public function review($url_key)
+    {
+        $model = new Common_model();
+        $user_id = $this->session->userdata["user_id"];
+        $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
+        if (!empty($is_valid))
+        {
+            $post_details = $this->redis_functions->get_post_details($url_key);
+            $post_title = stripslashes($post_details->post_title);
+            if (!empty($post_details))
+            {
+                $input_arr = array(
+                    base_url() => 'Home',
+                    base_url('trips') => 'Trips',
+                    '#' => 'Review - ' . $post_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["post_details"] = $post_details;
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $post_title;
+                $data['meta_title'] = 'Review - ' . $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $this->template->write_view("content", "pages/trip/post/review", $data);
+                $this->template->render();
+            }
+            else
+            {
+                display_404_page();
+            }
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
+    public function removeAllPostMedia($url_key)
+    {
+        $model = new Common_model();
+        $post_records = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key));
+        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, array('pm_post_id' => $post_records[0]['post_id']));
+        if (!empty($post_media_records))
+        {
+            foreach ($post_media_records as $key => $value)
+            {
+                if ($value['media_type'] == 'image')
+                {
+                    $new_path = $this->redis_functions->get_site_setting('POST_IMAGE_DELETED_PATH');
+                    $original_filename = explode('/', $value['pm_media_url']);
+                    $count_exploded = count($original_filename);
+                    $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
+                    copy($value['pm_media_url'], $new_filename);
+                    @unlink($value['pm_media_url']);
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename), array('pm_post_id' => $post_records[0]['post_id']));
+                }
+
+                // updating the status as deleted for both video and image here itself
+                $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+            }
+        }
+        return TRUE;
     }
 
 }

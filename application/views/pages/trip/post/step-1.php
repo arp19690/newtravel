@@ -1,9 +1,8 @@
-<link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css">  
 <div class="main-cont">
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title">Trips - <span>Post new</span></div>
+                <div class="page-title">Trip - <span><?php echo $page_title;?></span></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
