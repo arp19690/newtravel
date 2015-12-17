@@ -1,5 +1,12 @@
 <?php
 
+function display_404_page()
+{
+    require_once APPPATH . 'controllers/index.php';
+    $index_controller = new Index();
+    $index_controller->pagenotfound();
+}
+
 function isValidImageExt($ext)
 {
     $valid_ext_Arr = array('jpg', 'jpeg', 'png', 'gif');
