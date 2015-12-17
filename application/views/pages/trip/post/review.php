@@ -25,7 +25,7 @@ $redis_functions = new Redisfunctions();
 
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
-                                            <b>Thank You. Your Order is Confirmed.</b>
+                                            <b>Kindly review your post.</b>
                                             <span>Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</span>
                                         </div>
                                     </div>
@@ -34,7 +34,7 @@ $redis_functions = new Redisfunctions();
                                         <div class="complete-txt">
                                             <div class="clear">
                                                 <h2 class="pull-left"><?php echo $page_title; ?></h2>
-                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details->post_url_key); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit</a>
+                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details->post_url_key); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit Post</a>
                                             </div>
 
                                             <div class="clear">
@@ -72,13 +72,29 @@ $redis_functions = new Redisfunctions();
                                             </div>
                                             <?php
                                         }
+                                        
+                                        if (!empty($post_details->post_costs))
+                                        {
+                                            ?>
+                                            <h2>Your Budget Information:-</h2>
+                                            <div class="complete-info-table" style="width: 95%;margin: auto;">
+                                                <?php
+                                                foreach ($post_details->post_costs as $key => $value)
+                                                {
+                                                    ?>
+                                                    <div class="complete-info-i">
+                                                        <div class="complete-info-l"><?php echo get_currency_symbol($value->cost_currency) . $value->cost_amount; ?></div>
+                                                        <div class="complete-info-r"><?php echo stripslashes($value->cost_title); ?></div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="complete-devider"></div>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <?php
+                                        }
                                         ?>
-
-                                        <div class="complete-txt final">
-                                            <h2>Booking Details</h2>
-                                            <p>Qoluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. Que porro quisqua. Sed ut perspiciatis unde omnis ste natus error.</p>
-                                            <div class="complete-txt-link"><a href="#">Your Hotel Info</a></div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
