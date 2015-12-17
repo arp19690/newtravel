@@ -36,17 +36,18 @@ $path = $controller . "/" . $action;
         <title><?php echo $meta_title; ?></title>
         <meta name="keywords" content="<?php echo $meta_keywords; ?>" />
         <meta name="description" content="<?php echo $meta_description; ?>" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/> 
         <meta property="og:url" content="<?php echo current_url(); ?>" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="<?php echo $meta_title; ?>" />
         <meta property="og:description" content="<?php echo $meta_description; ?>" />
         <meta property="og:image" content="<?php echo $meta_logo_image; ?>" />
+        
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css">  
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css"/>  
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/style.css" />
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/custom.css" />
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
