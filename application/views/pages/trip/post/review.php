@@ -22,9 +22,8 @@ $redis_functions = new Redisfunctions();
                         <div class="sp-page-lb">
                             <div class="sp-page-p">
                                 <div class="booking-left">
-                                    <h2><?php echo $page_title; ?></h2>
 
-                                    <div class="comlete-alert">
+                                    <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Thank You. Your Order is Confirmed.</b>
                                             <span>Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</span>
@@ -32,49 +31,48 @@ $redis_functions = new Redisfunctions();
                                     </div>
 
                                     <div class="complete-info">
-                                        <h2>Your Personal Information</h2>
-                                        <div class="complete-info-table">
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">Number:</div>
-                                                <div class="complete-info-r">521-645-6</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">First Name:</div>
-                                                <div class="complete-info-r">Roman</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">Last Name:</div>
-                                                <div class="complete-info-r">Polyarush</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">E-Mail Adress:</div>
-                                                <div class="complete-info-r">weblionmedia@gmail.com</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">Country:</div>
-                                                <div class="complete-info-r">Austria</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="complete-info-i">
-                                                <div class="complete-info-l">Phone Number:</div>
-                                                <div class="complete-info-r">+8 256 254 25 625</div>
-                                                <div class="clear"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="complete-devider"></div>
-
                                         <div class="complete-txt">
-                                            <h2>Payment Info</h2>
-                                            <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. Que porro quisqua. Sed ut perspiciatis unde omnis ste natus error sit voluptatem.</p>
-                                            <div class="complete-txt-link"><a href="#">Payment is made by Via Paypal.</a></div>
+                                            <div class="clear">
+                                                <h2 class="pull-left"><?php echo $page_title; ?></h2>
+                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details->post_url_key); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit</a>
+                                            </div>
+
+                                            <div class="clear">
+                                                <p><?php echo stripslashes($post_details->post_description); ?></p>
+                                            </div>
                                         </div>
 
                                         <div class="complete-devider"></div>
+
+                                        <?php
+                                        if (!empty($post_details->post_regions))
+                                        {
+                                            ?>
+                                            <h2>Your Itinerary Information:-</h2>
+                                            <div class="complete-info-table" style="width: 95%;margin: auto;">
+                                                <?php
+                                                foreach ($post_details->post_regions as $key => $value)
+                                                {
+                                                    ?>
+                                                    <div class="complete-info-i">
+                                                        <div class="complete-info-l" style="width: 250px;">
+                                                            <p style="margin: 0;">From: <strong><?php echo stripslashes($value->pr_source_location); ?></strong></p>
+                                                            <p style="margin: 0 0 0 35px;">(23-12-2015)</p>
+                                                        </div>
+                                                        <div class="complete-info-r" style="display: inline-block;">
+                                                            <p style="margin: 0;">To: <strong><?php echo stripslashes($value->pr_destination_location); ?></strong></p>
+                                                            <p style="margin: 0 0 0 20px;">(23-12-2015)</p>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="complete-devider"></div>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
 
                                         <div class="complete-txt final">
                                             <h2>Booking Details</h2>
