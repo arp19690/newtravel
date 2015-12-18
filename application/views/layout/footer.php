@@ -23,11 +23,12 @@ $featured_trips = $redis_functions->get_featured_trips();
                         $trip_details = $redis_functions->get_trip_details($post_url_key);
                         $trip_title = stripslashes($trip_details->post_title);
                         $trip_description = getNWordsFromString(stripslashes($trip_details->post_description), 20);
+                        $trip_primary_image = getImage($trip_details->post_primary_image);
                         ?>
                         <div class="footer-tour">
                             <div class="footer-tour-l">
                                 <a href="<?php echo base_url('trip/view/' . $post_url_key); ?>">
-                                    <img alt="<?php echo $trip_title; ?>" src="<?php echo IMAGES_PATH; ?>" />
+                                    <img alt="<?php echo $trip_title; ?>" src="<?php echo $trip_primary_image; ?>" />
                                 </a>
                             </div>
                             <div class="footer-tour-r">
