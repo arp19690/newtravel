@@ -23,6 +23,7 @@ $redis_functions = new Redisfunctions();
                             <div class="sp-page-p">
                                 <div class="booking-left">
 
+                                    <h2>Post complete</h2>
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
