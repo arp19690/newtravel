@@ -105,6 +105,7 @@ $redis_functions = new Redisfunctions();
                 </div>
 
                 <div class="sp-page-r">
+                    <?php $this->load->view('pages/trip/post/featured-select-sidebar'); ?>
                     <?php $this->load->view('pages/trip/post-right-sidebar'); ?>
                 </div>
                 <div class="clear"></div>
