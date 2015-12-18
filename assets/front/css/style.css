@@ -81,7 +81,8 @@ input,select,button,textarea {outline:none;}
 .header-lang  a.langs-item.it {background:url(../img/it.gif) left top no-repeat;}
 .header-curency {float:right;position:relative;}
 .header-curency:hover a {color:#ff7200;}
-.curency-drop {position:absolute;left:0px;display:none;top:40px;border-top:4px solid #fff;z-index:999;font-family:'Raleway';font-weight:700;background:#fcf8f5;width:126px;padding:11px 10px 7px 14px;}
+/*.curency-drop {position:absolute;left:0px;display:none;top:40px;border-top:4px solid #fff;z-index:999;font-family:'Raleway';font-weight:700;background:#fcf8f5;width:126px;padding:11px 10px 7px 14px;}*/
+.curency-drop {position:absolute;right:0px;display:none;top:40px;border-top:4px solid #fff;z-index:999;font-family:'Raleway';font-weight:700;background:#fcf8f5;width:126px;padding:11px 10px 7px 14px;}
 .header-curency a {display:block;border-left:1px solid #333333;	padding:14px 14px 0px 14px;height:26px;color:#fff;font-size:11px;text-transform:uppercase;font-family:'Montserrat';font-weight:700;text-decoration:none;}
 .header-curency .curency-drop div {margin-bottom:8px;}
 .header-curency .curency-drop a {font-size:11px;color:#697374;margin:0px;padding:0px;height:auto;display:inline;text-transform:uppercase;border:0px;}

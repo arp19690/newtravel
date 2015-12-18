@@ -1,5 +1,27 @@
 <?php
 
+function get_currency_symbol($string)
+{
+    $output = '$';
+    $string = strtolower($string);
+    switch ($string)
+    {
+        case 'usd':
+            $output = '$';
+            break;
+        case 'eur':
+            $output = '€';
+            break;
+        case 'gbp':
+            $output = '£';
+            break;
+        case 'inr':
+            $output = '₹';
+            break;
+    }
+    return $output;
+}
+
 function display_404_page()
 {
     require_once APPPATH . 'controllers/index.php';
@@ -426,13 +448,18 @@ function getAddThis()
                     <!-- AddThis Button END -->';
 }
 
-function getAge($user_birthday, $format = "mm-dd-yyy")
+function getAge($user_birthday)
 {
-    $explodeBirth = explode("-", $user_birthday);
-    $countExplode = count($explodeBirth);
-    $birthYear = $explodeBirth[$countExplode - 1];
-    $current_year = date("Y", time());
-    return $current_year - $birthYear;
+    if (!empty($user_birthday))
+    {
+        $birthYear = date('Y', strtotime($user_birthday));
+        $current_year = date("Y", time());
+        return $current_year - $birthYear;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 function getPublicProfileUrl($username)

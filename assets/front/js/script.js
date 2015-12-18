@@ -47,7 +47,7 @@ $(document).ready(function () {
         $('.header-b').addClass('fixed');
         $('.header-logo').css('margin-top', '10px')
         $('.header-right').css('margin-top', '21px');
-        $('.header-logo').find('img').attr('src', 'assets/front/img/logo-a.png');
+        $('.header-logo').find('img').attr('src', js_base_url + 'assets/front/img/logo-a.png');
 
     }
     $headerUp = function () {
@@ -56,7 +56,7 @@ $(document).ready(function () {
         $('.header-b').css('height', '89px');
         $('.header-logo').css('margin-top', '26px');
         $('.header-right').css('margin-top', '37px');
-        $('.header-logo').find('img').attr('src', 'assets/front/img/logo.png');
+        $('.header-logo').find('img').attr('src', js_base_url + 'assets/front/img/logo.png');
     }
 
     $(window).scroll(function () {
@@ -270,7 +270,7 @@ $(document).ready(function () {
                 google.maps.event.addListenerOnce(map, 'idle', function () {
 
                     var place = new google.maps.LatLng(52.569334, 13.380216);
-                    var image = new google.maps.MarkerImage('assets/front/img/map.png',
+                    var image = new google.maps.MarkerImage(js_base_url + 'assets/front/img/map.png',
                             new google.maps.Size(19, 29),
                             new google.maps.Point(0, 0),
                             new google.maps.Point(0, 32));

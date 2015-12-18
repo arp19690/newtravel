@@ -7,6 +7,15 @@ function getClientLocalTime()
     return hours + "." + minutes;
 }
 
+function fb_share_dialog(url)
+{
+    FB.ui({
+        method: 'share',
+        href: url,
+    }, function (response) {
+    });
+}
+
 $(document).ready(function () {
     $('.date-inpt').datepicker();
     $('.custom-select').customSelect();

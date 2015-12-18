@@ -36,25 +36,47 @@ $path = $controller . "/" . $action;
         <title><?php echo $meta_title; ?></title>
         <meta name="keywords" content="<?php echo $meta_keywords; ?>" />
         <meta name="description" content="<?php echo $meta_description; ?>" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/> 
+        <meta property="og:url" content="<?php echo current_url(); ?>" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="<?php echo $meta_title; ?>" />
+        <meta property="og:description" content="<?php echo $meta_description; ?>" />
+        <meta property="og:image" content="<?php echo $meta_logo_image; ?>" />
+
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css">
-        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css">  
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/idangerous.swiper.css"/>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery.formstyler.css"/>  
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/style.css" />
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/custom.css" />
-        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,600,700,800' rel='stylesheet' type='text/css'>
-        <!--<link href='http://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>-->
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>	
-        <link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/fonts.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
     <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
+        <script>
+            var js_base_url = '<?php echo base_url(); ?>';
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '<?php echo $redis_functions->get_site_setting('FACEBOOK_APP_ID'); ?>',
+                    xfbml: true,
+                    version: 'v2.5'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
         <?php
         if (!isset($this->session->userdata['user_id']))
         {
@@ -81,19 +103,23 @@ $path = $controller . "/" . $action;
                             <span style="background: none;padding: 0;">&nbsp;&nbsp;Good morning <?php echo $addressee_name; ?>, let's go running?</span>
                         </div>
                     </div>
-                    <div class="header-account">
+                    <div class="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'header-curency' : 'header-account'; ?>">
                         <?php
                         if (isset($this->session->userdata['user_id']))
                         {
                             ?>
-                            <a href="<?php echo base_url('logout'); ?>" onclick="event.preventDefault();
-                                    window.location.href = $(this).attr('href');">Logout</a>
-                               <?php
-                           }
-                           else
-                           {
-                               ?>
-                            <a href="<?php echo base_url('my-account'); ?>">Login / Register</a>
+                            <a href="<?php echo base_url('my-account'); ?>" onclick="event.preventDefault();
+                                    window.location.href = $(this).attr('href');">My Account</a>
+                            <div class="curency-drop">
+                                <div><a href="<?php echo base_url('my-trips'); ?>">My Trips</a></div>
+                                <div><a href="<?php echo base_url('logout'); ?>">Logout</a></div>
+                            </div>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <a href="<?php echo base_url('login'); ?>">Login / Register</a>
                             <?php
                         }
                         ?>
