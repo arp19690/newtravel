@@ -1,5 +1,6 @@
 <?php
 $redis_functions = new Redisfunctions();
+$featured_trips = $redis_functions->get_featured_trips();
 ?>
 <footer class="footer-a">
     <div class="wrapper-padding">
@@ -11,41 +12,35 @@ $redis_functions = new Redisfunctions();
             <div class="footer-skype">Skype: angelotours</div>
         </div>
         <div class="section">
-            <div class="footer-lbl">Featured deals</div>
+            <div class="footer-lbl">Featured trips</div>
             <div class="footer-tours">
                 <!-- // -->
-                <div class="footer-tour">
-                    <div class="footer-tour-l"><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/f-tour-01.jpg" /></a></div>
-                    <div class="footer-tour-r">
-                        <div class="footer-tour-a">amsterdam tour</div>
-                        <div class="footer-tour-b">location: netherlands</div>
-                        <div class="footer-tour-c">800$</div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="footer-tour">
-                    <div class="footer-tour-l"><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/f-tour-02.jpg" /></a></div>
-                    <div class="footer-tour-r">
-                        <div class="footer-tour-a">Kiev tour</div>
-                        <div class="footer-tour-b">location: ukraine</div>
-                        <div class="footer-tour-c">550$</div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->			
-                <!-- // -->
-                <div class="footer-tour">
-                    <div class="footer-tour-l"><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/f-tour-03.jpg" /></a></div>
-                    <div class="footer-tour-r">
-                        <div class="footer-tour-a">vienna tour</div>
-                        <div class="footer-tour-b">location: austria</div>
-                        <div class="footer-tour-c">940$</div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
+                <?php
+                if (!empty($featured_trips))
+                {
+                    foreach ($featured_trips as $post_url_key)
+                    {
+                        $trip_details = $redis_functions->get_trip_details($post_url_key);
+                        $trip_title = stripslashes($trip_details->post_title);
+                        $trip_description = getNWordsFromString(stripslashes($trip_details->post_description), 20);
+                        ?>
+                        <div class="footer-tour">
+                            <div class="footer-tour-l">
+                                <a href="<?php echo base_url('trip/view/' . $post_url_key); ?>">
+                                    <img alt="<?php echo $trip_title; ?>" src="<?php echo IMAGES_PATH; ?>" />
+                                </a>
+                            </div>
+                            <div class="footer-tour-r">
+                                <div class="footer-tour-a"><?php echo $trip_title; ?></div>
+                                <div class="footer-tour-b"><?php echo $trip_description; ?></div>
+                                <div class="footer-tour-c">800$</div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
         <div class="section">

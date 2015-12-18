@@ -351,7 +351,6 @@ class Trip extends CI_Controller
 
     public function review($url_key)
     {
-        $this->redis_functions->set_featured_trips();
         $model = new Common_model();
         $user_id = $this->session->userdata["user_id"];
         $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));

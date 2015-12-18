@@ -16,38 +16,31 @@ class Redisfunctions
 
     public function set_featured_trips()
     {
+        $key_array = array();
         $custom_model = new Custom_model();
         $records = $custom_model->get_featured_trips('p.post_url_key');
         if (count($records) > 0)
         {
-            $this->ci->redis->del('featured_trips');
             foreach ($records as $value)
             {
-                $this->ci->redis->hSet('featured_trips', $value['post_url_key'], json_encode($value));
+                $key_array[] = $value['post_url_key'];
             }
+            $this->ci->redis->set('featured_trips', json_encode($key_array));
         }
 
-        return $records;
+        return $key_array;
     }
 
     public function get_featured_trips()
     {
-        $output = $this->ci->redis->hgetall('featured_trips');
+        $output = json_decode($this->ci->redis->get('featured_trips'));
         return $output;
     }
 
     public function is_featured_trip($url_key)
     {
-        $output = array();
-        if ($this->ci->redis->hExists('featured_trips', $url_key) == TRUE)
-        {
-            $output = json_decode($this->ci->redis->hGet('featured_trips', $url_key));
-        }
-        else
-        {
-            $this->set_featured_trips();
-        }
-
+        $featured_trips = (array) $this->get_featured_trips();
+        $output = in_array($url_key, $featured_trips);
         return $output;
     }
 
@@ -229,6 +222,14 @@ class Redisfunctions
             $output = $this->get_user_profile_data($username);
         }
         return $output;
+    }
+
+    public function delete_all_hash_keys($hash_name, $hash_keys)
+    {
+        foreach ($hash_keys as $key_name)
+        {
+            $this->ci->redis->hDel($hash_name, $key_name);
+        }
     }
 
 }
