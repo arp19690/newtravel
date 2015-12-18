@@ -41,29 +41,29 @@ class Redisfunctions
         return $output;
     }
 
-    public function set_post_details($url_key)
+    public function set_trip_details($url_key)
     {
         $custom_model = new Custom_model();
-        $custom_model->verify_post_status($url_key);
-        $post_details = $custom_model->get_post_detail($url_key);
-        if (count($post_details) > 0)
+        $custom_model->verify_trip_status($url_key);
+        $trip_details = $custom_model->get_trip_detail($url_key);
+        if (count($trip_details) > 0)
         {
-            $this->ci->redis->hSet('posts', $url_key, json_encode($post_details));
+            $this->ci->redis->hSet('trips', $url_key, json_encode($trip_details));
         }
 
-        return $post_details;
+        return $trip_details;
     }
 
-    public function get_post_details($url_key)
+    public function get_trip_details($url_key)
     {
         $output = array();
-        if ($this->ci->redis->hExists('posts', $url_key) == TRUE)
+        if ($this->ci->redis->hExists('trips', $url_key) == TRUE)
         {
-            $output = json_decode($this->ci->redis->hGet('posts', $url_key));
+            $output = json_decode($this->ci->redis->hGet('trips', $url_key));
         }
         else
         {
-            $this->set_post_details($url_key);
+            $this->set_trip_details($url_key);
         }
 
         return $output;

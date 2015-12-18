@@ -10,7 +10,7 @@ class Custom_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_post_detail($url_key)
+    public function get_trip_detail($url_key)
     {
         $output = array();
         $model = new Common_model();
@@ -47,10 +47,10 @@ class Custom_model extends CI_Model
         return $output;
     }
 
-    public function verify_post_status($url_key)
+    public function verify_trip_status($url_key)
     {
         $model = new Common_model();
-        $post_details = $this->get_post_detail($url_key);
+        $post_details = $this->get_trip_detail($url_key);
 
         if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
         {
