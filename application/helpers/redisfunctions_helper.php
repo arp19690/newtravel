@@ -30,6 +30,21 @@ class Redisfunctions
         return $records;
     }
 
+    public function is_featured_trip($url_key)
+    {
+        $output = array();
+        if ($this->ci->redis->hExists('featured_trips', $url_key) == TRUE)
+        {
+            $output = json_decode($this->ci->redis->hGet('featured_trips', $url_key));
+        }
+        else
+        {
+            $this->set_featured_trips();
+        }
+
+        return $output;
+    }
+
     public function set_travel_mediums()
     {
         $model = new Common_model();
