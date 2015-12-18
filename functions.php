@@ -8,7 +8,7 @@ function getImage($image_path_filename)
     }
     else
     {
-        $output = NO_PRODUCT_IMG_PATH;
+        $output = NO_IMAGE_PATH;
     }
     return $output;
 }
