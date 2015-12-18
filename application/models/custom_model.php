@@ -23,7 +23,7 @@ class Custom_model extends CI_Model
             $post_activities_records = $model->fetchSelectedData('*', TABLE_POST_ACTIVITIES, array('pa_post_id' => $post_id));
             $output['post_activities'] = $post_activities_records;
 
-            $post_featured_records = $model->fetchSelectedData('*', TABLE_POST_FEATURED, array('pf_post_id' => $post_id, 'pf_status' => '1', 'pf_end_time' > date('Y-m-d H:i:s')));
+            $post_featured_records = $model->fetchSelectedData('*', TABLE_POST_FEATURED, array('pf_post_id' => $post_id, 'pf_status' => '1', 'pf_end_date >' => date('Y-m-d H:i:s')));
             $output['post_featured'] = $post_featured_records;
 
             $post_regions_records = $model->fetchSelectedData('*', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
