@@ -40,6 +40,18 @@ class Custom_model extends CI_Model
 
             $post_images_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'image', 'pm_status' => '1'));
             $output['post_media']['images'] = $post_images_records;
+            $output['post_primary_image'] = NULL;
+            if (!empty($post_images_records))
+            {
+                foreach ($post_images_records as $value)
+                {
+                    if ($value['pm_primary'] == '1')
+                    {
+                        $output['post_primary_image'] = $value['pm_media_url'];
+                        break;
+                    }
+                }
+            }
 
             $post_videos_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'video', 'pm_status' => '1'));
             $output['post_media']['videos'] = $post_videos_records;
@@ -51,6 +63,7 @@ class Custom_model extends CI_Model
     {
         $model = new Common_model();
         $post_details = $this->get_trip_detail($url_key);
+        prd($post_details);
         if (!empty($post_details))
         {
             if (isset($this->session->userdata["user_id"]) && $post_details->post_user_id == @$this->session->userdata["user_id"])
