@@ -51,28 +51,30 @@ class Custom_model extends CI_Model
     {
         $model = new Common_model();
         $post_details = $this->get_trip_detail($url_key);
-
-        if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
+        if (!empty($post_details))
         {
-            $post_published = 1;
-
-            $required_keys = array(
-                'post_title' => 'Please enter a title',
-                'post_url_key' => 'Please enter a title',
-                'post_regions' => 'Please enter your itinerary information',
-            );
-
-            foreach ($required_keys as $key => $error_message)
+            if (isset($this->session->userdata["user_id"]) && $post_details->post_user_id == @$this->session->userdata["user_id"])
             {
-                if (empty($key))
-                {
-                    $post_published = 0;
-                    $this->session->set_flashdata('warning', $error_message);
-                    break;
-                }
-            }
+                $post_published = 1;
 
-            $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
+                $required_keys = array(
+                    'post_title' => 'Please enter a title',
+                    'post_url_key' => 'Please enter a title',
+                    'post_regions' => 'Please enter your itinerary information',
+                );
+
+                foreach ($required_keys as $key => $error_message)
+                {
+                    if (empty($key))
+                    {
+                        $post_published = 0;
+                        $this->session->set_flashdata('warning', $error_message);
+                        break;
+                    }
+                }
+
+                $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
+            }
         }
         return TRUE;
     }
