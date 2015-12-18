@@ -1,5 +1,18 @@
 <?php
 
+function getImage($image_path_filename)
+{
+    if (is_file($image_path_filename))
+    {
+        $output = base_url($image_path_filename);
+    }
+    else
+    {
+        $output = NO_PRODUCT_IMG_PATH;
+    }
+    return $output;
+}
+
 function get_currency_symbol($string)
 {
     $output = '$';
