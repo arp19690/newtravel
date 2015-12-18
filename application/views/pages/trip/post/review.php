@@ -6,7 +6,7 @@ $redis_functions = new Redisfunctions();
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title"><span>Review</span></div>
+                <div class="page-title"><span>Review your trip</span></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
@@ -23,7 +23,7 @@ $redis_functions = new Redisfunctions();
                             <div class="sp-page-p">
                                 <div class="booking-left">
 
-                                    <h2>Post complete</h2>
+                                    <h2>Successfully posted</h2>
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
