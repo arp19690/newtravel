@@ -14,6 +14,15 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function auto_set_redis_keys()
+    {
+        $this->set_featured_trips();
+        $this->set_site_settings();
+        $this->set_activity_master();
+        $this->set_static_page_content();
+        $this->set_travel_mediums();
+    }
+
     public function set_featured_trips()
     {
         $key_array = array();
