@@ -42,7 +42,7 @@ $path = $controller . "/" . $action;
         <meta property="og:title" content="<?php echo $meta_title; ?>" />
         <meta property="og:description" content="<?php echo $meta_description; ?>" />
         <meta property="og:image" content="<?php echo $meta_logo_image; ?>" />
-        
+
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css"/>
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/owl.carousel.css"/>
@@ -103,19 +103,23 @@ $path = $controller . "/" . $action;
                             <span style="background: none;padding: 0;">&nbsp;&nbsp;Good morning <?php echo $addressee_name; ?>, let's go running?</span>
                         </div>
                     </div>
-                    <div class="header-account">
+                    <div class="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'header-curency' : 'header-account'; ?>">
                         <?php
                         if (isset($this->session->userdata['user_id']))
                         {
                             ?>
-                            <a href="<?php echo base_url('logout'); ?>" onclick="event.preventDefault();
-                                    window.location.href = $(this).attr('href');">Logout</a>
-                               <?php
-                           }
-                           else
-                           {
-                               ?>
-                            <a href="<?php echo base_url('my-account'); ?>">Login / Register</a>
+                            <a href="<?php echo base_url('my-account'); ?>" onclick="event.preventDefault();
+                                    window.location.href = $(this).attr('href');">My Account</a>
+                            <div class="curency-drop">
+                                <div><a href="<?php echo base_url('my-posts'); ?>">My Posts</a></div>
+                                <div><a href="<?php echo base_url('logout'); ?>">Logout</a></div>
+                            </div>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <a href="<?php echo base_url('login'); ?>">Login / Register</a>
                             <?php
                         }
                         ?>
