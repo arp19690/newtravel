@@ -14,6 +14,22 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function set_featured_trips()
+    {
+        $custom_model = new Custom_model();
+        $records = $custom_model->get_featured_trips('p.post_url_key');
+        if (count($records) > 0)
+        {
+            $this->ci->redis->del('featured_trips');
+            foreach ($records as $value)
+            {
+                $this->ci->redis->hSet('featured_trips', $value['post_url_key'], json_encode($value));
+            }
+        }
+
+        return $records;
+    }
+
     public function set_travel_mediums()
     {
         $model = new Common_model();

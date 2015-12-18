@@ -77,4 +77,11 @@ class Custom_model extends CI_Model
         return TRUE;
     }
 
+    public function get_featured_trips($fields = 'p.post_url_key')
+    {
+        $sql = "SELECT " . $fields . " FROM `post_featured` as pf LEFT JOIN posts as p ON p.post_id = pf.pf_post_id LEFT JOIN post_featured_master as pfm on pfm.pfm_id = pf.pf_pfm_id WHERE p.post_status = '1' and p.post_published = '1' and pf.pf_status = '1' and pfm.pfm_status = '1' and pf_end_date > '" . date('Y-m-d H:i:s') . "' ORDER BY pfm.pfm_amount";
+        $records = $this->db->query($sql)->result_array();
+        return $records;
+    }
+
 }
