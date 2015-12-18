@@ -111,7 +111,7 @@ $path = $controller . "/" . $action;
                             <a href="<?php echo base_url('my-account'); ?>" onclick="event.preventDefault();
                                     window.location.href = $(this).attr('href');">My Account</a>
                             <div class="curency-drop">
-                                <div><a href="<?php echo base_url('my-posts'); ?>">My Posts</a></div>
+                                <div><a href="<?php echo base_url('my-trips'); ?>">My Trips</a></div>
                                 <div><a href="<?php echo base_url('logout'); ?>">Logout</a></div>
                             </div>
                             <?php
