@@ -30,6 +30,12 @@ class Redisfunctions
         return $records;
     }
 
+    public function get_featured_trips()
+    {
+        $output = $this->ci->redis->hgetall('featured_trips');
+        return $output;
+    }
+
     public function is_featured_trip($url_key)
     {
         $output = array();
