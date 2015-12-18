@@ -10,7 +10,7 @@ class Custom_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_post_detail($url_key)
+    public function get_trip_detail($url_key)
     {
         $output = array();
         $model = new Common_model();
@@ -40,6 +40,18 @@ class Custom_model extends CI_Model
 
             $post_images_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'image', 'pm_status' => '1'));
             $output['post_media']['images'] = $post_images_records;
+            $output['post_primary_image'] = NULL;
+            if (!empty($post_images_records))
+            {
+                foreach ($post_images_records as $value)
+                {
+                    if ($value['pm_primary'] == '1')
+                    {
+                        $output['post_primary_image'] = $value['pm_media_url'];
+                        break;
+                    }
+                }
+            }
 
             $post_videos_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'video', 'pm_status' => '1'));
             $output['post_media']['videos'] = $post_videos_records;
@@ -47,34 +59,43 @@ class Custom_model extends CI_Model
         return $output;
     }
 
-    public function verify_post_status($url_key)
+    public function verify_trip_status($url_key)
     {
         $model = new Common_model();
-        $post_details = $this->get_post_detail($url_key);
-
-        if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
+        $post_details = $this->get_trip_detail($url_key);
+        if (!empty($post_details))
         {
-            $post_published = 1;
-
-            $required_keys = array(
-                'post_title' => 'Please enter a title',
-                'post_url_key' => 'Please enter a title',
-                'post_regions' => 'Please enter your itinerary information',
-            );
-
-            foreach ($required_keys as $key => $error_message)
+            if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
             {
-                if (empty($key))
-                {
-                    $post_published = 0;
-                    $this->session->set_flashdata('warning', $error_message);
-                    break;
-                }
-            }
+                $post_published = 1;
 
-            $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
+                $required_keys = array(
+                    'post_title' => 'Please enter a title',
+                    'post_url_key' => 'Please enter a title',
+                    'post_regions' => 'Please enter your itinerary information',
+                );
+
+                foreach ($required_keys as $key => $error_message)
+                {
+                    if (empty($key))
+                    {
+                        $post_published = 0;
+                        $this->session->set_flashdata('warning', $error_message);
+                        break;
+                    }
+                }
+
+                $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
+            }
         }
         return TRUE;
+    }
+
+    public function get_featured_trips($fields = 'p.post_url_key')
+    {
+        $sql = "SELECT " . $fields . " FROM `post_featured` as pf LEFT JOIN posts as p ON p.post_id = pf.pf_post_id LEFT JOIN post_featured_master as pfm on pfm.pfm_id = pf.pf_pfm_id WHERE p.post_status = '1' and p.post_published = '1' and pf.pf_status = '1' and pfm.pfm_status = '1' and pf_end_date > '" . date('Y-m-d H:i:s') . "' ORDER BY pfm.pfm_amount";
+        $records = $this->db->query($sql)->result_array();
+        return $records;
     }
 
 }

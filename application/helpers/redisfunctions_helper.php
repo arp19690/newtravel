@@ -14,6 +14,45 @@ class Redisfunctions
         $this->ci->redis = new CI_Redis();
     }
 
+    public function auto_set_redis_keys()
+    {
+        $this->set_featured_trips();
+        $this->set_site_settings();
+        $this->set_activity_master();
+        $this->set_static_page_content();
+        $this->set_travel_mediums();
+    }
+
+    public function set_featured_trips()
+    {
+        $key_array = array();
+        $custom_model = new Custom_model();
+        $records = $custom_model->get_featured_trips('p.post_url_key');
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $key_array[] = $value['post_url_key'];
+            }
+            $this->ci->redis->set('featured_trips', json_encode($key_array));
+        }
+
+        return $key_array;
+    }
+
+    public function get_featured_trips()
+    {
+        $output = json_decode($this->ci->redis->get('featured_trips'));
+        return $output;
+    }
+
+    public function is_featured_trip($url_key)
+    {
+        $featured_trips = (array) $this->get_featured_trips();
+        $output = in_array($url_key, $featured_trips);
+        return $output;
+    }
+
     public function set_travel_mediums()
     {
         $model = new Common_model();
@@ -41,29 +80,29 @@ class Redisfunctions
         return $output;
     }
 
-    public function set_post_details($url_key)
+    public function set_trip_details($url_key)
     {
         $custom_model = new Custom_model();
-        $custom_model->verify_post_status($url_key);
-        $post_details = $custom_model->get_post_detail($url_key);
-        if (count($post_details) > 0)
+        $custom_model->verify_trip_status($url_key);
+        $trip_details = $custom_model->get_trip_detail($url_key);
+        if (count($trip_details) > 0)
         {
-            $this->ci->redis->hSet('posts', $url_key, json_encode($post_details));
+            $this->ci->redis->hSet('trips', $url_key, json_encode($trip_details));
         }
 
-        return $post_details;
+        return $trip_details;
     }
 
-    public function get_post_details($url_key)
+    public function get_trip_details($url_key)
     {
         $output = array();
-        if ($this->ci->redis->hExists('posts', $url_key) == TRUE)
+        if ($this->ci->redis->hExists('trips', $url_key) == TRUE)
         {
-            $output = json_decode($this->ci->redis->hGet('posts', $url_key));
+            $output = json_decode($this->ci->redis->hGet('trips', $url_key));
         }
         else
         {
-            $this->set_post_details($url_key);
+            $this->set_trip_details($url_key);
         }
 
         return $output;
@@ -192,6 +231,14 @@ class Redisfunctions
             $output = $this->get_user_profile_data($username);
         }
         return $output;
+    }
+
+    public function delete_all_hash_keys($hash_name, $hash_keys)
+    {
+        foreach ($hash_keys as $key_name)
+        {
+            $this->ci->redis->hDel($hash_name, $key_name);
+        }
     }
 
 }

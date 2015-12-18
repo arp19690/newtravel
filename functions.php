@@ -1,5 +1,14 @@
 <?php
 
+function getImage($image_path_filename)
+{
+    if (!is_file($image_path_filename))
+    {
+        $image_path_filename = NO_IMAGE_PATH;
+    }
+    return $image_path_filename;
+}
+
 function get_currency_symbol($string)
 {
     $output = '$';
