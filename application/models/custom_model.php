@@ -70,7 +70,6 @@ class Custom_model extends CI_Model
             }
 
             $model->updateData(TABLE_POSTS, array('post_published' => $post_published), array('post_url_key' => $url_key));
-            $this->redis_functions->set_post_details($url_key);
         }
         return TRUE;
     }
