@@ -89,7 +89,7 @@ input,select,button,textarea {outline:none;}
 .header-b {height:89px;width:100%;background:#fff;-webkit-box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);-moz-box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);}
 .header-logo {float:left;margin:26px 0px 0px 0px;}
 .header-logo img {width:188px;}
-.fixed .header-logo img {width:39px;}
+/*.fixed .header-logo img {width:39px;}*/
 .header-right {float:right; margin-top:37px;}
 .header-nav {float:right;}
 .header-nav ul,.header-nav ul li {margin:0px;padding:0px;list-style:none;}
