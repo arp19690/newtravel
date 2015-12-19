@@ -352,27 +352,34 @@ class Trip extends CI_Controller
     public function review($url_key)
     {
         $model = new Common_model();
-        $user_id = $this->session->userdata["user_id"];
-        $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
-        if (!empty($is_valid))
+        if (isset($this->session->userdata["user_id"]))
         {
-            $trip_details = $this->redis_functions->get_trip_details($url_key);
-            $post_title = stripslashes($trip_details->post_title);
-            if (!empty($trip_details))
+            $user_id = $this->session->userdata["user_id"];
+            $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
+            if (!empty($is_valid))
             {
-                $input_arr = array(
-                    base_url() => 'Home',
-                    base_url('trips') => 'Trips',
-                    '#' => 'Review - ' . $post_title,
-                );
-                $breadcrumbs = get_breadcrumbs($input_arr);
+                $trip_details = $this->redis_functions->get_trip_details($url_key);
+                $post_title = stripslashes($trip_details->post_title);
+                if (!empty($trip_details))
+                {
+                    $input_arr = array(
+                        base_url() => 'Home',
+                        base_url('trips') => 'Trips',
+                        '#' => 'Review - ' . $post_title,
+                    );
+                    $breadcrumbs = get_breadcrumbs($input_arr);
 
-                $data["post_details"] = $trip_details;
-                $data["breadcrumbs"] = $breadcrumbs;
-                $data["page_title"] = $post_title;
-                $data['meta_title'] = 'Review - ' . $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
-                $this->template->write_view("content", "pages/trip/post/review", $data);
-                $this->template->render();
+                    $data["post_details"] = $trip_details;
+                    $data["breadcrumbs"] = $breadcrumbs;
+                    $data["page_title"] = $post_title;
+                    $data['meta_title'] = 'Review - ' . $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                    $this->template->write_view("content", "pages/trip/post/review", $data);
+                    $this->template->render();
+                }
+                else
+                {
+                    display_404_page();
+                }
             }
             else
             {

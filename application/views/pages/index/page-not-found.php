@@ -1,10 +1,29 @@
-<div class="container-fluid">
-    <div class="row text-center page-not-found">
-        <h1>404</h1>
-        <p>Houston, We have a problem</p>
-        <hr/>
-        <p>return to the <a href="<?php echo base_url(); ?>" class="btn btn-info">base</a></p>
-        <p>Over and out!</p><br/>
-        <i class="glyphicon glyphicon-plane"></i>
+<div class="main-cont">  	
+    <div class="inner-page">
+        <div class="inner-breadcrumbs">
+            <div class="content-wrapper">
+                <div class="page-title">404 - Page not found</div>
+                <div class="breadcrumbs">
+                    <a href="#">Home</a> / <span>Page not found</span>
+                </div>
+                <div class="clear"></div>
+            </div>		
+        </div>
+
+        <div class="about-content">
+            <div class="content-wrapper">
+                <header class="page-lbl fly-in" style="margin-bottom: 80px;">
+                    <div class="offer-slider-lbl">404</div>
+                    <p>Houston, we have a problem! We landed on the wrong planet.</p>
+                    <p>We are coming back <a href="<?php echo base_url(); ?>">home</a>.</p>
+                </header>	
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('body').removeClass('');
+        $('body').addClass('inner-body');
+    });
+</script>

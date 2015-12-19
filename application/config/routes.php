@@ -45,12 +45,8 @@
     $route['404_override'] = 'index/pageNotFound';
 
     $route['home'] = 'index/index';
+    $route['company/(:any)'] = 'staticpage/index/$1';
     $route['contact-us'] = 'staticpage/contact';
-    $route['about-us'] = 'staticpage/index/about';
-    $route['how-it-works'] = 'staticpage/index/how-it-works';
-    $route['privacy-policy'] = 'staticpage/index/privacy';
-    $route['terms'] = 'staticpage/index/terms';
-    $route['my-blogs'] = 'blog/myBlogs';
     $route['login/facebook'] = 'index/loginwithfacebook';
     $route['login'] = 'index/login';
     $route['logout'] = 'index/logout';

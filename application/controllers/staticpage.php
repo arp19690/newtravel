@@ -6,46 +6,53 @@ class Staticpage extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->ci->redis = new CI_Redis();
         $this->redis_functions = new Redisfunctions();
     }
 
-    public function index($pageName = 'about')
+    public function index($pageName = 'about-us')
     {
         $data = array();
-
-        $viewFile = "about";
-
         switch ($pageName)
         {
-            case "about":
+            case "about-us":
                 {
-                    $viewFile = "about";
-                    $data["meta_title"] = "About Us - " . $this->redis_functions->get_site_setting('SITE_NAME');
-                    $data["content"] = stripslashes($this->ci->redis->get_static_page_content('about_us'));
+                    $page_title = 'About us';
+                    $content = stripslashes($this->redis_functions->get_static_page_content('about-us'));
                     break;
                 }
             case "how-it-works":
                 {
-                    $viewFile = "how-it-works";
-                    $data["meta_title"] = "How it works - " . $this->redis_functions->get_site_setting('SITE_NAME');
+                    $page_title = 'How it works';
+                    $content = stripslashes($this->redis_functions->get_static_page_content('how-it-works'));
                     break;
                 }
             case "privacy":
                 {
-                    $viewFile = "privacy";
-                    $data["meta_title"] = "Privacy Policy - " . $this->redis_functions->get_site_setting('SITE_NAME');
+                    $page_title = 'Privacy Policy';
+                    $content = stripslashes($this->redis_functions->get_static_page_content('privacy-policy'));
                     break;
                 }
             case "terms":
                 {
-                    $viewFile = "terms";
-                    $data["meta_title"] = "Terms &amp; Conditions - " . $this->redis_functions->get_site_setting('SITE_NAME');
+                    $page_title = 'Terms &amp; Conditions';
+                    $content = stripslashes($this->redis_functions->get_static_page_content('terms'));
                     break;
                 }
         }
 
-        $this->template->write_view("content", "pages/staticpage/" . $viewFile, $data);
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["content"] = $content;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . " - " . $this->redis_functions->get_site_setting('SITE_NAME');
+        $data['meta_description'] = getNWordsFromString($content, 200);
+
+        $this->template->write_view("content", "pages/staticpage/static-content", $data);
         $this->template->render();
     }
 

@@ -34,6 +34,15 @@ class Custom_model extends CI_Model
 
             $post_costs_records = $model->fetchSelectedData('*', TABLE_POST_COSTS, array('cost_post_id' => $post_id));
             $output['post_costs'] = $post_costs_records;
+            $total_cost = 0;
+            if (!empty($post_costs_records))
+            {
+                foreach ($post_costs_records as $value)
+                {
+                    $total_cost = $total_cost + $value['cost_amount'];
+                }
+            }
+            $output['post_total_cost'] = $total_cost;
 
             $post_travelers_records = $model->fetchSelectedData('*', TABLE_POST_TRAVELERS, array('pt_post_id' => $post_id));
             $output['post_travelers'] = $post_travelers_records;

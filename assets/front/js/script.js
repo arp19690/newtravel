@@ -23,6 +23,16 @@ function init_validation(target) {
         return validate(target);
     }
 }
+
+function open_authorize_popup()
+{
+    event.preventDefault();
+    $('.overlay').fadeIn(function () {
+        $('.autorize-popup').animate({top: '50%'}, 300).find('input:text').eq('0').focus();
+    });
+    return false;
+}
+
 $(window).load(function () {
     init_validation();
 });
@@ -171,10 +181,7 @@ $(document).ready(function () {
     });
 
     $('.header-account a').click(function () {
-        $('.overlay').fadeIn(function () {
-            $('.autorize-popup').animate({top: '50%'}, 300).find('input:text').eq('0').focus();
-        });
-        return false;
+        open_authorize_popup();
     });
 
     $('.overlay').click(function () {

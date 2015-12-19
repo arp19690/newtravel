@@ -103,27 +103,6 @@ $path = $controller . "/" . $action;
                             <span style="background: none;padding: 0;">&nbsp;&nbsp;Good morning <?php echo $addressee_name; ?>, let's go running?</span>
                         </div>
                     </div>
-                    <div class="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'header-curency' : 'header-account'; ?>">
-                        <?php
-                        if (isset($this->session->userdata['user_id']))
-                        {
-                            ?>
-                            <a href="<?php echo base_url('my-account'); ?>" onclick="event.preventDefault();
-                                    window.location.href = $(this).attr('href');">My Account</a>
-                            <div class="curency-drop">
-                                <div><a href="<?php echo base_url('my-trips'); ?>">My Trips</a></div>
-                                <div><a href="<?php echo base_url('logout'); ?>">Logout</a></div>
-                            </div>
-                            <?php
-                        }
-                        else
-                        {
-                            ?>
-                            <a href="<?php echo base_url('login'); ?>">Login / Register</a>
-                            <?php
-                        }
-                        ?>
-                    </div>
                     <div class="header-social">
                         <a href="<?php echo get_external_url($redis_functions->get_site_setting('TWITTER_SOCIAL_LINK')); ?>" target="_blank" class="social-twitter"></a>
                         <a href="<?php echo get_external_url($redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK')); ?>" target="_blank" class="social-facebook"></a>
