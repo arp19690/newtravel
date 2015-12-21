@@ -1893,7 +1893,8 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 /*.booking-form-i .input input[type='text'] {border:0px; width:100%; font-size:14px; font-family:'Raleway';}*/
 .booking-form-i .input input[type='text'], 
 .booking-form-i .input input[type='number'], 
-.booking-form-i .input input[type='email'] 
+.booking-form-i .input input[type='email'], 
+.booking-form-i .input input[type='password']
 {border:0px; width:100%; font-size:14px; font-family:'Raleway';}
 .booking-form .checkbox {margin-top:2px;}
 .booking-form .checkbox label {font-size:12px; font-weight:500; color:#848484; font-family:'Raleway'; cursor:pointer;}
