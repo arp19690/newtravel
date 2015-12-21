@@ -140,6 +140,21 @@ function checkIfTripURLKeyUnique($trip_url_key, $post_id = NULL)
     return $trip_url_key;
 }
 
+function getUniqueUsernameFromEmail($email)
+{
+    require_once APPPATH . '/models/common_model.php';
+    $model = new Common_model();
+    $explode_email = explode('@', $email);
+    $username = trim($explode_email[0]);
+    $is_exists = $model->is_exists('user_id', TABLE_USERS, array('user_username' => $username));
+    if (!empty($is_exists))
+    {
+        $username = getUniqueUsernameFromEmail($username . '-' . rand(100, 999));
+    }
+
+    return $username;
+}
+
 function getUniqueBlogURLKey($random_number = NULL, $string_lenth = 10)
 {
     require_once APPPATH . '/models/common_model.php';
