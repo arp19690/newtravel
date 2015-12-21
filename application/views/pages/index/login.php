@@ -37,6 +37,7 @@
                                     </div>
                                     <div class="clear"></div>
                                     <button type="submit" class="contacts-send">Login</button>
+                                    <a href="<?php echo base_url('forgot-password'); ?>" style="margin-left: 25px;" class="a-no-underline">Forgot password?</a>
                                 </form>
                             </div>
                         </div>
