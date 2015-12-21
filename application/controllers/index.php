@@ -92,7 +92,17 @@ class Index extends CI_Controller
             }
             else
             {
-                $data['meta_title'] = 'Login - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $page_title = 'Login';
+
+                $input_arr = array(
+                    base_url() => 'Home',
+                    '#' => $page_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $page_title;
+                $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/login", $data);
                 $this->template->render();
             }
