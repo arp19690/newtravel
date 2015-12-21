@@ -27,11 +27,23 @@ class User extends CI_Controller
 //                prd($arr);
             if (isset($arr["btn_submit"]))
             {
-                $username = trim($arr['user_username']);
-                $data_array = array();
+                $location_details = get_location_details_from_google(trim($arr['user_location']));
+                $location_lat_long = getLatLonByAddress(trim($arr['user_location']));
+                $data_array = array(
+                    'user_fullname' => stripslashes($arr['user_fullname']),
+                    'user_gender' => stripslashes($arr['user_gender']),
+                    'user_location' => stripslashes($arr['user_location']),
+                    'user_city' => $location_details['city'],
+                    'user_state' => $location_details['state'],
+                    'user_country' => $location_details['country'],
+                    'user_location' => trim($arr['user_location']),
+                    'user_latitude' => $location_lat_long['latitude'],
+                    'user_longitude' => $location_lat_long['longitude'],
+                );
 
                 if (isset($arr['user_username']))
                 {
+                    $username = trim($arr['user_username']);
                     $checkUsername = $model->is_exists("user_id", TABLE_USERS, array("username" => $username, "user_id !=" => $user_id));
 
                     if (!empty($checkUsername))
@@ -51,7 +63,7 @@ class User extends CI_Controller
                 $this->redis_functions->set_user_profile_data($username);
 
                 @$this->session->set_userdata("user_fullname", trim($arr["user_fullname"]));
-                @$this->session->set_userdata("user_username", trim($arr["user_username"]));
+                @$this->session->set_userdata("user_username", $username);
             }
             redirect(base_url('my-account'));
         }
