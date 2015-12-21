@@ -18,6 +18,7 @@
                 <div class="contacts-colls">
                     <div class="contacts-colls-l">
                         <!--Ads will appear here-->
+                        <?php echo get_google_ad(); ?>
                         <div class="clear"></div>
                     </div>
 
@@ -37,7 +38,13 @@
                                     </div>
                                     <div class="clear"></div>
                                     <button type="submit" class="contacts-send">Login</button>
-                                    <a href="<?php echo base_url('forgot-password'); ?>" style="margin-left: 25px;" class="a-no-underline">Forgot password?</a>
+                                    <div class="clear"></div>
+
+                                    <div class="" style="margin-top: 35px;">
+                                        <a href="<?php echo base_url('forgot-password'); ?>" class="">Forgot password?</a>
+                                        <p style="margin: 10px 0;"><small>or,</small></p>
+                                        <a href="<?php echo base_url('register'); ?>" class="">Register for a new account</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>
