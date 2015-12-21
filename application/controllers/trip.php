@@ -11,33 +11,49 @@ class Trip extends CI_Controller
 
     public function index()
     {
-        $this->add_new();
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $this->add_new();
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
     public function add_new($step = 1, $url_key = NULL)
     {
-        $data = array();
-        $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
-
-        switch ($step)
+        if (isset($this->session->userdata["user_id"]))
         {
-            case 1:
-                // meta info
-                $this->add_new_step_one($url_key);
-                break;
-            case 2:
-                // regions
-                $this->add_new_step_two($url_key);
-                break;
-            case 3:
-                // budgets
-                $this->add_new_step_three($url_key);
-                break;
-            case 4:
-                // media
-                $this->add_new_step_four($url_key);
-                break;
+            $data = array();
+            $user_id = $this->session->userdata["user_id"];
+            $model = new Common_model();
+
+            switch ($step)
+            {
+                case 1:
+                    // meta info
+                    $this->add_new_step_one($url_key);
+                    break;
+                case 2:
+                    // regions
+                    $this->add_new_step_two($url_key);
+                    break;
+                case 3:
+                    // budgets
+                    $this->add_new_step_three($url_key);
+                    break;
+                case 4:
+                    // media
+                    $this->add_new_step_four($url_key);
+                    break;
+            }
+        }
+        else
+        {
+            require_once APPPATH . 'controllers/index.php';
+            $index_controller = new Index();
+            $index_controller->login();
         }
     }
 

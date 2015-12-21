@@ -92,7 +92,17 @@ class Index extends CI_Controller
             }
             else
             {
-                $data['meta_title'] = 'Login - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $page_title = 'Login';
+
+                $input_arr = array(
+                    base_url() => 'Home',
+                    '#' => $page_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $page_title;
+                $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/login", $data);
                 $this->template->render();
             }
@@ -113,86 +123,78 @@ class Index extends CI_Controller
             if ($this->input->post())
             {
                 $redirect_url = base_url();
-//                if ($this->input->get('next'))
-//                {
-//                    $redirect_url = $this->input->get('next');
-//                }
+                if ($this->input->get('next'))
+                {
+                    $redirect_url = $this->input->get('next');
+                }
                 $arr = $this->input->post();
-//                    prd($arr);
+//                prd($arr);
 
-                $user_email = $arr["user_email"];
-                $username = $arr["username"];
-
+                $user_email = trim(strtolower($arr["user_email"]));
                 $is_email_exists = $model->is_exists('user_id', TABLE_USERS, array('user_email' => $user_email));
                 if (empty($is_email_exists))
                 {
                     // valid email
-                    $is_username_exists = $model->is_exists('user_id', TABLE_USERS, array('username' => $username));
-                    if (empty($is_username_exists))
+                    $verification_code = substr(getEncryptedString($arr['user_email'] . $arr['user_gender'] . time()), 0, 30);
+                    $user_username = getUniqueUsernameFromEmail($user_email);
+
+                    $location_details = get_location_details_from_google(trim($arr['user_location']));
+                    $location_lat_long = getLatLonByAddress(trim($arr['user_location']));
+
+                    $data_array = array(
+                        'user_fullname' => $arr['user_fullname'],
+                        'user_gender' => strtolower($arr['user_gender']),
+                        'user_username' => $user_username,
+                        'user_email' => $user_email,
+                        'user_password' => md5($arr['user_password']),
+                        'user_ipaddress' => USER_IP,
+                        'user_useragent' => USER_AGENT,
+                        'user_created_on' => date('Y-m-d H:i:s'),
+                        'user_status' => '0',
+                        'user_verification_code' => $verification_code,
+                        'user_city' => $location_details['city'],
+                        'user_region' => $location_details['state'],
+                        'user_country' => $location_details['country'],
+                        'user_location' => $location_details['location'],
+                        'user_latitude' => $location_lat_long['latitude'],
+                        'user_longitude' => $location_lat_long['longitude'],
+                    );
+                    $user_id = $model->insertData(TABLE_USERS, $data_array);
+
+                    if (USER_IP != '127.0.0.1')
                     {
-                        // valid username
-
-                        $verification_code = substr(getEncryptedString($arr['username'] . $arr['user_gender'] . time()), 0, 30);
-
-                        $data_array = array(
-                            'first_name' => $arr['first_name'],
-                            'last_name' => $arr['last_name'],
-                            'user_gender' => $arr['user_gender'],
-                            'username' => $arr['username'],
-                            'user_email' => $arr['user_email'],
-                            'user_password' => md5($arr['user_password']),
-                            'user_ipaddress' => USER_IP,
-                            'user_agent' => USER_AGENT,
-                            'user_status' => '0',
-                            'verification_code' => $verification_code,
-                        );
-                        $model->insertData(TABLE_USERS, $data_array);
-                        $user_id = $this->db->insert_id();
-
-                        if (!empty($_FILES) && $_FILES['user_img']['size'] > 0 && $_FILES['user_img']['error'] == 0)
-                        {
-                            $source = $_FILES['user_img']['tmp_name'];
-                            $destination = USER_IMG_PATH . "/" . getEncryptedString($user_id) . ".jpg";
-
-                            @unlink($destination);
-
-                            $this->load->library('SimpleImage');
-                            $simpleImage = new SimpleImage();
-                            $simpleImage->uploadImage($source, $destination, USER_IMG_WIDTH, USER_IMG_HEIGHT);
-                        }
-
-                        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
-                        {
-                            $verification_url = base_url('activate?code=' . $verification_code);
-                            $this->load->library('EmailTemplates');
-                            $EmailTemplates = new EmailTemplates();
-                            $messageText = $EmailTemplates->registerEmail(ucwords($arr['first_name'] . " " . $arr['last_name']), $verification_url);
-                            $email_model = new Email_model();
-                            $email_model->sendMail($arr['user_email'], 'Verification Email - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageText);
-                        }
-
-                        $this->session->set_flashdata('success', '<strong>Success!</strong> We have sent you an email. Please verify your email address');
-                        redirect(base_url('login'));
+                        $verification_url = base_url('activate?code=' . $verification_code);
+                        $this->load->library('EmailTemplates');
+                        $EmailTemplates = new EmailTemplates();
+                        $messageText = $EmailTemplates->registerEmail(ucwords($arr['user_fullname']), $verification_url);
+                        $email_model = new Email_model();
+                        $email_model->sendMail($arr['user_email'], 'Verification Email - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageText);
                     }
-                    else
-                    {
-                        // invalid username                            
-                        $this->session->set_flashdata('error', '<strong>Oops!</strong> Username already exists');
-                        $this->session->set_flashdata('post', $arr);
-                        redirect(base_url('register'));
-                    }
+
+                    $this->session->set_flashdata('success', '<strong>Success!</strong> We have sent you an email. Please verify your email address');
+                    redirect($redirect_url);
                 }
                 else
                 {
                     // invalid email    
                     $this->session->set_flashdata('error', '<strong>Oops!</strong> Email already exists');
                     $this->session->set_flashdata('post', $arr);
-                    redirect(base_url('register'));
+                    redirect(base_url('register?next=' . $this->input->get('next')));
                 }
             }
             else
             {
-                $data['meta_title'] = 'Register - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $page_title = 'Register';
+
+                $input_arr = array(
+                    base_url() => 'Home',
+                    '#' => $page_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $page_title;
+                $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/register", $data);
                 $this->template->render();
             }
