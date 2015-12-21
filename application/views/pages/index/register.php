@@ -46,7 +46,7 @@
                                     <div class="booking-form-i">
                                         <input type="hidden" name="user_gender" class="user_gender_input" value="male"/>
                                         <div class="form-sex">
-                                            <label>Male/Female</label>
+                                            <label>Male/Female:</label>
                                             <div class="sex-type chosen" data-value="male">M</div>
                                             <div class="sex-type" data-value="female">F</div>
                                             <div class="clear"></div>
