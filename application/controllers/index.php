@@ -252,9 +252,9 @@ class Index extends CI_Controller
             if ($this->input->post())
             {
                 $arr = $this->input->post();
-                $user_email = $arr['user_email'];
+                $user_email = trim(strtolower($arr['user_email']));
 
-                $is_valid_email = $model->is_exists('user_id, user_status, first_name, last_name', TABLE_USERS, array('user_email' => $user_email));
+                $is_valid_email = $model->is_exists('user_id, user_status, user_fullname', TABLE_USERS, array('user_email' => $user_email));
                 if (!empty($is_valid_email))
                 {
                     // valid
@@ -262,7 +262,7 @@ class Index extends CI_Controller
                     if ($user_status == '1')
                     {
                         // active user
-                        $full_name = ucwords($is_valid_email[0]['first_name'] . " " . $is_valid_email[0]['last_name']);
+                        $full_name = ucwords($is_valid_email[0]['user_fullname']);
                         $new_password = substr(getEncryptedString($user_email . "-" . $user_status . time()), 0, 6);
                         $model->updateData(TABLE_USERS, array('user_password' => md5($new_password)), array('user_email' => $user_email));
 
@@ -270,7 +270,7 @@ class Index extends CI_Controller
                         {
                             $this->load->library('EmailTemplates');
                             $emailTemplate = new EmailTemplates();
-                            $messageContent = $emailTemplate->forgotPassword($full_name, $new_password);
+                            $messageContent = $emailTemplate->forgot-password($full_name, $new_password);
                             $email_model = new Email_model();
                             $email_model->sendMail($user_email, 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                         }
@@ -282,19 +282,29 @@ class Index extends CI_Controller
                     {
                         // account not active
                         $this->session->set_flashdata('error', '<strong>Sorry!</strong> Your account is not active');
-                        redirect(base_url('forgotPassword'));
+                        redirect(base_url('forgot-password'));
                     }
                 }
                 else
                 {
                     // invalid
                     $this->session->set_flashdata('error', 'No such record found.');
-                    redirect(base_url('forgotPassword'));
+                    redirect(base_url('forgot-password'));
                 }
             }
             else
-            {
-                $data['meta_title'] = 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            {                
+                $page_title = 'Forgot Password';
+
+                $input_arr = array(
+                    base_url() => 'Home',
+                    '#' => $page_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $page_title;
+                $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/forgot-password", $data);
                 $this->template->render();
             }
