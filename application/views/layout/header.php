@@ -13,12 +13,12 @@ if (!isset($meta_description))
 if (!isset($meta_logo_image))
     $meta_logo_image = IMAGES_PATH . "/logo.jpg";
 
-clearstatcache();
-$this->output->set_header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
-$this->output->set_header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
-$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
-$this->output->set_header('Cache-Control: post-check=0, pre-check=0', false);
-$this->output->set_header('Pragma: no-cache');
+//clearstatcache();
+//$this->output->set_header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
+//$this->output->set_header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
+//$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
+//$this->output->set_header('Cache-Control: post-check=0, pre-check=0', false);
+//$this->output->set_header('Pragma: no-cache');
 //    prd($meta_logo_image);
 
 $controller = $this->router->fetch_class();
@@ -93,6 +93,22 @@ $path = $controller . "/" . $action;
         ?>
 
         <header id="top">
+            <div class="notification-area">
+                <?php
+                if ($this->session->flashdata('success'))
+                {
+                    echo '<div class="message-box-d">' . $this->session->flashdata('success') . '</div>';
+                }
+                if ($this->session->flashdata('warning'))
+                {
+                    echo '<div class="message-box-b">' . $this->session->flashdata('warning') . '</div>';
+                }
+                if ($this->session->flashdata('error'))
+                {
+                    echo '<div class="message-box-c">' . $this->session->flashdata('error') . '</div>';
+                }
+                ?>
+            </div>
             <div class="header-a">
                 <div class="wrapper-padding">			
                     <div class="header-phone hidden">

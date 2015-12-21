@@ -1,48 +1,48 @@
-<?php
-    $blog_title = "";
-    $blog_content = "";
+<div class="main-cont">	
+    <div class="inner-page">
+        <div class="inner-breadcrumbs" style="margin: 0;">
+            <div class="content-wrapper">
+                <div class="page-title"><?php echo $page_title; ?></div>
+                <?php
+                if (isset($breadcrumbs) && !empty($breadcrumbs))
+                {
+                    echo $breadcrumbs;
+                }
+                ?>
+                <div class="clear"></div>
+            </div>		
+        </div>
 
-    if (isset($record))
-    {
-        extract($record);
-    }
-?>
-<div class="container margin-top-40 col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="contacts-page-holder">
+            <div class="contacts-page">
+                <div class="contacts-colls">
+                    <div class="contacts-colls-l">
+                        <!--Ads will appear here-->
+                        <?php echo get_google_ad(); ?>
+                        <div class="clear"></div>
+                    </div>
 
-    <div class="row margin-bottom-20 clearfix">
-        <h1>Forgot Password</h1>
-        <a href='javascript:history.go(-1);' class='btn btn-default pull-right clearfix'><i class='glyphicon glyphicon-arrow-left'></i>&nbsp;Back</a>
-    </div>
-
-    <div class="row">
-        <!--  ==========  -->
-        <!--  = Main content =  -->
-        <!--  ==========  -->
-        <section class="">
-
-            <form class="form-horizontal validate-form" method='post' action='' enctype="multipart/form-data">
-                <div class="margin-bottom-20 clearfix">
-
-                    <label for="user_email" >Email <span class="required">*</span></label>
-                    <input class="form-control required" name="user_email" id="user_email" type="text" required="required" placeholder="Email" value='<?php echo $blog_title; ?>'/>
-
-                    <p class="">Input your email here and we will take care of it.</p>
+                    <div class="contacts-colls-r">
+                        <div class="contacts-colls-rb">
+                            <div class="contact-colls-lbl"><?php echo $page_title; ?></div>
+                            <div class="booking-form">
+                                <form id="contact_form" action="<?php echo base_url('forgot-password'); ?>" method="post">
+                                    <div class="booking-form-i">
+                                        <label>Your registered email:</label>
+                                        <div class="input"><input type="email" name="user_email" placeholder="Enter you email" required="required" /></div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <button type="submit" class="contacts-send">Submit</button>
+                                    <a href="<?php echo base_url('login'); ?>" style="margin-left: 25px;" class="a-no-underline">Login</a>
+                                    <div class="clear"></div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
                 </div>
-
-                <div class="col-lg-12 text-center">	
-                    <input class="btn btn-primary btn-lg disable-btn" name="btn_submit" value="Submit" type="submit">
-                </div>
-            </form>
-
-        </section> <!-- /main content -->
-
+                <div class="clear"></div>	
+            </div>
+        </div>
     </div>
-
-    <div class="row margin-top-40 text-right">
-        <a href="<?php echo base_url('login'); ?>">Login?</a><br/>
-        <a href="<?php echo base_url('register'); ?>">Sign up?</a>
-    </div>
-</div> <!-- /container -->
-
-
-<script type='text/javascript' src='<?php echo base_url(JS_PATH . "/ckeditor/ckeditor.js"); ?>'></script>
+</div>

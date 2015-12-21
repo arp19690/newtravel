@@ -85,4 +85,8 @@ $(document).ready(function () {
         var input = jQuery(".gMapLocation-cities")[i];
         var autocomplete = new google.maps.places.Autocomplete(input, options)
     }
+
+    setTimeout(function () {
+        $('.notification-area').slideUp('slow');
+    }, 2500);
 });

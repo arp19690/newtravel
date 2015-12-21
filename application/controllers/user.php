@@ -6,13 +6,7 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-
-        $exclude_array = array("viewProfile", "myAlbums", "viewAlbum", "viewPhoto");
-
-        if (!isset($this->session->userdata["user_id"]) && !in_array($this->router->fetch_method(), $exclude_array))
-        {
-            redirect(base_url());
-        }
+        $this->redis_functions = new Redisfunctions();
     }
 
     public function index()
@@ -24,49 +18,71 @@ class User extends CI_Controller
     {
         $data = array();
         $model = new Common_model();
-        $redis_functions = new Redisfunctions();
         $user_id = $this->session->userdata["user_id"];
         $username = $this->session->userdata["user_username"];
-        prd($username);
 
         if ($this->input->post())
         {
             $arr = $this->input->post();
 //                prd($arr);
-            $username = trim($arr["username"]);
             if (isset($arr["btn_submit"]))
             {
-                unset($arr['btn_submit'], $arr['user_email']);
+                $location_details = get_location_details_from_google(trim($arr['user_location']));
+                $location_lat_long = getLatLonByAddress(trim($arr['user_location']));
+                $data_array = array(
+                    'user_fullname' => stripslashes($arr['user_fullname']),
+                    'user_gender' => stripslashes($arr['user_gender']),
+                    'user_location' => stripslashes($arr['user_location']),
+                    'user_city' => $location_details['city'],
+                    'user_state' => $location_details['state'],
+                    'user_country' => $location_details['country'],
+                    'user_location' => trim($arr['user_location']),
+                    'user_latitude' => $location_lat_long['latitude'],
+                    'user_longitude' => $location_lat_long['longitude'],
+                );
 
-                $checkUsername = $model->is_exists("user_id", TABLE_USERS, array("username" => $username, "user_id !=" => $user_id));
-
-                if (empty($checkUsername))
+                if (isset($arr['user_username']))
                 {
-                    $this->session->set_flashdata("success", "<strong>Success!</strong> Account details updated");
-                }
-                else
-                {
-                    unset($arr["username"]);
-                    $this->session->set_flashdata("error", "<strong>Oops!</strong> That username is already taken. Please choose another.");
+                    $username = trim($arr['user_username']);
+                    $checkUsername = $model->is_exists("user_id", TABLE_USERS, array("username" => $username, "user_id !=" => $user_id));
+
+                    if (!empty($checkUsername))
+                    {
+                        $this->session->set_flashdata("error", "That username is already taken. Please choose another.");
+                    }
+                    else
+                    {
+                        $data_array['user_username'] = $username;
+                        $data_array['user_changed_username'] = '1';
+                    }
                 }
 
-                $model->updateData(TABLE_USERS, $arr, array("user_id" => $user_id));
-                @$this->session->set_userdata("first_name", trim($arr["first_name"]));
-                @$this->session->set_userdata("last_name", trim($arr["last_name"]));
-                @$this->session->set_userdata("username", trim($arr["username"]));
+                $this->session->set_flashdata("success", "Personal details updated successfully");
+                $model->updateData(TABLE_USERS, $data_array, array("user_id" => $user_id));
+
+                // updating redis keys now
+                $this->redis_functions->set_user_profile_data($username);
+
+                @$this->session->set_userdata("user_fullname", trim($arr["user_fullname"]));
+                @$this->session->set_userdata("user_username", $username);
             }
             redirect(base_url('my-account'));
         }
         else
         {
-            $record = $redis_functions->get_user_profile_data($username);
+            $record = $this->redis_functions->get_user_profile_data($username);
+            $page_title = $record["user_fullname"];
 
-            $data["meta_title"] = ucwords($record["user_fullname"]) . " | " . SITE_NAME;
-            $user_bio = stripslashes($record["user_about"]);
-            if (!empty($user_bio))
-                $data["meta_description"] = getNWordsFromString($user_bio, 22);
+            $input_arr = array(
+                base_url() => 'Home',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["record"] = $record;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/user/my-account", $data);
             $this->template->render();
         }
@@ -79,7 +95,7 @@ class User extends CI_Controller
         $user_id = $this->session->userdata["user_id"];
 
         $record = $model->fetchSelectedData("*", TABLE_USERS, array("user_id" => $user_id));
-        $data["meta_title"] = ucwords($this->session->userdata["first_name"] . " " . $this->session->userdata["last_name"]) . " | " . SITE_NAME;
+        $data["meta_title"] = ucwords($this->session->userdata["first_name"] . " " . $this->session->userdata["last_name"]) . " | " . $this->redis_functions->get_site_setting('SITE_NAME');
         $user_bio = $record[0]["user_bio"];
         if (!empty($user_bio))
             $data["meta_description"] = getNWordsFromString($user_bio, 30);
@@ -122,7 +138,7 @@ class User extends CI_Controller
 
                 $my_connects_record = $custom_model->getMyFriends($record["user_id"], "first_name, last_name, user_facebook_id, username, user_id", "0,8");
 
-                $data["meta_title"] = ucwords($record["first_name"] . " " . $record["last_name"]) . " | " . SITE_NAME;
+                $data["meta_title"] = ucwords($record["first_name"] . " " . $record["last_name"]) . " | " . $this->redis_functions->get_site_setting('SITE_NAME');
                 $data["meta_description"] = getNWordsFromString($record["user_bio"], 30);
                 $data["record"] = $record;
                 $data["is_friend"] = $is_friend;
@@ -180,7 +196,7 @@ class User extends CI_Controller
                         $emailTemplate = new EmailTemplates();
                         $messageContent = $emailTemplate->newConnectRequestEmail($to_full_name, $from_full_name);
                         $email_model = new Email_model();
-                        $email_model->sendMail($to_email, 'New Connect Request | ' . SITE_NAME, $messageContent);
+                        $email_model->sendMail($to_email, 'New Connect Request | ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                     }
 
                     $this->session->set_flashdata("success", "<strong>Success!</strong> Connect request sent successfully");
@@ -216,7 +232,7 @@ class User extends CI_Controller
         $record = $model->getAllDataFromJoin("*", TABLE_FRIENDS . " as f", array(TABLE_USERS . " as u" => "u.user_id = f.sent_from"), "LEFT", array("sent_from !=" => $user_id, "sent_to" => $user_id, "is_accepted" => "0"), "friend_id", "DESC");
 //            prd($record);
 
-        $data["meta_title"] = "Connect Requests | " . SITE_NAME;
+        $data["meta_title"] = "Connect Requests | " . $this->redis_functions->get_site_setting('SITE_NAME');
         $data["page_title"] = "Connect Requests";
         $data["record"] = $record;
 
@@ -297,7 +313,7 @@ class User extends CI_Controller
             {
                 $record = $model->fetchSelectedData("send_emails", TABLE_USERS, array("user_id" => $user_id));
 
-                $data["meta_title"] = "Email Preference | " . SITE_NAME;
+                $data["meta_title"] = "Email Preference | " . $this->redis_functions->get_site_setting('SITE_NAME');
                 $data["page_title"] = "Email Preference";
                 $data["send_emails"] = $record[0]['send_emails'];
 
@@ -395,7 +411,7 @@ class User extends CI_Controller
                 }
             }
 
-            $data['meta_title'] = 'Change Password | ' . SITE_NAME;
+            $data['meta_title'] = 'Change Password | ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/user/change-password", $data);
             $this->template->render();
         }
@@ -495,7 +511,7 @@ class User extends CI_Controller
             $user_name_records = $model->fetchSelectedData("user_id, first_name, last_name", TABLE_USERS, array('username' => $username));
             if (empty($user_name_records))
             {
-                $data['meta_title'] = 'Page Not Found | ' . SITE_NAME;
+                $data['meta_title'] = 'Page Not Found | ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/page-not-found", $data);
                 $this->template->render();
             }
@@ -528,7 +544,7 @@ class User extends CI_Controller
             $data['record'] = $record;
             $data['pagination'] = $pagination;
             $data['page_title'] = $page_title;
-            $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
+            $data['meta_title'] = $page_title . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
 
             $this->template->write_view("content", "pages/user/my-albums", $data);
             $this->template->render();
@@ -646,7 +662,7 @@ class User extends CI_Controller
             {
                 $data['album_key'] = $album_key;
                 $data['page_title'] = "Upload Photos";
-                $data['meta_title'] = 'Upload Photos | ' . SITE_NAME;
+                $data['meta_title'] = 'Upload Photos | ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/user/upload-photos", $data);
                 $this->template->render();
             }
@@ -728,7 +744,7 @@ class User extends CI_Controller
             $data['pagination'] = $pagination;
             $data['user_id'] = $owner_id;
             $data['page_title'] = stripslashes($album_name);
-            $data['meta_title'] = stripslashes($album_name) . ' | ' . SITE_NAME;
+            $data['meta_title'] = stripslashes($album_name) . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $data['album_key'] = stripslashes($album_key);
             $data['album_description'] = stripslashes($album_description);
             $this->template->write_view("content", "pages/user/view-album", $data);
@@ -760,7 +776,7 @@ class User extends CI_Controller
                 $data['totalLikesAndDislikes'] = $getTotalLikesAndDislikes;
                 $data['photo_pagination'] = $photo_pagination_links;
                 $data['page_title'] = stripslashes($user_record[0]['full_name']) . "'s Photos";
-                $data['meta_title'] = $data['page_title'] . ' | ' . SITE_NAME;
+                $data['meta_title'] = $data['page_title'] . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $data['owner_username'] = $user_record[0]['username'];
                 $data['photo_description'] = stripslashes($record[0]['photo_description']);
                 $this->template->write_view("content", "pages/user/view-photo", $data);

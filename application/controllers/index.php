@@ -153,13 +153,16 @@ class Index extends CI_Controller
                         'user_status' => '0',
                         'user_verification_code' => $verification_code,
                         'user_city' => $location_details['city'],
-                        'user_region' => $location_details['state'],
+                        'user_state' => $location_details['state'],
                         'user_country' => $location_details['country'],
-                        'user_location' => $location_details['location'],
+                        'user_location' => trim($arr['user_location']),
                         'user_latitude' => $location_lat_long['latitude'],
                         'user_longitude' => $location_lat_long['longitude'],
                     );
                     $user_id = $model->insertData(TABLE_USERS, $data_array);
+
+                    // updating redis keys now
+                    $this->redis_functions->set_user_profile_data($user_username);
 
                     if (USER_IP != '127.0.0.1')
                     {
@@ -224,8 +227,13 @@ class Index extends CI_Controller
                 }
                 else
                 {
+                    $user_records = $model->fetchSelectedData('user_username', TABLE_USERS, array('verification_code' => $verification_code));
                     // activate now
                     $model->updateData(TABLE_USERS, array('user_status' => '1', 'verification_code' => ''), array('verification_code' => $verification_code));
+
+                    // updating redis keys now
+                    $this->redis_functions->set_user_profile_data($user_records[0]['user_username']);
+
                     $this->session->set_flashdata('success', '<strong>Welcome!</strong> Your account now active.');
                     redirect(base_url('login'));
                 }
@@ -252,9 +260,9 @@ class Index extends CI_Controller
             if ($this->input->post())
             {
                 $arr = $this->input->post();
-                $user_email = $arr['user_email'];
+                $user_email = trim(strtolower($arr['user_email']));
 
-                $is_valid_email = $model->is_exists('user_id, user_status, first_name, last_name', TABLE_USERS, array('user_email' => $user_email));
+                $is_valid_email = $model->is_exists('user_id, user_status, user_fullname, user_username', TABLE_USERS, array('user_email' => $user_email));
                 if (!empty($is_valid_email))
                 {
                     // valid
@@ -262,15 +270,18 @@ class Index extends CI_Controller
                     if ($user_status == '1')
                     {
                         // active user
-                        $full_name = ucwords($is_valid_email[0]['first_name'] . " " . $is_valid_email[0]['last_name']);
+                        $full_name = ucwords($is_valid_email[0]['user_fullname']);
                         $new_password = substr(getEncryptedString($user_email . "-" . $user_status . time()), 0, 6);
                         $model->updateData(TABLE_USERS, array('user_password' => md5($new_password)), array('user_email' => $user_email));
+
+                        // updating redis keys now
+                        $this->redis_functions->set_user_profile_data($is_valid_email[0]['user_username']);
 
                         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
                         {
                             $this->load->library('EmailTemplates');
                             $emailTemplate = new EmailTemplates();
-                            $messageContent = $emailTemplate->forgotPassword($full_name, $new_password);
+                            $messageContent = $emailTemplate->forgot - password($full_name, $new_password);
                             $email_model = new Email_model();
                             $email_model->sendMail($user_email, 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                         }
@@ -282,19 +293,29 @@ class Index extends CI_Controller
                     {
                         // account not active
                         $this->session->set_flashdata('error', '<strong>Sorry!</strong> Your account is not active');
-                        redirect(base_url('forgotPassword'));
+                        redirect(base_url('forgot-password'));
                     }
                 }
                 else
                 {
                     // invalid
                     $this->session->set_flashdata('error', 'No such record found.');
-                    redirect(base_url('forgotPassword'));
+                    redirect(base_url('forgot-password'));
                 }
             }
             else
             {
-                $data['meta_title'] = 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                $page_title = 'Forgot Password';
+
+                $input_arr = array(
+                    base_url() => 'Home',
+                    '#' => $page_title,
+                );
+                $breadcrumbs = get_breadcrumbs($input_arr);
+
+                $data["breadcrumbs"] = $breadcrumbs;
+                $data["page_title"] = $page_title;
+                $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
                 $this->template->write_view("content", "pages/index/forgot-password", $data);
                 $this->template->render();
             }

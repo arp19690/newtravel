@@ -223,12 +223,11 @@ class Redisfunctions
     {
         if ($this->ci->redis->hExists('user_profile', $username) == TRUE)
         {
-            $output = json_decode($this->ci->redis->hGet('user_profile', $username));
+            $output = (array) json_decode($this->ci->redis->hGet('user_profile', $username));
         }
         else
         {
-            $this->set_user_profile_data($username);
-            $output = $this->get_user_profile_data($username);
+            $output = $this->set_user_profile_data($username);
         }
         return $output;
     }
