@@ -57,6 +57,7 @@ class User extends CI_Controller
                     }
                 }
 
+                $this->session->set_flashdata("success", "Personal details updated successfully");
                 $model->updateData(TABLE_USERS, $data_array, array("user_id" => $user_id));
 
                 // updating redis keys now

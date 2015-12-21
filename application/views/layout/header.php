@@ -93,6 +93,22 @@ $path = $controller . "/" . $action;
         ?>
 
         <header id="top">
+            <div class="notification-area">
+                <?php
+                if ($this->session->flashdata('success'))
+                {
+                    echo '<div class="message-box-d">' . $this->session->flashdata('success') . '</div>';
+                }
+                if ($this->session->flashdata('warning'))
+                {
+                    echo '<div class="message-box-b">' . $this->session->flashdata('warning') . '</div>';
+                }
+                if ($this->session->flashdata('error'))
+                {
+                    echo '<div class="message-box-c">' . $this->session->flashdata('error') . '</div>';
+                }
+                ?>
+            </div>
             <div class="header-a">
                 <div class="wrapper-padding">			
                     <div class="header-phone hidden">
