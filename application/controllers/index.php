@@ -153,9 +153,9 @@ class Index extends CI_Controller
                         'user_status' => '0',
                         'user_verification_code' => $verification_code,
                         'user_city' => $location_details['city'],
-                        'user_region' => $location_details['state'],
+                        'user_state' => $location_details['state'],
                         'user_country' => $location_details['country'],
-                        'user_location' => $location_details['location'],
+                        'user_location' => trim($arr['user_location']),
                         'user_latitude' => $location_lat_long['latitude'],
                         'user_longitude' => $location_lat_long['longitude'],
                     );
