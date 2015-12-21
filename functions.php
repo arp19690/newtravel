@@ -1,5 +1,10 @@
 <?php
 
+function get_google_ad()
+{
+    return NULL;
+}
+
 function getImage($image_path_filename)
 {
     if (!is_file($image_path_filename))
