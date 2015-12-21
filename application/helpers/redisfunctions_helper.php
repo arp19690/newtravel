@@ -23,33 +23,6 @@ class Redisfunctions
         $this->set_travel_mediums();
     }
 
-    public function set_user_details($username)
-    {
-        $model = new Common_model();
-        $records = $model->fetchSelectedData('*', TABLE_USERS, array('user_username' => $username));
-        if (count($records) > 0)
-        {
-            $this->ci->redis->hSet('users', $username, json_encode($records[0]));
-        }
-
-        return $records[0];
-    }
-
-    public function get_user_details($username)
-    {
-        $output = array();
-        if ($this->ci->redis->hExists('users', $username) == TRUE)
-        {
-            $output = (array) json_decode($this->ci->redis->hGet('users', $username));
-        }
-        else
-        {
-            $output = $this->set_user_details($username);
-        }
-
-        return $output;
-    }
-
     public function set_featured_trips()
     {
         $key_array = array();

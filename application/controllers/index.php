@@ -162,7 +162,7 @@ class Index extends CI_Controller
                     $user_id = $model->insertData(TABLE_USERS, $data_array);
 
                     // updating redis keys now
-                    $this->redis_functions->set_user_details($user_username);
+                    $this->redis_functions->set_user_profile_data($user_username);
 
                     if (USER_IP != '127.0.0.1')
                     {
@@ -232,7 +232,7 @@ class Index extends CI_Controller
                     $model->updateData(TABLE_USERS, array('user_status' => '1', 'verification_code' => ''), array('verification_code' => $verification_code));
 
                     // updating redis keys now
-                    $this->redis_functions->set_user_details($user_records[0]['user_username']);
+                    $this->redis_functions->set_user_profile_data($user_records[0]['user_username']);
 
                     $this->session->set_flashdata('success', '<strong>Welcome!</strong> Your account now active.');
                     redirect(base_url('login'));
@@ -275,7 +275,7 @@ class Index extends CI_Controller
                         $model->updateData(TABLE_USERS, array('user_password' => md5($new_password)), array('user_email' => $user_email));
 
                         // updating redis keys now
-                        $this->redis_functions->set_user_details($is_valid_email[0]['user_username']);
+                        $this->redis_functions->set_user_profile_data($is_valid_email[0]['user_username']);
 
                         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
                         {
