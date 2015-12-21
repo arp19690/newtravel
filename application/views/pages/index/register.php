@@ -26,7 +26,7 @@
                         <div class="contacts-colls-rb">
                             <div class="contact-colls-lbl"><?php echo $page_title; ?></div>
                             <div class="booking-form">
-                                <form id="contact_form" action="<?php echo base_url('register?next=' . current_url()); ?>">
+                                <form id="contact_form" action="<?php echo base_url('register?next=' . current_url()); ?>" method="post">
                                     <div class="booking-form-i">
                                         <label>Full Name:</label>
                                         <div class="input"><input type="text" name="user_fullname" placeholder="Enter you full name" required="required" /></div>

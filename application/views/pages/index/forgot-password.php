@@ -26,7 +26,7 @@
                         <div class="contacts-colls-rb">
                             <div class="contact-colls-lbl"><?php echo $page_title; ?></div>
                             <div class="booking-form">
-                                <form id="contact_form" action="<?php echo base_url('forgot-password'); ?>">
+                                <form id="contact_form" action="<?php echo base_url('forgot-password'); ?>" method="post">
                                     <div class="booking-form-i">
                                         <label>Your registered email:</label>
                                         <div class="input"><input type="email" name="user_email" placeholder="Enter you email" required="required" /></div>
