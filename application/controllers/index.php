@@ -136,6 +136,7 @@ class Index extends CI_Controller
                 {
                     // valid email
                     $verification_code = substr(getEncryptedString($arr['user_email'] . $arr['user_gender'] . time()), 0, 30);
+                    $user_username = getUniqueUsernameFromEmail($user_email);
 
                     $location_details = get_location_details_from_google(trim($arr['user_location']));
                     $location_lat_long = getLatLonByAddress(trim($arr['user_location']));
@@ -143,7 +144,7 @@ class Index extends CI_Controller
                     $data_array = array(
                         'user_fullname' => $arr['user_fullname'],
                         'user_gender' => strtolower($arr['user_gender']),
-                        'user_username' => $arr['user_username'],
+                        'user_username' => $user_username,
                         'user_email' => $user_email,
                         'user_password' => md5($arr['user_password']),
                         'user_ipaddress' => USER_IP,
