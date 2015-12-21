@@ -43,8 +43,8 @@ class Login_auth
                 $user_array = array(
                     "user_id" => $record["user_id"],
                     "user_fullname" => $record["user_fullname"],
-                    "username" => $record["user_username"],
-                    "user_username" => $record["user_email"],
+                    "user_username" => $record["user_username"],
+                    "user_email" => $record["user_email"],
                     "user_facebook_id" => $record["user_facebook_id"],
                     "user_session_expire_time" => time() + USER_TIMEOUT_TIME,
                 );
