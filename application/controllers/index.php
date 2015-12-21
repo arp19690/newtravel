@@ -161,6 +161,9 @@ class Index extends CI_Controller
                     );
                     $user_id = $model->insertData(TABLE_USERS, $data_array);
 
+                    // updating redis keys now
+                    $this->redis_functions->set_user_details($user_username);
+
                     if (USER_IP != '127.0.0.1')
                     {
                         $verification_url = base_url('activate?code=' . $verification_code);
@@ -224,8 +227,13 @@ class Index extends CI_Controller
                 }
                 else
                 {
+                    $user_records = $model->fetchSelectedData('user_username', TABLE_USERS, array('verification_code' => $verification_code));
                     // activate now
                     $model->updateData(TABLE_USERS, array('user_status' => '1', 'verification_code' => ''), array('verification_code' => $verification_code));
+
+                    // updating redis keys now
+                    $this->redis_functions->set_user_details($user_records[0]['user_username']);
+
                     $this->session->set_flashdata('success', '<strong>Welcome!</strong> Your account now active.');
                     redirect(base_url('login'));
                 }
@@ -254,7 +262,7 @@ class Index extends CI_Controller
                 $arr = $this->input->post();
                 $user_email = trim(strtolower($arr['user_email']));
 
-                $is_valid_email = $model->is_exists('user_id, user_status, user_fullname', TABLE_USERS, array('user_email' => $user_email));
+                $is_valid_email = $model->is_exists('user_id, user_status, user_fullname, user_username', TABLE_USERS, array('user_email' => $user_email));
                 if (!empty($is_valid_email))
                 {
                     // valid
@@ -266,11 +274,14 @@ class Index extends CI_Controller
                         $new_password = substr(getEncryptedString($user_email . "-" . $user_status . time()), 0, 6);
                         $model->updateData(TABLE_USERS, array('user_password' => md5($new_password)), array('user_email' => $user_email));
 
+                        // updating redis keys now
+                        $this->redis_functions->set_user_details($is_valid_email[0]['user_username']);
+
                         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
                         {
                             $this->load->library('EmailTemplates');
                             $emailTemplate = new EmailTemplates();
-                            $messageContent = $emailTemplate->forgot-password($full_name, $new_password);
+                            $messageContent = $emailTemplate->forgot - password($full_name, $new_password);
                             $email_model = new Email_model();
                             $email_model->sendMail($user_email, 'Forgot Password - ' . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
                         }
@@ -293,7 +304,7 @@ class Index extends CI_Controller
                 }
             }
             else
-            {                
+            {
                 $page_title = 'Forgot Password';
 
                 $input_arr = array(
