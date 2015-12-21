@@ -11,7 +11,14 @@ class Trip extends CI_Controller
 
     public function index()
     {
-        $this->add_new();
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $this->add_new();
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
     public function add_new($step = 1, $url_key = NULL)
