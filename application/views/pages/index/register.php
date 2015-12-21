@@ -29,15 +29,15 @@
                                 <form id="contact_form" action="<?php echo base_url('register?next=' . current_url()); ?>" method="post">
                                     <div class="booking-form-i">
                                         <label>Full Name:</label>
-                                        <div class="input"><input type="text" name="user_fullname" placeholder="Enter you full name" required="required" /></div>
+                                        <div class="input"><input type="text" name="user_fullname" placeholder="Enter your full name" required="required" /></div>
                                     </div>
                                     <div class="booking-form-i">
                                         <label>Your city:</label>
-                                        <div class="input"><input type="text" name="user_location" placeholder="Enter you city" class="gMapLocation-cities" /></div>
+                                        <div class="input"><input type="text" name="user_location" placeholder="Enter your city" class="gMapLocation-cities" /></div>
                                     </div>
                                     <div class="booking-form-i">
                                         <label>Email:</label>
-                                        <div class="input"><input type="email" name="user_email" placeholder="Enter you email" required="required" /></div>
+                                        <div class="input"><input type="email" name="user_email" placeholder="Enter your email" required="required" /></div>
                                     </div>
                                     <div class="booking-form-i">
                                         <label>Password:</label>
