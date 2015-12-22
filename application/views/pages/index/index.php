@@ -14,6 +14,7 @@ $redis_functions = new Redisfunctions();
                 <?php
                 if (!empty($featured_trip_keys))
                 {
+                    $i = 1;
                     foreach ($featured_trip_keys as $post_url_key)
                     {
                         $trip_details = $redis_functions->get_trip_details($post_url_key);
@@ -58,6 +59,11 @@ $redis_functions = new Redisfunctions();
                             </div>
                         </div>
                         <?php
+                        $i++;
+                        if ($i > 12)
+                        {
+                            break;
+                        }
                     }
                 }
                 ?>

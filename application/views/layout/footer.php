@@ -18,6 +18,7 @@ $featured_trips = $redis_functions->get_featured_trips();
                 <?php
                 if (!empty($featured_trips))
                 {
+                    $i = 0;
                     foreach ($featured_trips as $post_url_key)
                     {
                         $trip_details = $redis_functions->get_trip_details($post_url_key);
@@ -36,11 +37,16 @@ $featured_trips = $redis_functions->get_featured_trips();
                             <div class="footer-tour-r">
                                 <div class="footer-tour-a"><?php echo $trip_title; ?></div>
                                 <div class="footer-tour-b"><?php echo $trip_description; ?></div>
-                                <div class="footer-tour-c"><?php echo $trip_total_cost;?></div>
+                                <div class="footer-tour-c"><?php echo $trip_total_cost; ?></div>
                             </div>
                             <div class="clear"></div>
                         </div>
                         <?php
+                        $i++;
+                        if ($i > 4)
+                        {
+                            break;
+                        }
                     }
                 }
                 ?>
