@@ -29,6 +29,15 @@ class Custom_model extends CI_Model
             $post_regions_records = $model->fetchSelectedData('*', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
             $output['post_regions'] = $post_regions_records;
 
+            $output['post_start_date'] = NULL;
+            $output['post_end_date'] = NULL;
+            $post_start_end_date_record = $model->fetchSelectedData('min(pr_from_date) as start_date, max(`pr_to_date`) as end_date', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
+            if (!empty($post_start_end_date_record))
+            {
+                $output['post_start_date'] = $post_start_end_date_record[0]['start_date'];
+                $output['post_end_date'] = $post_start_end_date_record[0]['end_date'];
+            }
+
             $post_comments_records = $model->fetchSelectedData('*', TABLE_POST_COMMENTS, array('pcm_post_id' => $post_id));
             $output['post_comments'] = $post_comments_records;
 
