@@ -4,26 +4,57 @@
 
         <div class="mp-offesr">
             <div class="wrapper-padding-a">
+                <header class="fly-in" style="margin-bottom: 40px;text-align: center;">
+                    <div class="offer-slider-lbl">Our featured trips</div>
+                    <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui.</p>
+                </header>
                 <div class="offer-slider">
-                    <header class="fly-in page-lbl">
-                        <div class="offer-slider-lbl">We are Offering the hottest offers</div>
-                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseuuntur magni dolores eos qui ratione.</p>
-                    </header>
-
                     <div class="fly-in offer-slider-c">
-                        <div id="offers" class="owl-slider">
+                        <div id="offers-a" class="owl-slider">
                             <!-- // -->
                             <div class="offer-slider-i">
                                 <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-01.jpg" />
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-05.jpg" />
                                     <span class="offer-slider-overlay">
                                         <span class="offer-slider-btn">view details</span>
                                     </span>
                                 </a>
                                 <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Andrassy Thai Hotel</a></div>
+                                    <div class="offer-slider-link"><a href="#">Paris, france</a></div>
                                     <div class="offer-slider-l">
-                                        <div class="offer-slider-location">Location: Thailand </div>
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
+                                        <nav class="stars">
+                                            <ul>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </nav>
+                                    </div>
+                                    <div class="offer-slider-r align-right">
+                                        <b>1200$</b>
+                                        <span>price</span>
+                                    </div>
+                                    <div class="offer-slider-devider"></div>								
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <!-- \\ -->
+                            <!-- // -->
+                            <div class="offer-slider-i">
+                                <a class="offer-slider-img" href="#">
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-06.jpg" />
+                                    <span class="offer-slider-overlay">
+                                        <span class="offer-slider-btn">view details</span>
+                                    </span>
+                                </a>
+                                <div class="offer-slider-txt">
+                                    <div class="offer-slider-link"><a href="#">pattaya, thailand</a></div>
+                                    <div class="offer-slider-l">
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
                                         <nav class="stars">
                                             <ul>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
@@ -36,8 +67,8 @@
                                         </nav>
                                     </div>
                                     <div class="offer-slider-r">
-                                        <b>756$</b>
-                                        <span>avg/night</span>
+                                        <b>2200$</b>
+                                        <span>price</span>
                                     </div>
                                     <div class="offer-slider-devider"></div>								
                                     <div class="clear"></div>
@@ -47,15 +78,47 @@
                             <!-- // -->
                             <div class="offer-slider-i">
                                 <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-02.jpg" />
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-07.jpg" />
                                     <span class="offer-slider-overlay">
                                         <span class="offer-slider-btn">view details</span>
                                     </span>
                                 </a>
                                 <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Campanile Cracovie</a></div>
+                                    <div class="offer-slider-link"><a href="#">london, england</a></div>
                                     <div class="offer-slider-l">
-                                        <div class="offer-slider-location">location: poland</div>
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
+                                        <nav class="stars">
+                                            <ul>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </nav>
+                                    </div>
+                                    <div class="offer-slider-r">
+                                        <b>1900$</b>
+                                        <span>price</span>
+                                    </div>
+                                    <div class="offer-slider-devider"></div>								
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <!-- \\ -->
+                            <!-- // -->
+                            <div class="offer-slider-i">
+                                <a class="offer-slider-img" href="#">
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-08.jpg" />
+                                    <span class="offer-slider-overlay">
+                                        <span class="offer-slider-btn">view details</span>
+                                    </span>
+                                </a>
+                                <div class="offer-slider-txt">
+                                    <div class="offer-slider-link"><a href="#">san francisco, usa</a></div>
+                                    <div class="offer-slider-l">
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
                                         <nav class="stars">
                                             <ul>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
@@ -68,8 +131,8 @@
                                         </nav>
                                     </div>
                                     <div class="offer-slider-r">
-                                        <b>900$</b>
-                                        <span>avg/night</span>
+                                        <b>3500$</b>
+                                        <span>price</span>
                                     </div>
                                     <div class="offer-slider-devider"></div>								
                                     <div class="clear"></div>
@@ -79,29 +142,29 @@
                             <!-- // -->
                             <div class="offer-slider-i">
                                 <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-03.jpg" />
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-05.jpg" />
                                     <span class="offer-slider-overlay">
                                         <span class="offer-slider-btn">view details</span>
                                     </span>
                                 </a>
                                 <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Park Plaza Westminster</a></div>
+                                    <div class="offer-slider-link"><a href="#">Paris, france</a></div>
                                     <div class="offer-slider-l">
-                                        <div class="offer-slider-location">Location: Thailand </div>
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
                                         <nav class="stars">
                                             <ul>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
                                             </ul>
                                             <div class="clear"></div>
                                         </nav>
                                     </div>
-                                    <div class="offer-slider-r">
-                                        <b>850$</b>
-                                        <span>avg/night</span>
+                                    <div class="offer-slider-r align-right">
+                                        <b>1200$</b>
+                                        <span>price</span>
                                     </div>
                                     <div class="offer-slider-devider"></div>								
                                     <div class="clear"></div>
@@ -111,15 +174,15 @@
                             <!-- // -->
                             <div class="offer-slider-i">
                                 <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-04.jpg" />
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-06.jpg" />
                                     <span class="offer-slider-overlay">
                                         <span class="offer-slider-btn">view details</span>
                                     </span>
                                 </a>
                                 <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Ermin's Hotel</a></div>
+                                    <div class="offer-slider-link"><a href="#">pattaya, thailand</a></div>
                                     <div class="offer-slider-l">
-                                        <div class="offer-slider-location">location: england</div>
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
                                         <nav class="stars">
                                             <ul>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
@@ -132,8 +195,8 @@
                                         </nav>
                                     </div>
                                     <div class="offer-slider-r">
-                                        <b>630$</b>
-                                        <span>avg/night</span>
+                                        <b>2200$</b>
+                                        <span>price</span>
                                     </div>
                                     <div class="offer-slider-devider"></div>								
                                     <div class="clear"></div>
@@ -143,15 +206,47 @@
                             <!-- // -->
                             <div class="offer-slider-i">
                                 <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-01.jpg" />
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-07.jpg" />
                                     <span class="offer-slider-overlay">
                                         <span class="offer-slider-btn">view details</span>
                                     </span>
                                 </a>
                                 <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Andrassy Thai Hotel</a></div>
+                                    <div class="offer-slider-link"><a href="#">london, england</a></div>
                                     <div class="offer-slider-l">
-                                        <div class="offer-slider-location">Location: Thailand </div>
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
+                                        <nav class="stars">
+                                            <ul>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </nav>
+                                    </div>
+                                    <div class="offer-slider-r">
+                                        <b>1900$</b>
+                                        <span>price</span>
+                                    </div>
+                                    <div class="offer-slider-devider"></div>								
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <!-- \\ -->
+                            <!-- // -->
+                            <div class="offer-slider-i">
+                                <a class="offer-slider-img" href="#">
+                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-08.jpg" />
+                                    <span class="offer-slider-overlay">
+                                        <span class="offer-slider-btn">view details</span>
+                                    </span>
+                                </a>
+                                <div class="offer-slider-txt">
+                                    <div class="offer-slider-link"><a href="#">san francisco, usa</a></div>
+                                    <div class="offer-slider-l">
+                                        <div class="offer-slider-location">11 NOV 2014 - 22 NOV 2014</div>
                                         <nav class="stars">
                                             <ul>
                                                 <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
@@ -164,119 +259,19 @@
                                         </nav>
                                     </div>
                                     <div class="offer-slider-r">
-                                        <b>756$</b>
-                                        <span>avg/night</span>
+                                        <b>3500$</b>
+                                        <span>price</span>
                                     </div>
                                     <div class="offer-slider-devider"></div>								
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <!-- \\ -->
-                            <!-- // -->
-                            <div class="offer-slider-i">
-                                <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-02.jpg" />
-                                    <span class="offer-slider-overlay">
-                                        <span class="offer-slider-btn">view details</span>
-                                    </span>
-                                </a>
-                                <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Campanile Cracovie</a></div>
-                                    <div class="offer-slider-l">
-                                        <div class="offer-slider-location">location: poland</div>
-                                        <nav class="stars">
-                                            <ul>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                            </ul>
-                                            <div class="clear"></div>
-                                        </nav>
-                                    </div>
-                                    <div class="offer-slider-r">
-                                        <b>900$</b>
-                                        <span>avg/night</span>
-                                    </div>
-                                    <div class="offer-slider-devider"></div>								
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="offer-slider-i">
-                                <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-03.jpg" />
-                                    <span class="offer-slider-overlay">
-                                        <span class="offer-slider-btn">view details</span>
-                                    </span>
-                                </a>
-                                <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Park Plaza Westminster</a></div>
-                                    <div class="offer-slider-l">
-                                        <div class="offer-slider-location">Location: Thailand </div>
-                                        <nav class="stars">
-                                            <ul>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                            </ul>
-                                            <div class="clear"></div>
-                                        </nav>
-                                    </div>
-                                    <div class="offer-slider-r">
-                                        <b>850$</b>
-                                        <span>avg/night</span>
-                                    </div>
-                                    <div class="offer-slider-devider"></div>								
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="offer-slider-i">
-                                <a class="offer-slider-img" href="#">
-                                    <img alt="" src="<?php echo IMAGES_PATH; ?>/slide-04.jpg" />
-                                    <span class="offer-slider-overlay">
-                                        <span class="offer-slider-btn">view details</span>
-                                    </span>
-                                </a>
-                                <div class="offer-slider-txt">
-                                    <div class="offer-slider-link"><a href="#">Ermin's Hotel</a></div>
-                                    <div class="offer-slider-l">
-                                        <div class="offer-slider-location">location: england</div>
-                                        <nav class="stars">
-                                            <ul>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                            </ul>
-                                            <div class="clear"></div>
-                                        </nav>
-                                    </div>
-                                    <div class="offer-slider-r">
-                                        <b>630$</b>
-                                        <span>avg/night</span>
-                                    </div>
-                                    <div class="offer-slider-devider"></div>								
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
+
                         </div>
                     </div>
                 </div>
-
                 <div class="offer-slider">
-                    <header class="fly-in">
-                        <div class="offer-slider-lbl">Our featured tours</div>
-                        <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui.</p>
-                    </header>
                     <div class="fly-in offer-slider-c">
                         <div id="offers-a" class="owl-slider">
                             <!-- // -->
