@@ -37,6 +37,7 @@ class Custom_model extends CI_Model
             $total_cost = 0;
             if (!empty($post_costs_records))
             {
+                $output['post_currency'] = $post_costs_records[0]['cost_currency'];
                 foreach ($post_costs_records as $value)
                 {
                     $total_cost = $total_cost + $value['cost_amount'];
