@@ -21,9 +21,9 @@ $featured_trips = $redis_functions->get_featured_trips();
                     foreach ($featured_trips as $post_url_key)
                     {
                         $trip_details = $redis_functions->get_trip_details($post_url_key);
-                        $trip_title = stripslashes($trip_details->post_title);
-                        $trip_description = getNWordsFromString(stripslashes($trip_details->post_description), 20);
-                        $trip_primary_image = base_url(getImage($trip_details->post_primary_image));
+                        $trip_title = stripslashes($trip_details['post_title']);
+                        $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
+                        $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
                         ?>
                         <div class="footer-tour">
                             <div class="footer-tour-l">
