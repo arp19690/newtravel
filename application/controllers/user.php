@@ -29,18 +29,28 @@ class User extends CI_Controller
 //                prd($arr);
                 if (isset($arr["btn_submit"]))
                 {
+                    $user_dob = NULL;
+                    if (!empty($arr['dob_dd']) && !empty($arr['dob_mm']) && !empty($arr['dob_yy']))
+                    {
+                        $user_dob = $arr['dob_yy'] . '-' . $arr['dob_mm'] . '-' . $arr['dob_dd'];
+                    }
+
                     $location_details = get_location_details_from_google(trim($arr['user_location']));
                     $location_lat_long = getLatLonByAddress(trim($arr['user_location']));
                     $data_array = array(
-                        'user_fullname' => stripslashes($arr['user_fullname']),
-                        'user_gender' => stripslashes($arr['user_gender']),
-                        'user_location' => stripslashes($arr['user_location']),
+                        'user_fullname' => addslashes($arr['user_fullname']),
+                        'user_gender' => addslashes($arr['user_gender']),
+                        'user_location' => addslashes($arr['user_location']),
                         'user_city' => $location_details['city'],
                         'user_state' => $location_details['state'],
                         'user_country' => $location_details['country'],
                         'user_location' => trim($arr['user_location']),
                         'user_latitude' => $location_lat_long['latitude'],
                         'user_longitude' => $location_lat_long['longitude'],
+                        'user_tagline' => addslashes($arr['user_tagline']),
+                        'user_about' => addslashes($arr['user_about']),
+                        'user_relationship_status' => addslashes($arr['user_relationship_status']),
+                        'user_dob' => $user_dob,
                     );
 
                     if (isset($arr['user_username']))
