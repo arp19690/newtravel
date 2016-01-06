@@ -458,7 +458,7 @@ class Trip extends CI_Controller
         return TRUE;
     }
 
-    public function my_posts($view_type='list')
+    public function my_posts($view_type = 'list', $limit = 10)
     {
         switch ($view_type)
         {
