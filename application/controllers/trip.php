@@ -458,7 +458,7 @@ class Trip extends CI_Controller
         return TRUE;
     }
 
-    public function my_posts($view_type = 'list', $limit = 10)
+    public function my_posts($view_type = 'list', $page = 1)
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
@@ -476,7 +476,7 @@ class Trip extends CI_Controller
 
         $data["post_records"] = $post_records;
         $data["view_type"] = $view_type;
-        $data["limit"] = $limit;
+        $data["page"] = $page;
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
