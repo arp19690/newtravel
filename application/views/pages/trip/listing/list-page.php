@@ -3,7 +3,7 @@
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title"><?php echo $page_title;?></div>
+                <div class="page-title"><?php echo $page_title; ?></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
@@ -20,7 +20,16 @@
                 </div>
 
                 <div class="two-colls-right">
-                    <?php $this->load->view('pages/trip/listing/trip-list'); ?>
+                    <?php
+                    if ($view_type == 'list')
+                    {
+                        $this->load->view('pages/trip/listing/trip-list');
+                    }
+                    elseif ($view_type == 'grid')
+                    {
+                        $this->load->view('pages/trip/listing/trip-grid');
+                    }
+                    ?>
                     <br class="clear" />
                 </div>
             </div>

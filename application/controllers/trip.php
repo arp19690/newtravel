@@ -473,17 +473,14 @@ class Trip extends CI_Controller
             '#' => $page_title,
         );
         $breadcrumbs = get_breadcrumbs($input_arr);
-        $view_file_name = 'list-page';
-        if ($view_type == 'grid')
-        {
-            $view_file_name = 'grid-page';
-        }
 
         $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["limit"] = $limit;
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
-        $this->template->write_view("content", "pages/trip/listing/" . $view_file_name, $data);
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
     }
 
