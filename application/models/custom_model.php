@@ -28,6 +28,21 @@ class Custom_model extends CI_Model
 
             $post_regions_records = $model->fetchSelectedData('*', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
             $output['post_regions'] = $post_regions_records;
+            $output['post_travel_mediums'] = array();
+            if (!empty($post_regions_records))
+            {
+                foreach ($post_regions_records as $key => $value)
+                {
+                    $travel_mediums = $records = $model->fetchSelectedData('tm_title, tm_icon', TABLE_TRAVEL_MEDIUMS, array('tm_status' => '1', 'tm_id' => $value['pr_travel_medium']));
+                    if (!empty($travel_mediums))
+                    {
+                        $output['post_travel_mediums'][] = array(
+                            'title' => stripslashes($travel_mediums[0]['tm_title']),
+                            'icon' => stripslashes($travel_mediums[0]['tm_icon']),
+                        );
+                    }
+                }
+            }
 
             $output['post_start_date'] = NULL;
             $output['post_end_date'] = NULL;
