@@ -458,7 +458,19 @@ class Trip extends CI_Controller
         return TRUE;
     }
 
-    public function my_posts()
+    public function my_posts($view_type='list')
+    {
+        switch ($view_type)
+        {
+            case 'list':
+                $this->my_posts_list_view();
+                break;
+            case 'grid':
+                break;
+        }
+    }
+
+    public function my_posts_list_view()
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];

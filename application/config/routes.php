@@ -55,7 +55,7 @@
     $route['change-password'] = 'user/changePassword';
     $route['activate'] = 'index/activate';
     $route['my-account'] = 'user/myAccount';
-    $route['my-trips'] = 'trip/my_posts';
+    $route['my-trips/(:any)'] = 'trip/my_posts/$1';
 
     $route['trip/post/add'] = 'trip/add_new';
     $route['trip/post/edit/(:num)/(:any)'] = 'trip/add_new/$1/$2';
