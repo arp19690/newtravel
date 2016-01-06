@@ -460,18 +460,6 @@ class Trip extends CI_Controller
 
     public function my_posts($view_type = 'list', $limit = 10)
     {
-        switch ($view_type)
-        {
-            case 'list':
-                $this->my_posts_list_view();
-                break;
-            case 'grid':
-                break;
-        }
-    }
-
-    public function my_posts_list_view()
-    {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
         $model = new Common_model();
@@ -485,12 +473,17 @@ class Trip extends CI_Controller
             '#' => $page_title,
         );
         $breadcrumbs = get_breadcrumbs($input_arr);
+        $view_file_name = 'list-page';
+        if ($view_type == 'grid')
+        {
+            $view_file_name = 'grid-page';
+        }
 
         $data["post_records"] = $post_records;
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
-        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->write_view("content", "pages/trip/listing/" . $view_file_name, $data);
         $this->template->render();
     }
 
