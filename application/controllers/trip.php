@@ -478,7 +478,7 @@ class Trip extends CI_Controller
         $page_title = 'Trips I\'ve Posted';
 
         $whereConsStr = array('post_user_id' => $user_id);
-        $trip_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC');
+        $post_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC');
 
         $input_arr = array(
             base_url() => 'Home',
@@ -486,7 +486,7 @@ class Trip extends CI_Controller
         );
         $breadcrumbs = get_breadcrumbs($input_arr);
 
-        $data["trip_records"] = $trip_records;
+        $data["post_records"] = $post_records;
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
