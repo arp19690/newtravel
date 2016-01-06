@@ -82,7 +82,7 @@
                                                     <b><?php echo $post_total_cost; ?></b>
                                                     <span>trip budget</span>
                                                 </div>           
-                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>">View details</a>   
+                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>">View</a>   
                                             </div>
                                         </div>
                                         <div class="clear"></div>
