@@ -3,7 +3,7 @@
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title">Tours - <span>Alternative</span></div>
+                <div class="page-title"><?php echo $page_title;?></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
