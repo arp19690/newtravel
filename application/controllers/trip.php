@@ -466,7 +466,8 @@ class Trip extends CI_Controller
         $page_title = 'Trips I\'ve Posted';
 
         $whereConsStr = array('post_user_id' => $user_id);
-        $post_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC');
+        $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
+        $post_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC', $limit);
 
         $input_arr = array(
             base_url() => 'Home',
