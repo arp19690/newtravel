@@ -444,19 +444,34 @@ class User extends CI_Controller
     {
         if (isset($this->session->userdata['user_id']) && !empty($_FILES) && $_FILES['user_img']['size'] > 0 && $_FILES['user_img']['error'] == 0)
         {
+            $model = new Common_model();
             $user_id = $this->session->userdata['user_id'];
+            $user_record = $model->fetchSelectedData('user_profile_picture, user_username', TABLE_USERS, array('user_id' => $user_id));
+            $user_record = $user_record[0];
+
+            $redirect_url = base_url('my-account');
+            if ($this->input->post('next'))
+            {
+                $redirect_url = $this->input->post('next');
+            }
 
             $source = $_FILES['user_img']['tmp_name'];
-            $destination = USER_IMG_PATH . "/" . getEncryptedString($user_id) . ".jpg";
-
-            @unlink($destination);
+            $destination = USER_IMG_PATH . "/" . getEncryptedString($user_id . time()) . ".jpg";
 
             $this->load->library('SimpleImage');
             $simpleImage = new SimpleImage();
             $simpleImage->uploadImage($source, $destination, USER_IMG_WIDTH, USER_IMG_HEIGHT);
 
+//            removing older picture
+            @unlink($user_record['user_profile_picture']);
+
+            $model->updateData(TABLE_USERS, array('user_profile_picture' => $destination), array('user_id' => $user_id));
             $this->session->set_flashdata('success', '<strong>Success!</strong> Your profile picture has been changed');
-            redirect(base_url('my-account'));
+
+            // updating redis keys now
+            $this->redis_functions->set_user_profile_data($user_record['user_username']);
+
+            redirect($redirect_url);
         }
         else
         {

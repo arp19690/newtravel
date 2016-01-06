@@ -17,8 +17,18 @@
             <div class="contacts-page">
                 <div class="contacts-colls">
                     <div class="contacts-colls-l">
-                        <!--Ads will appear here-->
-                        <?php echo get_google_ad(); ?>
+                        <div class="clear">
+                            <img src="<?php echo getImage($record['user_profile_picture']); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
+                        </div>
+
+                        <div class="clear">
+                            <form action="<?php echo base_url('user/changeProfilePicture'); ?>" method="post" enctype="multipart/form-data" class="img-upload-form">
+                                <input type="hidden" name="next" value="<?php echo current_url(); ?>"/>
+                                <label for="user_img" class="hightile-a" style="padding:10px;cursor:pointer;margin: 0;">Change Image</label>
+                                <input type="file" name="user_img" id="user_img" style="display:none;"/>
+                            </form>
+                            <div class="clear"></div>
+                        </div>
                         <div class="clear"></div>
                     </div>
 
@@ -150,6 +160,14 @@
             $(this).addClass('chosen');
             var gender = $(this).attr('data-value');
             $('.user_gender_input').val(gender);
+        });
+
+        $('#user_img').change(function () {
+            var img_value = $(this).val();
+            if (img_value != '')
+            {
+                $('.img-upload-form').submit();
+            }
         });
     });
 </script>
