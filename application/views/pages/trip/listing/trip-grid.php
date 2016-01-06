@@ -45,7 +45,7 @@
                             <div class="offer-slider-devider"></div>								
                             <div class="clear"></div>
                             <div class="offer-slider-lead"><?php echo $post_description; ?></div>
-                            <a href="<?php echo $post_url; ?>" class="cat-list-btn">Select</a>
+                            <a href="<?php echo $post_url; ?>" class="cat-list-btn">View details</a>
                         </div>
                     </div>
                     <!-- \\ -->
