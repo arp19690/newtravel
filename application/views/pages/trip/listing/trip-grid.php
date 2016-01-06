@@ -30,7 +30,7 @@
                         <a href="<?php echo $post_url; ?>" class="offer-slider-img">
                             <img alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
                             <span class="offer-slider-overlay">
-                                <span class="offer-slider-btn">view details</span><span></span>
+                                <span class="offer-slider-btn">View details</span><span></span>
                             </span>
                         </a>
                         <div class="offer-slider-txt">
