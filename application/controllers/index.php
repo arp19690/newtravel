@@ -12,9 +12,12 @@ class Index extends CI_Controller
     public function index()
     {
         $data = array();
-        $model = new Common_model();
-        $custom_model = new Custom_model();
+        $featured_trip_keys = $this->redis_functions->get_featured_trips('p.post_url_key', '0, 12');
 
+        $page_title = $this->redis_functions->get_site_setting('SITE_TITLE');
+        $data["featured_trip_keys"] = $featured_trip_keys;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $data["page_title"];
         $this->template->write_view("content", "pages/index/index", $data);
         $this->template->render();
     }

@@ -109,7 +109,7 @@ $path = $controller . "/" . $action;
                     ?>
                     <li><a href="<?php echo base_url('my-account'); ?>">My Account</a>
                         <ul>
-                            <li><a href="<?php echo base_url('my-trips'); ?>">My Trips</a></li>
+                            <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                         </ul>
                     </li>
                     <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>

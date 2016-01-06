@@ -411,11 +411,11 @@ function getPaginationLinks($url, $total_records, $current_page = 1, $pagination
     return $str;
 }
 
-function getPaginationLimit($current_page = 1, $max_records = 20)
+function getPaginationLimit($current_page = 1, $max_records = TRIPS_PAGINATION_LIMIT)
 {
-    $upper_limit = $current_page * $max_records;
-    $lower_limit = ($current_page - 1) * $max_records;
-    $limit = $lower_limit . ", " . $upper_limit;
+    $limit_record_one = ($current_page - 1) * $max_records;
+    $limit = $limit_record_one . ', ' . ($limit_record_one + $max_records);
+
     return $limit;
 }
 

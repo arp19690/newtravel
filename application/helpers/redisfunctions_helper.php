@@ -42,7 +42,7 @@ class Redisfunctions
 
     public function get_featured_trips()
     {
-        $output = json_decode($this->ci->redis->get('featured_trips'));
+        $output = (array) json_decode($this->ci->redis->get('featured_trips'));
         return $output;
     }
 
@@ -98,7 +98,7 @@ class Redisfunctions
         $output = array();
         if ($this->ci->redis->hExists('trips', $url_key) == TRUE)
         {
-            $output = json_decode($this->ci->redis->hGet('trips', $url_key));
+            $output = (array) json_decode($this->ci->redis->hGet('trips', $url_key));
         }
         else
         {

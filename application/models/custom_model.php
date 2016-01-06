@@ -28,6 +28,43 @@ class Custom_model extends CI_Model
 
             $post_regions_records = $model->fetchSelectedData('*', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
             $output['post_regions'] = $post_regions_records;
+            $output['post_travel_mediums'] = array();
+            $output['post_travel_mediums_string'] = NULL;
+            if (!empty($post_regions_records))
+            {
+                $tmp_arr = array();
+                foreach ($post_regions_records as $key => $value)
+                {
+                    $travel_mediums = $records = $model->fetchSelectedData('tm_title, tm_icon', TABLE_TRAVEL_MEDIUMS, array('tm_status' => '1', 'tm_id' => $value['pr_travel_medium']));
+                    if (!empty($travel_mediums))
+                    {
+                        $title = stripslashes($travel_mediums[0]['tm_title']);
+                        $icon = stripslashes($travel_mediums[0]['tm_icon']);
+
+                        if (!in_array($title, $tmp_arr))
+                        {
+                            $tmp_arr[] = $title;
+                        }
+
+                        $output['post_travel_mediums'][] = array(
+                            'title' => $title,
+                            'icon' => $icon,
+                        );
+                    }
+                }
+                $output['post_travel_mediums_string'] = implode(' + ', $tmp_arr);
+            }
+
+            $output['post_start_date'] = NULL;
+            $output['post_end_date'] = NULL;
+            $output['post_total_days'] = NULL;
+            $post_start_end_date_record = $model->fetchSelectedData('min(pr_from_date) as start_date, max(`pr_to_date`) as end_date', TABLE_POST_REGIONS, array('pr_post_id' => $post_id));
+            if (!empty($post_start_end_date_record))
+            {
+                $output['post_start_date'] = $post_start_end_date_record[0]['start_date'];
+                $output['post_end_date'] = $post_start_end_date_record[0]['end_date'];
+                $output['post_total_days'] = round((strtotime($post_start_end_date_record[0]['end_date']) - strtotime($post_start_end_date_record[0]['start_date'])) / (3600 * 24));
+            }
 
             $post_comments_records = $model->fetchSelectedData('*', TABLE_POST_COMMENTS, array('pcm_post_id' => $post_id));
             $output['post_comments'] = $post_comments_records;
@@ -37,6 +74,7 @@ class Custom_model extends CI_Model
             $total_cost = 0;
             if (!empty($post_costs_records))
             {
+                $output['post_currency'] = $post_costs_records[0]['cost_currency'];
                 foreach ($post_costs_records as $value)
                 {
                     $total_cost = $total_cost + $value['cost_amount'];
@@ -100,9 +138,9 @@ class Custom_model extends CI_Model
         return TRUE;
     }
 
-    public function get_featured_trips($fields = 'p.post_url_key')
+    public function get_featured_trips($fields = 'p.post_url_key', $limit = '0, 20')
     {
-        $sql = "SELECT " . $fields . " FROM `post_featured` as pf LEFT JOIN posts as p ON p.post_id = pf.pf_post_id LEFT JOIN post_featured_master as pfm on pfm.pfm_id = pf.pf_pfm_id WHERE p.post_status = '1' and p.post_published = '1' and pf.pf_status = '1' and pfm.pfm_status = '1' and pf_end_date > '" . date('Y-m-d H:i:s') . "' ORDER BY pfm.pfm_amount";
+        $sql = "SELECT " . $fields . " FROM `post_featured` as pf LEFT JOIN posts as p ON p.post_id = pf.pf_post_id LEFT JOIN post_featured_master as pfm on pfm.pfm_id = pf.pf_pfm_id WHERE p.post_status = '1' and p.post_published = '1' and pf.pf_status = '1' and pfm.pfm_status = '1' and pf_end_date > '" . date('Y-m-d H:i:s') . "' ORDER BY pfm.pfm_amount LIMIT " . $limit;
         $records = $this->db->query($sql)->result_array();
         return $records;
     }
