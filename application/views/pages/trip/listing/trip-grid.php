@@ -36,17 +36,7 @@
                         <div class="offer-slider-txt">
                             <div class="offer-slider-link"><a href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
                             <div class="offer-slider-l">
-                                <div class="offer-slider-location">Duration : <?php echo $post_total_days; ?> days</div>
-                                <nav class="stars">
-                                    <ul>
-                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                    </ul>
-                                    <div class="clear"></div>
-                                </nav>
+                                <div class="offer-slider-location">Trip Duration : <?php echo $post_total_days; ?> days</div>
                             </div>
                             <div class="offer-slider-r">
                                 <b><?php echo $post_total_cost; ?></b>
@@ -71,12 +61,6 @@
         </div>
 
         <div class="clear"></div>
-
-        <div class="pagination">
-            <a class="active" href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <div class="clear"></div>
-        </div>            
+        <?php $this->load->view('pages/trip/listing/pagination'); ?>     
     </div>
 </div>

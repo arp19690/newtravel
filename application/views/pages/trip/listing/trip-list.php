@@ -61,10 +61,10 @@
                                                                         <span class="tour-item-plus"><img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon.png"></span>
                                                                         <img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon-02.png">-->
                                                                     </div>
-                                                                    <div class="tour-icon-txt">Air + bus</div>
+                                                                    <div class="tour-icon-txt">Via : <?php echo $post_details['post_travel_mediums_string']; ?></div>
                                                                     <div class="clear"></div>
                                                                 </div>
-                                                                <div class="tour-duration">Duration : <?php echo $post_total_days; ?> days</div>
+                                                                <div class="tour-duration">Trip Duration : <?php echo $post_total_days; ?> days</div>
                                                                 <div class="clear"></div>
                                                             </div>
                                                         </div>
@@ -75,17 +75,9 @@
                                         </div>
                                         <div class="cat-list-content-r">
                                             <div class="cat-list-content-p">
-                                                <nav class="stars">
-                                                    <ul>
-                                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                                    </ul>
-                                                    <div class="clear"></div>
-                                                </nav>
-                                                <div class="cat-list-review">270 reviews</div>
+                                                <?php
+                                                count($post_details['post_comments']) > 0 ? '<div class="cat-list-review">' . number_format(count($post_details['post_comments'])) . ' reviews</div>' : ''
+                                                ?>
                                                 <div class="offer-slider-r">
                                                     <b><?php echo $post_total_cost; ?></b>
                                                     <span>trip budget</span>
