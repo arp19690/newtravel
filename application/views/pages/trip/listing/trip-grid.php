@@ -36,7 +36,7 @@
                         <div class="offer-slider-txt">
                             <div class="offer-slider-link"><a href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
                             <div class="offer-slider-l">
-                                <div class="offer-slider-location">Trip Duration : <?php echo $post_total_days; ?> days</div>
+                                <div class="offer-slider-location">Duration : <?php echo $post_total_days; ?> days</div>
                             </div>
                             <div class="offer-slider-r">
                                 <b><?php echo $post_total_cost; ?></b>
