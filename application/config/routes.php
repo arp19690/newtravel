@@ -55,10 +55,11 @@ $route['forgot-password'] = 'index/forgotPassword';
 $route['change-password'] = 'user/changePassword';
 $route['activate'] = 'index/activate';
 $route['my-account'] = 'user/myAccount';
-$route['my-trips/(:any)'] = 'trip/my_posts/$1';
 
 $route['trip/post/add'] = 'trip/add_new';
 $route['trip/post/edit/(:num)/(:any)'] = 'trip/add_new/$1/$2';
+$route['my-trips/(:any)'] = 'trip/my_posts/$1';
+$route['trip/view/(:any)'] = 'trip/trip_details/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

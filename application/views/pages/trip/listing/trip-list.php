@@ -49,11 +49,11 @@
                                                                 <div class="tour-i-holder">
                                                                     <div class="tour-item-icons">
                                                                         <?php
-                                                                        if (!empty($post_details->post_media->images))
+                                                                        if (!empty($post_details['post_media']->images))
                                                                         {
-                                                                            foreach ($post_details->post_media->images as $key => $value)
+                                                                            foreach ($post_details['post_media']->images as $key => $value)
                                                                             {
-                                                                                echo '<img alt="' . $post_title . '" src="' . getimagesize($value['pm_media_url']) . '">';
+                                                                                echo '<img alt="' . $post_title . '" src="' . getImage($value->pm_media_url) . '">';
                                                                             }
                                                                         }
                                                                         ?>

@@ -485,4 +485,32 @@ class Trip extends CI_Controller
         $this->template->render();
     }
 
+    public function trip_details($post_url_key)
+    {
+        $post_details = $this->redis_functions->get_trip_details($post_url_key);
+        if (!empty($post_details))
+        {
+            $data = array();
+            $page_title = stripslashes($post_details['post_title']);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["post_details"] = $post_details;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/trip-detail", $data);
+            $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }
