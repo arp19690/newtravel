@@ -11,7 +11,7 @@ if (!empty($post_details['post_start_date']) && !empty($post_details['post_end_d
     $post_start_end_date_string = date($post_date_format, strtotime($post_details['post_start_date'])) . ' - ' . date($post_date_format, strtotime($post_details['post_end_date']));
 }
 $post_total_days = number_format($post_details['post_total_days']);
-prd($post_details);
+//prd($post_details);
 ?>
 
 <!-- main-cont -->
@@ -274,18 +274,12 @@ prd($post_details);
                                         <div class="content-tabs-i">
                                             <h2>Facilities</h2>
                                             <ul class="preferences-list-alt">
-                                                <li class="internet">High-speed Internet</li>
-                                                <li class="parking">Free parking</li>
-                                                <li class="gym">Gym</li>
-                                                <li class="restourant">Restourant</li>
-                                                <li class="pets">Pets allowed</li>
-                                                <li class="pool">Swimming Pool</li>
-                                                <li class="kitchen">Kitchen</li>
-                                                <li class="conf-room">Conference room</li>
-                                                <li class="bike">Bike Rental</li>
-                                                <li class="entertaiment">Entertaiment</li>
-                                                <li class="bar">Bar</li>
-                                                <li class="secure">Secure</li>
+                                                <?php
+                                                foreach ($post_details['post_activities'] as $key => $value)
+                                                {
+                                                    echo '<li class="' . $value->am_icon . '">' . stripslashes($value->am_title) . '</li>';
+                                                }
+                                                ?>
                                             </ul>
                                             <div class="clear"></div>
                                         </div>
