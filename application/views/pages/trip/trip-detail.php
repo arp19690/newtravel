@@ -11,6 +11,7 @@ if (!empty($post_details['post_start_date']) && !empty($post_details['post_end_d
     $post_start_end_date_string = date($post_date_format, strtotime($post_details['post_start_date'])) . ' - ' . date($post_date_format, strtotime($post_details['post_end_date']));
 }
 $post_total_days = number_format($post_details['post_total_days']);
+prd($post_details);
 ?>
 
 <!-- main-cont -->
@@ -64,7 +65,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                     <!-- // tab item // -->
                                     <div class="tab-item">
                                         <div class="tab-gallery-big">
-                                            <img alt="" src="img/tour-big.jpg">
+                                            <img alt="<?php echo $page_title; ?>" src="<?php echo getImage($post_details['post_primary_image']); ?>">
                                         </div>
                                         <div class="tab-gallery-preview">
                                             <div id="gallery">
@@ -212,9 +213,10 @@ $post_total_days = number_format($post_details['post_total_days']);
                                     <div class="content-tabs-body">
                                         <!-- // content-tabs-i // -->
                                         <div class="content-tabs-i">
-                                            <h2>Hotel Description</h2>
-                                            <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui. voluptatem sequi nesciunt. Neque porro quisqua. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>
-                                            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                                            <h2>Description</h2>
+                                            <div>
+                                                <?php echo $post_description; ?>
+                                            </div>
                                             <div class="tab-reasons">
                                                 <h2>4 Reasons to Choose Andrassy Rhai Hotel</h2>
                                                 <div class="tab-reasons-h">
@@ -270,32 +272,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <!-- \\ content-tabs-i \\ -->
                                         <!-- // content-tabs-i // -->
                                         <div class="content-tabs-i">
-                                            <h2>Hotel Facilities</h2>
-                                            <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>
-                                            <ul class="preferences-list">
-                                                <li class="internet">High-speed Internet</li>
-                                                <li class="conf-room">Conference room</li>
-                                                <li class="play-place">Play Place</li>
-                                                <li class="restourant">Restourant</li>
-                                                <li class="bar">Bar</li>
-                                                <li class="doorman">Doorman</li>
-                                                <li class="kitchen">Kitchen</li>
-                                                <li class="spa">Spa services</li>
-                                                <li class="bike">Bike Rental</li>
-                                                <li class="entertaiment">Entertaiment</li>
-                                                <li class="hot-tub">Hot Tub</li>
-                                                <li class="pool">Swimming Pool</li>
-                                                <li class="parking">Free parking</li>
-                                                <li class="gym">Gym</li>
-                                                <li class="tv">TV</li>
-                                                <li class="pets">Pets allowed</li>
-                                                <li class="handicap">Handicap</li>
-                                                <li class="secure">Secure </li>
-                                            </ul>
-                                            <div class="clear"></div>
-                                            <div class="preferences-devider"></div>
-                                            <h2>Alternative Style</h2>
-                                            <p>Quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt eque porro quisqua.</p>
+                                            <h2>Facilities</h2>
                                             <ul class="preferences-list-alt">
                                                 <li class="internet">High-speed Internet</li>
                                                 <li class="parking">Free parking</li>
@@ -984,16 +961,22 @@ $post_total_days = number_format($post_details['post_total_days']);
                 <div class="sp-page-r">
                     <div class="h-detail-r">
                         <div class="h-detail-lbl">
-                            <div class="h-detail-lbl-a">Amazing France Tour</div>
-                            <div class="h-detail-lbl-b">11 nov 2015 - 22 now 2015</div>
+                            <div class="h-detail-lbl-a"><?php echo $page_title; ?></div>
+                            <div class="h-detail-lbl-b"><?php echo $post_start_end_date_string; ?></div>
                         </div>
                         <div class="h-tour">
                             <div class="tour-item-icons">
-                                <img alt="" src="img/tour-icon-01.png">
-                                <span class="tour-item-plus"><img alt="" src="img/tour-icon.png"></span>
-                                <img alt="" src="img/tour-icon-02.png">
+                                <?php
+                                if (!empty($post_details['post_media']->images))
+                                {
+                                    foreach ($post_details['post_media']->images as $key => $value)
+                                    {
+                                        echo '<img alt="' . $post_title . '" src="' . getImage($value->pm_media_url) . '">';
+                                    }
+                                }
+                                ?>
                             </div>
-                            <div class="tour-icon-txt">Air + bus</div>
+                            <div class="tour-icon-txt"><?php echo $post_details['post_travel_mediums_string']; ?></div>
                             <div class="tour-icon-person">2 persons</div>
                             <div class="clear"></div>
                         </div>
