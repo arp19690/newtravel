@@ -637,17 +637,6 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <div class="h-detail-lbl-b"><?php echo $post_start_end_date_string; ?></div>
                         </div>
                         <div class="h-tour">
-                            <div class="tour-item-icons">
-                                <?php
-                                if (!empty($post_details['post_media']->images))
-                                {
-                                    foreach ($post_details['post_media']->images as $key => $value)
-                                    {
-                                        echo '<img alt="' . $post_title . '" src="' . getImage($value->pm_media_url) . '">';
-                                    }
-                                }
-                                ?>
-                            </div>
                             <div class="tour-icon-txt"><?php echo $post_details['post_travel_mediums_string']; ?></div>
                             <div class="tour-icon-person">2 persons</div>
                             <div class="clear"></div>
