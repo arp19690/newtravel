@@ -437,7 +437,8 @@ button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; fon
 .ui-widget-header .ui-icon.ui-icon-circle-triangle-e {width:4px; height:8px; left:auto; margin-left:0px; right:0px; background:url(../img/cal-right.png) left top no-repeat; background-position:0px 0px;}
 .ui-datepicker .ui-datepicker-prev {left:0px; cursor:pointer;}
 .ui-datepicker .ui-datepicker-next {right:0px; cursor:pointer;}
-.ui-corner-all.ui-state-hover {border-color:transparent; background:transparent; }
+/*.ui-corner-all.ui-state-hover {border-color:transparent; background:transparent; }*/
+.ui-corner-all.ui-state-hover {border-color:transparent; background:#d19405;cursor:ew-resize; }
 .ui-datepicker .ui-datepicker-prev.ui-state-hover {left:-1px;}
 .ui-datepicker .ui-datepicker-next.ui-state-hover {right:-1px;}
 

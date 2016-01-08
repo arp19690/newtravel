@@ -67,7 +67,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <nav>
                                             <ul>
                                                 <li><a class="active" href="#">DESCRIPTION</a></li>
-                                                <li><a href="#">reviews</a></li>
+                                                <li><a href="#" class="reviews-tab-href">reviews</a></li>
                                                 <li><a href="#" class="tabs-lamp"></a></li>
                                             </ul>
                                         </nav>
@@ -830,6 +830,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                 $(this).addClass("appeared");
             });
             $('.fly-in').appear({force_process: true});
+        });
+        
+        $('.h-add-review').click(function(e){
+            e.preventDefault();
+            $('.reviews-tab-href').click();
         });
     });
 </script>
