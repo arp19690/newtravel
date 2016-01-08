@@ -1533,7 +1533,8 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .tour-item-b p {margin:0px 0px 10px 0px;}
 .tour-item-plus {margin:0px 3px 0px 2px; display:inline-block;}
 .tour-item-icons {float:left;}
-.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 9px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
+/*.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 9px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}*/
+.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 0px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
 .tour-duration {float:left; font-size:10px; margin:4px 0px 0px 33px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
 .tour-item .offer-slider-r span {font-weight:500; color:#747d7e;}
 .tour-item .cat-list-item-rb .offer-slider-r b {margin-bottom:6px;}

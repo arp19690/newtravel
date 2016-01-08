@@ -47,20 +47,6 @@
                                                             <p><?php echo $post_description; ?></p>
                                                             <div class="tour-item-footer">
                                                                 <div class="tour-i-holder">
-                                                                    <div class="tour-item-icons">
-                                                                        <?php
-                                                                        if (!empty($post_details['post_media']->images))
-                                                                        {
-                                                                            foreach ($post_details['post_media']->images as $key => $value)
-                                                                            {
-                                                                                echo '<img alt="' . $post_title . '" src="' . getImage($value->pm_media_url) . '">';
-                                                                            }
-                                                                        }
-                                                                        ?>
-        <!--                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon-01.png">
-                                                                        <span class="tour-item-plus"><img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon.png"></span>
-                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon-02.png">-->
-                                                                    </div>
                                                                     <div class="tour-icon-txt">Via : <?php echo $post_details['post_travel_mediums_string']; ?></div>
                                                                     <div class="clear"></div>
                                                                 </div>
