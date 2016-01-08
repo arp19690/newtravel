@@ -34,33 +34,6 @@ $post_total_days = number_format($post_details['post_total_days']);
                     <div class="sp-page-l">
                         <div class="sp-page-lb">
                             <div class="sp-page-p">
-                                <div class="h-tabs">
-                                    <div class="h-tabs-left">
-                                        <div class="h-tab-i active">
-                                            <a href="#" class="h-tab-item-01">
-                                                <i></i>
-                                                <span>photos</span>
-                                                <span class="clear"></span>
-                                            </a>
-                                        </div>
-                                        <div class="h-tab-i">
-                                            <a href="#" class="h-tab-item-03">
-                                                <i></i>
-                                                <span>calendar</span>
-                                                <span class="clear"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="h-tabs-right">
-                                        <a href="#">
-                                            <i></i>
-                                            <span>more tours</span>
-                                            <div class="clear"></div>
-                                        </a>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-
                                 <div class="mm-tabs-wrapper">
                                     <!-- // tab item // -->
                                     <div class="tab-item">
@@ -86,114 +59,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- \\ tab item \\ -->	
-                                    <!-- // tab item // -->
-                                    <div class="tab-item">
-                                        <div class="calendar-tab">
-                                            <div class="calendar-tab-select">
-                                                <label>Select month</label>
-                                                <select class="custom-select">
-                                                    <option>january 2015</option>
-                                                    <option>january 2015</option>
-                                                    <option>january 2015</option>
-                                                </select>
-                                            </div>
-
-
-                                            <div class="tab-calendar-colls">
-                                                <div class="tab-calendar-collsl">
-                                                    <div class="tab-calendar-collslb">
-                                                        <table>
-                                                            <thead>
-                                                                <tr>
-                                                                    <td>sun</td>
-                                                                    <td>mon</td>
-                                                                    <td>tue</td>
-                                                                    <td>wed</td>
-                                                                    <td>thu</td>
-                                                                    <td>fri</td>
-                                                                    <td>sat</td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td class="date-passed"><span><label></label></span></td>
-                                                                    <td class="date-passed"><span><label></label></span></td>
-                                                                    <td class="date-passed"><span><label></label></span></td>
-                                                                    <td><span><label>1</label></span></td>
-                                                                    <td><span><label>2</label></span></td>
-                                                                    <td><span><label>3</label></span></td>
-                                                                    <td><span><label>4</label></span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><span><label>5</label></span></td>
-                                                                    <td><span><label>6</label></span></td>
-                                                                    <td><span><label>7</label></span></td>
-                                                                    <td><span><label>8</label></span></td>
-                                                                    <td><span><label>9</label></span></td>
-                                                                    <td><span><label>10</label></span></td>
-                                                                    <td><span><label>11</label></span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><span><label>12</label></span></td>
-                                                                    <td><span><label>13</label></span></td>
-                                                                    <td><span><label>14</label></span></td>
-                                                                    <td><span><label>15</label></span></td>
-                                                                    <td><span><label>16</label></span></td>
-                                                                    <td><span><label>17</label></span></td>
-                                                                    <td><span><label>18</label></span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><span><label>19</label></span></td>
-                                                                    <td><span><label>20</label></span></td>
-                                                                    <td><span><label>21</label></span></td>
-                                                                    <td><span><label>22</label></span></td>
-                                                                    <td><span><label>23</label></span></td>
-                                                                    <td><span><label>24</label></span></td>
-                                                                    <td><span><label>25</label></span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><span><label>26</label></span></td>
-                                                                    <td class="date-available"><span><label>27</label></span></td>
-                                                                    <td class="date-available"><span><label>28</label></span></td>
-                                                                    <td class="date-available"><span><label>29</label></span></td>
-                                                                    <td class="date-unavailable"><span><label>30</label></span></td>
-                                                                    <td class="date-unavailable"><span><label>31</label></span></td>
-                                                                    <td class="date-passed"><span><label></label></span></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-calendar-collsr">
-                                                <div class="tab-calendar-s">
-
-                                                    <div class="map-symbol passed">
-                                                        <div class="map-symbol-l"></div>
-                                                        <div class="map-symbol-r">Date past</div>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="map-symbol available">
-                                                        <div class="map-symbol-l"></div>
-                                                        <div class="map-symbol-r">available</div>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="map-symbol unavailable">
-                                                        <div class="map-symbol-l"></div>
-                                                        <div class="map-symbol-r">unavailable</div>
-                                                        <div class="clear"></div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="clear"></div>
-
-                                        </div>
-                                    </div>
-                                    <!-- \\ tab item \\ -->	
-
+                                    <!-- \\ tab item \\ -->
                                 </div>
 
                                 <div class="content-tabs">
@@ -201,7 +67,6 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <nav>
                                             <ul>
                                                 <li><a class="active" href="#">DESCRIPTION</a></li>
-                                                <li><a href="#">Facilities</a></li>
                                                 <li><a href="#">reviews</a></li>
                                                 <li><a href="#" class="tabs-lamp"></a></li>
                                             </ul>
@@ -212,29 +77,28 @@ $post_total_days = number_format($post_details['post_total_days']);
                                     <div class="content-tabs-body">
                                         <!-- // content-tabs-i // -->
                                         <div class="content-tabs-i">
-                                            <h2>Description</h2>
-                                            <div>
-                                                <?php echo $post_description; ?>
+                                            <div class="clear">
+                                                <h2>Description</h2>
+                                                <div>
+                                                    <?php echo $post_description; ?>
+                                                </div>
                                             </div>
-                                           
-                                        <?php $this->load->view('pages/trip/trip-detail-reasons'); ?>
-                                            
+
+                                            <div class="clear" style="margin-top:40px;">
+                                                <h2>Facilities</h2>
+                                                <ul class="preferences-list-alt">
+                                                    <?php
+                                                    foreach ($post_details['post_activities'] as $key => $value)
+                                                    {
+                                                        echo '<li class="' . $value->am_icon . '">' . stripslashes($value->am_title) . '</li>';
+                                                    }
+                                                    ?>
+                                                </ul>
+                                            </div>
+
                                         </div>
                                         <!-- \\ content-tabs-i \\ -->
-                                        <!-- // content-tabs-i // -->
-                                        <div class="content-tabs-i">
-                                            <h2>Facilities</h2>
-                                            <ul class="preferences-list-alt">
-                                                <?php
-                                                foreach ($post_details['post_activities'] as $key => $value)
-                                                {
-                                                    echo '<li class="' . $value->am_icon . '">' . stripslashes($value->am_title) . '</li>';
-                                                }
-                                                ?>
-                                            </ul>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <!-- \\ content-tabs-i \\ -->
+
                                         <!-- // content-tabs-i // -->
                                         <div class="content-tabs-i">
                                             <div class="reviews-a">
@@ -619,7 +483,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             </div>
                                         </div>
                                         <!-- \\ content-tabs-i \\ -->
-                                        
+
                                         <?php $this->load->view('pages/trip/trip-detail-faq'); ?>
 
                                     </div>
@@ -909,3 +773,70 @@ $post_total_days = number_format($post_details['post_total_days']);
     </div>  
 </div>
 <!-- /main-cont -->
+
+<script src="<?php echo JS_PATH; ?>/bxSlider.js"></script> 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.custom-select').customSelect();
+        $('.review-ranger').each(function () {
+            var $this = $(this);
+            var $index = $(this).index();
+            if ($index == '0') {
+                var $val = '3.0'
+            } else if ($index == '1') {
+                var $val = '3.8'
+            } else if ($index == '2') {
+                var $val = '2.8'
+            } else if ($index == '3') {
+                var $val = '4.8'
+            } else if ($index == '4') {
+                var $val = '4.3'
+            } else if ($index == '5') {
+                var $val = '5.0'
+            }
+            $this.find('.slider-range-min').slider({
+                range: "min",
+                step: 0.1,
+                value: $val,
+                min: 0.1,
+                max: 5.1,
+                create: function (event, ui) {
+                    $this.find('.ui-slider-handle').append('<span class="range-holder"><i></i></span>');
+                },
+                slide: function (event, ui) {
+                    $this.find(".range-holder i").text(ui.value);
+                }
+            });
+            $this.find(".range-holder i").text($val);
+        });
+
+        $('#reasons-slider').bxSlider({
+            infiniteLoop: true,
+            speed: 500,
+            mode: 'fade',
+            minSlides: 1,
+            maxSlides: 1,
+            moveSlides: 1,
+            auto: true,
+            slideMargin: 0
+        });
+
+        $('#gallery').bxSlider({
+            infiniteLoop: true,
+            speed: 500,
+            slideWidth: 108,
+            minSlides: 1,
+            maxSlides: 6,
+            moveSlides: 1,
+            auto: false,
+            slideMargin: 7
+        });
+
+        $(function () {
+            $(document.body).on('appear', '.fly-in', function (e, $affected) {
+                $(this).addClass("appeared");
+            });
+            $('.fly-in').appear({force_process: true});
+        });
+    });
+</script>
