@@ -1,6 +1,6 @@
 <?php
 $post_title = stripslashes($post_details['post_title']);
-$post_description = getNWordsFromString(stripslashes($post_details['post_description']), 40);
+$post_description = stripslashes($post_details['post_description']);
 $post_primary_image = base_url(getImage($post_details['post_primary_image']));
 $post_url = getTripUrl($post_details['post_url_key']);
 $post_total_cost = get_currency_symbol($post_details['post_currency']) . $post_details['post_total_cost'];
@@ -201,9 +201,8 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <nav>
                                             <ul>
                                                 <li><a class="active" href="#">DESCRIPTION</a></li>
-                                                <li><a href="#">Preferences</a></li>
+                                                <li><a href="#">Facilities</a></li>
                                                 <li><a href="#">reviews</a></li>
-                                                <li><a href="#">THINGS TO DO</a></li>
                                                 <li><a href="#" class="tabs-lamp"></a></li>
                                             </ul>
                                         </nav>
@@ -217,57 +216,9 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             <div>
                                                 <?php echo $post_description; ?>
                                             </div>
-                                            <div class="tab-reasons">
-                                                <h2>4 Reasons to Choose Andrassy Rhai Hotel</h2>
-                                                <div class="tab-reasons-h">
-                                                    <!-- // -->
-                                                    <div class="tab-reasons-i reasons-01">
-                                                        <b>fully responsive</b>
-                                                        <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
-                                                    </div>
-                                                    <!-- \\ -->
-                                                    <!-- // -->
-                                                    <div class="tab-reasons-i reasons-02">
-                                                        <b>757 verified reviews</b>
-                                                        <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
-                                                    </div>
-                                                    <!-- \\ -->
-                                                    <!-- // -->
-                                                    <div class="tab-reasons-i reasons-03">
-                                                        <b>Manage your bookings online</b>
-                                                        <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
-                                                    </div>
-                                                    <!-- \\ -->
-                                                    <!-- // -->
-                                                    <div class="tab-reasons-i reasons-04">
-                                                        <b>Booking is safe</b>
-                                                        <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
-                                                    </div>
-                                                    <!-- \\ -->
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <div class="facilities">
-                                                    <h2>Facilities of Hotel</h2>
-                                                    <table>
-                                                        <tr>
-                                                            <td class="facilities-a">Food & Drink</td>
-                                                            <td class="facilities-b">Breakfast in the Room</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="facilities-a">Internet</td>
-                                                            <td class="facilities-b"><span class="facility-label">Free! WiFi is available in all areas and is free of charge.</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="facilities-a">Parking</td>
-                                                            <td class="facilities-b">Vending Machine (drinks), 24-Hour Front Desk, Express Check-in/Check-out</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="facilities-a">Languages</td>
-                                                            <td class="facilities-b">Italian, French, Spanish, English, Arabic</td>
-                                                        </tr>
-                                                    </table>	
-                                                </div>
-                                            </div>
+                                           
+                                        <?php $this->load->view('pages/trip/trip-detail-reasons'); ?>
+                                            
                                         </div>
                                         <!-- \\ content-tabs-i \\ -->
                                         <!-- // content-tabs-i // -->
@@ -668,285 +619,12 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             </div>
                                         </div>
                                         <!-- \\ content-tabs-i \\ -->
-                                        <!-- // content-tabs-i // -->
-                                        <div class="content-tabs-i">
-                                            <h2>Things to do</h2>
-                                            <p class="small">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>
-                                            <div class="todo-devider"></div>
-                                            <div class="todo-row">
-                                                <!-- // -->
-                                                <div class="cat-list-item">
-                                                    <div class="cat-list-item-l">
-                                                        <a href="#"><img alt="" src="img/todo-01.jpg"></a>
-                                                    </div>
-                                                    <div class="cat-list-item-r">
-                                                        <div class="cat-list-item-rb">
-                                                            <div class="cat-list-item-p">
-                                                                <div class="cat-list-content">
-                                                                    <div class="cat-list-content-a">
-                                                                        <div class="cat-list-content-l">
-                                                                            <div class="cat-list-content-lb">
-                                                                                <div class="cat-list-content-lpadding">
-                                                                                    <div class="offer-slider-link"><a href="#">Totam rem aperiam, eaque ipsa quae</a></div>
-                                                                                    <div class="offer-rate">Exelent</div>
-                                                                                    <p>Voluptatem quia voluptas sit aspernatur aut odit  aut figut, sed quia consequuntur magni dolores eos qui  voluptatem sequi nescuint. Neque porro quisqua. Sed ut perspiciatis  unde omnis ste.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <br class="clear">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cat-list-content-r">
-                                                                        <div class="cat-list-content-p">
-                                                                            <nav class="stars">
-                                                                                <ul>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                </ul>
-                                                                                <div class="clear"></div>
-                                                                            </nav>
-                                                                            <div class="cat-list-review">31 reviews</div>
-                                                                            <a href="#" class="todo-btn">Read more</a>  
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clear"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br class="clear">
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <!-- \\ --> 
-                                                <!-- // -->
-                                                <div class="cat-list-item">
-                                                    <div class="cat-list-item-l">
-                                                        <a href="#"><img alt="" src="img/todo-02.jpg"></a>
-                                                    </div>
-                                                    <div class="cat-list-item-r">
-                                                        <div class="cat-list-item-rb">
-                                                            <div class="cat-list-item-p">
-                                                                <div class="cat-list-content">
-                                                                    <div class="cat-list-content-a">
-                                                                        <div class="cat-list-content-l">
-                                                                            <div class="cat-list-content-lb">
-                                                                                <div class="cat-list-content-lpadding">
-                                                                                    <div class="offer-slider-link"><a href="#">Invertore veitatis et quasi architecto</a></div>
-                                                                                    <div class="offer-rate">Exelent</div>
-                                                                                    <p>Voluptatem quia voluptas sit aspernatur aut odit  aut figut, sed quia consequuntur magni dolores eos qui  voluptatem sequi nescuint. Neque porro quisqua. Sed ut perspiciatis  unde omnis ste.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <br class="clear">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cat-list-content-r">
-                                                                        <div class="cat-list-content-p">
-                                                                            <nav class="stars">
-                                                                                <ul>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                </ul>
-                                                                                <div class="clear"></div>
-                                                                            </nav>
-                                                                            <div class="cat-list-review">31 reviews</div>
-                                                                            <a href="#" class="todo-btn">Read more</a>  
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clear"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br class="clear">
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <!-- \\ --> 
-                                                <!-- // -->
-                                                <div class="cat-list-item">
-                                                    <div class="cat-list-item-l">
-                                                        <a href="#"><img alt="" src="img/todo-03.jpg"></a>
-                                                    </div>
-                                                    <div class="cat-list-item-r">
-                                                        <div class="cat-list-item-rb">
-                                                            <div class="cat-list-item-p">
-                                                                <div class="cat-list-content">
-                                                                    <div class="cat-list-content-a">
-                                                                        <div class="cat-list-content-l">
-                                                                            <div class="cat-list-content-lb">
-                                                                                <div class="cat-list-content-lpadding">
-                                                                                    <div class="offer-slider-link"><a href="#">Dolores eos qui ratione voluptatem</a></div>
-                                                                                    <div class="offer-rate">Exelent</div>
-                                                                                    <p>Voluptatem quia voluptas sit aspernatur aut odit  aut figut, sed quia consequuntur magni dolores eos qui  voluptatem sequi nescuint. Neque porro quisqua. Sed ut perspiciatis  unde omnis ste.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <br class="clear">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cat-list-content-r">
-                                                                        <div class="cat-list-content-p">
-                                                                            <nav class="stars">
-                                                                                <ul>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                </ul>
-                                                                                <div class="clear"></div>
-                                                                            </nav>
-                                                                            <div class="cat-list-review">31 reviews</div>
-                                                                            <a href="#" class="todo-btn">Read more</a>  
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clear"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br class="clear">
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <!-- \\ -->     
-                                                <!-- // -->
-                                                <div class="cat-list-item">
-                                                    <div class="cat-list-item-l">
-                                                        <a href="#"><img alt="" src="img/todo-04.jpg"></a>
-                                                    </div>
-                                                    <div class="cat-list-item-r">
-                                                        <div class="cat-list-item-rb">
-                                                            <div class="cat-list-item-p">
-                                                                <div class="cat-list-content">
-                                                                    <div class="cat-list-content-a">
-                                                                        <div class="cat-list-content-l">
-                                                                            <div class="cat-list-content-lb">
-                                                                                <div class="cat-list-content-lpadding">
-                                                                                    <div class="offer-slider-link"><a href="#">Neque porro quisquaem est qui dolorem</a></div>
-                                                                                    <div class="offer-rate">Exelent</div>
-                                                                                    <p>Voluptatem quia voluptas sit aspernatur aut odit  aut figut, sed quia consequuntur magni dolores eos qui  voluptatem sequi nescuint. Neque porro quisqua. Sed ut perspiciatis  unde omnis ste.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <br class="clear">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cat-list-content-r">
-                                                                        <div class="cat-list-content-p">
-                                                                            <nav class="stars">
-                                                                                <ul>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                    <li><a href="#"><img alt="" src="img/todostar-a.png"></a></li>
-                                                                                </ul>
-                                                                                <div class="clear"></div>
-                                                                            </nav>
-                                                                            <div class="cat-list-review">31 reviews</div>
-                                                                            <a href="#" class="todo-btn">Read more</a>  
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clear"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br class="clear">
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <!-- \\ -->                
-                                            </div>
-                                            <a href="#" class="guest-reviews-more">Load more reviews</a>
-                                        </div>
-                                        <!-- \\ content-tabs-i \\ -->
-                                        <!-- // content-tabs-i // -->
-                                        <div class="content-tabs-i">
-                                            <h2>FAQ</h2>
-                                            <p class="small">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>
-                                            <div class="todo-devider"></div>
-                                            <div class="faq-row">
-                                                <!-- // -->
-                                                <div class="faq-item">
-                                                    <div class="faq-item-a">
-                                                        <span class="faq-item-left">Totam rem aperiam, eaquie ipsa quae?</span>
-                                                        <span class="faq-item-i"></span>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="faq-item-b">
-                                                        <div class="faq-item-p">
-                                                            Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia aspernatur aut odit aut fugit consequuntur magni dolores eos qui voluptatem sequi nesciunt. aspernatur aut odit aut fugit  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- \\ -->
-                                                <!-- // -->
-                                                <div class="faq-item">
-                                                    <div class="faq-item-a">
-                                                        <span class="faq-item-left">Dolores eos qui ratione voluptatem sequi nescuin?</span>
-                                                        <span class="faq-item-i"></span>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="faq-item-b">
-                                                        <div class="faq-item-p">
-                                                            Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia aspernatur aut odit aut fugit consequuntur magni dolores eos qui voluptatem sequi nesciunt. aspernatur aut odit aut fugit  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- \\ -->
-                                                <!-- // -->
-                                                <div class="faq-item">
-                                                    <div class="faq-item-a">
-                                                        <span class="faq-item-left">Neque porro quisquam est, qui dolorem ipsum?</span>
-                                                        <span class="faq-item-i"></span>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="faq-item-b">
-                                                        <div class="faq-item-p">
-                                                            Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia aspernatur aut odit aut fugit consequuntur magni dolores eos qui voluptatem sequi nesciunt. aspernatur aut odit aut fugit  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- \\ -->
-                                                <!-- // -->
-                                                <div class="faq-item">
-                                                    <div class="faq-item-a">
-                                                        <span class="faq-item-left">Dolor sit amet consectutur adipisci velit, sed?</span>
-                                                        <span class="faq-item-i"></span>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="faq-item-b">
-                                                        <div class="faq-item-p">
-                                                            Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia aspernatur aut odit aut fugit consequuntur magni dolores eos qui voluptatem sequi nesciunt. aspernatur aut odit aut fugit  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- \\ -->
-                                                <!-- // -->
-                                                <div class="faq-item">
-                                                    <div class="faq-item-a">
-                                                        <span class="faq-item-left">Consectetur, adipisci velit, sed quia non numquam?</span>
-                                                        <span class="faq-item-i"></span>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                    <div class="faq-item-b">
-                                                        <div class="faq-item-p">
-                                                            Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia aspernatur aut odit aut fugit consequuntur magni dolores eos qui voluptatem sequi nesciunt. aspernatur aut odit aut fugit  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- \\ -->
-                                            </div>
-                                        </div>
-                                        <!-- \\ content-tabs-i \\ -->
+                                        
+                                        <?php $this->load->view('pages/trip/trip-detail-faq'); ?>
 
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -992,7 +670,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                         </div>
                         <a href="#" class="wishlist-btn">
                             <span class="wishlist-btn-l"><i></i></span>
-                            <span class="wishlist-btn-r">ADD TO wish list</span>
+                            <span class="wishlist-btn-r">Add to wish list</span>
                             <div class="clear"></div>
                         </a>
                         <a href="#" class="book-btn">
