@@ -502,7 +502,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                         </div>
                         <div class="h-tour">
                             <div class="tour-icon-txt"><?php echo $post_details['post_travel_mediums_string']; ?></div>
-                            <div class="tour-icon-person">2 persons</div>
+                            <div class="tour-icon-person"><?php echo count($post_details['post_travelers']) . ' traveler' . (count($post_details['post_travelers']) == 1 ? '' : 's'); ?></div>
                             <div class="clear"></div>
                         </div>
                         <div class="h-detail-stars">
