@@ -533,13 +533,6 @@ $post_total_days = number_format($post_details['post_total_days']);
                         </a>
                     </div>
 
-                    <div class="h-help">
-                        <div class="h-help-lbl">Need Sparrow Help?</div>
-                        <div class="h-help-lbl-a">We would be happy to help you!</div>
-                        <div class="h-help-phone">2-800-256-124 23</div>
-                        <div class="h-help-email">sparrow@mail.com</div>
-                    </div>
-
                     <div class="reasons-rating">
                         <div id="reasons-slider">
                             <!-- // -->
