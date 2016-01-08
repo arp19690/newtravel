@@ -504,6 +504,7 @@ class Trip extends CI_Controller
             $data["breadcrumbs"] = $breadcrumbs;
             $data["page_title"] = $page_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $data['meta_description'] = getNWordsFromString(stripslashes($post_details['post_description']), 150);
             $this->template->write_view("content", "pages/trip/trip-detail", $data);
             $this->template->render();
         }
