@@ -14,8 +14,7 @@
             </div>
             <div class="two-colls">
                 <div class="two-colls-left">
-                    <!--Google Ad code goes here-->
-                    <?php echo get_google_ad(); ?>
+                    <?php $this->load->view('pages/trip/listing/search-sidebar'); ?>
                     <div class="clear"></div>
                 </div>
 
