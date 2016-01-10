@@ -74,7 +74,7 @@ class Redisfunctions
         }
         else
         {
-            $this->set_travel_mediums();
+            $output = $this->set_travel_mediums();
         }
 
         return $output;
