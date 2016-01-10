@@ -6,7 +6,7 @@ $count_search_results = 0;
 
 <div class="clear">
     <div class="srch-results-lbl fly-in">
-        <span><?php number_format($count_search_results); ?> results found.</span>
+        <span><?php echo number_format($count_search_results); ?> results found.</span>
     </div> 
 
     <div class="side-block fly-in">
@@ -135,7 +135,7 @@ $count_search_results = 0;
                 range: true,
                 min: 0,
                 max: 15000,
-                values: [275, 1100],
+                values: [250, 3500],
                 slide: function (event, ui) {
                     $("#ammount-from").val(ui.values[0] + '$');
                     $("#ammount-to").val(ui.values[1] + '$');
