@@ -1,4 +1,3 @@
-
 html { -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto; }
 html, body, img, form {margin: 0px; padding: 0px; border: none; letter-spacing:normal;}
 html, body {height:100%;-webkit-font-smoothing: antialiased;}
@@ -412,10 +411,12 @@ input,select,button,textarea {outline:none;}
 .weather-c {text-align:center;font-size:12px;color:#fff;font-family: 'Raleway';font-weight:600;text-transform:uppercase;}
 .weather-block-padding {text-align:center;}
 .weather-footer {text-align:left;padding:20px 0px 0px 18px;}
-.weather-foot-link-a {font-size:21px;line-height:25px;color:#fff;font-weight:nomal;font-family: 'Montserrat'; font-weight:normal; display:block;}
+.weather-foot-link-a {font-size:21px;line-height:25px;color:#fff;font-weight:normal;font-family: 'Montserrat'; font-weight:normal; display:block;}
 .weather-footer a {text-decoration:none;}
 .weather-foot-link {display:block;font-size:12px;color:#fff;text-transform:uppercase;font-family: 'Raleway';	font-weight:600;margin-bottom:5px;}
 .srch-btn {display:block;width:102px; height:24px; padding-top:10px;background:#ff7200; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;text-align:center;font-size:11px;text-decoration:none;color:#fff; border:0px;margin-top:1px;float:left;font-family: 'Montserrat';font-weight:normal;text-transform:uppercase;}
+.btn-orange {background:#ff7200; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;color:#fff; border:0px;}
+.btn {display:inline-block; padding:10px 28px; border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;text-align:center;font-size:11px;text-decoration:none; border:1px solid #e5e5e5;font-family: 'Montserrat';font-weight:normal;text-transform:uppercase;}
 button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; font-weight:normal; padding-top:2px; float: none; margin-top:21px; height:34px;}
 
 .date-icon {display:block; width:16px; height:15px; background:url(../img/datepick.png) left top no-repeat; position:absolute; z-index:1; top:7px; right:8px;} 
@@ -2560,6 +2561,20 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .row.collapse {display:block;}
 .datepicker-popup {margin-top:15px; margin-left:-8px;}
 .form-element-popup-container-spacer {display:none;}
+
+.margin-top-10{margin-top:10px !important;}
+.margin-top-20{margin-top:20px !important;}
+.margin-top-40{margin-top:40px !important;}
+.margin-top-60{margin-top:60px !important;}
+.margin-bottom-10{margin-bottom:10px !important;}
+.margin-bottom-20{margin-bottom:20px !important;}
+.margin-bottom-40{margin-bottom:40px !important;}
+.margin-bottom-60{margin-bottom:60px !important;}
+.text-center{text-align:center !important;}
+.text-right{text-align:right !important;}
+.text-left{text-align:left !important;}
+.pull-left{float:left !important;}
+.pull-right{float:right !important;}
 
 @media screen and (max-width:1130px) {    
     .mp-popular-row .offer-slider-i {width:31.1%; margin-right:3.3%;}
