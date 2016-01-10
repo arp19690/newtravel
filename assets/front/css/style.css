@@ -2575,6 +2575,9 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .text-left{text-align:left !important;}
 .pull-left{float:left !important;}
 .pull-right{float:right !important;}
+.display-block{display:block !important;}
+.clr-light-grey{color:#838383 !Important;}
+.no-text-decoration{text-decoration:none;}
 
 @media screen and (max-width:1130px) {    
     .mp-popular-row .offer-slider-i {width:31.1%; margin-right:3.3%;}
