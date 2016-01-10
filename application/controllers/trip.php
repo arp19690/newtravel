@@ -525,6 +525,7 @@ class Trip extends CI_Controller
             if (!empty($post_details))
             {
                 $model->updateData(TABLE_POSTS, array('post_status' => '3'), $where_cond_arr);
+                $this->redis_functions->remove_trip_details($post_url_key);
                 $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']), ' successfully deleted');
             }
             else
