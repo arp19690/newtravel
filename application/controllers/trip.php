@@ -514,4 +514,29 @@ class Trip extends CI_Controller
         }
     }
 
+    public function delete_trip($post_url_key)
+    {
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $user_id = $this->session->userdata["user_id"];
+            $model = new Common_model();
+            $where_cond_arr = array('post_url_key' => $post_url_key, 'post_user_id' => $user_id, 'post_status !=' => '2');
+            $post_details = $model->fetchSelectedData('post_id, post_title', TABLE_POSTS, $where_cond_arr);
+            if (!empty($post_details))
+            {
+                $model->updateData(TABLE_POSTS, array('post_status' => '3'), $where_cond_arr);
+                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']), ' successfully deleted');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'No such posts found to be deleted');
+            }
+            redirect(base_url('my-trips/list'));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }
