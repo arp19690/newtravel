@@ -30,7 +30,7 @@
                         <a href="<?php echo $post_url; ?>" class="offer-slider-img">
                             <img alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
                             <span class="offer-slider-overlay">
-                                <span class="offer-slider-btn">View details</span><span></span>
+                                <span class="offer-slider-btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</span><span></span>
                             </span>
                         </a>
                         <div class="offer-slider-txt">
@@ -45,7 +45,13 @@
                             <div class="offer-slider-devider"></div>								
                             <div class="clear"></div>
                             <div class="offer-slider-lead"><?php echo $post_description; ?></div>
-                            <a href="<?php echo $post_url; ?>" class="cat-list-btn">View details</a>
+                            <div class="clear text-center margin-top-20">
+                                <a href="<?php echo $post_url; ?>" class="btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</a>
+                            </div>
+                            <div class="clear text-center margin-top-20">
+                                <a class="btn" style="padding: 5px 15px;" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
+                                <a class="btn" style="padding: 5px 15px;" href="<?php echo base_url('trip/delete/' . stripslashes($post_details['post_url_key'])); ?>" onclick="return confirm('Sure you want to delete your trip?');"><span class="fa fa-trash"></span>&nbsp;&nbsp;Delete</a>   
+                            </div>
                         </div>
                     </div>
                     <!-- \\ -->
