@@ -102,7 +102,7 @@ $path = $controller . "/" . $action;
         <nav class="header-nav">
             <ul>
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php isset($this->session->userdata['user_id']) == TRUE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish a Trip</a></li>
+                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php isset($this->session->userdata['user_id']) == TRUE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
                 <?php
                 if (isset($this->session->userdata['user_id']))
                 {
