@@ -68,7 +68,8 @@
                                                     <b><?php echo $post_total_cost; ?></b>
                                                     <span>trip budget</span>
                                                 </div>           
-                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>">View</a>   
+                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>"><span class="fa fa-search"></span>&nbsp;&nbsp;View</a>   
+                                                <a class="btn btn-orange margin-top-10" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
                                             </div>
                                         </div>
                                         <div class="clear"></div>
