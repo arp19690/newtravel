@@ -74,7 +74,7 @@ class Redisfunctions
         }
         else
         {
-            $this->set_travel_mediums();
+            $output = $this->set_travel_mediums();
         }
 
         return $output;
@@ -106,6 +106,13 @@ class Redisfunctions
         }
 
         return $output;
+    }
+
+    public function remove_trip_details($url_key)
+    {
+        $this->ci->redis->hDel('trips', $url_key);
+        $this->set_featured_trips();
+        return TRUE;
     }
 
     public function set_activity_master()

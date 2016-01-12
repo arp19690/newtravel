@@ -1,4 +1,3 @@
-
 html { -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto; }
 html, body, img, form {margin: 0px; padding: 0px; border: none; letter-spacing:normal;}
 html, body {height:100%;-webkit-font-smoothing: antialiased;}
@@ -412,10 +411,12 @@ input,select,button,textarea {outline:none;}
 .weather-c {text-align:center;font-size:12px;color:#fff;font-family: 'Raleway';font-weight:600;text-transform:uppercase;}
 .weather-block-padding {text-align:center;}
 .weather-footer {text-align:left;padding:20px 0px 0px 18px;}
-.weather-foot-link-a {font-size:21px;line-height:25px;color:#fff;font-weight:nomal;font-family: 'Montserrat'; font-weight:normal; display:block;}
+.weather-foot-link-a {font-size:21px;line-height:25px;color:#fff;font-weight:normal;font-family: 'Montserrat'; font-weight:normal; display:block;}
 .weather-footer a {text-decoration:none;}
 .weather-foot-link {display:block;font-size:12px;color:#fff;text-transform:uppercase;font-family: 'Raleway';	font-weight:600;margin-bottom:5px;}
 .srch-btn {display:block;width:102px; height:24px; padding-top:10px;background:#ff7200; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;text-align:center;font-size:11px;text-decoration:none;color:#fff; border:0px;margin-top:1px;float:left;font-family: 'Montserrat';font-weight:normal;text-transform:uppercase;}
+.btn-orange {background:#ff7200; border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;color:#fff; border:0px;}
+.btn {display:inline-block; padding:10px 28px; border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;text-align:center;font-size:11px;text-decoration:none; border:1px solid #e5e5e5;font-family: 'Montserrat';font-weight:normal;text-transform:uppercase;color:#838383;}
 button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; font-weight:normal; padding-top:2px; float: none; margin-top:21px; height:34px;}
 
 .date-icon {display:block; width:16px; height:15px; background:url(../img/datepick.png) left top no-repeat; position:absolute; z-index:1; top:7px; right:8px;} 
@@ -437,7 +438,8 @@ button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; fon
 .ui-widget-header .ui-icon.ui-icon-circle-triangle-e {width:4px; height:8px; left:auto; margin-left:0px; right:0px; background:url(../img/cal-right.png) left top no-repeat; background-position:0px 0px;}
 .ui-datepicker .ui-datepicker-prev {left:0px; cursor:pointer;}
 .ui-datepicker .ui-datepicker-next {right:0px; cursor:pointer;}
-.ui-corner-all.ui-state-hover {border-color:transparent; background:transparent; }
+/*.ui-corner-all.ui-state-hover {border-color:transparent; background:transparent; }*/
+.ui-corner-all.ui-state-hover {border-color:transparent; background:#d19405;cursor:ew-resize; }
 .ui-datepicker .ui-datepicker-prev.ui-state-hover {left:-1px;}
 .ui-datepicker .ui-datepicker-next.ui-state-hover {right:-1px;}
 
@@ -1533,7 +1535,8 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .tour-item-b p {margin:0px 0px 10px 0px;}
 .tour-item-plus {margin:0px 3px 0px 2px; display:inline-block;}
 .tour-item-icons {float:left;}
-.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 9px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
+/*.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 9px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}*/
+.tour-icon-txt {float:left; font-size:10px; margin:4px 0px 0px 0px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
 .tour-duration {float:left; font-size:10px; margin:4px 0px 0px 33px; color:#747d7e; font-family:'Raleway'; font-weight:600; text-transform:uppercase;}
 .tour-item .offer-slider-r span {font-weight:500; color:#747d7e;}
 .tour-item .cat-list-item-rb .offer-slider-r b {margin-bottom:6px;}
@@ -1666,9 +1669,8 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .content-tabs-i:nth-child(1) {display:block;}
 .content-tabs-i h2 {font-family:'Montserrat'; font-weight:normal; font-size:16px; color:#4c4c4c; margin-bottom:19px;}
 .content-tabs-i p {font-size:14px; color:#626262; line-height:26px;}
-
 .content-tabs-i p.small {font-size: 13px; line-height: 21px;}
-.tab-reasons {padding-top:14px;}
+.tab-reasons {padding-top:35px;}
 .tab-reasons h2 {margin-bottom:26px;}
 .tab-reasons-h {background:#fcfbfa; padding:27px 20px 5px 26px; margin-bottom:36px;}
 .tab-reasons-i {width:41%; margin-bottom:6px; float:left; padding-left:43px;}
@@ -2559,6 +2561,23 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .row.collapse {display:block;}
 .datepicker-popup {margin-top:15px; margin-left:-8px;}
 .form-element-popup-container-spacer {display:none;}
+
+.margin-top-10{margin-top:10px !important;}
+.margin-top-20{margin-top:20px !important;}
+.margin-top-40{margin-top:40px !important;}
+.margin-top-60{margin-top:60px !important;}
+.margin-bottom-10{margin-bottom:10px !important;}
+.margin-bottom-20{margin-bottom:20px !important;}
+.margin-bottom-40{margin-bottom:40px !important;}
+.margin-bottom-60{margin-bottom:60px !important;}
+.text-center{text-align:center !important;}
+.text-right{text-align:right !important;}
+.text-left{text-align:left !important;}
+.pull-left{float:left !important;}
+.pull-right{float:right !important;}
+.display-block{display:block !important;}
+.clr-light-grey{color:#838383 !Important;}
+.no-text-decoration{text-decoration:none;}
 
 @media screen and (max-width:1130px) {    
     .mp-popular-row .offer-slider-i {width:31.1%; margin-right:3.3%;}

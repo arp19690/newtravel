@@ -47,20 +47,6 @@
                                                             <p><?php echo $post_description; ?></p>
                                                             <div class="tour-item-footer">
                                                                 <div class="tour-i-holder">
-                                                                    <div class="tour-item-icons">
-                                                                        <?php
-                                                                        if (!empty($post_details->post_media->images))
-                                                                        {
-                                                                            foreach ($post_details->post_media->images as $key => $value)
-                                                                            {
-                                                                                echo '<img alt="' . $post_title . '" src="' . getimagesize($value['pm_media_url']) . '">';
-                                                                            }
-                                                                        }
-                                                                        ?>
-        <!--                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon-01.png">
-                                                                        <span class="tour-item-plus"><img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon.png"></span>
-                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/tour-icon-02.png">-->
-                                                                    </div>
                                                                     <div class="tour-icon-txt">Via : <?php echo $post_details['post_travel_mediums_string']; ?></div>
                                                                     <div class="clear"></div>
                                                                 </div>
@@ -82,7 +68,9 @@
                                                     <b><?php echo $post_total_cost; ?></b>
                                                     <span>trip budget</span>
                                                 </div>           
-                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>">View</a>   
+                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>"><span class="fa fa-search"></span>&nbsp;&nbsp;View</a>   
+                                                <a class="btn btn-orange margin-top-10" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
+                                                <a class="text-center display-block margin-top-40 clr-light-grey no-text-decoration" href="<?php echo base_url('trip/delete/' . stripslashes($post_details['post_url_key'])); ?>" onclick="return confirm('Sure you want to delete your trip?');"><span class="fa fa-trash"></span>&nbsp;&nbsp;Delete</a>   
                                             </div>
                                         </div>
                                         <div class="clear"></div>

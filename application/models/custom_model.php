@@ -20,7 +20,7 @@ class Custom_model extends CI_Model
             $post_id = $post_records[0]['post_id'];
             $output = $post_records[0];
 
-            $post_activities_records = $model->fetchSelectedData('*', TABLE_POST_ACTIVITIES, array('pa_post_id' => $post_id));
+            $post_activities_records = $model->getAllDataFromJoin('*', TABLE_POST_ACTIVITIES . ' as pa', array(TABLE_ACTIVITIES_MASTER . ' as am' => 'am.am_id = pa.pa_activity_id'), 'INNER', array('pa_post_id' => $post_id, 'am_status' => '1'), 'am_title');
             $output['post_activities'] = $post_activities_records;
 
             $post_featured_records = $model->fetchSelectedData('*', TABLE_POST_FEATURED, array('pf_post_id' => $post_id, 'pf_status' => '1', 'pf_end_date >' => date('Y-m-d H:i:s')));

@@ -485,4 +485,59 @@ class Trip extends CI_Controller
         $this->template->render();
     }
 
+    public function trip_details($post_url_key)
+    {
+        $post_details = $this->redis_functions->get_trip_details($post_url_key);
+        if (!empty($post_details))
+        {
+            $data = array();
+            $page_title = stripslashes($post_details['post_title']);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('trips') => 'Trips',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["post_details"] = $post_details;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $data['meta_description'] = getNWordsFromString(stripslashes($post_details['post_description']), 150);
+            $this->template->write_view("content", "pages/trip/trip-detail", $data);
+            $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
+    public function delete_trip($post_url_key)
+    {
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $user_id = $this->session->userdata["user_id"];
+            $model = new Common_model();
+            $where_cond_arr = array('post_url_key' => $post_url_key, 'post_user_id' => $user_id, 'post_status !=' => '2');
+            $post_details = $model->fetchSelectedData('post_id, post_title', TABLE_POSTS, $where_cond_arr);
+            if (!empty($post_details))
+            {
+                $model->updateData(TABLE_POSTS, array('post_status' => '3'), $where_cond_arr);
+                $this->redis_functions->remove_trip_details($post_url_key);
+                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']), ' successfully deleted');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'No such posts found to be deleted');
+            }
+            redirect(base_url('my-trips/list'));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }
