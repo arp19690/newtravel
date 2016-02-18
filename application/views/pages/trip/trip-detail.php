@@ -521,16 +521,23 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>
                             <p>Neque porro quisqua. Sed ut perspiciatis unde omnis ste natus error sit voluptatem.</p>
                         </div>
-                        <a href="#" class="wishlist-btn">
-                            <span class="wishlist-btn-l"><i></i></span>
-                            <span class="wishlist-btn-r">Add to wish list</span>
-                            <div class="clear"></div>
-                        </a>
-                        <a href="#" class="book-btn">
-                            <span class="book-btn-l"><i></i></span>
-                            <span class="book-btn-r">book now</span>
-                            <div class="clear"></div>
-                        </a>
+                        <?php
+                        if (isset($this->session->userdata['user_id']) && $this->session->userdata['user_id'] != $post_details['post_user_id'])
+                        {
+                            ?>
+                            <a href="#" class="wishlist-btn">
+                                <span class="wishlist-btn-l"><i></i></span>
+                                <span class="wishlist-btn-r">Add to wish list</span>
+                                <div class="clear"></div>
+                            </a>
+                            <a href="#" class="book-btn">
+                                <span class="book-btn-l"><i></i></span>
+                                <span class="book-btn-r">book now</span>
+                                <div class="clear"></div>
+                            </a>
+                            <?php
+                        }
+                        ?>
                     </div>
 
                     <div class="reasons-rating">
@@ -831,8 +838,8 @@ $post_total_days = number_format($post_details['post_total_days']);
             });
             $('.fly-in').appear({force_process: true});
         });
-        
-        $('.h-add-review').click(function(e){
+
+        $('.h-add-review').click(function (e) {
             e.preventDefault();
             $('.reviews-tab-href').click();
         });
