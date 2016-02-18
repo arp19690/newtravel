@@ -1,7 +1,10 @@
 <?php
 $redis_functions = new Redisfunctions();
 $travel_mediums = $redis_functions->get_travel_mediums();
-$count_search_results = 0;
+if (!isset($count_search_results))
+{
+    $count_search_results = 0;
+}
 ?>
 
 <div class="clear">
