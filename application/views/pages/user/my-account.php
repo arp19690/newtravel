@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="booking-form-i">
                                             <label>Your email:</label>
-                                            <div class="input"><?php echo stripslashes($record['user_email']); ?></div>
+                                            <div class="input hover-cursor-disabled"><?php echo stripslashes($record['user_email']); ?></div>
                                         </div>
                                     </div>
 
