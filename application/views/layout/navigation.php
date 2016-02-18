@@ -107,8 +107,9 @@ $path = $controller . "/" . $action;
                 if (isset($this->session->userdata['user_id']))
                 {
                     ?>
-                    <li><a href="<?php echo base_url('my-account'); ?>">My Account</a>
+                    <li><a href="javascript:void(0)">Profile</a>
                         <ul>
+                            <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                         </ul>
                     </li>
