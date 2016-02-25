@@ -5,7 +5,7 @@ function modify_url($base_url,$param_array = NULL, $separator = '&amp;')
     // parse the url
     $pathInfo = parse_url($_SERVER['REQUEST_URI']);
     $newQueryStr = NULL;
-    if (isset($pathInfo['query']) && !empty($pathInfo['query']))
+    if (isset($pathInfo['query']) && !empty(@$pathInfo['query']))
     {
         $newQueryStr = $pathInfo['query'];
     }
