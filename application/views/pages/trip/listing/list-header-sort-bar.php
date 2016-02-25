@@ -3,7 +3,7 @@ $current_base_url = explode('?', current_url())[0];
 ?>
 <div class="catalog-head fly-in">
     <label>Sort results by:</label>
-    <div class="search-select">
+    <div class="search-select" style="width: 145px;">
         <select name="sort" class="sort-filter-select">
             <?php
             $sort_array = array(
