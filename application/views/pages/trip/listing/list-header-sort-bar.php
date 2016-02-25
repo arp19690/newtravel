@@ -5,11 +5,28 @@ $current_base_url = explode('?', current_url())[0];
     <label>Sort results by:</label>
     <div class="search-select">
         <select name="sort" class="sort-filter-select">
-            <option value="<?php echo modify_url($current_base_url, array('sort' => 'title')); ?>">Title</option>
-            <option value="<?php echo modify_url($current_base_url, array('sort' => 'price_low')); ?>">Price: Low to High</option>
-            <option value="<?php echo modify_url($current_base_url, array('sort' => 'price_high')); ?>">Price High to Low</option>
-            <option value="<?php echo modify_url($current_base_url, array('sort' => 'duration_low')); ?>">Duration: Low to High</option>
-            <option value="<?php echo modify_url($current_base_url, array('sort' => 'duration_high')); ?>">Duration: High to Low</option>
+            <?php
+            $sort_array = array(
+                'title' => 'Title',
+                'price_low' => 'Price: Low to High',
+                'price_high' => 'Price High to Low',
+                'duration_low' => 'Duration: Low to High',
+                'duration_high' => 'Duration: High to Low',
+            );
+
+            foreach ($sort_array as $key => $value)
+            {
+                $selected = '';
+                if (isset($_GET['sort']))
+                {
+                    if ($_GET['sort'] == $key)
+                    {
+                        $selected = 'selected="selected"';
+                    }
+                }
+                echo '<option value="' . modify_url($current_base_url, array('sort' => $key)) . '" ' . $selected . '>' . $value . '</option>';
+            }
+            ?>
         </select>
     </div>
     <a href="<?php echo str_replace('/grid', '/list', current_url()); ?>" class="show-list"></a>              
