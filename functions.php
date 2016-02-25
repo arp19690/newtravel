@@ -1,5 +1,24 @@
 <?php
 
+function modify_url($base_url,$param_array = NULL, $separator = '&amp;')
+{
+    // parse the url
+    $pathInfo = parse_url($_SERVER['REQUEST_URI']);
+    $newQueryStr = NULL;
+    if (isset($pathInfo['query']) && !empty($pathInfo['query']))
+    {
+        $newQueryStr = $pathInfo['query'];
+    }
+
+    if (!empty($param_array))
+    {
+        // build the new query string
+        $newQueryStr .= $separator . http_build_query($param_array);
+    }
+
+    return $base_url . (!empty($newQueryStr) == TRUE ? ('?' . $newQueryStr) : ($newQueryStr));
+}
+
 function get_google_ad()
 {
     return NULL;
