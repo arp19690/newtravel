@@ -30,25 +30,27 @@ $redis_functions = new Redisfunctions();
                             $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
                         }
                         ?>
-                        <div class="offer-slider">
-                            <div class="fly-in offer-slider-c">
+                        <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
+                            <div class="fly-in offer-slider-c" itemscope itemtype="http://schema.org/Product">
                                 <div id="offers-a" class="owl-slider">
                                     <!-- // -->
                                     <div class="offer-slider-i">
-                                        <a class="offer-slider-img" href="<?php echo $trip_url; ?>">
-                                            <img alt="<?php echo $trip_title; ?>" src="<?php echo $trip_primary_image; ?>" />
+                                        <a itemprop="url" class="offer-slider-img" href="<?php echo $trip_url; ?>">
+                                            <img itemprop="image" alt="<?php echo $trip_title; ?>" src="<?php echo $trip_primary_image; ?>" />
                                             <span class="offer-slider-overlay">
                                                 <span class="offer-slider-btn">view details</span>
                                             </span>
                                         </a>
                                         <div class="offer-slider-txt">
-                                            <div class="offer-slider-link"><a href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
+                                            <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
                                             <div class="offer-slider-l">
                                                 <div class="offer-slider-location"><?php echo $trip_start_end_date_string; ?></div>
                                             </div>
-                                            <div class="offer-slider-r align-right">
-                                                <b><?php echo $trip_total_cost; ?></b>
-                                                <span>budget</span>
+                                            <div class="offer-slider-r align-right" itemscope itemtype="http://schema.org/Offer">
+                                                <span itemprop="priceCurrency" content="<?php echo strtoupper($trip_details['post_currency']); ?>">
+                                                    <b><span itemprop="price" content="<?php echo number_format($trip_details['post_total_cost'], 2); ?>"><?php echo $trip_total_cost; ?></span></b>
+                                                    <span>budget</span>
+                                                </span>
                                             </div>
                                             <div class="offer-slider-devider"></div>								
                                             <div class="clear"></div>
