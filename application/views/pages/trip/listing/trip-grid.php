@@ -1,4 +1,4 @@
-<div class="two-colls-right-b">
+<div class="two-colls-right-b" itemscope itemtype="http://schema.org/Event">
     <div class="padding">
 
         <?php $this->load->view('pages/trip/listing/list-header-sort-bar'); ?>
@@ -26,17 +26,18 @@
                     $post_total_days = number_format($post_details['post_total_days']);
                     ?>
                     <!-- // -->
-                    <div class="offer-slider-i catalog-i tour-grid fly-in">
-                        <a href="<?php echo $post_url; ?>" class="offer-slider-img">
-                            <img alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
+                    <div class="offer-slider-i catalog-i tour-grid fly-in" itemscope itemtype="http://schema.org/Product">
+                        <a href="<?php echo $post_url; ?>" class="offer-slider-img" itemprop="url">
+                            <img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
                             <span class="offer-slider-overlay">
                                 <span class="offer-slider-btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</span><span></span>
                             </span>
                         </a>
                         <div class="offer-slider-txt">
-                            <div class="offer-slider-link"><a href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
+                            <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
                             <div class="offer-slider-l">
                                 <div class="offer-slider-location">Duration : <?php echo $post_total_days; ?> days</div>
+                                <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
                             </div>
                             <div class="offer-slider-r">
                                 <b><?php echo $post_total_cost; ?></b>
@@ -46,7 +47,7 @@
                             <div class="clear"></div>
                             <div class="offer-slider-lead"><?php echo $post_description; ?></div>
                             <div class="clear text-center margin-top-20">
-                                <a href="<?php echo $post_url; ?>" class="btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</a>
+                                <a itemprop="url" href="<?php echo $post_url; ?>" class="btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</a>
                             </div>
                             <div class="clear text-center margin-top-20">
                                 <a class="btn" style="padding: 5px 15px;" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
