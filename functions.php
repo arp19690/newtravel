@@ -97,12 +97,15 @@ function get_trip_url_key($trip_title, $post_id = NULL)
 function get_breadcrumbs($input_arr)
 {
     $i = 1;
-    $str = '<div class="breadcrumbs">';
+    $str = '<div class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">';
     foreach ($input_arr as $url => $title)
     {
         if (count($input_arr) > $i)
         {
-            $str.='<a href="' . $url . '">' . $title . '</a>';
+            $str.='<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
+            $str.='<a itemprop="item" href="' . $url . '"><span itemprop="name">' . $title . '</span></a>';
+            $str.= '<meta itemprop="position" content="' . $i . '" />';
+            $str.='</span>';
             $str.=' / ';
         }
         else
