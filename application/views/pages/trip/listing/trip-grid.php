@@ -40,10 +40,10 @@
                                 <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
                             </div>
                             <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
-                                <span itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
-                                    <b><span itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><?php echo $post_total_cost; ?></span></b>
+                                <div itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
+                                    <div itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><b><?php echo $post_total_cost; ?></b></div>
                                     <span>trip budget</span>
-                                </span>
+                                </div>
                             </div>
                             <div class="offer-slider-devider"></div>								
                             <div class="clear"></div>

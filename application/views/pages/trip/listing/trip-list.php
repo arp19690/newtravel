@@ -66,10 +66,10 @@
                                                 count($post_details['post_comments']) > 0 ? '<div class="cat-list-review">' . number_format(count($post_details['post_comments'])) . ' reviews</div>' : ''
                                                 ?>
                                                 <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
-                                                    <span itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
-                                                        <b><span itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><?php echo $post_total_cost; ?></span></b>
+                                                    <div itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
+                                                        <div itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><b><?php echo $post_total_cost; ?></b></div>
                                                         <span>trip budget</span>
-                                                    </span>
+                                                    </div>
                                                 </div>           
                                                 <a itemprop="url" class="cat-list-btn" href="<?php echo $post_url; ?>"><span class="fa fa-search"></span>&nbsp;&nbsp;View</a>   
                                                 <a class="btn btn-orange margin-top-10" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
