@@ -68,7 +68,7 @@ if (!isset($count_search_results))
         <div class="side-block fly-in">
             <div class="side-price">
                 <div class="side-padding">
-                    <div class="side-lbl">Budget</div>
+                    <div class="side-lbl">Budget <small>(USD)</small></div>
                     <div class="price-ranger">
                         <div id="slider-range"></div>              
                     </div>
@@ -162,15 +162,13 @@ if (!isset($count_search_results))
                 max: 15000,
                 values: [250, 3500],
                 slide: function (event, ui) {
-                    $("#ammount-from").val(ui.values[0] + '$');
-                    $("#ammount-to").val(ui.values[1] + '$');
+                    $("#ammount-from").val(ui.values[0]);
+                    $("#ammount-to").val(ui.values[1]);
                 }
             });
-            $("#ammount-from").val($("#slider-range").slider("values", 0) + '$');
-            $("#ammount-to").val($("#slider-range").slider("values", 1) + '$');
+            $("#ammount-from").val($("#slider-range").slider("values", 0));
+            $("#ammount-to").val($("#slider-range").slider("values", 1));
         });
-
-
 
         $(".side-time").each(function () {
             var $this = $(this);
