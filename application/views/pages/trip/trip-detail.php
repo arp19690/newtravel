@@ -16,10 +16,10 @@ $post_total_days = number_format($post_details['post_total_days']);
 
 <!-- main-cont -->
 <div class="main-cont">
-    <div class="body-wrapper">
+    <div class="body-wrapper" itemscope itemtype="http://schema.org/Event">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title"><?php echo $page_title; ?></div>
+                <div class="page-title" itemprop="name"><?php echo $page_title; ?></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
@@ -41,7 +41,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             <img alt="<?php echo $page_title; ?>" src="<?php echo getImage($post_details['post_primary_image']); ?>">
                                         </div>
                                         <div class="tab-gallery-preview">
-                                            <div id="gallery">
+                                            <div id="gallery" itemscope itemtype="http://schema.org/Product">
                                                 <?php
                                                 if (!empty($post_details['post_media']->images))
                                                 {
@@ -50,7 +50,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                         $image_src = getImage($value->pm_media_url);
                                                         ?>
                                                         <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
-                                                            <a href="<?php echo $image_src; ?>"><img alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
+                                                            <a href="<?php echo $image_src; ?>"><img itemprop="image" alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
                                                         </div>
                                                         <?php
                                                     }
@@ -79,7 +79,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <div class="content-tabs-i">
                                             <div class="clear">
                                                 <h2>Description</h2>
-                                                <div>
+                                                <div itemprop="description">
                                                     <?php echo $post_description; ?>
                                                 </div>
                                             </div>
