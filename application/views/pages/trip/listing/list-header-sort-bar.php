@@ -12,8 +12,8 @@ $current_base_url = explode('?', current_url())[0];
             <option value="<?php echo modify_url($current_base_url, array('sort' => 'duration_high')); ?>">Duration: High to Low</option>
         </select>
     </div>
-    <a href="#" class="show-list"></a>              
-    <a class="show-thumbs chosen" href="#"></a> 
+    <a href="<?php echo str_replace('/grid', '/list', current_url()); ?>" class="show-list"></a>              
+    <a href="<?php echo str_replace('/list', '/grid', current_url()); ?>" class="show-thumbs chosen"></a> 
     <div class="clear"></div>
 </div>
 <script type="text/javascript">
