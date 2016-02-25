@@ -46,6 +46,29 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_latest_trips()
+    {
+        $key_array = array();
+        $custom_model = new Custom_model();
+        $records = $custom_model->get_featured_trips('p.post_url_key');
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $key_array[] = $value['post_url_key'];
+            }
+            $this->ci->redis->set('latest_trips', json_encode($key_array));
+        }
+
+        return $key_array;
+    }
+
+    public function get_latest_trips()
+    {
+        $output = (array) json_decode($this->ci->redis->get('latest_trips'));
+        return $output;
+    }
+
     public function is_featured_trip($url_key)
     {
         $featured_trips = (array) $this->get_featured_trips();
