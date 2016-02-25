@@ -39,13 +39,15 @@
                                 <div class="offer-slider-location">Duration : <?php echo $post_total_days; ?> days</div>
                                 <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
                             </div>
-                            <div class="offer-slider-r">
-                                <b><?php echo $post_total_cost; ?></b>
-                                <span>trip budget</span>
+                            <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
+                                <span itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
+                                    <b><span itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><?php echo $post_total_cost; ?></span></b>
+                                    <span>trip budget</span>
+                                </span>
                             </div>
                             <div class="offer-slider-devider"></div>								
                             <div class="clear"></div>
-                            <div class="offer-slider-lead"><?php echo $post_description; ?></div>
+                            <div class="offer-slider-lead" itemprop="description"><?php echo $post_description; ?></div>
                             <div class="clear text-center margin-top-20">
                                 <a itemprop="url" href="<?php echo $post_url; ?>" class="btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</a>
                             </div>
