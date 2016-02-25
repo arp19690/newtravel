@@ -7,123 +7,126 @@ if (!isset($count_search_results))
 }
 ?>
 
-<div class="clear">
-    <div class="srch-results-lbl fly-in">
-        <span><?php echo number_format($count_search_results); ?> results found.</span>
-    </div> 
+<form action="<?php echo base_url('search'); ?>" method="GET">
+    <div class="clear">
+        <div class="srch-results-lbl fly-in">
+            <span><?php echo number_format($count_search_results); ?> results found.</span>
+        </div> 
 
-    <div class="side-block fly-in">
-        <div class="side-block-search">
-            <div class="page-search-p">
-                <!-- // -->
-                <div class="srch-tab-line">
-                    <div class="clear">
-                        <label>Location</label>
-                        <div class="input-a"><input type="text" name="search_location" value="" placeholder="example: France" class="gMapLocation-cities"></div>	
+        <div class="side-block fly-in">
+            <div class="side-block-search">
+                <div class="page-search-p">
+                    <!-- // -->
+                    <div class="srch-tab-line">
+                        <div class="clear">
+                            <label>Location</label>
+                            <div class="input-a"><input type="text" name="search_location" value="" placeholder="example: France" class="gMapLocation-cities"></div>	
+                        </div>
+                        <div class="clear transformed margin-top-20">
+                            <label>Number of Travelers</label>
+                            <div class="select-wrapper">
+                                <select class="custom-select" name="search_travelers">
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++)
+                                    {
+                                        $num_of_travelers = $i == 5 ? ($i . '+') : ($i);
+                                        echo '<option value="' . $num_of_travelers . '">' . $num_of_travelers . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>	
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="clear transformed margin-top-20">
-                        <label>Number of Travelers</label>
-                        <div class="select-wrapper">
-                            <select class="custom-select">
-                                <?php
-                                for ($i = 1; $i <= 5; $i++)
-                                {
-                                    $num_of_travelers = $i == 5 ? ($i . '+') : ($i);
-                                    echo '<option value="' . $num_of_travelers . '">' . $num_of_travelers . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>	
+                    <!-- \\ -->
+                    <!-- // -->
+                    <div class="srch-tab-line">
+                        <div class="srch-tab-left">
+                            <label>Departure</label>
+                            <div class="input-a"><input type="text" name="search_date_start" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                        </div>
+                        <div class="srch-tab-right">
+                            <label>Return</label>
+                            <div class="input-a"><input type="text" name="search_date_end" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="srch-tab-line">
-                    <div class="srch-tab-left">
-                        <label>Departure</label>
-                        <div class="input-a"><input type="text" name="search_date_start" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
-                    </div>
-                    <div class="srch-tab-right">
-                        <label>Return</label>
-                        <div class="input-a"><input type="text" name="search_date_end" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <button class="srch-btn">Search</button> 
-            </div>  
-        </div>          
-    </div>
+                    <!-- \\ -->
+                </div>  
+            </div>          
+        </div>
 
-    <!-- // side // -->
-    <div class="side-block fly-in">
-        <div class="side-price">
-            <div class="side-padding">
-                <div class="side-lbl">Budget</div>
-                <div class="price-ranger">
-                    <div id="slider-range"></div>              
-                </div>
-                <div class="price-ammounts">
-                    <input type="text" name="search_budget_min" id="ammount-from" readonly>
-                    <input type="text" name="search_budget_max" id="ammount-to" readonly>
-                    <div class="clear"></div>
-                </div>              
-            </div>
-        </div>  
-    </div>
-    <!-- \\ side \\ -->
-
-    <!-- // side // -->
-    <div class="side-block fly-in">
-        <div class="side-stars">
-            <div class="side-padding">
-                <div class="side-lbl">Trip duration</div>  
-                <?php
-                $trip_duration_arr = array(
-                    '4' => '2 - 4',
-                    '6' => '4 - 6',
-                    '10' => '6 - 10',
-                    '10+' => '10+'
-                );
-
-                foreach ($trip_duration_arr as $key => $value)
-                {
-                    ?>
-                    <div class="checkbox"><label><input type="checkbox" name="search_trip_days[]" value="<?php echo $key; ?>" /><?php echo $value; ?> Days</label></div>
-                    <?php
-                }
-                ?>     
-            </div>
-        </div>  
-    </div>
-    <!-- \\ side \\ -->
-
-    <?php
-    if (!empty($travel_mediums))
-    {
-        ?>
         <!-- // side // -->
         <div class="side-block fly-in">
-            <div class="side-stars">
+            <div class="side-price">
                 <div class="side-padding">
-                    <div class="side-lbl">Travel medium</div>  
-                    <?php
-                    foreach ($travel_mediums as $key => $value)
-                    {
-                        ?>
-                        <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value->tm_id; ?>"/><?php echo stripslashes($value->tm_title); ?></label></div>
-                                <?php
-                            }
-                            ?>
+                    <div class="side-lbl">Budget</div>
+                    <div class="price-ranger">
+                        <div id="slider-range"></div>              
+                    </div>
+                    <div class="price-ammounts">
+                        <input type="text" name="search_budget_min" id="ammount-from" readonly>
+                        <input type="text" name="search_budget_max" id="ammount-to" readonly>
+                        <div class="clear"></div>
+                    </div>              
                 </div>
             </div>  
         </div>
         <!-- \\ side \\ -->
+
+        <!-- // side // -->
+        <div class="side-block fly-in">
+            <div class="side-stars">
+                <div class="side-padding">
+                    <div class="side-lbl">Trip duration</div>  
+                    <?php
+                    $trip_duration_arr = array(
+                        '4' => '2 - 4',
+                        '6' => '4 - 6',
+                        '10' => '6 - 10',
+                        '10+' => '10+'
+                    );
+
+                    foreach ($trip_duration_arr as $key => $value)
+                    {
+                        ?>
+                        <div class="checkbox"><label><input type="checkbox" name="search_duration[]" value="<?php echo $key; ?>" /><?php echo $value; ?> Days</label></div>
+                        <?php
+                    }
+                    ?>     
+                </div>
+            </div>  
+        </div>
+        <!-- \\ side \\ -->
+
         <?php
-    }
-    ?>
-</div>
+        if (!empty($travel_mediums))
+        {
+            ?>
+            <!-- // side // -->
+            <div class="side-block fly-in">
+                <div class="side-stars">
+                    <div class="side-padding">
+                        <div class="side-lbl">Travel medium</div>  
+                        <?php
+                        foreach ($travel_mediums as $key => $value)
+                        {
+                            ?>
+                            <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value->tm_id; ?>"/><?php echo stripslashes($value->tm_title); ?></label></div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>  
+            </div>
+            <!-- \\ side \\ -->
+            <?php
+        }
+        ?>
+
+            <button type="submit" class="btn btn-orange">Submit</button>
+    </div>
+</form>
 <script src="<?php echo JS_PATH; ?>/jquery.formstyler.js"></script>
 <script>
     $(document).ready(function () {
