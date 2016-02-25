@@ -147,7 +147,7 @@ class Custom_model extends CI_Model
 
     public function get_latest_trips($fields = 'p.post_url_key', $limit = '0, 4')
     {
-        $sql = "SELECT " . $fields . " FROM posts as p WHERE p.post_status = '1' and p.post_published = '1' ORDER BY p.id DESC LIMIT " . $limit;
+        $sql = "SELECT " . $fields . " FROM posts as p WHERE p.post_status = '1' and p.post_published = '1' ORDER BY p.post_id DESC LIMIT " . $limit;
         $records = $this->db->query($sql)->result_array();
         return $records;
     }
