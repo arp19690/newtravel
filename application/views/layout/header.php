@@ -54,7 +54,7 @@ $path = $controller . "/" . $action;
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script src="<?php echo JS_PATH; ?>/jquery.1.7.1.js"></script>
     </head>
-    <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>">
+    <body class="<?php echo $path == 'index/index' ? 'index-page' : ''; ?>" itemscope itemtype="http://schema.org/WebPage">
         <script>
             var js_base_url = '<?php echo base_url(); ?>';
             window.fbAsyncInit = function () {
