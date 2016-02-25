@@ -7,7 +7,7 @@ if (!isset($count_search_results))
 }
 ?>
 
-<form action="<?php echo base_url('search'); ?>" method="GET">
+<form action="<?php echo base_url('trip/search'); ?>" method="GET">
     <div class="clear">
         <div class="srch-results-lbl fly-in">
             <span><?php echo number_format($count_search_results); ?> results found.</span>
@@ -20,7 +20,7 @@ if (!isset($count_search_results))
                     <div class="srch-tab-line">
                         <div class="clear">
                             <label>Location</label>
-                            <div class="input-a"><input type="text" name="search_location" value="" placeholder="example: France" class="gMapLocation-cities"></div>	
+                            <div class="input-a"><input type="text" name="search_location" value="<?php echo isset($_GET['search_location']) == TRUE ? $_GET['search_location'] : ''; ?>" placeholder="example: France" class="gMapLocation-cities"></div>	
                         </div>
                         <div class="clear transformed margin-top-20">
                             <label>Number of Travelers</label>
@@ -30,7 +30,15 @@ if (!isset($count_search_results))
                                     for ($i = 1; $i <= 5; $i++)
                                     {
                                         $num_of_travelers = $i == 5 ? ($i . '+') : ($i);
-                                        echo '<option value="' . $num_of_travelers . '">' . $num_of_travelers . '</option>';
+                                        $selected = '';
+                                        if (isset($_GET['search_travelers']))
+                                        {
+                                            if ($_GET['search_travelers'] == $value)
+                                            {
+                                                $selected = 'selected="selected"';
+                                            }
+                                        }
+                                        echo '<option value="' . $num_of_travelers . '" ' . $selected . '>' . $num_of_travelers . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -43,11 +51,11 @@ if (!isset($count_search_results))
                     <div class="srch-tab-line">
                         <div class="srch-tab-left">
                             <label>Departure</label>
-                            <div class="input-a"><input type="text" name="search_date_start" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                            <div class="input-a"><input type="text" name="search_date_start" value="<?php echo isset($_GET['search_date_start']) == TRUE ? $_GET['search_date_start'] : ''; ?>" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                         </div>
                         <div class="srch-tab-right">
                             <label>Return</label>
-                            <div class="input-a"><input type="text" name="search_date_end" value="" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                            <div class="input-a"><input type="text" name="search_date_end" value="<?php echo isset($_GET['search_date_end']) == TRUE ? $_GET['search_date_end'] : ''; ?>" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -80,17 +88,20 @@ if (!isset($count_search_results))
                 <div class="side-padding">
                     <div class="side-lbl">Trip duration</div>  
                     <?php
-                    $trip_duration_arr = array(
-                        '4' => '2 - 4',
-                        '6' => '4 - 6',
-                        '10' => '6 - 10',
-                        '10+' => '10+'
-                    );
+                    $trip_duration_arr = array('2-4', '4-6', '6-10', '10+');
 
-                    foreach ($trip_duration_arr as $key => $value)
+                    foreach ($trip_duration_arr as $value)
                     {
+                        $checked = '';
+                        if (isset($_GET['search_duration']))
+                        {
+                            if ($_GET['search_duration'] == $value)
+                            {
+                                $checked = 'checked="checked"';
+                            }
+                        }
                         ?>
-                        <div class="checkbox"><label><input type="checkbox" name="search_duration[]" value="<?php echo $key; ?>" /><?php echo $value; ?> Days</label></div>
+                        <div class="checkbox"><label><input type="checkbox" name="search_duration[]" value="<?php echo $value; ?>" <?php echo $checked; ?>/><?php echo $value; ?> Days</label></div>
                         <?php
                     }
                     ?>     
@@ -111,8 +122,16 @@ if (!isset($count_search_results))
                         <?php
                         foreach ($travel_mediums as $key => $value)
                         {
+                            $checked = '';
+                            if (isset($_GET['search_travel_medium']))
+                            {
+                                if ($_GET['search_travel_medium'] == $value)
+                                {
+                                    $checked = 'checked="checked"';
+                                }
+                            }
                             ?>
-                            <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value->tm_id; ?>"/><?php echo stripslashes($value->tm_title); ?></label></div>
+                            <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value->tm_id; ?>" <?php echo $checked; ?>/><?php echo stripslashes($value->tm_title); ?></label></div>
                             <?php
                         }
                         ?>
@@ -124,7 +143,7 @@ if (!isset($count_search_results))
         }
         ?>
 
-            <button type="submit" class="btn btn-orange">Submit</button>
+        <button type="submit" class="btn btn-orange">Submit</button>
     </div>
 </form>
 <script src="<?php echo JS_PATH; ?>/jquery.formstyler.js"></script>
