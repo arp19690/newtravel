@@ -50,7 +50,7 @@ class Redisfunctions
     {
         $key_array = array();
         $custom_model = new Custom_model();
-        $records = $custom_model->get_featured_trips('p.post_url_key');
+        $records = $custom_model->get_latest_trips('p.post_url_key');
         if (count($records) > 0)
         {
             foreach ($records as $value)
