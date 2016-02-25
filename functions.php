@@ -110,7 +110,10 @@ function get_breadcrumbs($input_arr)
         }
         else
         {
-            $str.='<span>' . $title . '</span>';
+            $str.='<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
+            $str.='<span itemprop="name">' . $title . '</span>';
+            $str.= '<meta itemprop="position" content="' . $i . '" />';
+            $str.='</span>';
         }
         $i++;
     }
