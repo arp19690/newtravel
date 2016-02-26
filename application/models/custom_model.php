@@ -145,4 +145,34 @@ class Custom_model extends CI_Model
         return $records;
     }
 
+    public function get_latest_trips($fields = 'p.post_url_key', $limit = '0, 4')
+    {
+        $sql = "SELECT " . $fields . " FROM posts as p WHERE p.post_status = '1' and p.post_published = '1' ORDER BY p.post_id DESC LIMIT " . $limit;
+        $records = $this->db->query($sql)->result_array();
+        return $records;
+    }
+
+    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $group_by = 'p.post_id', $order_by = 'p.post_title ASC')
+    {
+        $output = array();
+        $sql = 'SELECT ' . $fields . ' FROM `posts` as p 
+                    left join post_regions as pr on pr.pr_post_id = p.post_id
+                    left join post_costs as pc on pc.cost_post_id = p.post_id
+                    left join post_travelers as pt on pt.pt_post_id = p.post_id
+                    WHERE ' . $where_cond_str . '
+                    GROUP BY ' . $group_by . ' 
+                    ORDER BY ' . $order_by;
+        $records = $this->db->query($sql)->result_array();
+
+        if (!empty($records))
+        {
+            foreach ($records as $value)
+            {
+                $output[] = $this->get_trip_detail($value['post_url_key']);
+            }
+        }
+
+        return $output;
+    }
+
 }

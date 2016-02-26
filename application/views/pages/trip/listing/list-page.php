@@ -14,7 +14,7 @@
             </div>
             <div class="two-colls">
                 <div class="two-colls-left">
-                    <?php $this->load->view('pages/trip/listing/search-sidebar'); ?>
+                    <?php $this->load->view('pages/trip/listing/search-sidebar', array('count_search_results' => count($post_records))); ?>
                     <div class="clear"></div>
                 </div>
 

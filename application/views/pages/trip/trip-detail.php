@@ -16,10 +16,10 @@ $post_total_days = number_format($post_details['post_total_days']);
 
 <!-- main-cont -->
 <div class="main-cont">
-    <div class="body-wrapper">
+    <div class="body-wrapper" itemscope itemtype="http://schema.org/Event">
         <div class="wrapper-padding">
             <div class="page-head">
-                <div class="page-title"><?php echo $page_title; ?></div>
+                <div class="page-title" itemprop="name"><?php echo $page_title; ?></div>
                 <?php
                 if (isset($breadcrumbs) && !empty($breadcrumbs))
                 {
@@ -41,7 +41,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                             <img alt="<?php echo $page_title; ?>" src="<?php echo getImage($post_details['post_primary_image']); ?>">
                                         </div>
                                         <div class="tab-gallery-preview">
-                                            <div id="gallery">
+                                            <div id="gallery" itemscope itemtype="http://schema.org/Product">
                                                 <?php
                                                 if (!empty($post_details['post_media']->images))
                                                 {
@@ -50,7 +50,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                         $image_src = getImage($value->pm_media_url);
                                                         ?>
                                                         <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
-                                                            <a href="<?php echo $image_src; ?>"><img alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
+                                                            <a href="<?php echo $image_src; ?>"><img itemprop="image" alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
                                                         </div>
                                                         <?php
                                                     }
@@ -79,7 +79,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                         <div class="content-tabs-i">
                                             <div class="clear">
                                                 <h2>Description</h2>
-                                                <div>
+                                                <div itemprop="description">
                                                     <?php echo $post_description; ?>
                                                 </div>
                                             </div>
@@ -521,16 +521,23 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>
                             <p>Neque porro quisqua. Sed ut perspiciatis unde omnis ste natus error sit voluptatem.</p>
                         </div>
-                        <a href="#" class="wishlist-btn">
-                            <span class="wishlist-btn-l"><i></i></span>
-                            <span class="wishlist-btn-r">Add to wish list</span>
-                            <div class="clear"></div>
-                        </a>
-                        <a href="#" class="book-btn">
-                            <span class="book-btn-l"><i></i></span>
-                            <span class="book-btn-r">book now</span>
-                            <div class="clear"></div>
-                        </a>
+                        <?php
+                        if (isset($this->session->userdata['user_id']) && $this->session->userdata['user_id'] != $post_details['post_user_id'])
+                        {
+                            ?>
+                            <a href="#" class="wishlist-btn">
+                                <span class="wishlist-btn-l"><i></i></span>
+                                <span class="wishlist-btn-r">Add to wish list</span>
+                                <div class="clear"></div>
+                            </a>
+                            <a href="#" class="book-btn">
+                                <span class="book-btn-l"><i></i></span>
+                                <span class="book-btn-r">book now</span>
+                                <div class="clear"></div>
+                            </a>
+                            <?php
+                        }
+                        ?>
                     </div>
 
                     <div class="reasons-rating">
@@ -693,71 +700,6 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <!-- \\ -->
                         </div>			
                     </div>
-
-                    <div class="h-reasons">
-                        <div class="h-liked-lbl">Reasons to Book with us</div>
-                        <div class="h-reasons-row">
-                            <!-- // -->
-                            <div class="reasons-i">
-                                <div class="reasons-h">
-                                    <div class="reasons-l">
-                                        <img alt="" src="img/reasons-a.png">
-                                    </div>
-                                    <div class="reasons-r">
-                                        <div class="reasons-rb">
-                                            <div class="reasons-p">
-                                                <div class="reasons-i-lbl">Awesome design</div>
-                                                <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequunt.</p>
-                                            </div>
-                                        </div>
-                                        <br class="clear" />
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <!-- \\ -->	
-                            <!-- // -->
-                            <div class="reasons-i">
-                                <div class="reasons-h">
-                                    <div class="reasons-l">
-                                        <img alt="" src="img/reasons-b.png">
-                                    </div>
-                                    <div class="reasons-r">
-                                        <div class="reasons-rb">
-                                            <div class="reasons-p">
-                                                <div class="reasons-i-lbl">carefylly handcrafted</div>
-                                                <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequunt.</p>
-                                            </div>
-                                        </div>
-                                        <br class="clear" />
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <!-- \\ -->	
-                            <!-- // -->
-                            <div class="reasons-i">
-                                <div class="reasons-h">
-                                    <div class="reasons-l">
-                                        <img alt="" src="img/reasons-c.png">
-                                    </div>
-                                    <div class="reasons-r">
-                                        <div class="reasons-rb">
-                                            <div class="reasons-p">
-                                                <div class="reasons-i-lbl">sustomer support</div>
-                                                <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequunt.</p>
-                                            </div>
-                                        </div>
-                                        <br class="clear" />
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <!-- \\ -->				
-                        </div>
-                    </div>
-
-
                 </div>
                 <div class="clear"></div>
             </div>
@@ -831,8 +773,8 @@ $post_total_days = number_format($post_details['post_total_days']);
             });
             $('.fly-in').appear({force_process: true});
         });
-        
-        $('.h-add-review').click(function(e){
+
+        $('.h-add-review').click(function (e) {
             e.preventDefault();
             $('.reviews-tab-href').click();
         });

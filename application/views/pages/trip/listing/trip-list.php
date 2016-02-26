@@ -1,4 +1,4 @@
-<div class="two-colls-right-b">
+<div class="two-colls-right-b" itemscope itemtype="http://schema.org/Event">
     <div class="padding">
 
         <?php $this->load->view('pages/trip/listing/list-header-sort-bar'); ?>
@@ -26,9 +26,9 @@
                     $post_total_days = number_format($post_details['post_total_days']);
                     ?>
                     <!-- // -->
-                    <div class="cat-list-item tour-item fly-in">
+                    <div class="cat-list-item tour-item fly-in" itemscope itemtype="http://schema.org/Product">
                         <div class="cat-list-item-l">
-                            <a href="<?php echo $post_url; ?>"><img alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>"></a>
+                            <a itemprop="url" href="<?php echo $post_url; ?>"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>"></a>
                         </div>
                         <div class="cat-list-item-r">
                             <div class="cat-list-item-rb">
@@ -39,18 +39,19 @@
                                                 <div class="cat-list-content-lb">
                                                     <div class="cat-list-content-lpadding">
                                                         <div class="tour-item-a">
-                                                            <div class="tour-item-lbl"><a href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
+                                                            <div class="tour-item-lbl" itemprop="name"><a itemprop="url" href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
                                                             <div class="tour-item-date"><?php echo $post_start_end_date_string; ?></div>
                                                         </div>
                                                         <div class="tour-item-devider"></div>
                                                         <div class="tour-item-b">
-                                                            <p><?php echo $post_description; ?></p>
+                                                            <p><span itemprop="description"><?php echo $post_description; ?></span></p>
                                                             <div class="tour-item-footer">
                                                                 <div class="tour-i-holder">
                                                                     <div class="tour-icon-txt">Via : <?php echo $post_details['post_travel_mediums_string']; ?></div>
                                                                     <div class="clear"></div>
                                                                 </div>
                                                                 <div class="tour-duration">Trip Duration : <?php echo $post_total_days; ?> days</div>
+                                                                <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
                                                                 <div class="clear"></div>
                                                             </div>
                                                         </div>
@@ -64,11 +65,13 @@
                                                 <?php
                                                 count($post_details['post_comments']) > 0 ? '<div class="cat-list-review">' . number_format(count($post_details['post_comments'])) . ' reviews</div>' : ''
                                                 ?>
-                                                <div class="offer-slider-r">
-                                                    <b><?php echo $post_total_cost; ?></b>
-                                                    <span>trip budget</span>
+                                                <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
+                                                    <div itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
+                                                        <div itemprop="price" content="<?php echo number_format($post_details['post_total_cost'], 2); ?>"><b><?php echo $post_total_cost; ?></b></div>
+                                                        <span>trip budget</span>
+                                                    </div>
                                                 </div>           
-                                                <a class="cat-list-btn" href="<?php echo $post_url; ?>"><span class="fa fa-search"></span>&nbsp;&nbsp;View</a>   
+                                                <a itemprop="url" class="cat-list-btn" href="<?php echo $post_url; ?>"><span class="fa fa-search"></span>&nbsp;&nbsp;View</a>   
                                                 <a class="btn btn-orange margin-top-10" href="<?php echo base_url('trip/post/edit/1/' . stripslashes($post_details['post_url_key'])); ?>"><span class="fa fa-pencil"></span>&nbsp;&nbsp;Edit</a>   
                                                 <a class="text-center display-block margin-top-40 clr-light-grey no-text-decoration" href="<?php echo base_url('trip/delete/' . stripslashes($post_details['post_url_key'])); ?>" onclick="return confirm('Sure you want to delete your trip?');"><span class="fa fa-trash"></span>&nbsp;&nbsp;Delete</a>   
                                             </div>

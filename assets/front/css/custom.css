@@ -1,3 +1,4 @@
 .hidden{display: none !important;}
 .a-no-underline{text-decoration: none;}
 .notification-area{position: absolute;width: 100%;display: inline-block;z-index: 999;}
+.hover-cursor-disabled:hover{cursor: not-allowed;}

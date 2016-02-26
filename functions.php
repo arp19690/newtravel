@@ -1,5 +1,24 @@
 <?php
 
+function modify_url($base_url,$param_array = NULL, $separator = '&amp;')
+{
+    // parse the url
+    $pathInfo = parse_url($_SERVER['REQUEST_URI']);
+    $newQueryStr = NULL;
+    if (isset($pathInfo['query']) && !empty(@$pathInfo['query']))
+    {
+        $newQueryStr = $pathInfo['query'];
+    }
+
+    if (!empty($param_array))
+    {
+        // build the new query string
+        $newQueryStr .= $separator . http_build_query($param_array);
+    }
+
+    return $base_url . (!empty($newQueryStr) == TRUE ? ('?' . $newQueryStr) : ($newQueryStr));
+}
+
 function get_google_ad()
 {
     return NULL;
@@ -97,17 +116,23 @@ function get_trip_url_key($trip_title, $post_id = NULL)
 function get_breadcrumbs($input_arr)
 {
     $i = 1;
-    $str = '<div class="breadcrumbs">';
+    $str = '<div class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">';
     foreach ($input_arr as $url => $title)
     {
         if (count($input_arr) > $i)
         {
-            $str.='<a href="' . $url . '">' . $title . '</a>';
+            $str.='<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
+            $str.='<a itemprop="item" href="' . $url . '"><span itemprop="name">' . $title . '</span></a>';
+            $str.= '<meta itemprop="position" content="' . $i . '" />';
+            $str.='</span>';
             $str.=' / ';
         }
         else
         {
-            $str.='<span>' . $title . '</span>';
+            $str.='<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
+            $str.='<span itemprop="name">' . $title . '</span>';
+            $str.= '<meta itemprop="position" content="' . $i . '" />';
+            $str.='</span>';
         }
         $i++;
     }
