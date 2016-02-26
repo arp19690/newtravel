@@ -540,9 +540,10 @@ class Trip extends CI_Controller
         }
     }
 
-    public function search()
+    public function search($view_type = 'list', $page = 1)
     {
         $model = new Common_model();
+        $custom_model = new Custom_model();
         $params = $this->input->get();
 
         $user_id = isset($this->session->userdata['user_id']) == TRUE ? $this->session->userdata['user_id'] : NULL;
@@ -571,7 +572,85 @@ class Trip extends CI_Controller
             'ps_useragent' => USER_AGENT
         );
         $model->insertData(TABLE_POST_SEARCHES, $data_array);
-        prd($data_array);
+
+        $order_by = 'p.post_title ASC';
+        switch ($order_by)
+        {
+            default:
+                $order_by = 'p.post_title ASC';
+                break;
+            case 'title':
+                $order_by = 'p.post_title ASC';
+                break;
+            case 'price_low':
+                $order_by = 'cost_amount ASC';
+                break;
+            case 'price_high':
+                $order_by = 'cost_amount DESC';
+                break;
+            case 'duration_low':
+                $order_by = 'COUNT(pt_post_id) ASC';
+                break;
+            case 'duration_high':
+                $order_by = 'COUNT(pt_post_id) DESC';
+                break;
+        }
+
+        $group_by = 'p.post_id';
+        $where_cond_str = '1';
+//        Location
+        if (!empty($search_location))
+        {
+            $where_cond_str .= ' AND (pr_source_location = "' . $search_location . '" or pr_destination_location = "' . $search_location . '")';
+        }
+//        Dates
+        if (!empty($search_date_start))
+        {
+            $where_cond_str .= ' AND pr_from_date >= "' . $search_date_start . '"';
+        }
+        if (!empty($search_date_end))
+        {
+            $where_cond_str .= ' AND pr_to_date <= "' . $search_date_end . '"';
+        }
+//        Costs
+        if (!empty($search_budget_min))
+        {
+            $where_cond_str .= ' AND cost_amount >= "' . $search_budget_min . '"';
+        }
+        if (!empty($search_budget_max))
+        {
+            $where_cond_str .= ' AND cost_amount <= "' . $search_budget_max . '"';
+        }
+//        Travellers
+        if (!empty($search_travelers))
+        {
+            if ($search_travelers != '5+')
+            {
+                $group_by = 'p.post_id HAVING COUNT(pt_post_id) = ' . $search_travelers;
+            }
+            else
+            {
+                $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= 5';
+            }
+        }
+
+        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => 'Search',
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+        $page_title = 'Search results';
+
+        $data["post_records"] = $search_results;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
     }
 
 }
