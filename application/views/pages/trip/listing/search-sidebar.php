@@ -33,7 +33,7 @@ if (!isset($count_search_results))
                                         $selected = '';
                                         if (isset($_GET['search_travelers']))
                                         {
-                                            if ($_GET['search_travelers'] == $value)
+                                            if ($_GET['search_travelers'] == $num_of_travelers)
                                             {
                                                 $selected = 'selected="selected"';
                                             }
