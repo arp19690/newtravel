@@ -540,4 +540,38 @@ class Trip extends CI_Controller
         }
     }
 
+    public function search()
+    {
+        $model = new Common_model();
+        $params = $this->input->get();
+
+        $user_id = isset($this->session->userdata['user_id']) == TRUE ? $this->session->userdata['user_id'] : NULL;
+        $search_location = !empty($params['search_location']) == TRUE ? addslashes($params['search_location']) : NULL;
+        $search_travelers = !empty($params['search_travelers']) == TRUE ? addslashes($params['search_travelers']) : NULL;
+        $search_date_start = !empty($params['search_date_start']) == TRUE ? date('Y-m-d', strtotime($params['search_date_start'])) : NULL;
+        $search_date_end = !empty($params['search_date_end']) == TRUE ? date('Y-m-d', strtotime($params['search_date_end'])) : NULL;
+        $search_budget_min = !empty($params['search_budget_min']) == TRUE ? $params['search_budget_min'] : NULL;
+        $search_budget_max = !empty($params['search_budget_max']) == TRUE ? $params['search_budget_max'] : NULL;
+        $search_duration = !empty($params['search_duration']) == TRUE ? $params['search_duration'] : NULL;
+        $search_travel_medium = !empty($params['search_travel_medium']) == TRUE ? $params['search_travel_medium'] : NULL;
+
+        $data_array = array(
+            'ps_user_id' => $user_id,
+            'ps_location' => $search_location,
+            'ps_travelers' => $search_travelers,
+            'ps_date_start' => $search_date_start,
+            'ps_date_end' => $search_date_end,
+            'ps_budget_min' => $search_budget_min,
+            'ps_budget_max' => $search_budget_max,
+            'ps_duration' => json_encode($search_duration),
+            'ps_travel_medium' => json_encode($search_travel_medium),
+            'ps_url' => addslashes(current_url()),
+            'ps_params' => json_encode($params),
+            'ps_ipaddress' => USER_IP,
+            'ps_useragent' => USER_AGENT
+        );
+        $model->insertData(TABLE_POST_SEARCHES, $data_array);
+        prd($data_array);
+    }
+
 }
