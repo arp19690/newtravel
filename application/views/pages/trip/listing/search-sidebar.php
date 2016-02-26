@@ -160,7 +160,7 @@ if (!isset($count_search_results))
                 range: true,
                 min: 0,
                 max: 15000,
-                values: [250, 3500],
+                values: [<?php echo isset($_GET['search_budget_min']) == TRUE ? $_GET['search_budget_min'] : 250; ?>, <?php echo isset($_GET['search_budget_max']) == TRUE ? $_GET['search_budget_max'] : 3500; ?>],
                 slide: function (event, ui) {
                     $("#ammount-from").val(ui.values[0]);
                     $("#ammount-to").val(ui.values[1]);
