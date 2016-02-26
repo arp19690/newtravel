@@ -95,7 +95,7 @@ if (!isset($count_search_results))
                         $checked = '';
                         if (isset($_GET['search_duration']))
                         {
-                            if ($_GET['search_duration'] == $value)
+                            if (in_array($value, $_GET['search_duration']))
                             {
                                 $checked = 'checked="checked"';
                             }
@@ -125,7 +125,7 @@ if (!isset($count_search_results))
                             $checked = '';
                             if (isset($_GET['search_travel_medium']))
                             {
-                                if ($_GET['search_travel_medium'] == $value)
+                                if (in_array($value->tm_id, $_GET['search_travel_medium']))
                                 {
                                     $checked = 'checked="checked"';
                                 }
