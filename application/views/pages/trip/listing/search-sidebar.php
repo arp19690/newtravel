@@ -7,7 +7,7 @@ if (!isset($count_search_results))
 }
 ?>
 
-<form action="<?php echo base_url('trip/search'); ?>" method="GET">
+<form action="<?php echo base_url('trip/search/list'); ?>" method="GET">
     <div class="clear">
         <div class="srch-results-lbl fly-in">
             <span><?php echo number_format($count_search_results); ?> results found.</span>
