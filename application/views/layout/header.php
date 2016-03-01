@@ -42,6 +42,8 @@ $path = $controller . "/" . $action;
         <meta property="og:title" content="<?php echo $meta_title; ?>" />
         <meta property="og:description" content="<?php echo $meta_description; ?>" />
         <meta property="og:image" content="<?php echo $meta_logo_image; ?>" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="<?php echo $redis_functions->get_site_setting('SITE_NAME'); ?>" />
 
         <link rel="icon" href="<?php echo IMAGES_PATH; ?>/favicon.png" />
         <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/jquery-ui.css"/>
