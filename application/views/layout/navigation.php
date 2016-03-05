@@ -107,13 +107,14 @@ $path = $controller . "/" . $action;
                 if (isset($this->session->userdata['user_id']))
                 {
                     ?>
-                    <li><a href="javascript:void(0)">Profile</a>
+                    <li><a href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                         <ul>
+                            <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                            <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
                     <?php
                 }
                 else
