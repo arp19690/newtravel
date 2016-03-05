@@ -92,7 +92,7 @@
             {
                 ?>
                 <div class="cat-list-item tour-item fly-in">
-                    <h4 style="font-weight: normal;text-align: center;"> No results found</h4>
+                    <h4 style="font-weight: normal;text-align: center;font-family: 'Raleway';"> No results found</h4>
                 </div>
                 <?php
             }
