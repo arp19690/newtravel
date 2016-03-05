@@ -231,8 +231,9 @@ class Trip extends CI_Controller
         $user_id = $this->session->userdata["user_id"];
         $model = new Common_model();
         $trip_details = $this->redis_functions->get_trip_details($url_key);
-        $post_title = stripslashes($trip_details->post_title);
-        $post_id = $trip_details->post_id;
+//        prd($trip_details);
+        $post_title = stripslashes($trip_details['post_title']);
+        $post_id = $trip_details['post_id'];
 
         if ($this->input->post() && isset($user_id))
         {
@@ -273,6 +274,7 @@ class Trip extends CI_Controller
             $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["breadcrumbs"] = $breadcrumbs;
+            $data["post_records"] = $trip_details;
             $data["page_title"] = $post_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/post/step-3", $data);
