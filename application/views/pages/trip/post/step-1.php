@@ -46,7 +46,7 @@
                                                     {
                                                         foreach ($post_records['post_activities'] as $value)
                                                         {
-                                                            $post_activity_ids[] = $value->pa_id;
+                                                            $post_activity_ids[] = $value->am_id;
                                                         }
                                                     }
                                                 }
