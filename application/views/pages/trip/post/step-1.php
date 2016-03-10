@@ -78,7 +78,10 @@
                 </div>
 
                 <div class="sp-page-r">
-                    <?php $this->load->view('pages/trip/post-right-sidebar'); ?>
+                    <?php
+//                    $this->load->view('pages/trip/post-right-sidebar'); 
+                    echo get_google_ad();
+                    ?>
                 </div>
                 <div class="clear"></div>
             </div>
