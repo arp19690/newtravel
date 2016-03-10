@@ -50,7 +50,7 @@
                             <div class="offer-slider-l">
                                 <div class="offer-slider-location">Duration : <?php echo $post_total_days; ?> days</div>
                                 <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
-                                <div class="offer-slider-location"><?php echo implode(' > ', $post_region_cities);; ?></div>
+                                <div class="offer-slider-location"><?php echo implode(' > ', $post_region_cities); ?></div>
                             </div>
                             <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
                                 <div itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
