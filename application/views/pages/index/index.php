@@ -29,6 +29,18 @@ $redis_functions = new Redisfunctions();
                             $trip_date_format = 'd M Y';
                             $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
                         }
+
+                        $post_region_cities = array();
+                        if (!empty($trip_details['post_regions']))
+                        {
+                            foreach ($trip_details['post_regions'] as $region_key => $region_value)
+                            {
+                                if (!in_array($region_value->pr_source_city, $post_region_cities))
+                                {
+                                    $post_region_cities[] = $region_value->pr_source_city;
+                                }
+                            }
+                        }
                         ?>
                         <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
                             <div class="fly-in offer-slider-c" itemscope itemtype="http://schema.org/Product">
@@ -45,6 +57,7 @@ $redis_functions = new Redisfunctions();
                                             <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
                                             <div class="offer-slider-l">
                                                 <div class="offer-slider-location"><?php echo $trip_start_end_date_string; ?></div>
+                                                <div class="offer-slider-location"><?php echo implode(' > ', $post_region_cities); ?></div>
                                             </div>
                                             <div class="offer-slider-r align-right" itemscope itemtype="http://schema.org/Offer">
                                                 <div itemprop="priceCurrency" content="<?php echo strtoupper($trip_details['post_currency']); ?>">

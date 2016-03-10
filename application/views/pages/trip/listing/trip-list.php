@@ -24,6 +24,18 @@
                         $post_start_end_date_string = date($post_date_format, strtotime($post_details['post_start_date'])) . ' - ' . date($post_date_format, strtotime($post_details['post_end_date']));
                     }
                     $post_total_days = number_format($post_details['post_total_days']);
+
+                    $post_region_cities = array();
+                    if (!empty($post_details['post_regions']))
+                    {
+                        foreach ($post_details['post_regions'] as $region_key => $region_value)
+                        {
+                            if (!in_array($region_value->pr_source_city, $post_region_cities))
+                            {
+                                $post_region_cities[] = $region_value->pr_source_city;
+                            }
+                        }
+                    }
                     ?>
                     <!-- // -->
                     <div class="cat-list-item tour-item fly-in" itemscope itemtype="http://schema.org/Product">
@@ -41,6 +53,7 @@
                                                         <div class="tour-item-a">
                                                             <div class="tour-item-lbl" itemprop="name"><a itemprop="url" href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>
                                                             <div class="tour-item-date"><?php echo $post_start_end_date_string; ?></div>
+                                                            <div class="tour-item-date" style="margin-top: 4px;"><?php echo implode(' > ', $post_region_cities); ?></div>
                                                         </div>
                                                         <div class="tour-item-devider"></div>
                                                         <div class="tour-item-b">
