@@ -12,6 +12,18 @@ if (!empty($post_details['post_start_date']) && !empty($post_details['post_end_d
 }
 $post_total_days = number_format($post_details['post_total_days']);
 //prd($post_details);
+
+$post_region_cities = array();
+if (!empty($post_details['post_regions']))
+{
+    foreach ($post_details['post_regions'] as $region_key => $region_value)
+    {
+        if (!in_array($region_value->pr_source_city, $post_region_cities))
+        {
+            $post_region_cities[] = $region_value->pr_source_city;
+        }
+    }
+}
 ?>
 
 <!-- main-cont -->
@@ -108,11 +120,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                         <div class="reviews-total">4.7/5.0</div>
                                                         <nav class="reviews-total-stars">
                                                             <ul>
-                                                                <li><a href="#"><img alt="" src="img/r-stars-total-b.png"></a></li>
-                                                                <li><a href="#"><img alt="" src="img/r-stars-total-b.png"></a></li>
-                                                                <li><a href="#"><img alt="" src="img/r-stars-total-b.png"></a></li>
-                                                                <li><a href="#"><img alt="" src="img/r-stars-total-b.png"></a></li>
-                                                                <li><a href="#"><img alt="" src="img/r-stars-total-a.png"></a></li>
+                                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
+                                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
+                                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
+                                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
+                                                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-a.png"></a></li>
                                                             </ul>
                                                             <div class="clear"></div>
                                                         </nav>
@@ -143,11 +155,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Cleanlines</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -158,11 +170,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Price</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -173,11 +185,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Sleep Quality</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -188,11 +200,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Service & Stuff</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -203,11 +215,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Location</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -218,11 +230,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                             <div class="hotel-reviews-left">Comfort</div>
                                                             <nav class="hotel-reviews-right">
                                                                 <ul>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-b.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
-                                                                    <li><a href="#"><img alt="" src="img/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
+                                                                    <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
                                                                 </ul>
                                                             </nav>
                                                             <div class="clear"></div>
@@ -243,7 +255,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                 <div class="guest-reviews-l">
                                                                     <div class="guest-reviews-img">
                                                                         <span>5.0</span>
-                                                                        <img alt="" src="img/guest-01.png">
+                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/guest-01.png">
                                                                     </div>
                                                                 </div>
                                                                 <div class="guest-reviews-r">
@@ -262,11 +274,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                             <div class="guest-reviews-padding">
                                                                                 <nav>
                                                                                     <ul>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-a.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-a.png"></li>
                                                                                     </ul>
                                                                                 </nav>
                                                                                 <div class="guest-rating">4,5/5.0</div>
@@ -287,7 +299,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                 <div class="guest-reviews-l">
                                                                     <div class="guest-reviews-img">
                                                                         <span>5.0</span>
-                                                                        <img alt="" src="img/guest-02.png">
+                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/guest-02.png">
                                                                     </div>
                                                                 </div>
                                                                 <div class="guest-reviews-r">
@@ -306,11 +318,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                             <div class="guest-reviews-padding">
                                                                                 <nav>
                                                                                     <ul>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-a.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-a.png"></li>
                                                                                     </ul>
                                                                                 </nav>
                                                                                 <div class="guest-rating">4,5/5.0</div>
@@ -331,7 +343,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                 <div class="guest-reviews-l">
                                                                     <div class="guest-reviews-img">
                                                                         <span>4.4</span>
-                                                                        <img alt="" src="img/guest-03.png">
+                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/guest-03.png">
                                                                     </div>
                                                                 </div>
                                                                 <div class="guest-reviews-r">
@@ -350,11 +362,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                             <div class="guest-reviews-padding">
                                                                                 <nav>
                                                                                     <ul>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-a.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-a.png"></li>
                                                                                     </ul>
                                                                                 </nav>
                                                                                 <div class="guest-rating">4,5/5.0</div>
@@ -375,7 +387,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                 <div class="guest-reviews-l">
                                                                     <div class="guest-reviews-img">
                                                                         <span>5.0</span>
-                                                                        <img alt="" src="img/guest-04.png">
+                                                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/guest-04.png">
                                                                     </div>
                                                                 </div>
                                                                 <div class="guest-reviews-r">
@@ -394,11 +406,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                                             <div class="guest-reviews-padding">
                                                                                 <nav>
                                                                                     <ul>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-b.png"></li>
-                                                                                        <li><img alt="" src="img/g-star-a.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-b.png"></li>
+                                                                                        <li><img alt="" src="<?php echo IMAGES_PATH; ?>/g-star-a.png"></li>
                                                                                     </ul>
                                                                                 </nav>
                                                                                 <div class="guest-rating">4,5/5.0</div>
@@ -499,6 +511,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                         <div class="h-detail-lbl">
                             <div class="h-detail-lbl-a"><?php echo $page_title; ?></div>
                             <div class="h-detail-lbl-b"><?php echo $post_start_end_date_string; ?></div>
+                            <div class="h-detail-lbl-b" style="margin-top:5px;"><?php echo implode(' > ', $post_region_cities); ?></div>
                         </div>
                         <div class="h-tour">
                             <div class="tour-icon-txt"><?php echo $post_details['post_travel_mediums_string']; ?></div>
@@ -507,11 +520,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                         </div>
                         <div class="h-detail-stars">
                             <ul class="h-stars-list">
-                                <li><a href="#"><img alt="" src="img/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="img/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="img/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="img/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="img/hd-star-a.png"></a></li>
+                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
+                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
+                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
+                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
+                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-a.png"></a></li>
                             </ul>
                             <div class="h-stars-lbl">156 reviews</div>
                             <a href="#" class="h-add-review">add review</a>
@@ -547,8 +560,8 @@ $post_total_days = number_format($post_details['post_total_days']);
                                 <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
                                 <div class="reasons-rating-user">
                                     <div class="reasons-rating-user-l">
-                                        <img alt="" src="img/r-user.png">
-                                        <span>5.0</span>
+                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
+                                             <span>5.0</span>
                                     </div>
                                     <div class="reasons-rating-user-r">
                                         <b>Gabriela King</b>
@@ -563,8 +576,8 @@ $post_total_days = number_format($post_details['post_total_days']);
                                 <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
                                 <div class="reasons-rating-user">
                                     <div class="reasons-rating-user-l">
-                                        <img alt="" src="img/r-user.png">
-                                        <span>5.0</span>
+                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
+                                             <span>5.0</span>
                                     </div>
                                     <div class="reasons-rating-user-r">
                                         <b>Robert Dowson</b>
@@ -579,8 +592,8 @@ $post_total_days = number_format($post_details['post_total_days']);
                                 <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
                                 <div class="reasons-rating-user">
                                     <div class="reasons-rating-user-l">
-                                        <img alt="" src="img/r-user.png">
-                                        <span>5.0</span>
+                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
+                                             <span>5.0</span>
                                     </div>
                                     <div class="reasons-rating-user-r">
                                         <b>Mike Tyson</b>
@@ -600,7 +613,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <div class="h-liked-item">
                                 <div class="h-liked-item-i">
                                     <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="img/like-01.jpg"></a>
+                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-01.jpg"></a>
                                     </div>
                                     <div class="h-liked-item-c">
                                         <div class="h-liked-item-cb">
@@ -609,11 +622,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                 <div class="h-liked-rating">
                                                     <nav class="stars">
                                                         <ul>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-a.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
                                                         </ul>
                                                         <div class="clear"></div>
                                                     </nav>
@@ -634,7 +647,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <div class="h-liked-item">
                                 <div class="h-liked-item-i">
                                     <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="img/like-02.jpg"></a>
+                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-02.jpg"></a>
                                     </div>
                                     <div class="h-liked-item-c">
                                         <div class="h-liked-item-cb">
@@ -643,11 +656,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                 <div class="h-liked-rating">
                                                     <nav class="stars">
                                                         <ul>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-a.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
                                                         </ul>
                                                         <div class="clear"></div>
                                                     </nav>
@@ -668,7 +681,7 @@ $post_total_days = number_format($post_details['post_total_days']);
                             <div class="h-liked-item">
                                 <div class="h-liked-item-i">
                                     <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="img/like-03.jpg"></a>
+                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-03.jpg"></a>
                                     </div>
                                     <div class="h-liked-item-c">
                                         <div class="h-liked-item-cb">
@@ -677,11 +690,11 @@ $post_total_days = number_format($post_details['post_total_days']);
                                                 <div class="h-liked-rating">
                                                     <nav class="stars">
                                                         <ul>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="img/star-a.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
+                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
                                                         </ul>
                                                         <div class="clear"></div>
                                                     </nav>

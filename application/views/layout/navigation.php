@@ -7,78 +7,17 @@ $path = $controller . "/" . $action;
 <!-- // mobile menu // -->
 <div class="mobile-menu">
     <nav>
-        <ul>
-            <li><a class="has-child" href="<?php echo base_url(); ?>">HOME</a>
+        <ul>					
+            <li><a href="<?php echo base_url(); ?>">Home</a></li>
+            <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php isset($this->session->userdata['user_id']) == TRUE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+            <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                 <ul>
-                    <li><a href="index.html">Home style one</a></li>
-                    <li><a href="index_02.html">Home style two</a></li>
-                    <li><a href="index_03.html">Home style three</a></li>
-                    <li><a href="index_04.html">Home style four</a></li>	
+                    <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                    <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
+                    <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                    <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
                 </ul>						
-            </li>
-            <li><a class="has-child" href="#">Hotels</a>
-                <ul>
-                    <li><a href="hotel_list.html">Hotels standard list</a></li>
-                    <li><a href="hotel_simple_style.html">Hotels simple style</a></li>
-                    <li><a href="hotel_detail_style.html">Hotels detail style</a></li>
-                    <li><a href="hotel_detail.html">Hotel item page</a></li>
-                    <li><a href="hotel_booking.html">Hotel booking page</a></li>
-                    <li><a href="#">booking complete page</a></li>
-                </ul>
-            </li>						
-            <li><a class="has-child" href="#">Flights</a>
-                <ul>
-                    <li><a href="flight_round_trip.html">Flights round trip</a></li>
-                    <li><a href="flight_one_way.html">flights one way trip</a></li>
-                    <li><a href="flight_alternative.html">flights alternative style</a></li>
-                    <li><a href="flight_detail.html">Flights detail page</a></li>
-                    <li><a href="flight_booking.html">Flights booking page</a></li>
-                    <li><a href="booking_complete.html">booking complete</a></li>
-                </ul>
-            </li>
-            <li><a class="has-child" href="#">Tours</a>
-                <ul>
-                    <li><a href="tour_alternative.html">Tours list style</a></li>
-                    <li><a href="tour_grid.html">tours grid style</a></li>
-                    <li><a href="tour_simple.html">Tours simple style</a></li>
-                    <li><a href="tour_detail.html">Tour detail page</a></li>
-                    <li><a href="tour_booking.html">tour booking page</a></li>
-                    <li><a href="booking_complete.html">booking complete</a></li>
-                </ul>
-            </li>						
-            <li><a class="has-child" href="#">Pages</a>
-                <ul>
-                    <li><a href="about_us.html">about us style one</a></li>
-
-                    <li><a href="services.html">services</a></li>
-                    <li><a href="<?php echo base_url('contact-us'); ?>">contact us</a></li>
-                </ul>
-            </li>
-            <li><a class="has-child" href="#">Portfolio</a>
-                <ul>
-                    <li><a href="portfolio_three_collumns.html">Portfolio three columns</a></li>
-                    <li><a href="portfolio_four_collumns.html">portfolio four columns</a></li>
-                    <li><a href="item_page.html">item page</a></li>
-                    <li><a href="item_page_full_width.html">Item page full width style</a></li>
-                </ul>
-            </li>
-            <li><a class="has-child" href="#">Blog</a>
-                <ul>
-                    <li><a href="blog_with_sidebar.html">Blog with sidebar</a></li>
-                    <li><a href="blog_masonry.html">blog masonry style</a></li>
-                    <li><a href="standart_blog_post.html">Blog post example</a></li>
-                </ul>
-            </li>
-            <li><a class="has-child" href="#">Features</a>
-                <ul>
-                    <li><a href="typography.html">typography</a></li>
-                    <li><a href="shortcodes.html">shortcodes</a></li>
-                    <li><a href="interactive_elements.html">interactive elements</a></li>
-                    <li><a href="cover_galleries.html">cover galleries</a></li>
-                    <li><a href="columns.html">columns</a></li>
-                </ul>
-            </li>						
-            <li><a href="<?php echo base_url('contact-us'); ?>">CONTACS</a></li>
+            </li>	
         </ul>
     </nav>	
 </div>
@@ -107,13 +46,14 @@ $path = $controller . "/" . $action;
                 if (isset($this->session->userdata['user_id']))
                 {
                     ?>
-                    <li><a href="javascript:void(0)">Profile</a>
+                    <li><a href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                         <ul>
+                            <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                            <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
                     <?php
                 }
                 else

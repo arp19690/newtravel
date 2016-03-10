@@ -889,10 +889,12 @@ button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; fon
 
 }
 .offer-slider-l {
-    width:151px;
+    /*width:151px;*/
+    width:140px;
     float:left;
 }
-.offer-slider-location {	
+.offer-slider-location {
+    max-width:115px;
     margin-bottom:7px;
     font-size:10px;
     color:#747d7e;
