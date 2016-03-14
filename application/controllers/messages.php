@@ -112,7 +112,7 @@ class Messages extends CI_Controller
 
         $json_data = json_encode($json_data);
         echo $json_data;
-        return$json_data;
+        return $json_data;
     }
 
     public function getLatestChatsAjax($other_user_id_enc, $last_timestamp)
@@ -136,7 +136,7 @@ class Messages extends CI_Controller
 
         $json_data = json_encode($json_data);
         echo $json_data;
-        return$json_data;
+        return $json_data;
     }
 
 }
