@@ -91,6 +91,7 @@ class Messages extends CI_Controller
 
     public function sendMessageAjax()
     {
+        $json_data = array('status' => 'error', 'message' => 'An error occurred');
         if (isset($this->session->userdata["user_id"]) && $this->input->post())
         {
             $user_id = $this->session->userdata["user_id"];
@@ -106,12 +107,17 @@ class Messages extends CI_Controller
                 "message_useragent" => USER_AGENT
             );
             $model->insertData(TABLE_MESSAGES, $data_array);
-            echo TRUE;
+            $json_data = array('status' => 'success', 'message' => 'Message sent');
         }
+
+        $json_data = json_encode($json_data);
+        echo $json_data;
+        return$json_data;
     }
 
     public function getLatestChatsAjax($other_user_id_enc, $last_timestamp)
     {
+        $json_data = array('status' => 'error', 'message' => 'An error occurred');
         if (isset($this->session->userdata["user_id"]) && $other_user_id_enc && $last_timestamp)
         {
             $user_id = $this->session->userdata["user_id"];
@@ -125,8 +131,12 @@ class Messages extends CI_Controller
             {
                 $str = json_encode($chat_records);
             }
-            echo $str;
+            $json_data = array('status' => 'success', 'message' => $str);
         }
+
+        $json_data = json_encode($json_data);
+        echo $json_data;
+        return$json_data;
     }
 
 }
