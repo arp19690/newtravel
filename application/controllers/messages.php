@@ -110,7 +110,7 @@ class Messages extends CI_Controller
         }
     }
 
-    public function getUnreadChatsAjax($other_user_id_enc, $last_timestamp)
+    public function getLatestChatsAjax($other_user_id_enc, $last_timestamp)
     {
         if (isset($this->session->userdata["user_id"]) && $other_user_id_enc && $last_timestamp)
         {
@@ -118,7 +118,7 @@ class Messages extends CI_Controller
             $other_user_id = getEncryptedString($other_user_id_enc, 'decode');
             $custom_model = new Custom_model();
             $fields = 'message_id, message_text, message_read, message_user_from, message_user_to, message_timestamp';
-            $chat_records = $custom_model->getUnreadChatsAjax($fields, $user_id, $other_user_id, $last_timestamp);
+            $chat_records = $custom_model->getLatestChatsAjax($fields, $user_id, $other_user_id, $last_timestamp);
 
             $str = NULL;
             if (!empty($chat_records))
