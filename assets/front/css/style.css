@@ -203,7 +203,7 @@ input,select,button,textarea {outline:none;}
     border-radius:3px;
     font-size:11px;
     padding:10px 8px 10px 8px;
-    text-transform:uppercase;
+    /*text-transform:uppercase;*/
     font-family:'Raleway';
     font-weight:600;
     color:#8a8a8a;	
