@@ -378,7 +378,7 @@ class Trip extends CI_Controller
             if (!empty($is_valid))
             {
                 $trip_details = $this->redis_functions->get_trip_details($url_key);
-                $post_title = stripslashes($trip_details->post_title);
+                $post_title = stripslashes($trip_details['post_title']);
                 if (!empty($trip_details))
                 {
                     $input_arr = array(
