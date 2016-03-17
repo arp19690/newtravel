@@ -411,6 +411,22 @@ class Trip extends CI_Controller
         }
     }
 
+    public function removeMediaAjax($url_key, $pm_id_enc)
+    {
+        $pm_id = getEncryptedString($pm_id_enc, 'decode');
+        if ($this->removeAllPostMedia($url_key, $pm_id) == TRUE)
+        {
+            $output = array('status' => 'success', 'message' => 'Media successfully removed.');
+        }
+        else
+        {
+            $output = array('status' => 'error', 'message' => 'An error occurred. Please try again.');
+        }
+        $output = json_encode($output);
+        echo $output;
+        return $output;
+    }
+
     public function removeAllPostMedia($url_key, $pm_id = NULL)
     {
         $model = new Common_model();
