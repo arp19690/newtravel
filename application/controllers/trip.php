@@ -335,6 +335,7 @@ class Trip extends CI_Controller
                             'pm_post_id' => $post_id,
                             'pm_primary' => (($image_i == 1 && strtolower($media_type) == 'image') ? '1' : '0'),
                             'pm_media_type' => strtolower($media_type),
+                            'pm_media_title' => addslashes($arr['media_type']),
                             'pm_media_url' => $media_filename,
                             'pm_ipaddress' => USER_IP,
                             'pm_useragent' => USER_AGENT,
@@ -429,7 +430,7 @@ class Trip extends CI_Controller
         {
             $output = array('status' => 'error', 'message' => 'Invalid URL or Parameter passed');
         }
-        
+
         $output = json_encode($output);
         echo $output;
         return $output;
