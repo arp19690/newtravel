@@ -411,17 +411,25 @@ class Trip extends CI_Controller
         }
     }
 
-    public function removeMediaAjax($url_key, $pm_id_enc)
+    public function removeMediaAjax($url_key)
     {
-        $pm_id = getEncryptedString($pm_id_enc, 'decode');
-        if ($this->removePostMedia($url_key, $pm_id) == TRUE)
+        if ($this->input->get('id'))
         {
-            $output = array('status' => 'success', 'message' => 'Media successfully removed.');
+            $pm_id = getEncryptedString($this->input->get('id'), 'decode');
+            if ($this->removePostMedia($url_key, $pm_id) == TRUE)
+            {
+                $output = array('status' => 'success', 'message' => 'Media successfully removed.');
+            }
+            else
+            {
+                $output = array('status' => 'error', 'message' => 'An error occurred. Please try again.');
+            }
         }
         else
         {
-            $output = array('status' => 'error', 'message' => 'An error occurred. Please try again.');
+            $output = array('status' => 'error', 'message' => 'Invalid URL or Parameter passed');
         }
+        
         $output = json_encode($output);
         echo $output;
         return $output;
@@ -441,7 +449,7 @@ class Trip extends CI_Controller
         {
             foreach ($post_media_records as $key => $value)
             {
-                if ($value['media_type'] == 'image')
+                if ($value['pm_media_type'] == 'image')
                 {
                     $new_path = $this->redis_functions->get_site_setting('POST_IMAGE_DELETED_PATH');
                     $original_filename = explode('/', $value['pm_media_url']);
