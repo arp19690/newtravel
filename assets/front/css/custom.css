@@ -3,3 +3,4 @@
 .notification-area{position: absolute;width: 100%;display: inline-block;z-index: 999;}
 .hover-cursor-disabled:hover{cursor: not-allowed;}
 #gallery .gallery-i img{display: inline-block;width: 100%;max-width: 108px;max-height: 75px;}
+.tab-gallery-big img{width: 100%;}
