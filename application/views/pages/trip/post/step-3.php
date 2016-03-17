@@ -131,7 +131,7 @@ $redis_functions = new Redisfunctions();
                 </div>
 
                 <div class="sp-page-r">
-                    <?php $this->load->view('pages/trip/post-right-sidebar'); ?>
+                    <?php $this->load->view('pages/trip/post-right-sidebar', array('post_records' => $post_records)); ?>
                 </div>
                 <div class="clear"></div>
             </div>
