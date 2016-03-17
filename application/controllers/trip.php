@@ -428,7 +428,7 @@ class Trip extends CI_Controller
                     $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
                     copy($value['pm_media_url'], $new_filename);
                     @unlink($value['pm_media_url']);
-                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename), array('pm_id' => $value['pm_id']));
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename, 'pm_status' => '2'), array('pm_id' => $value['pm_id']));
                 }
 
                 // updating the status as deleted for both video and image here itself
