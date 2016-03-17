@@ -134,7 +134,7 @@ $redis_functions = new Redisfunctions();
                                         <div class="clear"></div>
 
                                         <div class="booking-complete">
-                                            <button type="submit" class="booking-complete-btn">REVIEW</button>
+                                            <button type="submit" class="booking-complete-btn">COMPLETE</button>
                                         </div>
                                     </form>
                                 </div>
