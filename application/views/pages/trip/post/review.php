@@ -27,7 +27,7 @@ $redis_functions = new Redisfunctions();
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
-                                            <span>Let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
+                                            <span>&amp; let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
                                         </div>
                                     </div>
                                     <div class="mm-tabs-wrapper">
