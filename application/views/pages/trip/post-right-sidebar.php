@@ -31,7 +31,7 @@ if (!empty($post_records['post_regions']))
             if (!empty($post_records['post_primary_image']) && file_exists($post_records['post_primary_image']))
             {
                 ?>
-                <a href="#"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>"></a>
+                <a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>"></a>
                 <?php
             }
             ?>
@@ -40,7 +40,7 @@ if (!empty($post_records['post_regions']))
             <div class="checkout-headrb">
                 <div class="checkout-headrp">
                     <div class="chk-left">
-                        <div class="chk-lbl"><a href="#"><span itemprop="name"><?php echo $post_title; ?></span></a></div>
+                        <div class="chk-lbl"><a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><span itemprop="name"><?php echo $post_title; ?></span></a></div>
                         <div class="chk-lbl-a"><?php echo implode(' > ', $post_region_cities); ?></div>
                     </div>
 
