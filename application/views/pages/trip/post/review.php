@@ -133,10 +133,10 @@ $redis_functions = new Redisfunctions();
 
                 <div class="sp-page-r">
                     <?php
-                    if (empty($post_details['post_featured']))
-                    {
+//                    if (empty($post_details['post_featured']))
+//                    {
                         $this->load->view('pages/trip/post/featured-select-sidebar');
-                    }
+//                    }
 
 //                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('post_records' => $post_details));
                     $this->load->view('pages/trip/post-right-sidebar', array('post_records' => $post_details));
