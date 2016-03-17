@@ -463,6 +463,9 @@ class Trip extends CI_Controller
                     $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id'], 'pm_id' => $pm_id));
                 }
             }
+
+            // Updating trip's redis data here
+            $this->redis_functions->set_trip_details($url_key);
         }
         return TRUE;
     }
