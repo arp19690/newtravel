@@ -296,7 +296,7 @@ class Trip extends CI_Controller
 
             if (!empty($arr['media_type']) && isset($arr['media_type']))
             {
-                $this->removeAllPostMedia($url_key);
+                $this->removePostMedia($url_key);
                 foreach ($arr['media_type'] as $key => $media_type)
                 {
                     $media_filename = NULL;
@@ -335,6 +335,7 @@ class Trip extends CI_Controller
                             'pm_post_id' => $post_id,
                             'pm_primary' => (($image_i == 1 && strtolower($media_type) == 'image') ? '1' : '0'),
                             'pm_media_type' => strtolower($media_type),
+                            'pm_media_title' => addslashes($arr['media_type']),
                             'pm_media_url' => $media_filename,
                             'pm_ipaddress' => USER_IP,
                             'pm_useragent' => USER_AGENT,
@@ -378,7 +379,7 @@ class Trip extends CI_Controller
             if (!empty($is_valid))
             {
                 $trip_details = $this->redis_functions->get_trip_details($url_key);
-                $post_title = stripslashes($trip_details->post_title);
+                $post_title = stripslashes($trip_details['post_title']);
                 if (!empty($trip_details))
                 {
                     $input_arr = array(
@@ -411,16 +412,45 @@ class Trip extends CI_Controller
         }
     }
 
-    public function removeAllPostMedia($url_key)
+    public function removeMediaAjax($url_key)
+    {
+        if ($this->input->get('id'))
+        {
+            $pm_id = getEncryptedString($this->input->get('id'), 'decode');
+            if ($this->removePostMedia($url_key, $pm_id) == TRUE)
+            {
+                $output = array('status' => 'success', 'message' => 'Media successfully removed.');
+            }
+            else
+            {
+                $output = array('status' => 'error', 'message' => 'An error occurred. Please try again.');
+            }
+        }
+        else
+        {
+            $output = array('status' => 'error', 'message' => 'Invalid URL or Parameter passed');
+        }
+
+        $output = json_encode($output);
+        echo $output;
+        return $output;
+    }
+
+    public function removePostMedia($url_key, $pm_id = NULL)
     {
         $model = new Common_model();
         $post_records = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key));
-        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, array('pm_post_id' => $post_records[0]['post_id']));
+        $post_media_where_arr = array('pm_post_id' => $post_records[0]['post_id']);
+        if ($pm_id != NULL)
+        {
+            $post_media_where_arr['pm_id'] = $pm_id;
+        }
+        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, $post_media_where_arr);
         if (!empty($post_media_records))
         {
             foreach ($post_media_records as $key => $value)
             {
-                if ($value['media_type'] == 'image')
+                if ($value['pm_media_type'] == 'image')
                 {
                     $new_path = $this->redis_functions->get_site_setting('POST_IMAGE_DELETED_PATH');
                     $original_filename = explode('/', $value['pm_media_url']);
@@ -428,12 +458,23 @@ class Trip extends CI_Controller
                     $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
                     copy($value['pm_media_url'], $new_filename);
                     @unlink($value['pm_media_url']);
-                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename), array('pm_post_id' => $post_records[0]['post_id']));
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename, 'pm_status' => '2'), array('pm_id' => $value['pm_id']));
                 }
 
-                // updating the status as deleted for both video and image here itself
-                $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+                if ($pm_id == NULL)
+                {
+                    // updating the status as deleted for both video and image here itself
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+                }
+                else
+                {
+//                    If the media is known
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id'], 'pm_id' => $pm_id));
+                }
             }
+
+            // Updating trip's redis data here
+            $this->redis_functions->set_trip_details($url_key);
         }
         return TRUE;
     }

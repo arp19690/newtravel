@@ -1,6 +1,43 @@
 <?php
 
-function modify_url($base_url,$param_array = NULL, $separator = '&amp;')
+function get_video_embed_url($url)
+{
+
+    function _is_vimeo($url)
+    {
+        return (preg_match('/vimeo\.com/i', $url));
+    }
+
+    function _is_youtube($url)
+    {
+        return (preg_match('/youtu\.be/i', $url) || preg_match('/youtube\.com\/watch/i', $url));
+    }
+
+    if (_is_youtube($url))
+    {
+        $pattern = '/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/';
+        preg_match($pattern, $url, $matches);
+        if (count($matches) && strlen($matches[7]) == 11)
+        {
+            return '//www.youtube.com/embed/' . $matches[7];
+        }
+    }
+    else if (_is_vimeo($url))
+    {
+        $pattern = '/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/';
+        preg_match($pattern, $url, $matches);
+        if (count($matches))
+        {
+            return 'http://player.vimeo.com/video/' . $matches[2] . '?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff';
+        }
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+function modify_url($base_url, $param_array = NULL, $separator = '&amp;')
 {
     // parse the url
     $pathInfo = parse_url($_SERVER['REQUEST_URI']);
@@ -701,11 +738,11 @@ function getEncryptedString($value, $action = "encode")
 {
     if ($action == "encode")
     {
-        return base64_encode($value . USE_SALT);
+        return str_rot13($value . USE_SALT);
     }
     else
     {
-        $str = base64_decode($value);
+        $str = str_rot13(str_rot13($value));
         $new_str = str_replace(USE_SALT, "", $str);
         return $new_str;
     }

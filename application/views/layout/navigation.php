@@ -9,15 +9,28 @@ $path = $controller . "/" . $action;
     <nav>
         <ul>					
             <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php isset($this->session->userdata['user_id']) == TRUE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
-            <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
-                <ul>
-                    <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
-                    <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
-                    <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
-                    <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
-                </ul>						
-            </li>	
+            <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+            <?php
+            if (isset($this->session->userdata['user_id']))
+            {
+                ?>
+                <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
+                    <ul>
+                        <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                        <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
+                        <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                        <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
+                    </ul>						
+                </li>	
+                <?php
+            }
+            else
+            {
+                ?>
+                <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
+                <?php
+            }
+            ?>
         </ul>
     </nav>	
 </div>
@@ -41,7 +54,7 @@ $path = $controller . "/" . $action;
         <nav class="header-nav">
             <ul>
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php isset($this->session->userdata['user_id']) == TRUE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
                 <?php
                 if (isset($this->session->userdata['user_id']))
                 {

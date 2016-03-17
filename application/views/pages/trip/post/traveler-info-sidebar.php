@@ -1,7 +1,7 @@
 <?php
 $redis_functions = new Redisfunctions();
 $trip_details = $redis_functions->get_trip_details($url_key);
-$post_travelers = $trip_details->post_travelers;
+$post_travelers = $trip_details['post_travelers'];
 ?>
 <div class="checkout-coll">
     <div class="checkout-head">

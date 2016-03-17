@@ -35,11 +35,11 @@ $redis_functions = new Redisfunctions();
                                         <div class="complete-txt">
                                             <div class="clear">
                                                 <h2 class="pull-left"><?php echo $page_title; ?></h2>
-                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details->post_url_key); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit Post</a>
+                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details['post_url_key']); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit Post</a>
                                             </div>
 
                                             <div class="clear">
-                                                <p><?php echo stripslashes($post_details->post_description); ?></p>
+                                                <p><?php echo stripslashes($post_details['post_description']); ?></p>
                                             </div>
                                         </div>
 
@@ -106,12 +106,12 @@ $redis_functions = new Redisfunctions();
 
                 <div class="sp-page-r">
                     <?php
-                    if (empty($post_details->post_featured))
+                    if (empty($post_details['post_featured']))
                     {
                         $this->load->view('pages/trip/post/featured-select-sidebar');
                     }
 
-                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('url_key' => $post_details->post_url_key));
+                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('url_key' => $post_details['post_url_key']));
                     $this->load->view('pages/trip/post-right-sidebar');
                     ?>
                 </div>
