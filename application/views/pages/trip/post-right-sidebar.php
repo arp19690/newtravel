@@ -24,6 +24,7 @@ if (!empty($post_records['post_regions']))
     }
 }
 ?>
+
 <div class="checkout-coll" itemscope itemtype="http://schema.org/Event">
     <div class="checkout-head">
         <div class="checkout-headl" itemscope itemtype="http://schema.org/Product">
@@ -64,31 +65,78 @@ if (!empty($post_records['post_regions']))
     </div>
 
     <div class="chk-details">
-        <h2>Details</h2>
-        <div class="chk-detais-row">
-            <div class="chk-line">
-                <span class="chk-l">Room type:</span>
-                <span class="chk-r">Standard family</span>
-                <div class="clear"></div>
+        <?php
+        if (!empty($post_records['post_activities']))
+        {
+            ?>
+            <h2>Activities:</h2>
+            <div class="chk-detais-row">
+                <?php
+                foreach ($post_records['post_activities'] as $activity_key => $activity_value)
+                {
+                    ?>
+                    <div class="chk-line">
+                        <span class="chk-l"><a href="<?php echo base_url('activities/' . $activity_value->am_url_key); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $activity_value->am_title; ?></a></span>
+                        <div class="clear"></div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-            <div class="chk-line">
-                <span class="chk-l">price:</span>
-                <span class="chk-r">200$</span>
-                <div class="clear"></div>
+            <?php
+        }
+        ?>
+        <div class="clear"></div>
+
+        <?php
+        if (!empty($post_records['post_regions']))
+        {
+            ?>
+            <h2>Locations:</h2>
+            <div class="chk-detais-row">
+                <?php
+                foreach ($post_records['post_regions'] as $region_key => $region_value)
+                {
+                    ?>
+                    <div class="chk-line">
+                        <span class="chk-l"><a href="<?php echo base_url('cities/' . $region_value->pr_source_city); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $region_value->pr_source_city; ?></a></span>
+                        <span class="chk-r"><a href="<?php echo base_url('countries/' . $region_value->pr_source_country); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;"><?php echo $region_value->pr_source_country; ?></a></span>
+                        <div class="clear"></div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-            <div class="chk-line">
-                <span class="chk-l">3 nights stay</span>
-                <span class="chk-r">600$</span>
-                <div class="clear"></div>
+            <?php
+        }
+        ?>
+        <div class="clear"></div>
+
+        <?php
+        if (!empty($post_records['post_travelers']))
+        {
+            ?>
+            <h2>Travelers:</h2>
+            <div class="chk-detais-row">
+                <?php
+                foreach ($post_records['post_travelers'] as $traveler_key => $traveler_value)
+                {
+                    ?>
+                    <div class="chk-line">
+                        <span class="chk-l" style="font-weight: bold;"><?php echo $traveler_value->pt_traveler_name; ?></span>
+                        <span class="chk-r" style="font-weight: bold;"><?php echo ucwords($traveler_value->pt_traveler_gender) . ' (' . $traveler_value->pt_traveler_age . ')'; ?></span>
+                        <div class="clear"></div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-            <div class="chk-line">
-                <span class="chk-l">taxes and fees per night</span>
-                <span class="chk-r">3.52$</span>
-                <div class="clear"></div>
-            </div>
-        </div>
+            <?php
+        }
+        ?>
+        <div class="clear"></div>
         <div class="chk-total" itemscope itemtype="http://schema.org/Offer">
-            <div class="chk-total-l">Budget</div>
+            <div class="chk-total-l">Budget:</div>
             <div class="chk-total-r" itemprop="price" content="<?php echo number_format($post_records['post_total_cost'], 2); ?>"><?php echo $post_total_cost; ?></div>
             <div class="clear"></div>
         </div>					
