@@ -742,7 +742,7 @@ function getEncryptedString($value, $action = "encode")
     }
     else
     {
-        $str = str_rot13(str_rot13($value));
+        $str = str_rot13($value);
         $new_str = str_replace(USE_SALT, "", $str);
         return $new_str;
     }
