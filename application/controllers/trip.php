@@ -411,11 +411,16 @@ class Trip extends CI_Controller
         }
     }
 
-    public function removeAllPostMedia($url_key)
+    public function removeAllPostMedia($url_key, $pm_id = NULL)
     {
         $model = new Common_model();
         $post_records = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key));
-        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, array('pm_post_id' => $post_records[0]['post_id']));
+        $post_media_where_arr = array('pm_post_id' => $post_records[0]['post_id']);
+        if ($pm_id != NULL)
+        {
+            $post_media_where_arr['pm_id'] = $pm_id;
+        }
+        $post_media_records = $model->fetchSelectedData('pm_id, pm_media_type, pm_media_url', TABLE_POST_MEDIA, $post_media_where_arr);
         if (!empty($post_media_records))
         {
             foreach ($post_media_records as $key => $value)
@@ -431,8 +436,11 @@ class Trip extends CI_Controller
                     $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename, 'pm_status' => '2'), array('pm_id' => $value['pm_id']));
                 }
 
-                // updating the status as deleted for both video and image here itself
-                $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+                if ($pm_id == NULL)
+                {
+                    // updating the status as deleted for both video and image here itself
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
+                }
             }
         }
         return TRUE;
