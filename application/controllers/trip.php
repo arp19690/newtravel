@@ -296,7 +296,7 @@ class Trip extends CI_Controller
 
             if (!empty($arr['media_type']) && isset($arr['media_type']))
             {
-                $this->removeAllPostMedia($url_key);
+                $this->removePostMedia($url_key);
                 foreach ($arr['media_type'] as $key => $media_type)
                 {
                     $media_filename = NULL;
@@ -414,7 +414,7 @@ class Trip extends CI_Controller
     public function removeMediaAjax($url_key, $pm_id_enc)
     {
         $pm_id = getEncryptedString($pm_id_enc, 'decode');
-        if ($this->removeAllPostMedia($url_key, $pm_id) == TRUE)
+        if ($this->removePostMedia($url_key, $pm_id) == TRUE)
         {
             $output = array('status' => 'success', 'message' => 'Media successfully removed.');
         }
@@ -427,7 +427,7 @@ class Trip extends CI_Controller
         return $output;
     }
 
-    public function removeAllPostMedia($url_key, $pm_id = NULL)
+    public function removePostMedia($url_key, $pm_id = NULL)
     {
         $model = new Common_model();
         $post_records = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key));
