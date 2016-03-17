@@ -1,6 +1,6 @@
 <?php
 
-function modify_url($base_url,$param_array = NULL, $separator = '&amp;')
+function modify_url($base_url, $param_array = NULL, $separator = '&amp;')
 {
     // parse the url
     $pathInfo = parse_url($_SERVER['REQUEST_URI']);
@@ -701,11 +701,11 @@ function getEncryptedString($value, $action = "encode")
 {
     if ($action == "encode")
     {
-        return base64_encode($value . USE_SALT);
+        return str_rot13($value . USE_SALT);
     }
     else
     {
-        $str = base64_decode($value);
+        $str = str_rot13(str_rot13($value));
         $new_str = str_replace(USE_SALT, "", $str);
         return $new_str;
     }
