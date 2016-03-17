@@ -441,6 +441,11 @@ class Trip extends CI_Controller
                     // updating the status as deleted for both video and image here itself
                     $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id']));
                 }
+                else
+                {
+//                    If the media is known
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id'], 'pm_id' => $pm_id));
+                }
             }
         }
         return TRUE;
