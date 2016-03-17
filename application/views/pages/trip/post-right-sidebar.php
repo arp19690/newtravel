@@ -32,7 +32,7 @@ if (!empty($post_records['post_regions']))
             if (!empty($post_records['post_primary_image']) && file_exists($post_records['post_primary_image']))
             {
                 ?>
-                <a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>"></a>
+            <a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>" style="display: inline-block;width: 100%;"></a>
                 <?php
             }
             ?>
