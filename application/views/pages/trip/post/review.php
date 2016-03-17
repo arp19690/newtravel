@@ -46,13 +46,13 @@ $redis_functions = new Redisfunctions();
                                         <div class="complete-devider"></div>
 
                                         <?php
-                                        if (!empty($post_details->post_regions))
+                                        if (!empty($post_details['post_costs']))
                                         {
                                             ?>
                                             <h2>Your Itinerary Information:-</h2>
                                             <div class="complete-info-table" style="width: 95%;margin: auto;">
                                                 <?php
-                                                foreach ($post_details->post_regions as $key => $value)
+                                                foreach ($post_details['post_regions'] as $key => $value)
                                                 {
                                                     ?>
                                                     <div class="complete-info-i">
@@ -74,13 +74,13 @@ $redis_functions = new Redisfunctions();
                                             <?php
                                         }
 
-                                        if (!empty($post_details->post_costs))
+                                        if (!empty($post_details['post_costs']))
                                         {
                                             ?>
                                             <h2>Your Budget Information:-</h2>
                                             <div class="complete-info-table" style="width: 95%;margin: auto;">
                                                 <?php
-                                                foreach ($post_details->post_costs as $key => $value)
+                                                foreach ($post_details['post_costs'] as $key => $value)
                                                 {
                                                     ?>
                                                     <div class="complete-info-i">
