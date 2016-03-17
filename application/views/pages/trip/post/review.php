@@ -112,7 +112,7 @@ $redis_functions = new Redisfunctions();
                     }
 
                     $this->load->view('pages/trip/post/traveler-info-sidebar', array('url_key' => $post_details['post_url_key']));
-                    $this->load->view('pages/trip/post-right-sidebar');
+                    $this->load->view('pages/trip/post-right-sidebar', array('post_records' => $post_details));
                     ?>
                 </div>
                 <div class="clear"></div>
