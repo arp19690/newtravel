@@ -99,7 +99,7 @@ $redis_functions = new Redisfunctions();
                                                                                     }
                                                                                     else if ($media_type == 'videos')
                                                                                     {
-                                                                                        
+                                                                                        echo '<div><iframe class="dt-youtube" width="200" height="" src="' . get_video_embed_url($tmp_value->pm_media_url) . '" frameborder="0" allowfullscreen></iframe></div>';
                                                                                     }
                                                                                     ?>
                                                                                 </div>
