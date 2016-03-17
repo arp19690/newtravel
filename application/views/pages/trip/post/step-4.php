@@ -99,7 +99,15 @@ $redis_functions = new Redisfunctions();
                                                                                     }
                                                                                     else if ($media_type == 'videos')
                                                                                     {
-                                                                                        echo '<div><iframe class="dt-youtube" width="200" height="" src="' . get_video_embed_url($tmp_value->pm_media_url) . '" frameborder="0" allowfullscreen></iframe></div>';
+                                                                                        $embed_url = get_video_embed_url($tmp_value->pm_media_url);
+                                                                                        if ($embed_url != NULL)
+                                                                                        {
+                                                                                            echo '<div><iframe class="dt-youtube" width="200" height="" src="' . $embed_url . '" frameborder="0" allowfullscreen></iframe></div>';
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            echo '<p class="text-center" style="margin-top:30px;">Video not available</p>';
+                                                                                        }
                                                                                     }
                                                                                     ?>
                                                                                 </div>
