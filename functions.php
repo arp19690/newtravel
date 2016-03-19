@@ -734,18 +734,31 @@ function getUrl($value)
     return $url;
 }
 
-function getEncryptedString($value, $action = "encode")
+function getEncryptedString($string, $action = "encode")
 {
-    if ($action == "encode")
+    $output = false;
+
+    $encrypt_method = ENCRYPT_METHOD;
+    $secret_key = ENCRYPT_SECRET_KEY;
+    $secret_iv = ENCRYPT_SECRET_IV;
+
+    // hash
+    $key = hash('sha256', $secret_key);
+
+    // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+    $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+    if ($action == 'encode')
     {
-        return str_rot13($value . USE_SALT);
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
     }
-    else
+    else if ($action == 'decode')
     {
-        $str = str_rot13(str_rot13($value));
-        $new_str = str_replace(USE_SALT, "", $str);
-        return $new_str;
+        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
     }
+
+    return $output;
 }
 
 function getRandomNumberLength($str, $length = "8")

@@ -86,7 +86,7 @@ $redis_functions = new Redisfunctions();
                                                                             <label>Title:</label>
                                                                             <div class="input">
                                                                                 <input type="hidden" name="existing_media_id[]" value="<?php echo $pm_id_enc; ?>"/>
-                                                                                <input type="text" name="media_title[]" placeholder="Enter Title" value="<?php echo stripslashes($tmp_value->pm_media_title); ?>"/>
+                                                                                <input type="text" name="existing_media_title[]" placeholder="Enter Title" value="<?php echo stripslashes($tmp_value->pm_media_title); ?>"/>
                                                                             </div>
                                                                         </div>
                                                                         <div class="booking-form-i">

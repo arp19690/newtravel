@@ -294,9 +294,20 @@ class Trip extends CI_Controller
         {
             $arr = $this->input->post();
 
+            // To update existing media data
+            if (!empty($arr['existing_media_id']) && isset($arr['existing_media_id']))
+            {
+                foreach ($arr['existing_media_id'] as $existing_key => $existing_value)
+                {
+                    $pm_id = getEncryptedString($existing_value, 'decode');
+                    $pm_media_title = addslashes($arr['existing_media_title'][$existing_key]);
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_title' => $pm_media_title), array('pm_post_id' => $post_id, 'pm_id' => $pm_id));
+                }
+            }
+
+            // To upload fresh/new selected media
             if (!empty($arr['media_type']) && isset($arr['media_type']))
             {
-                $this->removePostMedia($url_key);
                 foreach ($arr['media_type'] as $key => $media_type)
                 {
                     $media_filename = NULL;
@@ -348,7 +359,6 @@ class Trip extends CI_Controller
 
             // setting post details to redis
             $this->redis_functions->set_trip_details($url_key);
-
             redirect(base_url('trip/review/' . $url_key));
         }
         else
@@ -458,7 +468,7 @@ class Trip extends CI_Controller
                     $new_filename = str_replace('//', '/', $new_path . '/' . $original_filename[$count_exploded - 1]);
                     copy($value['pm_media_url'], $new_filename);
                     @unlink($value['pm_media_url']);
-                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename, 'pm_status' => '2'), array('pm_id' => $value['pm_id']));
+                    $model->updateData(TABLE_POST_MEDIA, array('pm_media_url' => $new_filename, 'pm_status' => '2'), array('pm_post_id' => $post_records[0]['post_id'], 'pm_id' => $value['pm_id']));
                 }
 
                 if ($pm_id == NULL)

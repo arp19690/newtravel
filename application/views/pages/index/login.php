@@ -26,26 +26,41 @@
                         <div class="contacts-colls-rb">
                             <div class="contact-colls-lbl"><?php echo $page_title; ?></div>
                             <div class="booking-form">
-                                <form id="contact_form" action="<?php echo base_url('login?next=' . current_url()); ?>" method="post">
+                                <div class="clear">
                                     <div class="booking-form-i">
-                                        <label>Email:</label>
-                                        <div class="input"><input type="email" name="user_email" placeholder="Enter you email" required="required" /></div>
+                                        <div class="text-center">
+                                            <a href="<?php echo base_url('facebook-login'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Login with Facebook</a>
+                                            <p style="margin: 10px 0;"><small>or,</small></p>
+                                        </div>
                                     </div>
-                                    <div class="clear"></div>
-                                    <div class="booking-form-i">
-                                        <label>Password:</label>
-                                        <div class="input"><input type="password" name="user_password" placeholder="Enter your password" required="required" /></div>
-                                    </div>
-                                    <div class="clear"></div>
-                                    <button type="submit" class="contacts-send">Login</button>
-                                    <div class="clear"></div>
+                                </div>
 
-                                    <div class="" style="margin-top: 35px;">
-                                        <a href="<?php echo base_url('forgot-password'); ?>" class="">Forgot password?</a>
-                                        <p style="margin: 10px 0;"><small>or,</small></p>
-                                        <a href="<?php echo base_url('register'); ?>" class="">Register for a new account</a>
-                                    </div>
-                                </form>
+                                <div class="clear">
+                                    <form id="contact_form" action="<?php echo base_url('login?next=' . current_url()); ?>" method="post">
+                                        <div class="booking-form-i">
+                                            <label>Email:</label>
+                                            <div class="input"><input type="email" name="user_email" placeholder="Enter you email" required="required" /></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="booking-form-i">
+                                            <label>Password:</label>
+                                            <div class="input"><input type="password" name="user_password" placeholder="Enter your password" required="required" /></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <button type="submit" class="contacts-send">Login</button>
+                                        <div class="clear"></div>
+
+                                        <div class="clear" style="margin-top: 30px;">
+                                            <div class="booking-form-i">
+                                                <div class="text-center">
+                                                    <a href="<?php echo base_url('forgot-password'); ?>" class="">Forgot password?</a>
+                                                    <p style="margin: 10px 0;"><small>or,</small></p>
+                                                    <a href="<?php echo base_url('register'); ?>" class="">Register for a new account</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="clear"></div>

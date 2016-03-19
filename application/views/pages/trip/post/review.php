@@ -27,8 +27,35 @@ $redis_functions = new Redisfunctions();
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
-                                            <span>Let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
+                                            <span>&amp; let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
                                         </div>
+                                    </div>
+                                    <div class="mm-tabs-wrapper">
+                                        <!-- // tab item // -->
+                                        <div class="tab-item">
+                                            <div class="tab-gallery-big">
+                                                <img alt="<?php echo $post_details['post_title']; ?>" src="<?php echo base_url(getImage($post_details['post_primary_image'])); ?>">
+                                            </div>
+                                            <div class="tab-gallery-preview">
+                                                <div id="gallery" itemscope itemtype="http://schema.org/Product">
+                                                    <?php
+                                                    if (!empty($post_details['post_media']->images))
+                                                    {
+                                                        foreach ($post_details['post_media']->images as $key => $value)
+                                                        {
+                                                            $image_src = base_url(getImage($value->pm_media_url));
+                                                            ?>
+                                                            <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
+                                                                <a href="<?php echo $image_src; ?>"><img itemprop="image" alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- \\ tab item \\ -->
                                     </div>
 
                                     <div class="complete-info">
@@ -46,13 +73,13 @@ $redis_functions = new Redisfunctions();
                                         <div class="complete-devider"></div>
 
                                         <?php
-                                        if (!empty($post_details->post_regions))
+                                        if (!empty($post_details['post_costs']))
                                         {
                                             ?>
                                             <h2>Your Itinerary Information:-</h2>
                                             <div class="complete-info-table" style="width: 95%;margin: auto;">
                                                 <?php
-                                                foreach ($post_details->post_regions as $key => $value)
+                                                foreach ($post_details['post_regions'] as $key => $value)
                                                 {
                                                     ?>
                                                     <div class="complete-info-i">
@@ -74,13 +101,13 @@ $redis_functions = new Redisfunctions();
                                             <?php
                                         }
 
-                                        if (!empty($post_details->post_costs))
+                                        if (!empty($post_details['post_costs']))
                                         {
                                             ?>
                                             <h2>Your Budget Information:-</h2>
                                             <div class="complete-info-table" style="width: 95%;margin: auto;">
                                                 <?php
-                                                foreach ($post_details->post_costs as $key => $value)
+                                                foreach ($post_details['post_costs'] as $key => $value)
                                                 {
                                                     ?>
                                                     <div class="complete-info-i">
@@ -106,13 +133,13 @@ $redis_functions = new Redisfunctions();
 
                 <div class="sp-page-r">
                     <?php
-                    if (empty($post_details['post_featured']))
-                    {
+//                    if (empty($post_details['post_featured']))
+//                    {
                         $this->load->view('pages/trip/post/featured-select-sidebar');
-                    }
+//                    }
 
-                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('url_key' => $post_details['post_url_key']));
-                    $this->load->view('pages/trip/post-right-sidebar');
+//                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('post_records' => $post_details));
+                    $this->load->view('pages/trip/post-right-sidebar', array('post_records' => $post_details));
                     ?>
                 </div>
                 <div class="clear"></div>
