@@ -34,7 +34,7 @@
 
                     <div class="contacts-colls-r">
                         <div class="contacts-colls-rb">
-                            <div class="contact-colls-lbl">Personal Information</div>
+                            <div class="contact-colls-lbl">Personal Information<span style="display:inline-block;float: right;"><a href='#' style="text-decoration: none;color: #ff7200;font-weight: normal;font-size: 12px;">Change Password</a></span></div>
                             <div class="booking-form">
                                 <form id="contact_form" action="" method="post">
                                     <div class="clear">
