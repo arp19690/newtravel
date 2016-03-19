@@ -5,3 +5,5 @@
 #gallery .gallery-i img{display: inline-block;width: 100%;max-width: 108px;max-height: 75px;}
 .tab-gallery-big{text-align: center;}
 .tab-gallery-big img{width: 100%;max-width: 550px;}
+.facebook-btn{background-color: #3B5998;color: #FFFFFF;}
+.facebook-btn:hover{background-color: #2d4373;}
