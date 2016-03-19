@@ -35,6 +35,8 @@ class SocialLib
     public function getFacebookUserObject()
     {
         require_once APPPATH . "../assets/front/social/facebook/autoload.php";
+        $output_status = 'success';
+        $access_token_value = NULL;
 
         // Create our Application instance (replace this with your appId and secret).
         $fb = new Facebook\Facebook([
@@ -47,20 +49,27 @@ class SocialLib
         try
         {
             $accessToken = $helper->getAccessToken();
+
             // Returns a `Facebook\FacebookResponse` object
             $response = $fb->get('/me?fields=id,name,email', $accessToken);
+            $output_message = $user = $response->getGraphUser();
+
+            // The OAuth 2.0 client handler helps us manage access tokens
+            $oAuth2Client = $fb->getOAuth2Client();
+            $access_token_value = (string) $oAuth2Client->getLongLivedAccessToken($accessToken)->getValue();
         } catch (Facebook\Exceptions\FacebookResponseException $e)
         {
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
+//            echo 'Graph returned an error: ' . $e->getMessage();
+            $output_message = $e->getMessage();
+            $output_status = 'error';
         } catch (Facebook\Exceptions\FacebookSDKException $e)
         {
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+//            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            $output_message = $e->getMessage();
+            $output_status = 'error';
         }
 
-        $user = $response->getGraphUser();
-        return $user;
+        return array('status' => $output_status, 'data' => $output_message, 'accessToken' => $access_token_value);
     }
 
 }

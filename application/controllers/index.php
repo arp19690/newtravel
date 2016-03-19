@@ -343,7 +343,22 @@ class Index extends CI_Controller
             $this->load->library("SocialLib");
             $socialLib = new SocialLib();
             $facebook_user_obj = $socialLib->getFacebookUserObject();
-            prd($facebook_user_obj);
+            if ($facebook_user_obj['status'] == 'success')
+            {
+                if (!empty($facebook_user_obj['data']))
+                {
+                    $facebook_id = $facebook_user_obj['data']['id'];
+                    $facebook_name = $facebook_user_obj['data']['name'];
+                    $facebook_email = $facebook_user_obj['data']['email'];
+                    $facebook_access_token = $facebook_user_obj['accessToken'];
+                    prd($facebook_user_obj);
+                }
+            }
+            else
+            {
+                $this->session->set_flashdata('error', $facebook_user_obj['data']);
+                redirect(base_url('login'));
+            }
         }
         else
         {
