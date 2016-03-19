@@ -329,31 +329,26 @@ class Index extends CI_Controller
         }
     }
 
-    public function loginwithfacebook()
+    public function login_with_facebook()
     {
-        if (!isset($this->session->userdata["user_id"]))
-        {
-            if ($this->input->get('next'))
-            {
-                @$this->session->set_userdata("next_url", $this->input->get('next'));
-            }
-
-            $this->load->library('SocialLib');
-            $socialLib = new SocialLib();
-            $login_url = $socialLib->getFacebookLoginUrl();
-            redirect($login_url);
-        }
-        else
-        {
-            $this->logout();
-        }
+        $this->load->library("SocialLib");
+        $socialLib = new SocialLib();
+        redirect($socialLib->getFacebookLoginUrl());
     }
 
     public function facebookAuth()
     {
-        $this->load->library("SocialLib");
-        $socialLib = new SocialLib();
-        $socialLib->loginWithFacebook();
+        if ($this->input->get('code'))
+        {
+            $this->load->library("SocialLib");
+            $socialLib = new SocialLib();
+            $facebook_user_obj = $socialLib->getFacebookUserObject();
+            prd($facebook_user_obj);
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
     public function logout()
