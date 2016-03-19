@@ -9,8 +9,13 @@ $path = $controller . "/" . $action;
     <nav>
         <ul>					
             <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
             <?php
+            if ($path != 'index/login' && $path != 'index/register')
+            {
+                ?>
+                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+                <?php
+            }
             if (isset($this->session->userdata['user_id']))
             {
                 ?>
@@ -26,9 +31,12 @@ $path = $controller . "/" . $action;
             }
             else
             {
-                ?>
-                <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
-                <?php
+                if ($path != 'index/login' && $path != 'index/register')
+                {
+                    ?>
+                    <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
+                    <?php
+                }
             }
             ?>
         </ul>
@@ -54,8 +62,13 @@ $path = $controller . "/" . $action;
         <nav class="header-nav">
             <ul>
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
                 <?php
+                if ($path != 'index/login' && $path != 'index/register')
+                {
+                    ?>
+                    <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+                    <?php
+                }
                 if (isset($this->session->userdata['user_id']))
                 {
                     ?>
@@ -71,9 +84,12 @@ $path = $controller . "/" . $action;
                 }
                 else
                 {
-                    ?>
-                    <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
-                    <?php
+                    if ($path != 'index/login' && $path != 'index/register')
+                    {
+                        ?>
+                        <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
+                        <?php
+                    }
                 }
                 ?>
             </ul>
