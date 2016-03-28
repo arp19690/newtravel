@@ -691,8 +691,10 @@ class Trip extends CI_Controller
         {
             $params = $this->input->get();
             $query = $params['q'];
+            $user_id = isset($this->session->userdata['user_id']) == TRUE ? $this->session->userdata['user_id'] : NULL;
 
             $data_array = array(
+                'ps_user_id' => $user_id,
                 'ps_query' => addslashes($query),
                 'ps_url' => addslashes(current_url()),
                 'ps_params' => json_encode($params),
