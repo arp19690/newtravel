@@ -678,14 +678,12 @@ class Trip extends CI_Controller
 //        Travellers
         if (!empty($search_travelers))
         {
-            if ($search_travelers != '5+')
+            $search_travelers = str_replace('+', '', $search_travelers);
+            if ($search_travelers <= 0)
             {
-                $group_by = 'p.post_id HAVING COUNT(pt_post_id) = ' . $search_travelers;
+                $search_travelers = 1;
             }
-            else
-            {
-                $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= 5';
-            }
+            $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= ' . $search_travelers;
         }
 
         $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);

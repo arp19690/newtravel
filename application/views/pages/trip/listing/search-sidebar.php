@@ -29,7 +29,6 @@ if (!isset($count_search_results))
                                     <?php
                                     for ($i = 1; $i <= 5; $i++)
                                     {
-                                        $num_of_travelers = $i == 5 ? ($i . '+') : ($i);
                                         $selected = '';
                                         if (isset($_GET['search_travelers']))
                                         {
@@ -38,7 +37,7 @@ if (!isset($count_search_results))
                                                 $selected = 'selected="selected"';
                                             }
                                         }
-                                        echo '<option value="' . $num_of_travelers . '" ' . $selected . '>' . $num_of_travelers . '</option>';
+                                        echo '<option value="' . $num_of_travelers . '" ' . $selected . '>' . $num_of_travelers . '+</option>';
                                     }
                                     ?>
                                 </select>
