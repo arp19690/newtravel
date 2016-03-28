@@ -693,15 +693,18 @@ class Trip extends CI_Controller
             $query = $params['q'];
             $user_id = isset($this->session->userdata['user_id']) == TRUE ? $this->session->userdata['user_id'] : NULL;
 
-            $data_array = array(
-                'ps_user_id' => $user_id,
-                'ps_query' => addslashes($query),
-                'ps_url' => addslashes(current_url()),
-                'ps_params' => json_encode($params),
-                'ps_ipaddress' => USER_IP,
-                'ps_useragent' => USER_AGENT
-            );
-            $model->insertData(TABLE_POST_SEARCHES, $data_array);
+            if ($model->is_exists('ps_id', TABLE_POST_SEARCHES, array('ps_user_id' => $user_id, 'ps_query' => addslashes($query), 'ps_timestamp >=' => date('Y-m-d'))) == FALSE)
+            {
+                $data_array = array(
+                    'ps_user_id' => $user_id,
+                    'ps_query' => addslashes($query),
+                    'ps_url' => addslashes(current_url()),
+                    'ps_params' => json_encode($params),
+                    'ps_ipaddress' => USER_IP,
+                    'ps_useragent' => USER_AGENT
+                );
+                $model->insertData(TABLE_POST_SEARCHES, $data_array);
+            }
 
             $order_by = get_post_mysql_sort_by(@$params['sort']);
             $group_by = 'p.post_id';
