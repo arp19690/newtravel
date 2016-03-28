@@ -29,6 +29,7 @@ if (!isset($count_search_results))
                                     <?php
                                     for ($i = 1; $i <= 5; $i++)
                                     {
+                                        $num_of_travelers = $i;
                                         $selected = '';
                                         if (isset($_GET['search_travelers']))
                                         {
