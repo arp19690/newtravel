@@ -627,29 +627,7 @@ class Trip extends CI_Controller
         );
         $model->insertData(TABLE_POST_SEARCHES, $data_array);
 
-        $order_by = 'p.post_title ASC';
-        switch ($order_by)
-        {
-            default:
-                $order_by = 'p.post_title ASC';
-                break;
-            case 'title':
-                $order_by = 'p.post_title ASC';
-                break;
-            case 'price_low':
-                $order_by = 'cost_amount ASC';
-                break;
-            case 'price_high':
-                $order_by = 'cost_amount DESC';
-                break;
-            case 'duration_low':
-                $order_by = 'COUNT(pt_post_id) ASC';
-                break;
-            case 'duration_high':
-                $order_by = 'COUNT(pt_post_id) DESC';
-                break;
-        }
-
+        $order_by = get_post_mysql_sort_by($order_by);
         $group_by = 'p.post_id';
         $where_cond_str = '1';
 //        Location
