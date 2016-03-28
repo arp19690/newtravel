@@ -1,5 +1,7 @@
 <?php
 $redis_functions = new Redisfunctions();
+$custom_model = new Custom_model();
+$min_and_max_costs = $custom_model->get_min_and_max_cost_amounts();
 $travel_mediums = $redis_functions->get_travel_mediums();
 if (!isset($count_search_results))
 {
@@ -160,7 +162,7 @@ if (!isset($count_search_results))
                 range: true,
                 min: 0,
                 max: 15000,
-                values: [<?php echo isset($_GET['search_budget_min']) == TRUE ? $_GET['search_budget_min'] : 250; ?>, <?php echo isset($_GET['search_budget_max']) == TRUE ? $_GET['search_budget_max'] : 3500; ?>],
+                values: [<?php echo isset($_GET['search_budget_min']) == TRUE ? $_GET['search_budget_min'] : round($min_and_max_costs['min_cost']); ?>, <?php echo isset($_GET['search_budget_max']) == TRUE ? $_GET['search_budget_max'] : round($min_and_max_costs['max_cost']); ?>],
                 slide: function (event, ui) {
                     $("#ammount-from").val(ui.values[0]);
                     $("#ammount-to").val(ui.values[1]);

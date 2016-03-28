@@ -186,8 +186,15 @@ class Custom_model extends CI_Model
 //        Updating them as read messages
         $update_sql = 'UPDATE ' . TABLE_MESSAGES . ' SET message_read = "1" WHERE message_user_to = ' . $user_id . ' AND message_timestamp >= ' . $last_timestamp;
         $this->db->query($update_sql)->result_array();
-        
+
         return $records;
+    }
+
+    public function get_min_and_max_cost_amounts()
+    {
+        $sql = 'select min(cost_amount) as min_cost, max(cost_amount) as max_cost from post_costs';
+        $records = $this->db->query($sql)->result_array();
+        return $records[0];
     }
 
 }
