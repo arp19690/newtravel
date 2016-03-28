@@ -625,7 +625,11 @@ class Trip extends CI_Controller
             'ps_ipaddress' => USER_IP,
             'ps_useragent' => USER_AGENT
         );
-        $model->insertData(TABLE_POST_SEARCHES, $data_array);
+        
+        if ($model->is_exists('ps_id', TABLE_POST_SEARCHES, $data_array) == FALSE)
+        {
+            $model->insertData(TABLE_POST_SEARCHES, $data_array);
+        }
 
         $order_by = get_post_mysql_sort_by(@$params['sort']);
         $group_by = 'p.post_id';
