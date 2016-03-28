@@ -52,8 +52,10 @@ $path = $controller . "/" . $action;
         </div>
         <div class="hdr-srch-overlay">
             <div class="hdr-srch-overlay-a">
-                <input type="text" value="" placeholder="Start typing...">
-                <a href="#" class="srch-close"></a>
+                <form action="<?php echo base_url('trip/search/query'); ?>">
+                    <input type="text" name="q" placeholder="Start typing...">
+                    <a href="#" class="srch-close"></a>
+                </form>
                 <div class="clear"></div>
             </div>
         </div>	

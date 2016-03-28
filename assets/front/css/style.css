@@ -97,7 +97,7 @@ input,select,button,textarea {outline:none;}
 .hdr-srch-devider {float:right;height:15px;width:1px;margin:1px 17px 0px 21px;background:#e2e2e2;}
 .hdr-srch {position:relative;float:right;margin:2px 0px 0px 0px;}
 .hdr-srch-overlay {display:none;height:36px;padding-top:14px;background:#fff;width:100%;position:absolute;right:0px;top:22px;z-index:999;}
-.hdr-srch-overlay input[type='text'] {font-family:'PT Sans';font-size:13px;color:#6e6e6e;font-weight:700;border:0px;width:90%;float:left;background:transparent;text-transform:uppercase;}
+.hdr-srch-overlay input[type='text'] {font-family:'PT Sans';font-size:13px;color:#6e6e6e;font-weight:700;border:0px;width:90%;float:left;background:transparent;}
 .srch-close {display:block;width:13px;height:13px;float:right;margin:3px 0px 0px 0px;background:url(../img/srch-close.png) left top no-repeat;}
 .hdr-srch-btn {display:block;width:13px;height:13px;background:url(../img/srch-icon.png) left top no-repeat;}
 .hdr-srch-btn:hover {background-position:left -13px;}

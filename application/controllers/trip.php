@@ -627,7 +627,7 @@ class Trip extends CI_Controller
         );
         $model->insertData(TABLE_POST_SEARCHES, $data_array);
 
-        $order_by = get_post_mysql_sort_by($order_by);
+        $order_by = get_post_mysql_sort_by(@$params['sort']);
         $group_by = 'p.post_id';
         $where_cond_str = '1';
 //        Location
@@ -681,6 +681,51 @@ class Trip extends CI_Controller
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
+    }
+
+    public function search_query($view_type = 'list', $page = 1)
+    {
+        $model = new Common_model();
+        $custom_model = new Custom_model();
+        if ($this->input->get('q'))
+        {
+            $params = $this->input->get();
+            $query = $params['q'];
+
+            $data_array = array(
+                'ps_query' => addslashes($query),
+                'ps_url' => addslashes(current_url()),
+                'ps_params' => json_encode($params),
+                'ps_ipaddress' => USER_IP,
+                'ps_useragent' => USER_AGENT
+            );
+            $model->insertData(TABLE_POST_SEARCHES, $data_array);
+
+            $order_by = get_post_mysql_sort_by(@$params['sort']);
+            $group_by = 'p.post_id';
+            $where_cond_str = '1';
+            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                '#' => 'Search',
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+            $page_title = 'Search results';
+
+            $data["post_records"] = $search_results;
+            $data["view_type"] = $view_type;
+            $data["page"] = $page;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+            $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
 }
