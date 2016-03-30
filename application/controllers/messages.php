@@ -15,7 +15,14 @@ class Messages extends CI_Controller
 
     public function index()
     {
-        $this->inbox();
+        if ($this->input->get('username'))
+        {
+            $this->thread($this->input->get('username'));
+        }
+        else
+        {
+            $this->inbox();
+        }
     }
 
     public function inbox()
@@ -37,23 +44,6 @@ class Messages extends CI_Controller
         $data["page_title"] = $page_title;
         $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
         $data["active_class"] = "inbox";
-        $this->template->write_view("content", "pages/messages/list", $data);
-        $this->template->render();
-    }
-
-    public function outbox()
-    {
-        redirect(base_url('messages/inbox'));
-
-        $data = array();
-        $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
-        $custom_model = new Custom_model();
-        $data["record"] = $custom_model->getOutboxList($user_id);
-
-        $data["page_title"] = "Outbox";
-        $data['meta_title'] = 'Outbox | ' . SITE_NAME;
-        $data["active_class"] = "outbox";
         $this->template->write_view("content", "pages/messages/list", $data);
         $this->template->render();
     }
