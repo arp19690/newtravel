@@ -59,6 +59,13 @@ class Messages extends CI_Controller
             $records = $custom_model->get_chat_history($user_id, $user_to_records[0]['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
 
+//            Marking previous messages as read
+            if (!empty($records))
+            {
+                $latest_message_id = $records[count($records) - 1]['message_id'];
+                $this->mark_previous_messages_as_read($latest_message_id, $user_id, $user_to_records[0]['user_id']);
+            }
+
             $to_user_fullname = stripslashes($user_to_records[0]['user_fullname']);
             $page_title = $to_user_fullname;
             $input_arr = array(
@@ -82,6 +89,17 @@ class Messages extends CI_Controller
         {
             redirect(base_url('my-chats'));
         }
+    }
+
+    public function mark_previous_messages_as_read($latest_message_id, $me_user_id, $other_user_id)
+    {
+        $model = new Common_model();
+        $where_cond_arr = array(
+            'message_user_from' => $other_user_id,
+            'message_user_to' => $me_user_id,
+            'message_id <= ' => $latest_message_id
+        );
+        return $model->updateData(TABLE_MESSAGES, array('message_read' => '1'), $where_cond_arr);
     }
 
     public function sendMessageAjax()
