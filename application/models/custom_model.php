@@ -213,7 +213,7 @@ class Custom_model extends CI_Model
     {
         if ($fields == NULL)
         {
-            $fields = 'm1.*, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
+            $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
         }
         $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE m1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') ORDER BY message_id ASC';
         $records = $this->db->query($sql)->result_array();
