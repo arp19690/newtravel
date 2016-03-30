@@ -67,7 +67,7 @@ class Messages extends CI_Controller
             }
 
             $to_user_fullname = stripslashes($user_to_records['user_fullname']);
-            $to_user_username= stripslashes($user_to_records['user_username']);
+            $to_user_username = stripslashes($user_to_records['user_username']);
             $page_title = $to_user_fullname;
             $input_arr = array(
                 base_url() => 'Home',
@@ -116,7 +116,7 @@ class Messages extends CI_Controller
 
             $other_username = getEncryptedString($arr["to_username"], 'decode');
             $other_user_records = $redis_functions->get_user_profile_data($other_username);
-            if (!empty($other_user_records) && !empty($arr["message_text"]))
+            if (!empty($other_user_records) && !empty($arr["message_text"]) && $other_user_records['user_id'] != $user_id)
             {
                 $data_array = array(
                     "message_user_from" => $user_id,

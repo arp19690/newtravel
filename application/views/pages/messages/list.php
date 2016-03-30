@@ -150,7 +150,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                         </div>
 
                                         <div class="input-message-div">
-                                            <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo $to_user_username; ?>" class="my-message"></textarea>
+                                            <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo getEncryptedString($to_user_username); ?>" class="my-message"></textarea>
                                             <a href="#" class="btn btn-orange send-msg-btn">Send</a>
                                         </div>
                                     </div>
