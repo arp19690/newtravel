@@ -9,7 +9,7 @@
     .chat-log{height: 390px;overflow: auto;margin-top: 20px;}
     .h-liked-comment,.h-liked-item-l{margin: 0;}
     .h-liked-item-i{padding: 5px;}
-    .h-liked-item-i.active{background-color: #eae8e8;}
+    .h-liked-item-i.active, .chat-l-div .h-liked-item-i:hover{background-color: #eae8e8;}
     .h-liked-price a{color: #ff7200;text-decoration: none;}
     .h-liked-comment{font-size: 10px;}
 </style>
