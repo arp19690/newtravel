@@ -15,37 +15,34 @@ class Messages extends CI_Controller
 
     public function index()
     {
-        $this->inbox();
+        if ($this->input->get('username'))
+        {
+            $this->thread($this->input->get('username'));
+        }
+        else
+        {
+            $this->inbox();
+        }
     }
 
     public function inbox()
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
         $custom_model = new Custom_model();
-        $data["record"] = $custom_model->getInboxList($user_id);
+        $records = $custom_model->get_inbox_list($user_id);
 
-        $data["page_title"] = "Messages";
-        $data['meta_title'] = 'Messages | ' . SITE_NAME;
-        $data["active_class"] = "inbox";
-        $this->template->write_view("content", "pages/messages/list", $data);
-        $this->template->render();
-    }
+        $page_title = 'My Chats';
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
 
-    public function outbox()
-    {
-        redirect(base_url('messages/inbox'));
-
-        $data = array();
-        $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
-        $custom_model = new Custom_model();
-        $data["record"] = $custom_model->getOutboxList($user_id);
-
-        $data["page_title"] = "Outbox";
-        $data['meta_title'] = 'Outbox | ' . SITE_NAME;
-        $data["active_class"] = "outbox";
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["chat_list_records"] = $records;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
         $this->template->write_view("content", "pages/messages/list", $data);
         $this->template->render();
     }
@@ -54,38 +51,36 @@ class Messages extends CI_Controller
     {
         if ($username)
         {
-            $data = array();
-            $user_id = $this->session->userdata["user_id"];
             $model = new Common_model();
             $custom_model = new Custom_model();
+            $data = array();
+            $user_id = $this->session->userdata["user_id"];
+            $user_to_records = $model->fetchSelectedData('user_id, user_fullname', TABLE_USERS, array('user_username' => $username));
+            $records = $custom_model->get_chat_history($user_id, $user_to_records[0]['user_id']);
+            $chat_list_records = $custom_model->get_inbox_list($user_id);
 
-            $is_username_valid = $model->is_exists('user_id', TABLE_USERS, array('username' => $username));
-            if (!empty($is_username_valid))
-            {
-                $message_from = $is_username_valid[0]['user_id'];
-                $model->updateData(TABLE_MESSAGES, array("message_read" => "1"), array("message_from" => $message_from, "message_to" => $user_id));
+            $to_user_fullname=stripslashes($user_to_records[0]['user_fullname']);
+            $page_title = $to_user_fullname;
+            $input_arr = array(
+                base_url() => 'Home',
+                base_url('my-chats') => 'My Chats',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
 
-                $getUserNameRecord = $model->fetchSelectedData("first_name,last_name,username", TABLE_USERS, array("user_id" => $message_from));
-                $full_name = $getUserNameRecord[0]["first_name"] . " " . $getUserNameRecord[0]["last_name"];
-
-                $allThreadMessages = $custom_model->getThreadMessages($user_id, $message_from);
-//                prd($allThreadMessages);
-
-                $data["meta_title"] = "Messages | " . $full_name . " | " . SITE_NAME;
-                $data["page_title"] = "Chat with <a href='" . $getUserNameRecord[0]["username"] . "'>" . $full_name . "</a>";
-                $data["message_to"] = $message_from;
-                $data["record"] = $allThreadMessages;
-                $this->template->write_view("content", "pages/messages/thread", $data);
-                $this->template->render();
-            }
-            else
-            {
-                redirect(base_url('my-account'));
-            }
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["chat_list_records"] = $chat_list_records;
+            $data["records"] = $records;
+            $data["page_title"] = $page_title;
+            $data["to_user_fullname"] = $to_user_fullname;
+            $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
+            $data['display_thread'] = TRUE;
+            $this->template->write_view("content", "pages/messages/list", $data);
+            $this->template->render();
         }
         else
         {
-            redirect(base_url('messages'));
+            redirect(base_url('my-chats'));
         }
     }
 

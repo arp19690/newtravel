@@ -1,5 +1,37 @@
 <?php
 
+function get_message_timestamp_readable($timestamp)
+{
+    return date('d M Y G:i a', $timestamp);
+}
+
+function get_post_mysql_sort_by($order_by_string)
+{
+    $order_by = 'p.post_title ASC';
+    switch ($order_by_string)
+    {
+        default:
+            $order_by = 'p.post_title ASC';
+            break;
+        case 'title':
+            $order_by = 'p.post_title ASC';
+            break;
+        case 'price_low':
+            $order_by = 'cost_amount ASC';
+            break;
+        case 'price_high':
+            $order_by = 'cost_amount DESC';
+            break;
+        case 'duration_low':
+            $order_by = 'COUNT(pt_post_id) ASC';
+            break;
+        case 'duration_high':
+            $order_by = 'COUNT(pt_post_id) DESC';
+            break;
+    }
+    return $order_by;
+}
+
 function get_video_embed_url($url)
 {
 

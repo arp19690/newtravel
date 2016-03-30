@@ -625,31 +625,13 @@ class Trip extends CI_Controller
             'ps_ipaddress' => USER_IP,
             'ps_useragent' => USER_AGENT
         );
-        $model->insertData(TABLE_POST_SEARCHES, $data_array);
-
-        $order_by = 'p.post_title ASC';
-        switch ($order_by)
+        
+        if ($model->is_exists('ps_id', TABLE_POST_SEARCHES, $data_array) == FALSE)
         {
-            default:
-                $order_by = 'p.post_title ASC';
-                break;
-            case 'title':
-                $order_by = 'p.post_title ASC';
-                break;
-            case 'price_low':
-                $order_by = 'cost_amount ASC';
-                break;
-            case 'price_high':
-                $order_by = 'cost_amount DESC';
-                break;
-            case 'duration_low':
-                $order_by = 'COUNT(pt_post_id) ASC';
-                break;
-            case 'duration_high':
-                $order_by = 'COUNT(pt_post_id) DESC';
-                break;
+            $model->insertData(TABLE_POST_SEARCHES, $data_array);
         }
 
+        $order_by = get_post_mysql_sort_by(@$params['sort']);
         $group_by = 'p.post_id';
         $where_cond_str = '1';
 //        Location
@@ -678,14 +660,12 @@ class Trip extends CI_Controller
 //        Travellers
         if (!empty($search_travelers))
         {
-            if ($search_travelers != '5+')
+            $search_travelers = str_replace('+', '', $search_travelers);
+            if ($search_travelers <= 0)
             {
-                $group_by = 'p.post_id HAVING COUNT(pt_post_id) = ' . $search_travelers;
+                $search_travelers = 1;
             }
-            else
-            {
-                $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= 5';
-            }
+            $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= ' . $search_travelers;
         }
 
         $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
@@ -705,6 +685,56 @@ class Trip extends CI_Controller
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
+    }
+
+    public function search_query($view_type = 'list', $page = 1)
+    {
+        $model = new Common_model();
+        $custom_model = new Custom_model();
+        if ($this->input->get('q'))
+        {
+            $params = $this->input->get();
+            $query = $params['q'];
+            $user_id = isset($this->session->userdata['user_id']) == TRUE ? $this->session->userdata['user_id'] : NULL;
+
+            if ($model->is_exists('ps_id', TABLE_POST_SEARCHES, array('ps_user_id' => $user_id, 'ps_query' => addslashes($query), 'ps_timestamp >=' => date('Y-m-d'))) == FALSE)
+            {
+                $data_array = array(
+                    'ps_user_id' => $user_id,
+                    'ps_query' => addslashes($query),
+                    'ps_url' => addslashes(current_url()),
+                    'ps_params' => json_encode($params),
+                    'ps_ipaddress' => USER_IP,
+                    'ps_useragent' => USER_AGENT
+                );
+                $model->insertData(TABLE_POST_SEARCHES, $data_array);
+            }
+
+            $order_by = get_post_mysql_sort_by(@$params['sort']);
+            $group_by = 'p.post_id';
+            $where_cond_str = '1';
+            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                '#' => 'Search',
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+            $page_title = 'Search results';
+
+            $data["post_records"] = $search_results;
+            $data["view_type"] = $view_type;
+            $data["page"] = $page;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+            $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
 }

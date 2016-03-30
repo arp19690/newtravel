@@ -9,14 +9,19 @@ $path = $controller . "/" . $action;
     <nav>
         <ul>					
             <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
             <?php
+            if ($path != 'index/login' && $path != 'index/register')
+            {
+                ?>
+                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+                <?php
+            }
             if (isset($this->session->userdata['user_id']))
             {
                 ?>
                 <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                     <ul>
-                        <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                        <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
                         <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                         <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                         <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
@@ -26,9 +31,12 @@ $path = $controller . "/" . $action;
             }
             else
             {
-                ?>
-                <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
-                <?php
+                if ($path != 'index/login' && $path != 'index/register')
+                {
+                    ?>
+                    <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
+                    <?php
+                }
             }
             ?>
         </ul>
@@ -44,8 +52,10 @@ $path = $controller . "/" . $action;
         </div>
         <div class="hdr-srch-overlay">
             <div class="hdr-srch-overlay-a">
-                <input type="text" value="" placeholder="Start typing...">
-                <a href="#" class="srch-close"></a>
+                <form action="<?php echo base_url('trip/search/query'); ?>">
+                    <input type="text" name="q" placeholder="Start typing...">
+                    <a href="#" class="srch-close"></a>
+                </form>
                 <div class="clear"></div>
             </div>
         </div>	
@@ -54,14 +64,19 @@ $path = $controller . "/" . $action;
         <nav class="header-nav">
             <ul>
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
                 <?php
+                if ($path != 'index/login' && $path != 'index/register')
+                {
+                    ?>
+                    <li><a href="<?php echo base_url('trip/post/add'); ?>" <?php echo isset($this->session->userdata['user_id']) == FALSE ? 'onclick="open_authorize_popup();"' : ''; ?>>Publish Your Trip</a></li>
+                    <?php
+                }
                 if (isset($this->session->userdata['user_id']))
                 {
                     ?>
                     <li><a href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                         <ul>
-                            <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                            <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                             <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
@@ -71,9 +86,12 @@ $path = $controller . "/" . $action;
                 }
                 else
                 {
-                    ?>
-                    <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
-                    <?php
+                    if ($path != 'index/login' && $path != 'index/register')
+                    {
+                        ?>
+                        <li><a href="<?php echo base_url('login'); ?>" onclick="open_authorize_popup();">Login</a></li>
+                        <?php
+                    }
                 }
                 ?>
             </ul>

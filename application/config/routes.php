@@ -62,6 +62,9 @@ $route['trip/post/edit/(:num)/(:any)'] = 'trip/add_new/$1/$2';
 $route['my-trips/(:any)'] = 'trip/my_posts/$1';
 $route['trip/view/(:any)'] = 'trip/trip_details/$1';
 $route['trip/delete/(:any)'] = 'trip/delete_trip/$1';
+$route['trip/search/query'] = 'trip/search_query';
+
+$route['my-chats'] = 'messages/index';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -186,7 +186,41 @@ class Custom_model extends CI_Model
 //        Updating them as read messages
         $update_sql = 'UPDATE ' . TABLE_MESSAGES . ' SET message_read = "1" WHERE message_user_to = ' . $user_id . ' AND message_timestamp >= ' . $last_timestamp;
         $this->db->query($update_sql)->result_array();
-        
+
+        return $records;
+    }
+
+    public function get_min_and_max_cost_amounts()
+    {
+        $sql = 'select min(cost_amount) as min_cost, max(cost_amount) as max_cost from post_costs';
+        $records = $this->db->query($sql)->result_array();
+        return $records[0];
+    }
+
+    public function get_inbox_list($user_id, $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, to_user.user_fullname as to_fullname, to_user.user_profile_picture as to_profile_picture, to_user.user_username as to_username')
+    {
+        $sql = 'SELECT  ' . $fields . ' FROM `messages` as m1 
+                    left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.message_id > m1.message_id
+                    left join users as from_user on from_user.user_id = m1.`message_user_from`
+                    left join users as to_user on to_user.user_id = m1.`message_user_to`
+                    WHERE m1.`message_user_from` = ' . $user_id . ' and m1.`message_user_to` != ' . $user_id . ' and m2.message_id is NULL
+                    GROUP BY m1.`message_user_to`';
+        $records = $this->db->query($sql)->result_array();
+        return $records;
+    }
+
+    public function get_chat_history($user_from, $user_to, $fields = NULL, $limit = '20')
+    {
+        if ($fields == NULL)
+        {
+            $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
+        }
+        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE m1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') ORDER BY message_id DESC LIMIT ' . $limit;
+        $records = $this->db->query($sql)->result_array();
+        if (!empty($records))
+        {
+            $records = array_reverse($records);
+        }
         return $records;
     }
 
