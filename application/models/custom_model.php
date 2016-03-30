@@ -197,4 +197,23 @@ class Custom_model extends CI_Model
         return $records[0];
     }
 
+    public function get_inbox_list($user_id, $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, to_user.user_fullname as to_fullname')
+    {
+        $sql = 'SELECT  ' . $fields . ' FROM `messages` as m1 
+                    left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.message_id > m1.message_id
+                    left join users as from_user on from_user.user_id = m1.`message_user_from`
+                    left join users as to_user on to_user.user_id = m1.`message_user_to`
+                    WHERE m1.`message_user_from` = ' . $user_id . ' and m1.`message_user_to` != ' . $user_id . ' and m2.message_id is NULL
+                    GROUP BY m1.`message_user_to`';
+        $records = $this->db->query($sql)->result_array();
+        return $records;
+    }
+
+    public function get_chat_history($user_from, $user_to, $fields = 'm1.*, from_user.user_fullname as from_fullname, to_user.user_fullname', $limit_messages = '20')
+    {
+        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE m1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') ORDER BY message_id ASC LIMIT -' . $limit . ',' . $limit;
+        $records = $this->db->query($sql)->result_array();
+        return $records;
+    }
+
 }
