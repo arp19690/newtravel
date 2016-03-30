@@ -1,3 +1,8 @@
+<?php
+$redis_functions = new Redisfunctions();
+$my_profile = $redis_functions->get_user_profile_data($this->session->userdata['user_username']);
+?>
+
 <style>
     .chat-l-div,.chat-r-div{height: calc(100%);display: inline-block;width: 100%;vertical-align: top;}
     .chat-l-div{max-width: 35%;height: 585px;overflow: auto;}
@@ -8,7 +13,7 @@
     .send-msg-btn{width: 50px;padding: 20px;}
     .chat-log{height: 390px;overflow: auto;margin-top: 20px;}
     .h-liked-comment,.h-liked-item-l{margin: 0;}
-    .h-liked-item-i{padding: 5px;}
+    .chat-l-div .h-liked-item-i{padding: 5px;}
     .h-liked-item-i.active, .chat-l-div .h-liked-item-i:hover{background-color: #eae8e8;}
     .h-liked-price a{color: #ff7200;text-decoration: none;}
     .h-liked-comment{font-size: 10px;}
@@ -111,7 +116,7 @@
                                                     <div class="h-liked-item">
                                                         <div class="h-liked-item-i">
                                                             <div class="h-liked-item-l">
-                                                                <a href="<?php echo base_url('user/' . $from_username); ?>"><img alt="<?php echo $from_fullname ?>" src="<?php echo $user_profile_picture; ?>"></a>
+                                                                <a href="<?php echo base_url('user/' . $from_username); ?>"><img alt="<?php echo $from_fullname ?>" src="<?php echo $from_profile_picture; ?>"></a>
                                                             </div>
                                                             <div class="h-liked-item-c">
                                                                 <div class="h-liked-item-cb">
@@ -145,7 +150,7 @@
                                         </div>
 
                                         <div class="input-message-div">
-                                            <textarea name="message" placeholder="Type your message here..."></textarea>
+                                            <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo $to_user_username; ?>" class="my-message"></textarea>
                                             <a href="#" class="btn btn-orange send-msg-btn">Send</a>
                                         </div>
                                     </div>
@@ -166,7 +171,7 @@
 if (isset($_GET['username']))
 {
     ?>
-    <script>
+    <script type="text/javascript">
         function get_unread_chats(other_username_enc, latest_timestamp, chat_html)
         {
             var chat_url = '<?php echo base_url('messages/get_unread_chats_ajax'); ?>/' + other_username_enc + '/' + latest_timestamp;
@@ -178,25 +183,26 @@ if (isset($_GET['username']))
                     var output_data = null;
                     if (response != null)
                     {
-                        if (response.status == 'success')
+                        if (response['status'] == 'success')
                         {
                             var chat_records = response.data;
                             if (chat_records != null)
                             {
                                 $.each(chat_records, function (key, value) {
-                                    var tmp_html = chat_html.replace('{{username}}', value.from_username)
-                                    tmp_html = chat_html.replace('{{fullname}}', value.from_fullname)
-                                    tmp_html = chat_html.replace('{{message_text}}', value.message_text)
-                                    tmp_html = chat_html.replace('{{message_date_time}}', value.message_timestamp)
-                                    tmp_html = chat_html.replace('{{profile_picture}}', value.from_profile_picture)
-                                    output_data += tmp_html;
+                                    chat_html = chat_html.replace('{{username}}', value.from_username);
+                                    chat_html = chat_html.replace('{{fullname}}', value.from_fullname);
+                                    chat_html = chat_html.replace('{{fullname}}', value.from_fullname);
+                                    chat_html = chat_html.replace('{{message_text}}', value.message_text);
+                                    chat_html = chat_html.replace('{{message_date_time}}', value.message_timestamp);
+                                    chat_html = chat_html.replace('{{profile_picture}}', value.from_profile_picture);
+                                    output_data += chat_html;
                                 });
                             }
                         }
-                        else if (response.status == 'error')
+                        else if (response['status'] == 'error')
                         {
-                            console.log(response.message);
-                            alert(response.message);
+                            console.log(response['message']);
+                            alert(response['message']);
                         }
                     }
                     return output_data;
@@ -204,19 +210,81 @@ if (isset($_GET['username']))
             });
         }
 
+        function send_new_chat(to_username, message_text, chat_html)
+        {
+            var chat_url = '<?php echo base_url('messages/send_message_ajax'); ?>';
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: chat_url,
+                data: {'to_username': to_username, 'message_text': message_text},
+                success: function (response) {
+                    if (response != null)
+                    {
+                        if (response['status'] == 'success')
+                        {
+                            console.log(response['message']);
+                            chat_html = chat_html.replace('{{username}}', '<?php echo $this->session->userdata["user_username"]; ?>');
+                            chat_html = chat_html.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
+                            chat_html = chat_html.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
+                            chat_html = chat_html.replace('{{message_text}}', message_text);
+                            chat_html = chat_html.replace('{{message_date_time}}', '<?php echo get_message_timestamp_readable(time()); ?>');
+                            chat_html = chat_html.replace('{{profile_picture}}', '<?php echo $my_profile['user_profile_picture']; ?>');
+                            $('.new-chats-here').append(chat_html);
+                            // Scroll to bottom of the chat
+                            scroll_to_bottom('.chat-log');
+                            // Emptying the text box
+                            $('.my-message').val('');
+                        }
+                        else if (response['status'] == 'error')
+                        {
+                            console.log(response['message']);
+                            alert(response['message']);
+                        }
+                    }
+                }
+            });
+        }
+
         $(document).ready(function () {
             var new_chat_html = '<div class="h-liked-item"><div class="h-liked-item-i"><div class="h-liked-item-l"><a href="<?php echo base_url('user'); ?>/{{username}}"><img alt="{{fullname}}" src="{{profile_picture}}"></a></div><div class="h-liked-item-c"><div class="h-liked-item-cb"><div class="h-liked-item-p"><div class="h-liked-price"><a href="<?php echo base_url('user'); ?>/{{username}}">{{fullname}}</a></div><div class="h-liked-title">{{message_text}}</div><div class="h-liked-foot"><span class="h-liked-comment">{{message_date_time}}</span></div></div></div><div class="clear"></div></div></div><div class="clear"></div></div>'
+
+            // Scroll to bottom of the chat
+            scroll_to_bottom('.chat-log');
 
             // Now running AJAX frequecntly to see if any new chats came in
             setInterval(function () {
                 var other_username_enc = '<?php echo getEncryptedString($_GET['username']); ?>';
-                var latest_timestamp = '';
+                var latest_timestamp = '1459276200';
                 var result = get_unread_chats(other_username_enc, latest_timestamp, new_chat_html);
                 if (result != null)
                 {
                     $('.new-chats-here').append(result);
+                    // Scroll to bottom of the chat
+                    scroll_to_bottom('.chat-log');
                 }
             }, 1500);
+
+            // Send message here
+            $('.send-msg-btn').click(function (e) {
+                e.preventDefault();
+                var message_text = $('.my-message').val();
+                if (message_text != '')
+                {
+                    var to_username = $('.my-message').attr('data-to-username');
+                    send_new_chat(to_username, message_text, new_chat_html);
+                }
+            });
+
+            // While typing, if press enter submit chat
+            $('.my-message').keypress(function (e) {
+                var key = e.which;
+                if (key == 13)  // the enter key code
+                {
+                    $('.send-msg-btn').click();
+                    return false;
+                }
+            });
         });
     </script>
     <?php

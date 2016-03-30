@@ -51,22 +51,23 @@ class Messages extends CI_Controller
     {
         if ($username)
         {
-            $model = new Common_model();
             $custom_model = new Custom_model();
+            $redis_functions = new Redisfunctions();
             $data = array();
             $user_id = $this->session->userdata["user_id"];
-            $user_to_records = $model->fetchSelectedData('user_id, user_fullname', TABLE_USERS, array('user_username' => $username));
-            $records = $custom_model->get_chat_history($user_id, $user_to_records[0]['user_id']);
+            $user_to_records = $redis_functions->get_user_profile_data($username);
+            $records = $custom_model->get_chat_history($user_id, $user_to_records['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
 
 //            Marking previous messages as read
             if (!empty($records))
             {
                 $latest_message_id = $records[count($records) - 1]['message_id'];
-                $this->mark_previous_messages_as_read($latest_message_id, $user_id, $user_to_records[0]['user_id']);
+                $this->mark_previous_messages_as_read($latest_message_id, $user_id, $user_to_records['user_id']);
             }
 
-            $to_user_fullname = stripslashes($user_to_records[0]['user_fullname']);
+            $to_user_fullname = stripslashes($user_to_records['user_fullname']);
+            $to_user_username= stripslashes($user_to_records['user_username']);
             $page_title = $to_user_fullname;
             $input_arr = array(
                 base_url() => 'Home',
@@ -80,6 +81,7 @@ class Messages extends CI_Controller
             $data["records"] = $records;
             $data["page_title"] = $page_title;
             $data["to_user_fullname"] = $to_user_fullname;
+            $data["to_user_username"] = $to_user_username;
             $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
             $data['display_thread'] = TRUE;
             $this->template->write_view("content", "pages/messages/list", $data);
@@ -102,25 +104,35 @@ class Messages extends CI_Controller
         return $model->updateData(TABLE_MESSAGES, array('message_read' => '1'), $where_cond_arr);
     }
 
-    public function sendMessageAjax()
+    public function send_message_ajax()
     {
         $json_data = array('status' => 'error', 'message' => 'An error occurred');
         if (isset($this->session->userdata["user_id"]) && $this->input->post())
         {
             $user_id = $this->session->userdata["user_id"];
             $model = new Common_model();
+            $redis_functions = new Redisfunctions();
             $arr = $this->input->post();
 
-            $data_array = array(
-                "message_user_from" => $user_id,
-                "message_user_to" => getEncryptedString($arr["message_to_enc"], 'decode'),
-                'message_timestamp' => time(),
-                "message_text" => addslashes($arr["message_content"]),
-                "message_ipaddress" => USER_IP,
-                "message_useragent" => USER_AGENT
-            );
-            $model->insertData(TABLE_MESSAGES, $data_array);
-            $json_data = array('status' => 'success', 'message' => 'Message sent');
+            $other_username = getEncryptedString($arr["to_username"], 'decode');
+            $other_user_records = $redis_functions->get_user_profile_data($other_username);
+            if (!empty($other_user_records) && !empty($arr["message_text"]))
+            {
+                $data_array = array(
+                    "message_user_from" => $user_id,
+                    "message_user_to" => $other_user_records['user_id'],
+                    'message_timestamp' => time(),
+                    "message_text" => addslashes($arr["message_text"]),
+                    "message_ipaddress" => USER_IP,
+                    "message_useragent" => USER_AGENT
+                );
+                $model->insertData(TABLE_MESSAGES, $data_array);
+                $json_data = array('status' => 'success', 'message' => 'Message sent');
+            }
+            else
+            {
+                $json_data = array('status' => 'error', 'message' => 'Not a valid action');
+            }
         }
 
         $json_data = json_encode($json_data);
@@ -134,14 +146,14 @@ class Messages extends CI_Controller
         if (isset($this->session->userdata["user_id"]))
         {
             $custom_model = new Custom_model();
-            $model = new Common_model();
+            $redis_functions = new Redisfunctions();
 
             $user_id = $this->session->userdata["user_id"];
             $other_username = getEncryptedString($other_username_enc, 'decode');
-            $other_user_records = $model->fetchSelectedData('user_id', TABLE_USERS, array('user_username' => $other_username));
+            $other_user_records = $redis_functions->get_user_profile_data($other_username);
             if (!empty($other_user_records))
             {
-                $other_user_id = $other_user_records[0]['user_id'];
+                $other_user_id = $other_user_records['user_id'];
                 $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_deleted = "0" AND m1.message_timestamp >= ' . $latest_timestamp;
                 $chat_records = $custom_model->get_chat_history($user_id, $other_user_id, $fields = NULL, $where_str);
 
