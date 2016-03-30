@@ -175,21 +175,6 @@ class Custom_model extends CI_Model
         return $output;
     }
 
-    public function getLatestChatsAjax($fields, $user_id, $other_user_id, $last_timestamp)
-    {
-        $whereCondStr = '(message_user_to = ' . $user_id . ' OR message_user_to = ' . $other_user_id . ' OR message_user_from = ' . $user_id . ' OR message_user_from = ' . $other_user_id . ') AND message_timestamp >= ' . $last_timestamp;
-
-//        Fetching latest messages
-        $sql = 'SELECT ' . $fields . ' FROM ' . TABLE_MESSAGES . ' WHERE ' . $whereCondStr . ' ORDER BY message_id';
-        $records = $this->db->query($sql)->result_array();
-
-//        Updating them as read messages
-        $update_sql = 'UPDATE ' . TABLE_MESSAGES . ' SET message_read = "1" WHERE message_user_to = ' . $user_id . ' AND message_timestamp >= ' . $last_timestamp;
-        $this->db->query($update_sql)->result_array();
-
-        return $records;
-    }
-
     public function get_min_and_max_cost_amounts()
     {
         $sql = 'select min(cost_amount) as min_cost, max(cost_amount) as max_cost from post_costs';
@@ -209,13 +194,19 @@ class Custom_model extends CI_Model
         return $records;
     }
 
-    public function get_chat_history($user_from, $user_to, $fields = NULL, $limit = '20')
+    public function get_chat_history($user_from, $user_to, $fields = NULL, $where_str = NULL, $limit = '1000')
     {
         if ($fields == NULL)
         {
             $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
         }
-        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE m1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0" ORDER BY message_id DESC LIMIT ' . $limit;
+
+        if ($where_str == NULL)
+        {
+            $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0"';
+        }
+
+        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE ' . $where_str . ' ORDER BY message_id DESC LIMIT ' . $limit;
         $records = $this->db->query($sql)->result_array();
         if (!empty($records))
         {

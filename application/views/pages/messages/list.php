@@ -160,3 +160,60 @@
         </div>
     </div>
 </div>
+
+<!--If in a particular thread, then only execute this part of the code-->
+<?php
+if (isset($_GET['username']))
+{
+    ?>
+    <script>
+        function get_unread_chats(other_username_enc, latest_timestamp, chat_html)
+        {
+            var chat_url = '<?php echo base_url('messages/getLatestChatsAjax'); ?>/' + other_username_enc + '/' + latest_timestamp;
+            $.ajax({
+                dataType: 'json',
+                url: chat_url,
+                async: false,
+                success: function (response) {
+                    var output_data = null;
+                    if (response != null)
+                    {
+                        if (response.status == 'success')
+                        {
+                            var chat_records = response.data;
+                            if (chat_records != null)
+                            {
+                                $.each(chat_records, function (key, value) {
+                                    var tmp_html = chat_html.replace('{{username}}', value.from_username)
+                                    tmp_html = chat_html.replace('{{fullname}}', value.from_fullname)
+                                    tmp_html = chat_html.replace('{{message_text}}', value.message_text)
+                                    tmp_html = chat_html.replace('{{message_date_time}}', value.message_timestamp)
+                                    tmp_html = chat_html.replace('{{profile_picture}}', value.from_profile_picture)
+                                    output_data += tmp_html;
+                                });
+                            }
+                        }
+                    }
+                    return output_data;
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            var new_chat_html = '<div class="h-liked-item"><div class="h-liked-item-i"><div class="h-liked-item-l"><a href="<?php echo base_url('user'); ?>/{{username}}"><img alt="{{fullname}}" src="{{profile_picture}}"></a></div><div class="h-liked-item-c"><div class="h-liked-item-cb"><div class="h-liked-item-p"><div class="h-liked-price"><a href="<?php echo base_url('user'); ?>/{{username}}">{{fullname}}</a></div><div class="h-liked-title">{{message_text}}</div><div class="h-liked-foot"><span class="h-liked-comment">{{message_date_time}}</span></div></div></div><div class="clear"></div></div></div><div class="clear"></div></div>'
+
+            // Now running AJAX frequecntly to see if any new chats came in
+            setInterval(function () {
+                var other_username_enc = '<?php echo getEncryptedString($_GET['username']); ?>';
+                var latest_timestamp = '';
+                var result = get_unread_chats(other_username_enc, latest_timestamp, new_chat_html);
+                if (result != null)
+                {
+                    $('.new-chats-here').append(result);
+                }
+            }, 1500);
+        });
+    </script>
+    <?php
+}
+?>

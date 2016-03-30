@@ -128,23 +128,38 @@ class Messages extends CI_Controller
         return $json_data;
     }
 
-    public function getLatestChatsAjax($other_user_id_enc, $last_timestamp)
+    public function getLatestChatsAjax($other_username_enc, $latest_timestamp)
     {
         $json_data = array('status' => 'error', 'message' => 'An error occurred');
-        if (isset($this->session->userdata["user_id"]) && $other_user_id_enc && $last_timestamp)
+        if (isset($this->session->userdata["user_id"]))
         {
-            $user_id = $this->session->userdata["user_id"];
-            $other_user_id = getEncryptedString($other_user_id_enc, 'decode');
             $custom_model = new Custom_model();
-            $fields = 'message_id, message_text, message_read, message_user_from, message_user_to, message_timestamp';
-            $chat_records = $custom_model->getLatestChatsAjax($fields, $user_id, $other_user_id, $last_timestamp);
+            $model = new Common_model();
 
-            $str = NULL;
-            if (!empty($chat_records))
+            $user_id = $user_from = $this->session->userdata["user_id"];
+            $other_username = getEncryptedString($other_username_enc, 'decode');
+            $to_user_records = $model->fetchSelectedData('user_id', TABLE_USERS, array('user_username' => $other_username));
+            if (!empty($to_user_records))
             {
-                $str = json_encode($chat_records);
+                $user_to = $to_user_records[0]['user_id'];
+                $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0" AND m1.message_timestamp >= ' . $latest_timestamp;
+                $chat_records = $custom_model->get_chat_history($user_from, $user_to, $fields = NULL, $where_str);
+
+                $str = NULL;
+                if (!empty($chat_records))
+                {
+                    $str = $chat_records;
+
+                    //            Marking previous messages as read
+                    $latest_message_id = $chat_records[count($chat_records) - 1]['message_id'];
+                    $this->mark_previous_messages_as_read($latest_message_id, $user_id, $user_to);
+                }
+                $json_data = array('status' => 'success', 'message' => 'Success', 'data' => $str);
             }
-            $json_data = array('status' => 'success', 'message' => $str);
+            else
+            {
+                $json_data = array('status' => 'error', 'message' => 'Not a valid choice');
+            }
         }
 
         $json_data = json_encode($json_data);
