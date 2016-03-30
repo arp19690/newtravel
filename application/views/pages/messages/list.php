@@ -33,10 +33,11 @@
                         <div class="h-liked-lbl">All Chats</div>
                         <div class="h-liked-row">
                             <?php
-                            if (!empty($records))
+                            if (!empty($chat_list_records))
                             {
-                                foreach ($records as $key => $value)
+                                foreach ($chat_list_records as $key => $value)
                                 {
+                                    $username = $value['to_username'];
                                     $user_fullname = stripslashes($value['to_fullname']);
                                     $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
                                     $user_profile_picture = base_url(getImage($value['to_profile_picture']));
@@ -44,8 +45,8 @@
                                     ?>
                                     <!-- // -->
                                     <div class="h-liked-item" style="padding-bottom:10px; margin-bottom: 10px;">
-                                        <div class="h-liked-item-i">
-                                            <a href="#">
+                                        <div class="h-liked-item-i <?php echo isset($_GET['username']) == TRUE ? ($_GET['username'] == $username ? 'active' : NULL) : NULL; ?>">
+                                            <a href="<?php echo base_url('my-chats?username=' . $username); ?>">
                                                 <div class="h-liked-item-l" style="width:70px;">
                                                     <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
                                                 </div>
@@ -82,18 +83,22 @@
                     </div>
                 </div>
 
-                <div class="chat-r-div">
-                    <div class="h-liked">
-                        <div class="h-liked-lbl">You May Also Like</div>
-                        <div class="h-liked-row">
-                            <div class="h-liked-item">
-                                <div class="h-liked-item-i">
+                <?php
+                if (isset($display_thread) && $display_thread == TRUE)
+                {
+                    ?>
+                    <div class="chat-r-div">
+                        <div class="h-liked">
+                            <div class="h-liked-lbl"><?php echo $page_title; ?></div>
+                            <div class="h-liked-row">
+                                <div class="h-liked-item">
+                                    <div class="h-liked-item-i">
 
-                                    <div class="chat-log">
+                                        <div class="chat-log">
 
-                                        <!-- // -->
-                                        <div class="h-liked-item">
-                                            <div class="h-liked-item-i">
+                                            <!-- // -->
+                                            <div class="h-liked-item">
+                                                <div class="h-liked-item-i">
                                                     <div class="h-liked-item-l">
                                                         <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
                                                     </div>
@@ -109,22 +114,25 @@
                                                         </div>
                                                         <div class="clear"></div>
                                                     </div>
+                                                </div>
+                                                <div class="clear"></div>	
                                             </div>
-                                            <div class="clear"></div>	
-                                        </div>
-                                        <!-- \\ -->
-                                        
-                                    </div>
+                                            <!-- \\ -->
 
-                                    <div class="input-message-div">
-                                        <textarea name="message" placeholder="Type your message here..."></textarea>
-                                        <a href="#" class="btn btn-orange send-msg-btn">Send</a>
+                                        </div>
+
+                                        <div class="input-message-div">
+                                            <textarea name="message" placeholder="Type your message here..."></textarea>
+                                            <a href="#" class="btn btn-orange send-msg-btn">Send</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </div>
