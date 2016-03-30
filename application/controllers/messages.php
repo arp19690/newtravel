@@ -59,7 +59,8 @@ class Messages extends CI_Controller
             $records = $custom_model->get_chat_history($user_id, $user_to_records[0]['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
 
-            $page_title = stripslashes($user_to_records[0]['user_fullname']);
+            $to_user_fullname=stripslashes($user_to_records[0]['user_fullname']);
+            $page_title = $to_user_fullname;
             $input_arr = array(
                 base_url() => 'Home',
                 base_url('my-chats') => 'My Chats',
@@ -71,6 +72,7 @@ class Messages extends CI_Controller
             $data["chat_list_records"] = $chat_list_records;
             $data["records"] = $records;
             $data["page_title"] = $page_title;
+            $data["to_user_fullname"] = $to_user_fullname;
             $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
             $data['display_thread'] = TRUE;
             $this->template->write_view("content", "pages/messages/list", $data);

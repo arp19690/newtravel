@@ -91,7 +91,7 @@
                     ?>
                     <div class="chat-r-div">
                         <div class="h-liked">
-                            <div class="h-liked-lbl"><?php echo $page_title; ?></div>
+                            <div class="h-liked-lbl"><?php echo $to_user_fullname; ?></div>
                             <div class="h-liked-row">
                                 <div class="h-liked-item">
                                     <div class="h-liked-item-i">
@@ -132,7 +132,16 @@
                                                     <?php
                                                 }
                                             }
+                                            else
+                                            {
+                                                ?>
+                                                <div class="h-liked-item">
+                                                    <p class="text-center">No chat records found between You &amp; <?php echo $to_user_fullname; ?></p>
+                                                </div>
+                                                <?php
+                                            }
                                             ?>
+                                            <span class="new-chats-here"></span>
                                         </div>
 
                                         <div class="input-message-div">
