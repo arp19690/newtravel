@@ -25,9 +25,17 @@ class Messages extends CI_Controller
         $custom_model = new Custom_model();
         $records = $custom_model->get_inbox_list($user_id);
 
+        $page_title = 'My Chats';
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["breadcrumbs"] = $breadcrumbs;
         $data["records"] = $records;
-        $data["page_title"] = "Messages";
-        $data['meta_title'] = 'Messages | ' . SITE_NAME;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
         $data["active_class"] = "inbox";
         $this->template->write_view("content", "pages/messages/list", $data);
         $this->template->render();

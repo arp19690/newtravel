@@ -1,75 +1,75 @@
-<div class="container-fluid">
-    <div class="row">
-        <h1><?php echo $page_title; ?></h1>
-        <div class='text-right'>
-            <?php
-//                $inbox_active_class = "btn-default";
-//                $outbox_active_class = "btn-default";
-//                if ($active_class == "inbox")
-//                {
-//                    $inbox_active_class = "btn-info";
-//                }
-//                if ($active_class == "outbox")
-//                {
-//                    $outbox_active_class = "btn-info";
-//                }
-            ?>
-<!--            <a href='<?php echo base_url('messages/inbox'); ?>' class='btn <?php echo $inbox_active_class; ?>'><span class='glyphicon glyphicon glyphicon-save'></span>&nbsp;Inbox</a>
-            <a href='<?php echo base_url('messages/outbox'); ?>' class='btn <?php echo $outbox_active_class; ?>'><span class='glyphicon glyphicon glyphicon-open'></span>&nbsp;Outbox</a>-->
-        </div>
-        <br/>
+<!-- main-cont -->
+<div class="main-cont">
+    <div class="body-wrapper" itemscope itemtype="http://schema.org/Event">
+        <div class="wrapper-padding">
+            <div class="page-head">
+                <div class="page-title" itemprop="name"><?php echo $page_title; ?></div>
+                <?php
+                if (isset($breadcrumbs) && !empty($breadcrumbs))
+                {
+                    echo $breadcrumbs;
+                }
+                ?>
+                <div class="clear"></div>
+            </div>
 
-        <div class="col-lg-12 col-xs-12 container">
-            <div class="col-lg-7 col-xs-12 margin-bottom-20 ">
-                <div class="messages-list">
-                    <ul class="col-lg-12 col-xs-12">
-                        <?php
-                            if (!empty($record))
+            <div class="sp-page">
+                <div style="display: inline-block;max-width: 35%;width: 100%;">
+                    <div class="h-liked">
+                        <div class="h-liked-row">
+                            <?php
+                            if (!empty($records))
                             {
-                                foreach ($record as $key => $value)
+                                foreach ($records as $key => $value)
                                 {
-//                                    prd($record);
-                                    $logged_in_user_id = $this->session->userdata["user_id"];
-                                    $user_facebook_id = $value["user_facebook_id"];
-                                    $full_name = $value["first_name"] . " " . $value["last_name"];
-                                    $time_ago = getTimeAgo(strtotime($value["message_timestamp"]));
-                                    $message_content = substr($value["message_content"], 0, 50);
-
-                                    $facebookUserImage = getUserImage($value["user_id"],$user_facebook_id, NULL, 56, 56);
-
-                                    $unread_class = "";
-                                    if ($value["message_from"] != $logged_in_user_id && $value["message_read"] == 0)
-                                    {
-                                        $unread_class = "unread";
-                                    }
+                                    $user_fullname = stripslashes($value['to_fullname']);
+                                    $message_text = getNWordsFromString(stripslashes($value['message_text']),20);
+                                    $user_profile_picture = base_url(getImage($value['to_profile_picture']));
+                                    $message_date_time = date('d M Y H:i:s', $value['message_timestamp']);
                                     ?>
-                                    <li class="">
-                                        <a href="<?php echo base_url('messages/thread/' . $value["username"]); ?>" class='<?php echo $unread_class; ?>'>
-                                            <div class="col-lg-2 col-xs-4">
-                                                <img src="<?php echo $facebookUserImage; ?>" alt="<?php echo $full_name; ?>" class="img-rounded lazy message-list-img" data-original="<?php echo $facebookUserImage; ?>"/>
-                                            </div>
-                                            <div class="col-lg-10 col-xs-8 message-info row">
-                                                <p class="user-name"><?php echo $full_name; ?></p>
-                                                <p class="text-right time"><?php echo $time_ago; ?></p>
-
-                                                <p class="message-text"><?php echo $message_content; ?></p>
-                                            </div>
-                                        </a>
-                                    </li>
+                                    <!-- // -->
+                                    <div class="h-liked-item">
+                                        <div class="h-liked-item-i">
+                                            <a href="#">
+                                                <div class="h-liked-item-l">
+                                                    <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
+                                                </div>
+                                                <div class="h-liked-item-c">
+                                                    <div class="h-liked-item-cb">
+                                                        <div class="h-liked-item-p">
+                                                            <div class="h-liked-price"><?php echo $user_fullname ?></div>
+                                                            <div class="h-liked-title"><?php echo $message_text ?></div>
+                                                            <div class="h-liked-foot">
+                                                                <span class="h-liked-comment"><?php echo $message_date_time;?></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="clear"></div>	
+                                    </div>
+                                    <!-- \\ -->
                                     <?php
                                 }
                             }
                             else
                             {
-                                echo '<p class="margin-bottom-20 margin-top-20">No results found</p>';
+                                ?>
+                                <div class="h-liked-item">
+                                    <p class="text-center">No chats found</p>
+                                </div>
+                                <?php
                             }
-                        ?>
-                    </ul>
+                            ?>
+                        </div>			
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-5 text-right pull-right">
-                
+                <div style="display: inline-block;max-width: 74%">
+
+                </div>
             </div>
         </div>
     </div>

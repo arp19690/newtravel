@@ -197,7 +197,7 @@ class Custom_model extends CI_Model
         return $records[0];
     }
 
-    public function get_inbox_list($user_id, $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, to_user.user_fullname as to_fullname')
+    public function get_inbox_list($user_id, $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, to_user.user_fullname as to_fullname, to_user.user_profile_picture as to_profile_picture')
     {
         $sql = 'SELECT  ' . $fields . ' FROM `messages` as m1 
                     left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.message_id > m1.message_id
