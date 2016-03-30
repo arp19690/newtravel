@@ -169,7 +169,7 @@ if (isset($_GET['username']))
     <script>
         function get_unread_chats(other_username_enc, latest_timestamp, chat_html)
         {
-            var chat_url = '<?php echo base_url('messages/getLatestChatsAjax'); ?>/' + other_username_enc + '/' + latest_timestamp;
+            var chat_url = '<?php echo base_url('messages/get_unread_chats_ajax'); ?>/' + other_username_enc + '/' + latest_timestamp;
             $.ajax({
                 dataType: 'json',
                 url: chat_url,
@@ -192,6 +192,11 @@ if (isset($_GET['username']))
                                     output_data += tmp_html;
                                 });
                             }
+                        }
+                        else if (response.status == 'error')
+                        {
+                            console.log(response.message);
+                            alert(response.message);
                         }
                     }
                     return output_data;

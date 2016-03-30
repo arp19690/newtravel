@@ -128,7 +128,7 @@ class Messages extends CI_Controller
         return $json_data;
     }
 
-    public function getLatestChatsAjax($other_username_enc, $latest_timestamp)
+    public function get_unread_chats_ajax($other_username_enc, $latest_timestamp)
     {
         $json_data = array('status' => 'error', 'message' => 'An error occurred');
         if (isset($this->session->userdata["user_id"]))
@@ -136,14 +136,14 @@ class Messages extends CI_Controller
             $custom_model = new Custom_model();
             $model = new Common_model();
 
-            $user_id = $user_from = $this->session->userdata["user_id"];
+            $user_id = $this->session->userdata["user_id"];
             $other_username = getEncryptedString($other_username_enc, 'decode');
-            $to_user_records = $model->fetchSelectedData('user_id', TABLE_USERS, array('user_username' => $other_username));
-            if (!empty($to_user_records))
+            $other_user_records = $model->fetchSelectedData('user_id', TABLE_USERS, array('user_username' => $other_username));
+            if (!empty($other_user_records))
             {
-                $user_to = $to_user_records[0]['user_id'];
-                $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0" AND m1.message_timestamp >= ' . $latest_timestamp;
-                $chat_records = $custom_model->get_chat_history($user_from, $user_to, $fields = NULL, $where_str);
+                $other_user_id = $other_user_records[0]['user_id'];
+                $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_deleted = "0" AND m1.message_timestamp >= ' . $latest_timestamp;
+                $chat_records = $custom_model->get_chat_history($user_id, $other_user_id, $fields = NULL, $where_str);
 
                 $str = NULL;
                 if (!empty($chat_records))
@@ -152,7 +152,7 @@ class Messages extends CI_Controller
 
                     //            Marking previous messages as read
                     $latest_message_id = $chat_records[count($chat_records) - 1]['message_id'];
-                    $this->mark_previous_messages_as_read($latest_message_id, $user_id, $user_to);
+                    $this->mark_previous_messages_as_read($latest_message_id, $user_id, $other_user_id);
                 }
                 $json_data = array('status' => 'success', 'message' => 'Success', 'data' => $str);
             }
