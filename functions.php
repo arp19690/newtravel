@@ -1,5 +1,10 @@
 <?php
 
+function get_message_timestamp_readable($timestamp)
+{
+    return date('d M Y G:i a', $timestamp);
+}
+
 function get_post_mysql_sort_by($order_by_string)
 {
     $order_by = 'p.post_title ASC';

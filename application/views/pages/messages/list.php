@@ -10,6 +10,8 @@
     .h-liked-comment,.h-liked-item-l{margin: 0;}
     .h-liked-item-i{padding: 5px;}
     .h-liked-item-i.active{background-color: #eae8e8;}
+    .h-liked-price a{color: #ff7200;text-decoration: none;}
+    .h-liked-comment{font-size: 10px;}
 </style>
 
 <!-- main-cont -->
@@ -41,7 +43,7 @@
                                     $user_fullname = stripslashes($value['to_fullname']);
                                     $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
                                     $user_profile_picture = base_url(getImage($value['to_profile_picture']));
-                                    $message_date_time = date('d M Y H:i:s', $value['message_timestamp']);
+                                    $message_date_time = get_message_timestamp_readable($value['message_timestamp']);
                                     ?>
                                     <!-- // -->
                                     <div class="h-liked-item" style="padding-bottom:10px; margin-bottom: 10px;">
@@ -93,32 +95,44 @@
                             <div class="h-liked-row">
                                 <div class="h-liked-item">
                                     <div class="h-liked-item-i">
-
                                         <div class="chat-log">
-
-                                            <!-- // -->
-                                            <div class="h-liked-item">
-                                                <div class="h-liked-item-i">
-                                                    <div class="h-liked-item-l">
-                                                        <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
-                                                    </div>
-                                                    <div class="h-liked-item-c">
-                                                        <div class="h-liked-item-cb">
-                                                            <div class="h-liked-item-p">
-                                                                <div class="h-liked-price"><?php echo $user_fullname ?></div>
-                                                                <div class="h-liked-title"><?php echo $message_text ?></div>
-                                                                <div class="h-liked-foot">
-                                                                    <span class="h-liked-comment"><?php echo $message_date_time; ?></span>
+                                            <?php
+                                            if (!empty($records))
+                                            {
+                                                foreach ($records as $key => $value)
+                                                {
+                                                    $from_fullname = stripslashes($value['from_fullname']);
+                                                    $from_profile_picture = base_url(getImage($value['from_profile_picture']));
+                                                    $from_username = stripslashes($value['from_username']);
+                                                    $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
+                                                    $message_date_time = get_message_timestamp_readable($value['message_timestamp']);
+                                                    ?>
+                                                    <!-- // -->
+                                                    <div class="h-liked-item">
+                                                        <div class="h-liked-item-i">
+                                                            <div class="h-liked-item-l">
+                                                                <a href="<?php echo base_url('user/' . $from_username); ?>"><img alt="<?php echo $from_fullname ?>" src="<?php echo $user_profile_picture; ?>"></a>
+                                                            </div>
+                                                            <div class="h-liked-item-c">
+                                                                <div class="h-liked-item-cb">
+                                                                    <div class="h-liked-item-p">
+                                                                        <div class="h-liked-price"><a href="<?php echo base_url('user/' . $from_username); ?>"><?php echo $from_fullname ?></a></div>
+                                                                        <div class="h-liked-title"><?php echo $message_text ?></div>
+                                                                        <div class="h-liked-foot">
+                                                                            <span class="h-liked-comment"><?php echo $message_date_time; ?></span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+                                                                <div class="clear"></div>
                                                             </div>
                                                         </div>
-                                                        <div class="clear"></div>
+                                                        <div class="clear"></div>	
                                                     </div>
-                                                </div>
-                                                <div class="clear"></div>	
-                                            </div>
-                                            <!-- \\ -->
-
+                                                    <!-- \\ -->
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
                                         </div>
 
                                         <div class="input-message-div">
