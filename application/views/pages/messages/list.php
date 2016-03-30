@@ -1,3 +1,9 @@
+<style>
+    .chat-l-div,.chat-r-div{max-height: 400px;height: calc(100%);display: inline-block;width: 100%;overflow: auto;}
+    .chat-l-div{max-width: 35%;}
+    .chat-r-div{max-width: 74%;}
+</style>
+
 <!-- main-cont -->
 <div class="main-cont">
     <div class="body-wrapper" itemscope itemtype="http://schema.org/Event">
@@ -14,7 +20,7 @@
             </div>
 
             <div class="sp-page">
-                <div style="display: inline-block;max-width: 35%;width: 100%;">
+                <div class="chat-l-div">
                     <div class="h-liked">
                         <div class="h-liked-row">
                             <?php
@@ -23,7 +29,7 @@
                                 foreach ($records as $key => $value)
                                 {
                                     $user_fullname = stripslashes($value['to_fullname']);
-                                    $message_text = getNWordsFromString(stripslashes($value['message_text']),20);
+                                    $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
                                     $user_profile_picture = base_url(getImage($value['to_profile_picture']));
                                     $message_date_time = date('d M Y H:i:s', $value['message_timestamp']);
                                     ?>
@@ -40,7 +46,7 @@
                                                             <div class="h-liked-price"><?php echo $user_fullname ?></div>
                                                             <div class="h-liked-title"><?php echo $message_text ?></div>
                                                             <div class="h-liked-foot">
-                                                                <span class="h-liked-comment"><?php echo $message_date_time;?></span>
+                                                                <span class="h-liked-comment"><?php echo $message_date_time; ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -67,8 +73,7 @@
                     </div>
                 </div>
 
-                <div style="display: inline-block;max-width: 74%">
-
+                <div class="chat-r-div">
                 </div>
             </div>
         </div>
