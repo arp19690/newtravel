@@ -22,10 +22,10 @@ class Messages extends CI_Controller
     {
         $data = array();
         $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
         $custom_model = new Custom_model();
-        $data["record"] = $custom_model->getInboxList($user_id);
+        $records = $custom_model->get_inbox_list($user_id);
 
+        $data["records"] = $records;
         $data["page_title"] = "Messages";
         $data['meta_title'] = 'Messages | ' . SITE_NAME;
         $data["active_class"] = "inbox";

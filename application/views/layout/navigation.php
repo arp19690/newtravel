@@ -21,7 +21,7 @@ $path = $controller . "/" . $action;
                 ?>
                 <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                     <ul>
-                        <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                        <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
                         <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                         <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                         <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
@@ -76,7 +76,7 @@ $path = $controller . "/" . $action;
                     ?>
                     <li><a href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                         <ul>
-                            <li><a href="<?php echo base_url('chats'); ?>">My Chats</a></li>
+                            <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                             <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
