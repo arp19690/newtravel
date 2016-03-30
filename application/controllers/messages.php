@@ -59,7 +59,7 @@ class Messages extends CI_Controller
             $records = $custom_model->get_chat_history($user_id, $user_to_records[0]['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
 
-            $to_user_fullname=stripslashes($user_to_records[0]['user_fullname']);
+            $to_user_fullname = stripslashes($user_to_records[0]['user_fullname']);
             $page_title = $to_user_fullname;
             $input_arr = array(
                 base_url() => 'Home',
