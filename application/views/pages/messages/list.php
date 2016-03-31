@@ -151,6 +151,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
                                         <div class="input-message-div">
                                             <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo getEncryptedString($to_user_username); ?>" class="my-message"></textarea>
+                                            <input type="hidden" name="latest_timestamp" class="latest_timestamp" value="<?php echo time(); ?>"/>
                                             <a href="#" class="btn btn-orange send-msg-btn">Send</a>
                                         </div>
                                     </div>
@@ -197,6 +198,9 @@ if (isset($_GET['username']))
                                     chat_html = chat_html.replace('{{profile_picture}}', value.from_profile_picture);
                                     output_data += chat_html;
                                 });
+
+                                // Now updating latest timestamp
+                                $('input.latest_timestamp').val(response['latest_timestamp']);
                             }
                         }
                         else if (response['status'] == 'error')
@@ -235,6 +239,8 @@ if (isset($_GET['username']))
                             scroll_to_bottom('.chat-log');
                             // Emptying the text box
                             $('.my-message').val('');
+                            // Updating the latest timestamp
+                            $('input.latest_timestamp').val('<?php echo time(); ?>');
                         }
                         else if (response['status'] == 'error')
                         {
@@ -255,7 +261,7 @@ if (isset($_GET['username']))
             // Now running AJAX frequecntly to see if any new chats came in
             setInterval(function () {
                 var other_username_enc = '<?php echo getEncryptedString($_GET['username']); ?>';
-                var latest_timestamp = '1459276200';
+                var latest_timestamp = $('input.latest_timestamp').val();
                 var result = get_unread_chats(other_username_enc, latest_timestamp, new_chat_html);
                 if (result != null)
                 {

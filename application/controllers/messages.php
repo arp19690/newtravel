@@ -164,9 +164,10 @@ class Messages extends CI_Controller
 
                     //            Marking previous messages as read
                     $latest_message_id = $chat_records[count($chat_records) - 1]['message_id'];
+                    $latest_message_timestamp = $chat_records[count($chat_records) - 1]['message_timestamp'];
                     $this->mark_previous_messages_as_read($latest_message_id, $user_id, $other_user_id);
                 }
-                $json_data = array('status' => 'success', 'message' => 'Success', 'data' => $str);
+                $json_data = array('status' => 'success', 'message' => 'Success', 'data' => $str, 'latest_timestamp' => $latest_message_timestamp);
             }
             else
             {
