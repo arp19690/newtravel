@@ -188,7 +188,7 @@ class Custom_model extends CI_Model
                     left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.message_id > m1.message_id
                     left join users as from_user on from_user.user_id = m1.`message_user_from`
                     left join users as to_user on to_user.user_id = m1.`message_user_to`
-                    WHERE m1.`message_user_from` = ' . $user_id . ' and m1.`message_user_to` != ' . $user_id . ' AND m2.message_id is NULL AND m1.message_deleted = "0"
+                    WHERE (m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"
                     GROUP BY m1.`message_user_to`';
         $records = $this->db->query($sql)->result_array();
         return $records;
