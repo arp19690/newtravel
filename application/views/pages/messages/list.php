@@ -53,7 +53,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                     <!-- // -->
                                     <div class="h-liked-item" style="padding-bottom:10px; margin-bottom: 10px;">
                                         <div class="h-liked-item-i <?php echo isset($_GET['username']) == TRUE ? ($_GET['username'] == $username ? 'active' : NULL) : NULL; ?>">
-                                            <a href="<?php echo base_url('my-chats?username=' . $username); ?>">
+                                            <a href="<?php echo base_url('my-chats?username=' . $username); ?>" class="conversation-link">
                                                 <div class="h-liked-item-l" style="width:70px;">
                                                     <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
                                                 </div>
@@ -170,6 +170,11 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        window.location.href = $('.conversation-link:first').attr('href');
+    });
+</script>
 
 <!--If in a particular thread, then only execute this part of the code-->
 <?php
