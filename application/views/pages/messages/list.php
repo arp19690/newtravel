@@ -152,7 +152,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                         </div>
 
                                         <div class="input-message-div">
-                                            <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo getEncryptedString($to_user_username); ?>" class="my-message"></textarea>
+                                            <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo getEncryptedString($to_user_username); ?>" class="my-message" onfocus="remove_notification_from_title();"></textarea>
                                             <input type="hidden" name="latest_timestamp" class="latest_timestamp" value="<?php echo $latest_timestamp; ?>"/>
                                             <a href="#" class="btn btn-orange send-msg-btn">Send</a>
                                         </div>
@@ -161,13 +161,15 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                             </div>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
+                    <audio id="chatAudio"><source src="<?php echo base_url('assets/front/notify.wav'); ?>" type="audio/wav"></audio>
+                        <?php
+                    }
+                    ?>
             </div>
         </div>
     </div>
 </div>
+
 
 <!--If in a particular thread, then only execute this part of the code-->
 <?php
@@ -214,6 +216,15 @@ if (isset($_GET['username']))
                                 if (response['latest_timestamp'] != null)
                                 {
                                     $('input.latest_timestamp').val(response['latest_timestamp']);
+                                }
+
+                                // to ring a notification when the textarea is not selected
+                                if (!$(".my-message").is(":focus"))
+                                {
+                                    $('#chatAudio')[0].play();
+                                    var title_original_text = $('title').html();
+                                    $('title').html("(" + chat_records.length + ") " + title_original_text);
+                                    //                        document.title = "(1) " + title_original_text;
                                 }
                             }
                         }
@@ -264,6 +275,15 @@ if (isset($_GET['username']))
                     }
                 }
             });
+        }
+
+        // to clear the notification text i.e (1) from the title tag
+        function remove_notification_from_title()
+        {
+            var title_text = $('title').html();
+            title_text = title_text.replace(/\d+/, "");
+            title_text = title_text.replace("() ", "");
+            $('title').html(title_text);
         }
 
         $(document).ready(function () {
