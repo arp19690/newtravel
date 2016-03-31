@@ -258,7 +258,7 @@ if (isset($_GET['username']))
                             tmp_htm = tmp_htm.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
                             tmp_htm = tmp_htm.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
                             tmp_htm = tmp_htm.replace('{{message_text}}', message_text);
-                            tmp_htm = tmp_htm.replace('{{message_date_time}}', '<?php echo get_message_timestamp_readable(time()); ?>');
+                            tmp_htm = tmp_htm.replace('{{message_date_time}}', 'Just now');
                             tmp_htm = tmp_htm.replace('{{profile_picture}}', '<?php echo $my_profile['user_profile_picture']; ?>');
                             $('.new-chats-here').append(tmp_htm);
                             // Scroll to bottom of the chat
