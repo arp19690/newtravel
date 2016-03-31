@@ -102,6 +102,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                     <div class="h-liked-item-i">
                                         <div class="chat-log">
                                             <?php
+                                            $latest_timestamp = time();
                                             if (!empty($records))
                                             {
                                                 foreach ($records as $key => $value)
@@ -111,6 +112,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                                     $from_username = stripslashes($value['from_username']);
                                                     $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
                                                     $message_date_time = get_message_timestamp_readable($value['message_timestamp']);
+                                                    $latest_timestamp = $value['message_timestamp'];
                                                     ?>
                                                     <!-- // -->
                                                     <div class="h-liked-item">
@@ -151,7 +153,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
                                         <div class="input-message-div">
                                             <textarea name="message" placeholder="Type your message here..." data-to-username="<?php echo getEncryptedString($to_user_username); ?>" class="my-message"></textarea>
-                                            <input type="hidden" name="latest_timestamp" class="latest_timestamp" value="<?php echo time(); ?>"/>
+                                            <input type="hidden" name="latest_timestamp" class="latest_timestamp" value="<?php echo $latest_timestamp; ?>"/>
                                             <a href="#" class="btn btn-orange send-msg-btn">Send</a>
                                         </div>
                                     </div>
