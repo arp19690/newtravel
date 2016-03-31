@@ -200,7 +200,10 @@ if (isset($_GET['username']))
                                 });
 
                                 // Now updating latest timestamp
-                                $('input.latest_timestamp').val(response['latest_timestamp']);
+                                if (response['latest_timestamp'] != null)
+                                {
+                                    $('input.latest_timestamp').val(response['latest_timestamp']);
+                                }
                             }
                         }
                         else if (response['status'] == 'error')
