@@ -1,3 +1,8 @@
+function scroll_to_bottom(wrapper)
+{
+    $(wrapper).scrollTop($(wrapper)[0].scrollHeight);
+}
+
 function getClientLocalTime()
 {
     var currentTime = new Date()
