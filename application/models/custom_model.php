@@ -182,12 +182,22 @@ class Custom_model extends CI_Model
         return $records[0];
     }
 
-    public function get_inbox_list($user_id, $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, to_user.user_fullname as to_fullname, to_user.user_profile_picture as to_profile_picture, to_user.user_username as to_username')
+    public function get_inbox_list($user_id, $fields = NULL)
     {
-        $sql = 'SELECT  ' . $fields . ' FROM `messages` as m1 
+        if ($fields == NULL)
+        {
+            $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, 
+                            if(to_user.user_id = ' . $user_id . ', from_user.user_username, to_user.user_username) as from_username,
+                            if(to_user.user_id = ' . $user_id . ', from_user.user_fullname, to_user.user_fullname) as from_fullname,
+                            if(to_user.user_id = ' . $user_id . ', from_user.user_profile_picture, to_user.user_profile_picture) as from_profile_picture';
+        }
+
+        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 
                     left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.`message_user_to` = m1.`message_user_to` and m2.message_id > m1.message_id
                     left join users as to_user on to_user.user_id = m1.`message_user_to`
-                    WHERE (m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"';
+                    left join users as from_user on from_user.user_id = m1.`message_user_from`
+                    WHERE (m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"
+                    group by from_username order by m1.message_id desc';
         $records = $this->db->query($sql)->result_array();
         return $records;
     }
