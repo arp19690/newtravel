@@ -177,29 +177,38 @@ if (isset($_GET['username']))
     <script type="text/javascript">
         function get_unread_chats(other_username_enc, latest_timestamp, chat_html)
         {
+            var output_data = null;
             var chat_url = '<?php echo base_url('messages/get_unread_chats_ajax'); ?>/' + other_username_enc + '/' + latest_timestamp;
             $.ajax({
                 dataType: 'json',
                 url: chat_url,
                 async: false,
                 success: function (response) {
-                    var output_data = null;
                     if (response != null)
                     {
                         if (response['status'] == 'success')
                         {
-                            var chat_records = response.data;
+                            var chat_records = response['data'];
                             if (chat_records != null)
                             {
+                                output_data = '';
                                 $.each(chat_records, function (key, value) {
-                                    chat_html = chat_html.replace('{{username}}', value.from_username);
-                                    chat_html = chat_html.replace('{{fullname}}', value.from_fullname);
-                                    chat_html = chat_html.replace('{{fullname}}', value.from_fullname);
-                                    chat_html = chat_html.replace('{{message_text}}', value.message_text);
-                                    chat_html = chat_html.replace('{{message_date_time}}', value.message_timestamp);
-                                    chat_html = chat_html.replace('{{profile_picture}}', value.from_profile_picture);
+                                    chat_html = chat_html.replace('{{username}}', value['from_username']);
+                                    chat_html = chat_html.replace('{{fullname}}', value['from_fullname']);
+                                    chat_html = chat_html.replace('{{fullname}}', value['from_fullname']);
+                                    chat_html = chat_html.replace('{{message_text}}', value['message_text']);
+                                    chat_html = chat_html.replace('{{message_date_time}}', value['message_time_readable']);
+                                    chat_html = chat_html.replace('{{profile_picture}}', value['from_profile_picture']);
                                     output_data += chat_html;
                                 });
+
+                                // Append the new chat now
+                                if (output_data != null)
+                                {
+                                    $('.new-chats-here').append(output_data);
+                                    // Scroll to bottom of the chat
+                                    scroll_to_bottom('.chat-log');
+                                }
 
                                 // Now updating latest timestamp
                                 if (response['latest_timestamp'] != null)
@@ -214,7 +223,7 @@ if (isset($_GET['username']))
                             alert(response['message']);
                         }
                     }
-                    return output_data;
+                    return False;
                 }
             });
         }
@@ -267,13 +276,7 @@ if (isset($_GET['username']))
             setInterval(function () {
                 var other_username_enc = '<?php echo getEncryptedString($_GET['username']); ?>';
                 var latest_timestamp = $('input.latest_timestamp').val();
-                var result = get_unread_chats(other_username_enc, latest_timestamp, new_chat_html);
-                if (result != null)
-                {
-                    $('.new-chats-here').append(result);
-                    // Scroll to bottom of the chat
-                    scroll_to_bottom('.chat-log');
-                }
+                get_unread_chats(other_username_enc, latest_timestamp, new_chat_html);
             }, 1500);
 
             // Send message here

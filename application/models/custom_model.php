@@ -198,7 +198,7 @@ class Custom_model extends CI_Model
     {
         if ($fields == NULL)
         {
-            $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
+            $fields = 'm1.message_id, m1.message_text, m1.message_timestamp, FROM_UNIXTIME(m1.message_timestamp, "%d %b %Y %h:%i %p") as message_time_readable, from_user.user_fullname as from_fullname, to_user.user_fullname, from_user.user_profile_picture as from_profile_picture, from_user.user_username as from_username';
         }
 
         if ($where_str == NULL)
