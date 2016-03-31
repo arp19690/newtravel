@@ -44,10 +44,10 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                             {
                                 foreach ($chat_list_records as $key => $value)
                                 {
-                                    $username = $value['to_username'];
-                                    $user_fullname = stripslashes($value['to_fullname']);
+                                    $username = $value['from_username'];
+                                    $user_fullname = stripslashes($value['from_fullname']);
                                     $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
-                                    $user_profile_picture = base_url(getImage($value['to_profile_picture']));
+                                    $user_profile_picture = base_url(getImage($value['from_profile_picture']));
                                     $message_date_time = get_message_timestamp_readable($value['message_timestamp']);
                                     ?>
                                     <!-- // -->
