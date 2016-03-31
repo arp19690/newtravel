@@ -195,13 +195,14 @@ if (isset($_GET['username']))
                             {
                                 output_data = '';
                                 $.each(chat_records, function (key, value) {
-                                    chat_html = chat_html.replace('{{username}}', value['from_username']);
-                                    chat_html = chat_html.replace('{{fullname}}', value['from_fullname']);
-                                    chat_html = chat_html.replace('{{fullname}}', value['from_fullname']);
-                                    chat_html = chat_html.replace('{{message_text}}', value['message_text']);
-                                    chat_html = chat_html.replace('{{message_date_time}}', value['message_time_readable']);
-                                    chat_html = chat_html.replace('{{profile_picture}}', js_base_url + value['from_profile_picture']);
-                                    output_data += chat_html;
+                                    var tmp_htm = chat_html;
+                                    tmp_htm = tmp_htm.replace('{{username}}', value['from_username']);
+                                    tmp_htm = tmp_htm.replace('{{fullname}}', value['from_fullname']);
+                                    tmp_htm = tmp_htm.replace('{{fullname}}', value['from_fullname']);
+                                    tmp_htm = tmp_htm.replace('{{message_text}}', value['message_text']);
+                                    tmp_htm = tmp_htm.replace('{{message_date_time}}', value['message_time_readable']);
+                                    tmp_htm = tmp_htm.replace('{{profile_picture}}', js_base_url + value['from_profile_picture']);
+                                    output_data += tmp_htm;
                                 });
 
                                 // Append the new chat now
@@ -252,14 +253,14 @@ if (isset($_GET['username']))
                     {
                         if (response['status'] == 'success')
                         {
-                            console.log(response['message']);
-                            chat_html = chat_html.replace('{{username}}', '<?php echo $this->session->userdata["user_username"]; ?>');
-                            chat_html = chat_html.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
-                            chat_html = chat_html.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
-                            chat_html = chat_html.replace('{{message_text}}', message_text);
-                            chat_html = chat_html.replace('{{message_date_time}}', '<?php echo get_message_timestamp_readable(time()); ?>');
-                            chat_html = chat_html.replace('{{profile_picture}}', '<?php echo $my_profile['user_profile_picture']; ?>');
-                            $('.new-chats-here').append(chat_html);
+                            var tmp_htm = chat_html;
+                            tmp_htm = tmp_htm.replace('{{username}}', '<?php echo $this->session->userdata["user_username"]; ?>');
+                            tmp_htm = tmp_htm.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
+                            tmp_htm = tmp_htm.replace('{{fullname}}', '<?php echo $my_profile['user_fullname']; ?>');
+                            tmp_htm = tmp_htm.replace('{{message_text}}', message_text);
+                            tmp_htm = tmp_htm.replace('{{message_date_time}}', '<?php echo get_message_timestamp_readable(time()); ?>');
+                            tmp_htm = tmp_htm.replace('{{profile_picture}}', '<?php echo $my_profile['user_profile_picture']; ?>');
+                            $('.new-chats-here').append(tmp_htm);
                             // Scroll to bottom of the chat
                             scroll_to_bottom('.chat-log');
                             // Emptying the text box
