@@ -170,12 +170,6 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        window.location.href = $('.conversation-link:first').attr('href');
-    });
-</script>
-
 <!--If in a particular thread, then only execute this part of the code-->
 <?php
 if (isset($_GET['username']))
@@ -325,6 +319,16 @@ if (isset($_GET['username']))
                     return false;
                 }
             });
+        });
+    </script>
+    <?php
+}
+else
+{
+    ?>
+    <script>
+        $(document).ready(function () {
+            window.location.href = $('.conversation-link:first').attr('href');
         });
     </script>
     <?php
