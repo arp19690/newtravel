@@ -200,7 +200,7 @@ if (isset($_GET['username']))
                                     chat_html = chat_html.replace('{{fullname}}', value['from_fullname']);
                                     chat_html = chat_html.replace('{{message_text}}', value['message_text']);
                                     chat_html = chat_html.replace('{{message_date_time}}', value['message_time_readable']);
-                                    chat_html = chat_html.replace('{{profile_picture}}', value['from_profile_picture']);
+                                    chat_html = chat_html.replace('{{profile_picture}}', js_base_url + value['from_profile_picture']);
                                     output_data += chat_html;
                                 });
 
