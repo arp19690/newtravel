@@ -192,12 +192,12 @@ class Custom_model extends CI_Model
                             if(to_user.user_id = ' . $user_id . ', from_user.user_profile_picture, to_user.user_profile_picture) as from_profile_picture';
         }
 
-        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 
+        $sql = 'SELECT * FROM (SELECT ' . $fields . ' FROM `messages` as m1 
                     left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.`message_user_to` = m1.`message_user_to` and m2.message_id > m1.message_id
                     left join users as to_user on to_user.user_id = m1.`message_user_to`
                     left join users as from_user on from_user.user_id = m1.`message_user_from`
                     WHERE (m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"
-                    group by from_username order by m1.message_id desc';
+                    ORDER BY m1.message_id desc) as x GROUP BY x.from_username';
         $records = $this->db->query($sql)->result_array();
         return $records;
     }
