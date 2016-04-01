@@ -34,6 +34,7 @@ class Messages extends CI_Controller
         $user_id = $this->session->userdata["user_id"];
         $custom_model = new Custom_model();
         $records = $custom_model->get_inbox_list($user_id);
+        $unread_chats_username = $custom_model->get_unread_chats_username($user_id);
 
         $page_title = 'My Chats';
         $input_arr = array(
@@ -44,6 +45,7 @@ class Messages extends CI_Controller
 
         $data["breadcrumbs"] = $breadcrumbs;
         $data["chat_list_records"] = $records;
+        $data["unread_chats_username"] = $unread_chats_username;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
         $this->template->write_view("content", "pages/messages/list", $data);
@@ -61,6 +63,7 @@ class Messages extends CI_Controller
             $user_to_records = $redis_functions->get_user_profile_data($username);
             $records = $custom_model->get_chat_history($user_id, $user_to_records['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
+            $unread_chats_username = $custom_model->get_unread_chats_username($user_id);
 
 //            Marking previous messages as read
             if (!empty($records))
@@ -81,6 +84,7 @@ class Messages extends CI_Controller
 
             $data["breadcrumbs"] = $breadcrumbs;
             $data["chat_list_records"] = $chat_list_records;
+            $data["unread_chats_username"] = $unread_chats_username;
             $data["records"] = $records;
             $data["page_title"] = $page_title;
             $data["to_user_fullname"] = $to_user_fullname;

@@ -17,6 +17,8 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
     .h-liked-item-i.active, .chat-l-div .h-liked-item-i:hover{background-color: #eae8e8;}
     .h-liked-price a{color: #ff7200;text-decoration: none;}
     .h-liked-comment{font-size: 10px;}
+    .unread{background-color: #ff7200 !important;}
+    .unread .h-liked-price, .unread .h-liked-comment{color:#FFFFFF;}
 </style>
 
 <!-- main-cont -->
@@ -49,10 +51,17 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                     $message_text = getNWordsFromString(stripslashes($value['message_text']), 20);
                                     $user_profile_picture = base_url(getImage($value['from_profile_picture']));
                                     $message_date_time = get_message_timestamp_readable($value['message_timestamp']);
+
+                                    $active_class = isset($_GET['username']) == TRUE ? ($_GET['username'] == $username ? 'active' : NULL) : NULL;
+                                    $unread_class = '';
+                                    if (in_array($username, $unread_chats_username) && @$_GET['username'] != $username)
+                                    {
+                                        $unread_class = 'unread';
+                                    }
                                     ?>
                                     <!-- // -->
                                     <div class="h-liked-item" style="padding-bottom:10px; margin-bottom: 10px;">
-                                        <div class="h-liked-item-i <?php echo isset($_GET['username']) == TRUE ? ($_GET['username'] == $username ? 'active' : NULL) : NULL; ?>">
+                                        <div class="h-liked-item-i <?php echo $active_class . ' ' . $unread_class; ?>">
                                             <a href="<?php echo base_url('my-chats?username=' . $username); ?>" class="conversation-link">
                                                 <div class="h-liked-item-l" style="width:70px;">
                                                     <img alt="<?php echo $user_fullname ?>" src="<?php echo $user_profile_picture; ?>">
