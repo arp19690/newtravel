@@ -24,7 +24,17 @@ class Messages extends CI_Controller
         }
         else
         {
-            $this->inbox();
+            $custom_model = new Custom_model();
+            $user_id = $this->session->userdata["user_id"];
+            $records = $custom_model->get_inbox_list($user_id);
+            if (!empty($records))
+            {
+                redirect(base_url('my-chats?username=' . $records[0]['from_username']));
+            }
+            else
+            {
+                $this->inbox();
+            }
         }
     }
 
