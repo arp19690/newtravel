@@ -1,10 +1,9 @@
 <?php
-$custom_model = new Custom_model();
 $redis_functions = new Redisfunctions();
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 $path = $controller . "/" . $action;
-$unread_chats_count = count($custom_model->get_unread_chats_username($this->session->userdata['user_id']));
+$unread_chats_count = count($redis_functions->get_unread_chats_username($this->session->userdata['user_username']));
 ?>
 <!-- // mobile menu // -->
 <div class="mobile-menu">

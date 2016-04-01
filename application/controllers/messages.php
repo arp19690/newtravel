@@ -33,8 +33,9 @@ class Messages extends CI_Controller
         $data = array();
         $user_id = $this->session->userdata["user_id"];
         $custom_model = new Custom_model();
+        $redis_functions = new Redisfunctions();
         $records = $custom_model->get_inbox_list($user_id);
-        $unread_chats_username = $custom_model->get_unread_chats_username($user_id);
+        $unread_chats_username = $redis_functions->get_unread_chats_username($this->session->userdata["user_username"]);
 
         $page_title = 'My Chats';
         $input_arr = array(
@@ -63,7 +64,10 @@ class Messages extends CI_Controller
             $user_to_records = $redis_functions->get_user_profile_data($username);
             $records = $custom_model->get_chat_history($user_id, $user_to_records['user_id']);
             $chat_list_records = $custom_model->get_inbox_list($user_id);
-            $unread_chats_username = $custom_model->get_unread_chats_username($user_id);
+
+//            Setting and getting unread chats username to redis 
+            $redis_functions->set_unread_chats_username($this->session->userdata["user_username"]);
+            $unread_chats_username = $redis_functions->get_unread_chats_username($this->session->userdata["user_username"]);
 
 //            Marking previous messages as read
             if (!empty($records))
