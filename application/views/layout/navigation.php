@@ -1,8 +1,10 @@
 <?php
+$custom_model = new Custom_model();
 $redis_functions = new Redisfunctions();
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 $path = $controller . "/" . $action;
+$unread_chats_count = count($custom_model->get_unread_chats_username($this->session->userdata['user_id']));
 ?>
 <!-- // mobile menu // -->
 <div class="mobile-menu">
@@ -21,7 +23,7 @@ $path = $controller . "/" . $action;
                 ?>
                 <li><a class="has-child" href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                     <ul>
-                        <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
+                        <li><a href="<?php echo base_url('my-chats'); ?>">My Chats <?php echo $unread_chats_count > 0 ? '(' . $unread_chats_count . ')' : ''; ?></a></li>
                         <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                         <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                         <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
@@ -76,7 +78,7 @@ $path = $controller . "/" . $action;
                     ?>
                     <li><a href="javascript:void(0)"><?php echo stripslashes($this->session->userdata['user_fullname']); ?></a>
                         <ul>
-                            <li><a href="<?php echo base_url('my-chats'); ?>">My Chats</a></li>
+                            <li><a href="<?php echo base_url('my-chats'); ?>">My Chats <?php echo $unread_chats_count > 0 ? '(' . $unread_chats_count . ')' : ''; ?></a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
                             <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
