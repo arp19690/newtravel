@@ -17,6 +17,16 @@
             <div class="contacts-page">
                 <div class="contacts-colls">
                     <div class="contacts-colls-l">
+                        <?php
+                        if (empty($record['user_facebook_id']))
+                        {
+                            ?>
+                            <div class="clear" style="margin-bottom:20px;">
+                                <a href="<?php echo base_url('facebook-connect'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Connect with Facebook</a>    
+                            </div>
+                            <?php
+                        }
+                        ?>
                         <div class="clear">
                             <img src="<?php echo getImage($record['user_profile_picture']); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
                         </div>

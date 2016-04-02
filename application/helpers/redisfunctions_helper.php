@@ -17,6 +17,7 @@ class Redisfunctions
     public function auto_set_redis_keys()
     {
         $this->set_featured_trips();
+        $this->set_latest_trips();
         $this->set_site_settings();
         $this->set_activity_master();
         $this->set_static_page_content();
@@ -268,6 +269,29 @@ class Redisfunctions
         {
             $this->ci->redis->hDel($hash_name, $key_name);
         }
+    }
+
+    public function set_unread_chats_username($username)
+    {
+        $custom_model = new Custom_model();
+        $user_profile_data = $this->get_user_profile_data($username);
+
+        $records = $custom_model->get_unread_chats_username($user_profile_data['user_id']);
+        $this->ci->redis->hSet('unread_chats_username', $username, json_encode($records));
+        return $records;
+    }
+
+    public function get_unread_chats_username($username)
+    {
+        if ($this->ci->redis->hExists('unread_chats_username', $username) == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->hGet('unread_chats_username', $username));
+        }
+        else
+        {
+            $output = $this->set_unread_chats_username($username);
+        }
+        return $output;
     }
 
 }

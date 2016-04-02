@@ -827,19 +827,22 @@ function getTimeAgo($time)
     }
 }
 
-function getFacebookUserImageSource($facebook_id, $type = NULL, $width = NULL, $height = NULL)
+function getFacebookUserImageSource($facebook_id, $type = NULL, $width = USER_IMG_WIDTH, $height = USER_IMG_HEIGHT)
 {
-    $src = "https://graph.facebook.com/$facebook_id/picture?type=large";
+    $src = "https://graph.facebook.com/v2.5/$facebook_id/picture?width=" . $width;
 
     if ($type != NULL)
-        $src = "https://graph.facebook.com/$facebook_id/picture?type=$type";
-
-    if ($width != NULL)
     {
-        $src = "https://graph.facebook.com/$facebook_id/picture?width=$width";
-        if ($height != NULL)
-            $src = "https://graph.facebook.com/$facebook_id/picture?width=$width&height=$height";
+        $src = "https://graph.facebook.com/v2.5/$facebook_id/picture?type=$type";
     }
+    else
+    {
+        if ($height != NULL)
+        {
+            $src .= "&height=$height";
+        }
+    }
+
     return $src;
 }
 

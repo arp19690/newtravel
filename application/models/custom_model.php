@@ -223,4 +223,20 @@ class Custom_model extends CI_Model
         return $records;
     }
 
+    public function get_unread_chats_username($me_user_id)
+    {
+        $output = array();
+        $sql = 'select distinct user_username as from_username from `messages` left join `users` on user_id = `message_user_from` where `message_user_to` = ' . $me_user_id . ' and `message_read` = "0"';
+        $records = $this->db->query($sql)->result_array();
+        if (!empty($records))
+        {
+            foreach ($records as $value)
+            {
+                $output[] = $value['from_username'];
+            }
+        }
+
+        return $output;
+    }
+
 }

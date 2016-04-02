@@ -49,6 +49,7 @@ $route['company/(:any)'] = 'staticpage/index/$1';
 $route['contact-us'] = 'staticpage/contact';
 $route['facebook-login'] = 'index/login_with_facebook';
 $route['facebook-auth'] = 'index/facebookAuth';
+$route['facebook-connect'] = 'index/facebookConnect';
 $route['login'] = 'index/login';
 $route['logout'] = 'index/logout';
 $route['register'] = 'index/register';

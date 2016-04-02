@@ -14,7 +14,7 @@ class SocialLib
         $this->ci->load->model('Common_model');
     }
 
-    public function getFacebookLoginUrl($appId = FACEBOOK_APP_ID, $secretId = FACEBOOK_SECRET_ID, $redirect_uri = FACEBOOK_CALLBACK_URL)
+    public function getFacebookLoginUrl($redirect_uri = FACEBOOK_CALLBACK_URL, $appId = FACEBOOK_APP_ID, $secretId = FACEBOOK_SECRET_ID)
     {
         require_once APPPATH . "../assets/front/social/facebook/autoload.php";
 

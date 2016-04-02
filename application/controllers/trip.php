@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
 class Trip extends CI_Controller
 {
 
@@ -625,7 +628,7 @@ class Trip extends CI_Controller
             'ps_ipaddress' => USER_IP,
             'ps_useragent' => USER_AGENT
         );
-        
+
         if ($model->is_exists('ps_id', TABLE_POST_SEARCHES, $data_array) == FALSE)
         {
             $model->insertData(TABLE_POST_SEARCHES, $data_array);

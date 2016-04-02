@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
 class Staticpage extends CI_Controller
 {
 
@@ -190,11 +193,6 @@ class Staticpage extends CI_Controller
         fwrite($file, $xml);
         fclose($file);
         die;
-    }
-
-    public function cronjob()
-    {
-        $this->updateSitemap();
     }
 
 }
