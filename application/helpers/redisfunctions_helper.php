@@ -17,6 +17,7 @@ class Redisfunctions
     public function auto_set_redis_keys()
     {
         $this->set_featured_trips();
+        $this->set_latest_trips();
         $this->set_site_settings();
         $this->set_activity_master();
         $this->set_static_page_content();
