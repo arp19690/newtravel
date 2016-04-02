@@ -37,7 +37,13 @@ class Payments extends CI_Controller
 
             if (!empty($post_details) && !empty($feature_plan_details))
             {
-                $form_str = '<form action="' . PAYPAL_FORM_URL . '" method="post" class="paypal-form">
+                $form_str = '<div style="width:100%;display:inline-block;text-align:center;margin-top:12%;font-family:sans-serif;">
+                                    <img src="' . IMAGES_PATH . '/loader.gif" alt="Loading..."/>
+                                    <h3 style="margin:10px 0;">Please wait while we redirect you to payment gateway.</h3>
+                                    <p style="margin:0;">Do not press back button or refresh the page.</p>
+                                    </div>';
+
+                $form_str .= '<form action="' . PAYPAL_FORM_URL . '" method="post" class="paypal-form">
                                 <input type="hidden" name="charset" value="utf-8">
                                 <input type="hidden" name="cmd" value="_cart">
                                 <input type="hidden" name="upload" value="1">
