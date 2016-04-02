@@ -49,8 +49,8 @@ class Payments extends CI_Controller
                                 <input type="hidden" name="upload" value="1">
                                 <input type="hidden" name="business" value="' . PAYPAL_MERCHANT_EMAIL . '">
                                 <input type="hidden" name="quantity_1" value="1">
-                                <input type="hidden" name="item_name_1" value="' . $post_url_key . '">
-                                <input type="hidden" name="item_number_1" value="' . $post_details['post_id'] . '">
+                                <input type="hidden" name="item_name_1" value="' . $post_details['post_title'] . '">
+                                <input type="hidden" name="item_number_1" value="' . $post_url_key . '">
                                 <input type="hidden" name="amount_1" value="' . round($feature_plan_details[0]['pfm_amount'], 2) . '">
                                 <input type="hidden" name="currency_code" value="' . strtoupper($feature_plan_details[0]['pfm_currency']) . '">
                                 <input type="hidden" name="email" value="' . $this->session->userdata["user_email"] . '">
