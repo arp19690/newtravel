@@ -54,6 +54,7 @@ class Payments extends CI_Controller
                                 <input type="hidden" name="amount_1" value="' . round($feature_plan_details[0]['pfm_amount'], 2) . '">
                                 <input type="hidden" name="currency_code" value="' . strtoupper($feature_plan_details[0]['pfm_currency']) . '">
                                 <input type="hidden" name="email" value="' . $this->session->userdata["user_email"] . '">
+                                <input type="hidden" name="rm" value="2">
                                 <input type="hidden" name="return" value="' . base_url('trip/paypal-success?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                                 <input type="hidden" name="cancel_return" value="' . base_url('trip/paypal-cancel?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                               </form>';
@@ -118,6 +119,75 @@ class Payments extends CI_Controller
                 else
                 {
                     $this->session->set_flashdata('error', 'No such records found');
+                    display_404_page();
+                }
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Invalid request');
+                display_404_page();
+            }
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Invalid request');
+            display_404_page();
+        }
+    }
+
+    public function paypal_success()
+    {
+        if ($this->input->get('post_url_key') && $this->input->get('plan_key') && $this->input->get('id') && $this->input->post())
+        {
+            if ($this->input->post('item_number1') == $this->input->get('post_url_key'))
+            {
+                $user_id = $this->session->userdata['user_id'];
+                if ($user_id == getEncryptedString($this->input->get('id'), 'decode'))
+                {
+                    $model = new Common_model();
+                    $redis_functions = new Redisfunctions();
+                    $post_url_key = $this->input->get('post_url_key');
+                    $featured_plan_key = $this->input->get('plan_key');
+
+                    $post_details = $redis_functions->get_trip_details($post_url_key);
+                    $feature_plan_details = $model->fetchSelectedData('pfm_id, pfm_amount, pfm_currency', TABLE_FEATURED_MASTER, array('pfm_key' => $featured_plan_key));
+
+                    if (!empty($post_details) && !empty($feature_plan_details))
+                    {
+                        if ($post_details['post_user_id'] == $user_id)
+                        {
+                            $paypal_data = $this->input->post();
+                            $data_array = array(
+                                'payment_user_id' => $user_id,
+                                'payment_pfm_id' => $feature_plan_details[0]['pfm_id'],
+                                'payment_post_id' => $post_details['post_id'],
+                                'payment_txn_id' => $paypal_data['txn_id'],
+                                'payment_amount' => $paypal_data['payment_gross'],
+                                'payment_payer_email' => $paypal_data['payer_email'],
+                                'payment_receiver_email' => $paypal_data['receiver_email'],
+                                'payment_status' => '1',
+                                'payment_json' => json_encode($paypal_data),
+                                'payment_created_on' => date('Y-m-d H:i:s')
+                            );
+                            $model->insertData(TABLE_PAYMENTS, $data_array);
+                            $this->session->set_flashdata('success', 'Payment successful');
+                            redirect(getTripUrl($post_url_key));
+                        }
+                        else
+                        {
+                            $this->session->set_flashdata('error', 'Unauthorized access');
+                            display_404_page();
+                        }
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata('error', 'No such records found');
+                        display_404_page();
+                    }
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Invalid request');
                     display_404_page();
                 }
             }
