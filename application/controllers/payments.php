@@ -33,7 +33,7 @@ class Payments extends CI_Controller
             $post_details = $redis_functions->get_trip_details($post_url_key);
             $feature_plan_details = $model->fetchSelectedData('pfm_amount, pfm_currency', TABLE_FEATURED_MASTER, array('pfm_key' => $featured_plan_key));
 
-            $user_id_enc = getEncryptedString($this->session->userdata["user_email"]);
+            $user_id_enc = getEncryptedString($this->session->userdata["user_id"]);
 
             if (!empty($post_details) && !empty($feature_plan_details))
             {
