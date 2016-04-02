@@ -150,14 +150,16 @@ class Payments extends CI_Controller
                     $featured_plan_key = $this->input->get('plan_key');
 
                     $post_details = $redis_functions->get_trip_details($post_url_key);
-                    $feature_plan_details = $model->fetchSelectedData('pfm_id, pfm_amount, pfm_currency', TABLE_FEATURED_MASTER, array('pfm_key' => $featured_plan_key));
+                    $feature_plan_details = $model->fetchSelectedData('*', TABLE_FEATURED_MASTER, array('pfm_key' => $featured_plan_key));
 
                     if (!empty($post_details) && !empty($feature_plan_details))
                     {
                         if ($post_details['post_user_id'] == $user_id)
                         {
                             $paypal_data = $this->input->post();
+                            $payment_reference_number = getUniquePaymentReferenceNumber(getEncryptedString($paypal_data['txn_id']));
                             $data_array = array(
+                                'payment_reference_number' => $payment_reference_number,
                                 'payment_user_id' => $user_id,
                                 'payment_pfm_id' => $feature_plan_details[0]['pfm_id'],
                                 'payment_post_id' => $post_details['post_id'],
@@ -169,8 +171,17 @@ class Payments extends CI_Controller
                                 'payment_json' => json_encode($paypal_data),
                                 'payment_created_on' => date('Y-m-d H:i:s')
                             );
-                            $model->insertData(TABLE_PAYMENTS, $data_array);
-                            $this->session->set_flashdata('success', 'Payment successful');
+                            $is_exists = $model->fetchSelectedData('payment_id', TABLE_PAYMENTS, array('payment_post_id' => $post_details['post_id'], 'payment_txn_id' => $paypal_data['txn_id']));
+                            if (empty($is_exists))
+                            {
+                                $model->insertData(TABLE_PAYMENTS, $data_array);
+                                $this->session->set_flashdata('success', 'Payment successful');
+                            }
+                            else
+                            {
+                                $this->session->set_flashdata('error', 'Transaction ID already exists');
+                                redirect(getTripUrl($post_url_key));
+                            }
 
                             // Adding post to featured table
                             $this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']);
@@ -178,7 +189,7 @@ class Payments extends CI_Controller
                             // Updating redis table here
                             $redis_functions->set_trip_details($post_url_key);
 
-                            $page_title = 'Payment success';
+                            $page_title = 'Payment confirmed';
                             $input_arr = array(
                                 base_url() => 'Home',
                                 '#' => $page_title,
@@ -187,6 +198,7 @@ class Payments extends CI_Controller
 
                             $data["post_details"] = $post_details;
                             $data["feature_plan_details"] = $feature_plan_details[0];
+                            $data["payment_reference_number"] = $payment_reference_number;
                             $data["breadcrumbs"] = $breadcrumbs;
                             $data["page_title"] = $page_title;
                             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');

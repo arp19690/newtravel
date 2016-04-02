@@ -29,20 +29,18 @@
                                     </div>
 
                                     <div class="complete-info">
-                                        <h2>Your Personal Information</h2>
-
                                         <div class="complete-txt">
                                             <h2>Payment Info</h2>
-                                            <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. Que porro quisqua. Sed ut perspiciatis unde omnis ste natus error sit voluptatem.</p>
-                                            <div class="complete-txt-link"><a href="#">Payment is made by Via Paypal.</a></div>
+                                            <p>You post <a href="<?php echo getTripUrl($post_details['post_url_key']); ?>"><?php echo stripslashes($post_details['post_title']); ?></a> has been added to our featured list until <?php echo date('d-M-Y g:i A', time() + ($feature_plan_details['pfm_hours'] * 60 * 60)); ?></p>
+                                            <p>Your payment reference number is <strong>#<?php echo $payment_reference_number; ?></strong></p>
                                         </div>
 
                                         <div class="complete-devider"></div>
 
                                         <div class="complete-txt final">
-                                            <h2>Booking Details</h2>
-                                            <p>Qoluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. Que porro quisqua. Sed ut perspiciatis unde omnis ste natus error.</p>
-                                            <div class="complete-txt-link"><a href="#">Your Hotel Info</a></div>
+                                            <h2>Share it with your friends</h2>
+                                            <p>Let your friends know about it. Spread out a word about your post on your Facebook wall.</p>
+                                            <div class="complete-txt-link"><a href="<?php echo getShareWithFacebook(getTripUrl($post_details['post_url_key'])); ?>" target="_blank">Click here to share</a></div>
                                         </div>
 
                                     </div>
