@@ -643,7 +643,7 @@ function getUniquePaymentReferenceNumber($reference_number = NULL)
     require_once APPPATH . '/models/common_model.php';
     $model = new Common_model();
 
-    $reference_number = substr($reference_number, 0, 10);
+    $reference_number = strtoupper(substr($reference_number, 0, 10));
     $is_exists = $model->is_exists('payment_id', TABLE_PAYMENTS, array('payment_reference_number' => $reference_number));
     if (!empty($is_exists))
     {
