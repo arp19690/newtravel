@@ -64,6 +64,7 @@ $route['my-trips/(:any)'] = 'trip/my_posts/$1';
 $route['trip/view/(:any)'] = 'trip/trip_details/$1';
 $route['trip/delete/(:any)'] = 'trip/delete_trip/$1';
 $route['trip/search/query'] = 'trip/search_query';
+$route['trip/get-featured'] = 'payments/payment_for_featured_post';
 
 $route['my-chats'] = 'messages/index';
 
