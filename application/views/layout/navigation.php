@@ -3,7 +3,11 @@ $redis_functions = new Redisfunctions();
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 $path = $controller . "/" . $action;
-$unread_chats_count = count($redis_functions->get_unread_chats_username($this->session->userdata['user_username']));
+$unread_chats_count = 0;
+if (isset($this->session->userdata['user_username']))
+{
+    $unread_chats_count = count($redis_functions->get_unread_chats_username($this->session->userdata['user_username']));
+}
 ?>
 <!-- // mobile menu // -->
 <div class="mobile-menu">
