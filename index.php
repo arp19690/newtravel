@@ -5,8 +5,8 @@
     else
         ob_start();
 
-    require_once 'functions.php';
     require_once 'constants.php';
+    require_once 'functions.php';
     require_once 'db-constants.php';
 
     /*
