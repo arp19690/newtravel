@@ -344,17 +344,46 @@ class Index extends CI_Controller
         if ($this->input->get('code'))
         {
             $this->load->library("SocialLib");
+            $model = new Common_model();
             $socialLib = new SocialLib();
             $facebook_user_obj = $socialLib->getFacebookUserObject();
             if ($facebook_user_obj['status'] == 'success')
             {
                 if (!empty($facebook_user_obj['data']))
                 {
-                    $facebook_id = $facebook_user_obj['data']['id'];
-                    $facebook_name = $facebook_user_obj['data']['name'];
-                    $facebook_email = $facebook_user_obj['data']['email'];
-                    $facebook_access_token = $facebook_user_obj['accessToken'];
-                    prd($facebook_user_obj);
+                    if (isset($facebook_user_obj['data']['email']))
+                    {
+                        $facebook_id = $facebook_user_obj['data']['id'];
+                        $facebook_name = $facebook_user_obj['data']['name'];
+                        $facebook_email = $facebook_user_obj['data']['email'];
+                        $facebook_access_token = $facebook_user_obj['accessToken'];
+
+                        $user_password = md5($facebook_id . time());
+                        $data_array = array(
+                            'user_fullname' => addslashes($facebook_name),
+                            'user_email' => $facebook_email,
+                            'user_facebook_id' => $facebook_id,
+                            'user_facebook_accesstoken' => $facebook_access_token,
+                            'user_facebook_array' => json_encode($facebook_user_obj),
+                            'user_created_on' => date('Y-m-d H:i:s'),
+                            'user_ipaddress' => USER_IP,
+                            'user_useragent' => USER_AGENT,
+                            'user_password' => $user_password,
+                            'user_username' => getUniqueUsernameFromEmail($facebook_email)
+                        );
+                        $model->insertData(TABLE_USERS, $data_array);
+                        $this->session->set_flashdata('success', 'Welcome aboard ' . $facebook_name);
+
+                        // loggin user in
+                        $this->load->library('Login_auth');
+                        $login_auth = new Login_auth();
+                        $login_auth->login($facebook_email, $user_password, base_url('my-account'), base_url('login'));
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata('error', 'Email required when logging in with Facebook');
+                        redirect(base_url('login'));
+                    }
                 }
             }
             else
