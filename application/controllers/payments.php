@@ -61,10 +61,17 @@ class Payments extends CI_Controller
 
                 $form_str .= '<script type="text/javascript" src="' . JS_PATH . '/jquery.1.7.1.js"></script>
                                         <script type="text/javascript">
-                                            $(document).ready(function () {
-                                                $(".paypal-form").submit();
-                                            });
-                                        </script>';
+                                        function submit_form()
+                                        {
+                                            $(".paypal-form").submit();
+                                        }
+                                        $(document).ready(function () {
+                                            submit_form();
+
+                                            // re-submitting form in 20 seconds
+                                            setInterval(function(){submit_form();}, 20000);
+                                        });
+                                    </script>';
 
                 echo $form_str;
             }
