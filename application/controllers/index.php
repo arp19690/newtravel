@@ -383,7 +383,7 @@ class Index extends CI_Controller
                                     'user_profile_picture' => $new_image_path
                                 );
                                 $model->insertData(TABLE_USERS, $data_array);
-                                $this->session->set_flashdata('success', 'Welcome aboard ' . $facebook_name);
+                                $this->session->set_flashdata('success', 'Welcome aboard, ' . $facebook_name);
                             }
                             else
                             {
