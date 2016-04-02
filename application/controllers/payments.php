@@ -172,6 +172,12 @@ class Payments extends CI_Controller
                             $model->insertData(TABLE_PAYMENTS, $data_array);
                             $this->session->set_flashdata('success', 'Payment successful');
 
+                            // Adding post to featured table
+                            $this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']);
+
+                            // Updating redis table here
+                            $redis_functions->set_trip_details($post_url_key);
+
                             $page_title = 'Payment success';
                             $input_arr = array(
                                 base_url() => 'Home',
@@ -216,6 +222,24 @@ class Payments extends CI_Controller
             $this->session->set_flashdata('error', 'Invalid request');
             display_404_page();
         }
+    }
+
+    public function add_post_to_featured($post_id, $pfm_id)
+    {
+        $model = new Common_model();
+        $featured_plan_details = $model->fetchSelectedData('pfm_hours', TABLE_FEATURED_MASTER, array('pfm_id' => $pfm_id));
+        $featured_hours = $featured_plan_details[0]['pfm_hours'];
+        $start_timestamp = time();
+        $end_timestamp = $start_timestamp + (($featured_hours) * 60 * 60);
+
+        $data_array = array(
+            'pf_post_id' => $post_id,
+            'pf_start_date' => date('Y-m-d H:i:s', $start_timestamp),
+            'pf_end_date' => date('Y-m-d H:i:s', $end_timestamp),
+            'pf_pfm_id' => $pfm_id,
+            'pf_created_on' => date('Y-m-d H:i:s')
+        );
+        return $model->insertData(TABLE_POST_FEATURED, $data_array);
     }
 
 }
