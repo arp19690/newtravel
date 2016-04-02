@@ -171,7 +171,21 @@ class Payments extends CI_Controller
                             );
                             $model->insertData(TABLE_PAYMENTS, $data_array);
                             $this->session->set_flashdata('success', 'Payment successful');
-                            redirect(getTripUrl($post_url_key));
+
+                            $page_title = 'Payment success';
+                            $input_arr = array(
+                                base_url() => 'Home',
+                                '#' => $page_title,
+                            );
+                            $breadcrumbs = get_breadcrumbs($input_arr);
+
+                            $data["post_details"] = $post_details;
+                            $data["feature_plan_details"] = $feature_plan_details[0];
+                            $data["breadcrumbs"] = $breadcrumbs;
+                            $data["page_title"] = $page_title;
+                            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+                            $this->template->write_view("content", "pages/payments/paypal-success", $data);
+                            $this->template->render();
                         }
                         else
                         {
