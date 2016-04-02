@@ -195,9 +195,4 @@ class Staticpage extends CI_Controller
         die;
     }
 
-    public function cronjob()
-    {
-        $this->updateSitemap();
-    }
-
 }
