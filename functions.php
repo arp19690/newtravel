@@ -638,7 +638,22 @@ function getFileExtension($file_name)
     return $extension;
 }
 
-function getShareWithFacebookLinkPopup($link)
+function getUniquePaymentReferenceNumber($reference_number = NULL)
+{
+    require_once APPPATH . '/models/common_model.php';
+    $model = new Common_model();
+
+    $reference_number = substr($reference_number, 0, 10);
+    $is_exists = $model->is_exists('payment_id', TABLE_PAYMENTS, array('payment_reference_number' => $reference_number));
+    if (!empty($is_exists))
+    {
+        $reference_number = getUniquePaymentReferenceNumber(rand(100, 99999) . '-' . $reference_number);
+    }
+
+    return $reference_number;
+}
+
+function getShareWithFacebookLinkPopup($link, $title)
 {
     $href = '<script>
             function fbs_click() 
@@ -647,7 +662,7 @@ function getShareWithFacebookLinkPopup($link)
             return false;
             }
             </script>
-            <a rel="nofollow" href="http://www.facebook.com/share.php?u=<;url>" onclick="return fbs_click()" target="_blank">' . $link . '</a>';
+            <a rel="nofollow" href="http://www.facebook.com/share.php?u=' . $link . '" onclick="return fbs_click()" target="_blank">' . stripslashes($title) . '</a>';
 
     return $href;
 }
