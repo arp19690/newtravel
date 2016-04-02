@@ -90,29 +90,40 @@ class Payments extends CI_Controller
 
                 if (!empty($post_details) && !empty($feature_plan_details))
                 {
-                    $data_array = array(
-                        'payc_user_id' => $user_id,
-                        'payc_post_url_key' => $post_url_key,
-                        'payc_featured_plan' => $featured_plan_key,
-                        'payc_ipaddress' => USER_IP,
-                        'payc_useragent' => USER_AGENT
-                    );
-                    $model->insertData(TABLE_PAYMENTS_CANCELED, $data_array);
-                    $this->session->set_flashdata('error', 'Unsuccessful payment attempt. Please try again.');
-                    redirect(getTripUrl($post_url_key));
+                    if ($post_details['post_user_id'] == $user_id)
+                    {
+                        $data_array = array(
+                            'payc_user_id' => $user_id,
+                            'payc_post_url_key' => $post_url_key,
+                            'payc_featured_plan' => $featured_plan_key,
+                            'payc_ipaddress' => USER_IP,
+                            'payc_useragent' => USER_AGENT
+                        );
+                        $model->insertData(TABLE_PAYMENTS_CANCELED, $data_array);
+                        $this->session->set_flashdata('error', 'Unsuccessful payment attempt. Please try again.');
+                        redirect(getTripUrl($post_url_key));
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata('error', 'Unauthorized access');
+                        display_404_page();
+                    }
                 }
                 else
                 {
+                    $this->session->set_flashdata('error', 'No such records found');
                     display_404_page();
                 }
             }
             else
             {
+                $this->session->set_flashdata('error', 'Invalid request');
                 display_404_page();
             }
         }
         else
         {
+            $this->session->set_flashdata('error', 'Invalid request');
             display_404_page();
         }
     }
