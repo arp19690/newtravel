@@ -363,6 +363,11 @@ class Index extends CI_Controller
                             $is_exists = $model->is_exists('user_password', TABLE_USERS, array('user_email' => $facebook_email, 'user_facebook_id' => $facebook_id));
                             if (empty($is_exists))
                             {
+                                // get user profile picture here
+                                $facebook_image_url = getFacebookUserImageSource($facebook_id, NULL, USER_IMG_WIDTH);
+                                $new_image_path = USER_IMG_PATH . '/' . getEncryptedString($facebook_id . time()) . '.jpg';
+                                copy($facebook_image_url, $new_image_path);
+
                                 $user_password = md5($facebook_id . time());
                                 $data_array = array(
                                     'user_fullname' => addslashes($facebook_name),
@@ -374,7 +379,8 @@ class Index extends CI_Controller
                                     'user_ipaddress' => USER_IP,
                                     'user_useragent' => USER_AGENT,
                                     'user_password' => $user_password,
-                                    'user_username' => getUniqueUsernameFromEmail($facebook_email)
+                                    'user_username' => getUniqueUsernameFromEmail($facebook_email),
+                                    'user_profile_picture' => $new_image_path
                                 );
                                 $model->insertData(TABLE_USERS, $data_array);
                                 $this->session->set_flashdata('success', 'Welcome aboard ' . $facebook_name);
