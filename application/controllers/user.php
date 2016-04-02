@@ -110,24 +110,6 @@ class User extends CI_Controller
         }
     }
 
-    public function myWall()
-    {
-        $data = array();
-        $model = new Common_model();
-        $user_id = $this->session->userdata["user_id"];
-
-        $record = $model->fetchSelectedData("*", TABLE_USERS, array("user_id" => $user_id));
-        $data["meta_title"] = ucwords($this->session->userdata["first_name"] . " " . $this->session->userdata["last_name"]) . " | " . $this->redis_functions->get_site_setting('SITE_NAME');
-        $user_bio = $record[0]["user_bio"];
-        if (!empty($user_bio))
-            $data["meta_description"] = getNWordsFromString($user_bio, 30);
-
-        $data["record"] = $record[0];
-
-        $this->template->write_view("content", "pages/user/my-wall", $data);
-        $this->template->render();
-    }
-
     public function viewProfile($username)
     {
         $data = array();
