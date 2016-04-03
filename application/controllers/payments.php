@@ -192,10 +192,15 @@ class Payments extends CI_Controller
                             }
 
                             // Adding post to featured table
-                            $this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']);
+                            if ($this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']) == FALSE)
+                            {
+                                $this->session->set_flashdata('error', 'Unauthorized access to post');
+                                redirect(getTripUrl($post_url_key));
+                            }
 
                             // Updating redis table here
                             $redis_functions->set_trip_details($post_url_key);
+                            $redis_functions->set_featured_trips();
 
                             $page_title = 'Payment confirmed';
                             $input_arr = array(
@@ -247,19 +252,31 @@ class Payments extends CI_Controller
     public function add_post_to_featured($post_id, $pfm_id)
     {
         $model = new Common_model();
-        $featured_plan_details = $model->fetchSelectedData('pfm_hours', TABLE_FEATURED_MASTER, array('pfm_id' => $pfm_id));
-        $featured_hours = $featured_plan_details[0]['pfm_hours'];
-        $start_timestamp = time();
-        $end_timestamp = $start_timestamp + (($featured_hours) * 60 * 60);
+        $user_id = $this->session->userdata['user_id'];
+        $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_id' => $post_id, 'post_user_id' => $user_id));
+        if (!empty($is_valid))
+        {
+            $featured_plan_details = $model->fetchSelectedData('pfm_hours', TABLE_FEATURED_MASTER, array('pfm_id' => $pfm_id));
+            $featured_hours = $featured_plan_details[0]['pfm_hours'];
+            $start_timestamp = time();
+            $end_timestamp = $start_timestamp + (($featured_hours) * 60 * 60);
 
-        $data_array = array(
-            'pf_post_id' => $post_id,
-            'pf_start_date' => date('Y-m-d H:i:s', $start_timestamp),
-            'pf_end_date' => date('Y-m-d H:i:s', $end_timestamp),
-            'pf_pfm_id' => $pfm_id,
-            'pf_created_on' => date('Y-m-d H:i:s')
-        );
-        return $model->insertData(TABLE_POST_FEATURED, $data_array);
+            // disabling all the previous featured post for same post id
+            $model->updateData(TABLE_POST_FEATURED, array('pf_status' => '0'), array('pf_post_id' => $post_id));
+
+            $data_array = array(
+                'pf_post_id' => $post_id,
+                'pf_start_date' => date('Y-m-d H:i:s', $start_timestamp),
+                'pf_end_date' => date('Y-m-d H:i:s', $end_timestamp),
+                'pf_pfm_id' => $pfm_id,
+                'pf_created_on' => date('Y-m-d H:i:s')
+            );
+            return $model->insertData(TABLE_POST_FEATURED, $data_array);
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
 }
