@@ -24,14 +24,14 @@
                                     <div class="comlete-alert">
                                         <div class="comlete-alert-a">
                                             <b>Thank You. Your Payment has been confirmed.</b>
-                                            <span>And your post has been added to our featured list</span>
+                                            <span>And your upcoming trip has been added to our featured trips</span>
                                         </div>
                                     </div>
 
                                     <div class="complete-info">
                                         <div class="complete-txt">
                                             <h2>Payment Info</h2>
-                                            <p>You post <a href="<?php echo getTripUrl($post_details['post_url_key']); ?>"><?php echo stripslashes($post_details['post_title']); ?></a> has been added to our featured list until <?php echo date('d-M-Y g:i A', time() + ($feature_plan_details['pfm_hours'] * 60 * 60)); ?></p>
+                                            <p>Your trip <a href="<?php echo getTripUrl($post_details['post_url_key']); ?>"><?php echo stripslashes($post_details['post_title']); ?></a> has been added to our featured trips until <?php echo date('d-M-Y g:i A', time() + ($feature_plan_details['pfm_hours'] * 60 * 60)); ?></p>
                                             <p>Your payment reference number is <strong>#<?php echo $payment_reference_number; ?></strong></p>
                                         </div>
 
@@ -39,7 +39,7 @@
 
                                         <div class="complete-txt final">
                                             <h2>Share it with your friends</h2>
-                                            <p>Let your friends know about it. Spread out a word about your post on your Facebook wall.</p>
+                                            <p>Let your friends know about it. Spread out a word about your trip on your Facebook wall.</p>
                                             <div class="complete-txt-link"><a href="<?php echo getShareWithFacebook(getTripUrl($post_details['post_url_key'])); ?>" target="_blank">Click here to share</a></div>
                                         </div>
 
