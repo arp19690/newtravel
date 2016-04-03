@@ -214,6 +214,7 @@ class Payments extends CI_Controller
                                     'payer_user_email' => $user_email,
                                     'payment_txn_id' => $paypal_data['txn_id'],
                                     'post_title' => $post_details['post_title'],
+                                    'pfm_title' => $feature_plan_details['pfm_title'],
                                     'payment_currency' => 'USD',
                                     'payment_amount' => $paypal_data['payment_gross']
                                 );

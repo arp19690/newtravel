@@ -182,7 +182,7 @@ class Email_model extends CI_Model
 
                                 <tr class="heading">
                                     <td>
-                                        Post
+                                        Trip to feature
                                     </td>
 
                                     <td>
@@ -191,7 +191,7 @@ class Email_model extends CI_Model
                                 </tr>
 
                                 <tr class="item">
-                                    <td>' . stripslashes($invoice_data_array['post_title']) . '</td>
+                                    <td>' . stripslashes($invoice_data_array['post_title']) . ' <small>(' . $invoice_data_array['pfm_title'] . ')</small></td>
                                     <td>' . get_currency_symbol($invoice_data_array['payment_currency']) . number_format($invoice_data_array['payment_amount'], 2) . '</td>
                                 </tr>
 
