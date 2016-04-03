@@ -40,7 +40,19 @@
                     <!-- // -->
                     <div class="cat-list-item tour-item fly-in" itemscope itemtype="http://schema.org/Product">
                         <div class="cat-list-item-l">
-                            <a itemprop="url" href="<?php echo $post_url; ?>"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>"></a>
+                            <a itemprop="url" href="<?php echo $post_url; ?>" class="trip-a-tag">
+                                <img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
+                                <?php
+                                if (!empty($post_details['post_featured']))
+                                {
+                                    ?>
+                                    <div class="img-featured-tag">
+                                        <p class="img-featured-text"><span class="fa fa-star"></span>&nbsp;Featured</p>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </a>
                         </div>
                         <div class="cat-list-item-r">
                             <div class="cat-list-item-rb">
