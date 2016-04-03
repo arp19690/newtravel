@@ -55,6 +55,7 @@ class Payments extends CI_Controller
                                 <input type="hidden" name="currency_code" value="' . strtoupper($feature_plan_details[0]['pfm_currency']) . '">
                                 <input type="hidden" name="email" value="' . $this->session->userdata["user_email"] . '">
                                 <input type="hidden" name="rm" value="2">
+                                <input type="hidden" name="cpp_logo_image" value="' . (IMAGES_PATH . '/logo_paypal.png') . '">
                                 <input type="hidden" name="return" value="' . base_url('trip/paypal-success?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                                 <input type="hidden" name="cancel_return" value="' . base_url('trip/paypal-cancel?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                               </form>';
