@@ -70,6 +70,39 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_all_trips()
+    {
+        $key_array = array();
+        $custom_model = new Custom_model();
+        $where_cond_str = 'p.post_published = "1"';
+        $records = $custom_model->get_search_results('p.post_url_key', $where_cond_str);
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $key_array[] = $value['post_url_key'];
+            }
+            $this->ci->redis->set('all_trips', json_encode($key_array));
+        }
+
+        return $key_array;
+    }
+
+    public function get_all_trips()
+    {
+        $output = array();
+        if ($this->ci->redis->exists('all_trips') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('all_trips'));
+        }
+        else
+        {
+            $output = $this->set_all_trips();
+        }
+
+        return $output;
+    }
+
     public function is_featured_trip($url_key)
     {
         $featured_trips = (array) $this->get_featured_trips();

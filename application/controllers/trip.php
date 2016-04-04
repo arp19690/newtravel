@@ -515,6 +515,38 @@ class Trip extends CI_Controller
         return TRUE;
     }
 
+    public function all_posts($view_type = 'list', $page = 1)
+    {
+        $data = array();
+        $post_records = array();
+        $redis_functions = new Redisfunctions();
+        $page_title = 'All Trips';
+
+        $all_post_url_keys = $redis_functions->get_all_trips();
+        if (!empty($all_post_url_keys))
+        {
+            foreach ($all_post_url_keys as $url_key)
+            {
+                $post_records[] = $redis_functions->get_trip_details($url_key);
+            }
+        }
+
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
+    }
+
     public function my_posts($view_type = 'list', $page = 1)
     {
         $data = array();
