@@ -135,7 +135,7 @@ $redis_functions = new Redisfunctions();
                     <?php
 //                    if (empty($post_details['post_featured']))
 //                    {
-                        $this->load->view('pages/trip/post/featured-select-sidebar');
+                        $this->load->view('pages/trip/post/get-featured-sidebar');
 //                    }
 
 //                    $this->load->view('pages/trip/post/traveler-info-sidebar', array('post_records' => $post_details));
