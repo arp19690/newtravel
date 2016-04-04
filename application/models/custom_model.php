@@ -156,7 +156,7 @@ class Custom_model extends CI_Model
         return $records;
     }
 
-    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = 'p.post_title ASC', $group_by = 'p.post_id')
+    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = 'p.post_title ASC', $group_by = 'p.post_id', $limit = '0, 1000')
     {
         $output = array();
         $sql = 'SELECT ' . $fields . ' FROM `posts` as p 
@@ -165,7 +165,7 @@ class Custom_model extends CI_Model
                     left join post_travelers as pt on pt.pt_post_id = p.post_id
                     WHERE ' . $where_cond_str . '
                     GROUP BY ' . $group_by . ' 
-                    ORDER BY ' . $order_by;
+                    ORDER BY ' . $order_by . ' LIMIT ' . $limit;
         $records = $this->db->query($sql)->result_array();
 
         if (!empty($records))
