@@ -102,6 +102,10 @@ class Custom_model extends CI_Model
 
             $post_videos_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'video', 'pm_status' => '1'));
             $output['post_media']['videos'] = $post_videos_records;
+
+            // adding you may like data below
+            $you_may_like = $this->get_you_may_like($url_key);
+            $output['you_may_like'] = $you_may_like;
         }
         return $output;
     }
@@ -237,6 +241,75 @@ class Custom_model extends CI_Model
         }
 
         return $output;
+    }
+
+    public function get_you_may_like($current_url_key)
+    {
+        $redis_functions = new Redisfunctions();
+        $post_details = $redis_functions->get_trip_details($current_url_key);
+        $post_regions = $post_from_dates = $post_to_dates = $post_activities = $where_arr = $output_data = array();
+
+        // Adding post regions to where str
+        if (!empty($post_details['post_regions']))
+        {
+            foreach ($post_details['post_regions'] as $region_key => $region_value)
+            {
+                $post_regions[] = $region_value->pr_source_region;
+                $post_regions[] = $region_value->pr_destination_region;
+
+                // Adding from and to date of the trip to match
+                $post_from_dates[] = $region_value->pr_from_date;
+                $post_to_dates[] = $region_value->pr_to_date;
+            }
+        }
+
+        // Adding post activities
+        if (!empty($post_details['post_activities']))
+        {
+            foreach ($post_details['post_activities'] as $activity_key => $activity_value)
+            {
+                $post_activities[] = $activity_value->pa_activity_id;
+            }
+        }
+
+        if (!empty($post_regions))
+        {
+            $imploded_regions = '"' . implode('", "', array_unique($post_regions)) . '"';
+            $where_arr[] = 'pr.post_source_region IN (' . $imploded_regions . ')';
+            $where_arr[] = 'pr.post_destination_region IN (' . $imploded_regions . ')';
+        }
+
+        if (!empty($post_from_dates))
+        {
+            $imploded_from_dates = '"' . implode('", "', array_unique($post_from_dates)) . '"';
+            $where_arr[] = 'pr.pr_from_date IN (' . $imploded_from_dates . ')';
+        }
+
+        if (!empty($post_to_dates))
+        {
+            $imploded_to_dates = '"' . implode('", "', array_unique($post_to_dates)) . '"';
+            $where_arr[] = 'pr.pr_to_date IN (' . $imploded_to_dates . ')';
+        }
+
+        if (!empty($post_activities))
+        {
+            $imploded_activities = '"' . implode('", "', array_unique($imploded_activities)) . '"';
+            $where_str[] = 'pa.pa_activity_id IN (' . $imploded_activities . ')';
+        }
+
+        if (!empty($where_str))
+        {
+            $where_str = 'p.post_url_key != "' . $current_url_key . '" AND (' . explode(' OR ', $where_arr) . ')';
+            $records = $search_results = $this->get_search_results('p.post_url_key', $where_str);
+            if (!empty($records))
+            {
+                foreach ($records as $value)
+                {
+                    $output_data[] = $redis_functions->get_trip_details($value['post_url_key']);
+                }
+            }
+        }
+        return $output_data;
     }
 
 }
