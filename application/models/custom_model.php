@@ -156,8 +156,18 @@ class Custom_model extends CI_Model
         return $records;
     }
 
-    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = 'p.post_title ASC', $group_by = 'p.post_id', $limit = '0, 1000')
+    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = NULL, $group_by = NULL, $limit = '0, 1000')
     {
+        if ($order_by == NULL)
+        {
+            $order_by = 'p.post_title ASC';
+        }
+
+        if ($group_by == NULL)
+        {
+            $group_by = 'p.post_id';
+        }
+
         $output = array();
         $sql = 'SELECT ' . $fields . ' FROM `posts` as p 
                     left join post_regions as pr on pr.pr_post_id = p.post_id
