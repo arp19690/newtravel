@@ -156,7 +156,7 @@ class Custom_model extends CI_Model
         return $records;
     }
 
-    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $group_by = 'p.post_id', $order_by = 'p.post_title ASC')
+    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = 'p.post_title ASC', $group_by = 'p.post_id')
     {
         $output = array();
         $sql = 'SELECT ' . $fields . ' FROM `posts` as p 

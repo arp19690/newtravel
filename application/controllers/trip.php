@@ -703,7 +703,7 @@ class Trip extends CI_Controller
             $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= ' . $search_travelers;
         }
 
-        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by,$group_by);
 
         $input_arr = array(
             base_url() => 'Home',
@@ -748,7 +748,7 @@ class Trip extends CI_Controller
             $order_by = get_post_mysql_sort_by(@$params['sort']);
             $group_by = 'p.post_id';
             $where_cond_str = '1';
-            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by,$group_by);
 
             $input_arr = array(
                 base_url() => 'Home',
