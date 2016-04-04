@@ -47,11 +47,14 @@ $redis_functions = new Redisfunctions();
                                 <div id="offers-a" class="owl-slider">
                                     <!-- // -->
                                     <div class="offer-slider-i">
-                                        <a itemprop="url" class="offer-slider-img" href="<?php echo $trip_url; ?>">
+                                        <a itemprop="url" class="offer-slider-img trip-a-tag" href="<?php echo $trip_url; ?>">
                                             <img itemprop="image" alt="<?php echo $trip_title; ?>" src="<?php echo $trip_primary_image; ?>" />
                                             <span class="offer-slider-overlay">
                                                 <span class="offer-slider-btn">view details</span>
                                             </span>
+                                            <div class="img-featured-tag">
+                                                <p class="img-featured-text"><span class="fa fa-star"></span>&nbsp;Featured</p>
+                                            </div>
                                         </a>
                                         <div class="offer-slider-txt">
                                             <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>

@@ -39,11 +39,21 @@
                     ?>
                     <!-- // -->
                     <div class="offer-slider-i catalog-i tour-grid fly-in" itemscope itemtype="http://schema.org/Product">
-                        <a href="<?php echo $post_url; ?>" class="offer-slider-img" itemprop="url">
+                        <a href="<?php echo $post_url; ?>" class="offer-slider-img trip-a-tag" itemprop="url">
                             <img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo $post_primary_image; ?>">
                             <span class="offer-slider-overlay">
                                 <span class="offer-slider-btn"><span class="fa fa-search"></span>&nbsp;&nbsp;View details</span><span></span>
                             </span>
+                            <?php
+                            if (!empty($post_details['post_featured']))
+                            {
+                                ?>
+                                <div class="img-featured-tag">
+                                    <p class="img-featured-text"><span class="fa fa-star"></span>&nbsp;Featured</p>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </a>
                         <div class="offer-slider-txt">
                             <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $post_url; ?>"><?php echo $post_title; ?></a></div>

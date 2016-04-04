@@ -55,6 +55,7 @@ class Payments extends CI_Controller
                                 <input type="hidden" name="currency_code" value="' . strtoupper($feature_plan_details[0]['pfm_currency']) . '">
                                 <input type="hidden" name="email" value="' . $this->session->userdata["user_email"] . '">
                                 <input type="hidden" name="rm" value="2">
+                                <input type="hidden" name="cpp_logo_image" value="' . (IMAGES_PATH . '/logo_paypal.png') . '">
                                 <input type="hidden" name="return" value="' . base_url('trip/paypal-success?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                                 <input type="hidden" name="cancel_return" value="' . base_url('trip/paypal-cancel?post_url_key=' . $post_url_key . '&plan_key=' . $featured_plan_key . '&id=' . $user_id_enc) . '">
                               </form>';
@@ -149,6 +150,7 @@ class Payments extends CI_Controller
             if ($this->input->post('item_number1') == $this->input->get('post_url_key'))
             {
                 $user_id = $this->session->userdata['user_id'];
+                $user_email = $this->session->userdata['user_email'];
                 if ($user_id == getEncryptedString($this->input->get('id'), 'decode'))
                 {
                     $model = new Common_model();
@@ -165,6 +167,7 @@ class Payments extends CI_Controller
                         {
                             $paypal_data = $this->input->post();
                             $payment_reference_number = getUniquePaymentReferenceNumber(getEncryptedString($paypal_data['txn_id']));
+                            $payment_created_on = date('Y-m-d H:i:s');
                             $data_array = array(
                                 'payment_reference_number' => $payment_reference_number,
                                 'payment_user_id' => $user_id,
@@ -176,7 +179,7 @@ class Payments extends CI_Controller
                                 'payment_receiver_email' => $paypal_data['receiver_email'],
                                 'payment_status' => '1',
                                 'payment_json' => json_encode($paypal_data),
-                                'payment_created_on' => date('Y-m-d H:i:s')
+                                'payment_created_on' => $payment_created_on
                             );
                             $is_exists = $model->fetchSelectedData('payment_id', TABLE_PAYMENTS, array('payment_post_id' => $post_details['post_id'], 'payment_txn_id' => $paypal_data['txn_id']));
                             if (empty($is_exists))
@@ -191,10 +194,34 @@ class Payments extends CI_Controller
                             }
 
                             // Adding post to featured table
-                            $this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']);
+                            if ($this->add_post_to_featured($post_details['post_id'], $feature_plan_details[0]['pfm_id']) == FALSE)
+                            {
+                                $this->session->set_flashdata('error', 'Unauthorized access to post');
+                                redirect(getTripUrl($post_url_key));
+                            }
 
                             // Updating redis table here
                             $redis_functions->set_trip_details($post_url_key);
+                            $redis_functions->set_featured_trips();
+
+                            // Sending invoice email here
+                            if (USER_IP != '127.0.0.1')
+                            {
+                                $invoice_data_array = array(
+                                    'payment_reference_number' => $payment_reference_number,
+                                    'payment_created_on' => $payment_created_on,
+                                    'payer_user_fullname' => $this->session->userdata['user_fullname'],
+                                    'payer_user_email' => $user_email,
+                                    'payment_txn_id' => $paypal_data['txn_id'],
+                                    'post_title' => $post_details['post_title'],
+                                    'pfm_title' => $feature_plan_details['pfm_title'],
+                                    'payment_currency' => 'USD',
+                                    'payment_amount' => $paypal_data['payment_gross']
+                                );
+                                $email_model = new Email_model();
+                                $invoice_html_data = $email_model->invoice_template($invoice_data_array);
+                                $email_model->sendMail($user_email, $invoice_html_data['email_subject'], $invoice_html_data['email_message']);
+                            }
 
                             $page_title = 'Payment confirmed';
                             $input_arr = array(
@@ -246,19 +273,31 @@ class Payments extends CI_Controller
     public function add_post_to_featured($post_id, $pfm_id)
     {
         $model = new Common_model();
-        $featured_plan_details = $model->fetchSelectedData('pfm_hours', TABLE_FEATURED_MASTER, array('pfm_id' => $pfm_id));
-        $featured_hours = $featured_plan_details[0]['pfm_hours'];
-        $start_timestamp = time();
-        $end_timestamp = $start_timestamp + (($featured_hours) * 60 * 60);
+        $user_id = $this->session->userdata['user_id'];
+        $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_id' => $post_id, 'post_user_id' => $user_id));
+        if (!empty($is_valid))
+        {
+            $featured_plan_details = $model->fetchSelectedData('pfm_hours', TABLE_FEATURED_MASTER, array('pfm_id' => $pfm_id));
+            $featured_hours = $featured_plan_details[0]['pfm_hours'];
+            $start_timestamp = time();
+            $end_timestamp = $start_timestamp + (($featured_hours) * 60 * 60);
 
-        $data_array = array(
-            'pf_post_id' => $post_id,
-            'pf_start_date' => date('Y-m-d H:i:s', $start_timestamp),
-            'pf_end_date' => date('Y-m-d H:i:s', $end_timestamp),
-            'pf_pfm_id' => $pfm_id,
-            'pf_created_on' => date('Y-m-d H:i:s')
-        );
-        return $model->insertData(TABLE_POST_FEATURED, $data_array);
+            // disabling all the previous featured post for same post id
+            $model->updateData(TABLE_POST_FEATURED, array('pf_status' => '0'), array('pf_post_id' => $post_id));
+
+            $data_array = array(
+                'pf_post_id' => $post_id,
+                'pf_start_date' => date('Y-m-d H:i:s', $start_timestamp),
+                'pf_end_date' => date('Y-m-d H:i:s', $end_timestamp),
+                'pf_pfm_id' => $pfm_id,
+                'pf_created_on' => date('Y-m-d H:i:s')
+            );
+            return $model->insertData(TABLE_POST_FEATURED, $data_array);
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
 }

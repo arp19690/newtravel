@@ -8,3 +8,6 @@
 .facebook-btn{background-color: #3B5998;color: #FFFFFF;}
 .facebook-btn:hover{background-color: #2d4373;}
 img{max-width: 100%;}
+.trip-a-tag{position: relative;display: inline-block;}
+.img-featured-tag{position: absolute;top: 0;left: 0;z-index: 999;}
+.img-featured-text{color: #fff;background: #ff7200;display: inline-block;padding: 7px 8px;margin: 0;border-radius: 0 0 4px 0;font-size: 13px;}
