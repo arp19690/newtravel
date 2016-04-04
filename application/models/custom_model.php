@@ -253,7 +253,7 @@ class Custom_model extends CI_Model
         return $output;
     }
 
-    public function get_you_may_like($current_url_key)
+    public function get_you_may_like($current_url_key, $max_results = 5)
     {
         $redis_functions = new Redisfunctions();
         $post_details = $redis_functions->get_trip_details($current_url_key);
@@ -310,7 +310,7 @@ class Custom_model extends CI_Model
         if (!empty($where_str))
         {
             $where_str = 'p.post_url_key != "' . $current_url_key . '" AND (' . explode(' OR ', $where_arr) . ')';
-            $records = $search_results = $this->get_search_results('p.post_url_key', $where_str);
+            $records = $search_results = $this->get_search_results('p.post_url_key', $where_str, NULL, NULL, $max_results);
             if (!empty($records))
             {
                 foreach ($records as $value)
