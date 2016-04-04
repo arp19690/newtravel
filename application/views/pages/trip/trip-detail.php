@@ -125,6 +125,12 @@ if (!empty($post_details['post_regions']))
                 </div>
 
                 <div class="sp-page-r">
+                    <?php
+                    if ($post_details['post_user_id'] == $this->session->userdata['user_id'] && empty($post_details['post_featured']))
+                    {
+                        $this->load->view('pages/trip/post/get-featured-sidebar', array('post_url_key' => $post_details['post_url_key']));
+                    }
+                    ?>
                     <div class="h-detail-r">
                         <div class="h-detail-lbl">
                             <div class="h-detail-lbl-a"><?php echo $page_title; ?></div>
