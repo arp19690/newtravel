@@ -285,8 +285,8 @@ class Custom_model extends CI_Model
         if (!empty($post_regions))
         {
             $imploded_regions = '"' . implode('", "', array_unique($post_regions)) . '"';
-            $where_arr[] = 'pr.post_source_region IN (' . $imploded_regions . ')';
-            $where_arr[] = 'pr.post_destination_region IN (' . $imploded_regions . ')';
+            $where_arr[] = 'pr.pr_source_region IN (' . $imploded_regions . ')';
+            $where_arr[] = 'pr.pr_destination_region IN (' . $imploded_regions . ')';
         }
 
         if (!empty($post_from_dates))
@@ -303,13 +303,13 @@ class Custom_model extends CI_Model
 
         if (!empty($post_activities))
         {
-            $imploded_activities = '"' . implode('", "', array_unique($imploded_activities)) . '"';
+            $imploded_activities = '"' . implode('", "', array_unique($post_activities)) . '"';
             $where_str[] = 'pa.pa_activity_id IN (' . $imploded_activities . ')';
         }
 
         if (!empty($where_str))
         {
-            $where_str = 'p.post_url_key != "' . $current_url_key . '" AND (' . explode(' OR ', $where_arr) . ')';
+            $where_str = 'p.post_url_key != "' . $current_url_key . '" AND (' . implode(' OR ', $where_arr) . ')';
             $records = $search_results = $this->get_search_results('p.post_url_key', $where_str, NULL, NULL, $max_results);
             if (!empty($records))
             {
