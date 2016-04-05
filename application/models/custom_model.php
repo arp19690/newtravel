@@ -118,7 +118,7 @@ class Custom_model extends CI_Model
         {
             if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
             {
-                $post_published = 1;
+                $post_published = '1';
 
                 $required_keys = array(
                     'post_title' => 'Please enter a title',
@@ -128,11 +128,14 @@ class Custom_model extends CI_Model
 
                 foreach ($required_keys as $key => $error_message)
                 {
-                    if (empty($key))
+                    if (isset($post_details[$key]))
                     {
-                        $post_published = 0;
-                        $this->session->set_flashdata('warning', $error_message);
-                        break;
+                        if (empty($post_details[$key]))
+                        {
+                            $post_published = '0';
+                            $this->session->set_flashdata('error', $error_message);
+                            break;
+                        }
                     }
                 }
 
