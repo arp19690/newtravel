@@ -55,7 +55,7 @@ $(document).ready(function () {
         $('.header-a').slideUp(120);
         $('.header-b').css('height', '59px');
         $('.header-b').addClass('fixed');
-        $('.header-logo').css('margin-top', '10px')
+        $('.header-logo').css('margin-top', '5px')
         $('.header-right').css('margin-top', '21px');
         $('.header-logo').find('img').attr('src', js_base_url + 'assets/front/img/logo-a.png');
 
@@ -64,7 +64,7 @@ $(document).ready(function () {
         $('.header-a').slideDown(150);
         $('.header-b').removeClass('fixed');
         $('.header-b').css('height', '89px');
-        $('.header-logo').css('margin-top', '26px');
+        $('.header-logo').css('margin-top', '20px');
         $('.header-right').css('margin-top', '37px');
         $('.header-logo').find('img').attr('src', js_base_url + 'assets/front/img/logo.png');
     }
