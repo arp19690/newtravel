@@ -29,13 +29,19 @@ class Index extends CI_Controller
     {
         if ($this->input->get('url') == TRUE && !empty($this->input->get('url')))
         {
+            $model = new Common_model();
             $url = addslashes($this->input->get('url'));
             $data_array = array(
                 'er_url' => $url,
                 'er_ipaddress' => USER_IP,
                 'er_useragent' => USER_AGENT
             );
-            $model = new Common_model();
+
+            if (isset($this->session->userdata['user_id']))
+            {
+                $data_array['er_user_id'] = $this->session->userdata['user_id'];
+            }
+
             $model->insertData(TABLE_EXTERNAL_REDIRECTS, $data_array);
             redirect($url);
         }

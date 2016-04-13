@@ -57,6 +57,7 @@ $route['forgot-password'] = 'index/forgotPassword';
 $route['change-password'] = 'user/changePassword';
 $route['activate'] = 'index/activate';
 $route['my-account'] = 'user/myAccount';
+$route['r'] = 'index/external_redirect';
 
 $route['trip/post/add'] = 'trip/add_new';
 $route['trip/post/edit/(:num)/(:any)'] = 'trip/add_new/$1/$2';
