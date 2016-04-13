@@ -22,6 +22,7 @@ class Redisfunctions
         $this->set_activity_master();
         $this->set_static_page_content();
         $this->set_travel_mediums();
+        $this->set_all_user_profile_data(1);
     }
 
     public function set_featured_trips()
@@ -264,6 +265,22 @@ class Redisfunctions
             $output = $this->get_site_setting($key_name);
         }
         return $output;
+    }
+
+    public function set_all_user_profile_data($user_status = 1)
+    {
+        $model = new Common_model();
+        $fields = 'user_username';
+        $where_cond_arr = array('user_status' => (string) $user_status);
+        $records = $model->fetchSelectedData($fields, TABLE_USERS, $where_cond_arr);
+        if (!empty($records))
+        {
+            foreach ($records as $value)
+            {
+                $this->set_user_profile_data($value['user_username']);
+            }
+        }
+        return TRUE;
     }
 
     public function set_user_profile_data($username, $fields = NULL)
