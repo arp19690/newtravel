@@ -1,10 +1,16 @@
 <?php
 
-    if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
-        ob_start("ob_gzhandler");
-    else
-        ob_start();
+if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
+    ob_start("ob_gzhandler");
+else
+    ob_start();
 
+if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
+{
+    include_once 'coming_soon/index.html';
+}
+else
+{
     require_once 'constants.php';
     require_once 'functions.php';
     require_once 'db-constants.php';
@@ -211,3 +217,4 @@
 
     /* End of file index.php */
     /* Location: ./index.php */
+}
