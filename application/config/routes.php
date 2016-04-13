@@ -72,6 +72,7 @@ $route['trip/paypal-cancel'] = 'payments/paypal_cancel';
 $route['trip/paypal-success'] = 'payments/paypal_success';
 
 $route['my-chats'] = 'messages/index';
+$route['user/(:any)'] = 'user/public_profile/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -17,6 +17,33 @@ class User extends CI_Controller
         $this->myAccount();
     }
 
+    public function public_profile($username)
+    {
+        $redis_function = new Redisfunctions();
+        $record = $redis_function->get_user_profile_data($username);
+        if (!empty($record))
+        {
+            $page_title = $record["user_fullname"];
+
+            $input_arr = array(
+                base_url() => 'Home',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["record"] = $record;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $this->template->write_view("content", "pages/user/public-profile", $data);
+            $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
     public function myAccount()
     {
         if (isset($this->session->userdata["user_id"]))
