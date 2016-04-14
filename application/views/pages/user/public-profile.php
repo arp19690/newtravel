@@ -1,3 +1,6 @@
+<style>
+    blockquote::before{content: open-quote;font-size: 400%;margin-left: -0.95em;}
+</style>
 <div class="main-cont">	
     <div class="inner-page">
         <div class="inner-breadcrumbs" style="margin: 0;">
@@ -25,7 +28,10 @@
 
                     <div class="contacts-colls-r">
                         <div class="contacts-colls-rb">
-                            <div class="contact-colls-lbl">Personal Information</div>
+                            <div class="contact-colls-lbl">About:</div>
+                            <div>
+                                <figure><blockquote><?php echo stripslashes($record['user_about']); ?></blockquote></figure>
+                            </div>
                             <div class="booking-form">
                                 <form id="contact_form" action="" method="post">
                                     <div class="clear">
