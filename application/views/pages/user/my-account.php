@@ -28,7 +28,7 @@
                         }
                         ?>
                         <div class="clear">
-                            <img src="<?php echo getImage($record['user_profile_picture']); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
+                            <img src="<?php echo base_url(getImage($record['user_profile_picture'])); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
                         </div>
 
                         <div class="clear">
