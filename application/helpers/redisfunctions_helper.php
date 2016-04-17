@@ -143,9 +143,17 @@ class Redisfunctions
         $custom_model = new Custom_model();
         $custom_model->verify_trip_status($url_key);
         $trip_details = $custom_model->get_trip_detail($url_key);
-        if (count($trip_details) > 0)
+        if (!empty($trip_details))
         {
             $this->ci->redis->hSet('trips', $url_key, json_encode($trip_details));
+
+            // now fetch the owner username and update user profiel date redis index key
+            $model = new Common_model();
+            $user_record = $model->fetchSelectedData('user_username', TABLE_USERS, array('user_id' => $trip_details['post_user_id']));
+            if (!empty($user_record))
+            {
+                $this->set_user_profile_data($user_record[0]['user_username']);
+            }
         }
 
         return $trip_details;
