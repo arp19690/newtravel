@@ -72,19 +72,24 @@
                         ?>
                     </div>
 
-                    <div class="tree-colls-i about-text">
-                        <div class="about-percent">
-                            <label>tours - 87%</label>
-                            <div data-percentage="87" class="about-percent-a"><span></span></div>
+                    <div class="counters tree-colls-i about-text">
+                        <!-- // -->
+                        <div class="clear" style="display: inline-block;">
+                            <div class="counters-i">
+                                <b class="numscroller" data-slno='1' data-min='0' data-max='<?php echo number_format(count($record['trips_posted'])); ?>' data-delay='0' data-increment="2">0</b>
+                                <span>Trips posted</span>
+                            </div>
                         </div>
-                        <div class="about-percent">
-                            <label>work with clients - 47%</label>
-                            <div data-percentage="47" class="about-percent-a"><span></span></div>
+                        <!-- \\ -->
+
+                        <!-- // -->
+                        <div class="clear" style="display: inline-block;">
+                            <div class="counters-i">
+                                <b class="numscroller" data-slno='1' data-min='0' data-max='<?php echo number_format(count($record['trips_joined'])); ?>' data-delay='0' data-increment="2">0</b>
+                                <span>Trips joined</span>
+                            </div>
                         </div>
-                        <div class="about-percent">
-                            <label>hotels - 70%</label>
-                            <div data-percentage="70" class="about-percent-a"><span></span></div>
-                        </div>
+                        <!-- \\ -->
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -92,3 +97,4 @@
         </div>
     </div>
 </div>
+<script src="<?php echo JS_PATH; ?>/numscroller-1.0.js"></script>
