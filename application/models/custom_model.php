@@ -325,16 +325,29 @@ class Custom_model extends CI_Model
         return $output_data;
     }
 
-    public function get_user_profile_data($username, $fields = NULL)
+    public function get_user_profile_data($username, $user_fields = NULL)
     {
-        if ($fields == NULL)
+        if ($user_fields == NULL)
         {
-            $fields = 'user_id, user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
+            $user_fields = 'user_id, user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
         }
 
         $model = new Common_model();
-        $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
-        
+        $records = $model->fetchSelectedData($user_fields, TABLE_USERS, array('user_username' => $username));
+        if (!empty($records))
+        {
+            $records = $records[0];
+        }
+
+        // to fetch trips posted by the user
+        $trips_posted_records = $model->fetchSelectedData('post_id, post_url_key, post_published', TABLE_POSTS, array('post_user_id' => $records['user_id']), 'post_id', 'DESC');
+        $records['trips_posted'] = $trips_posted_records;
+
+        // to fetch the trips owner has joined
+        $sql = 'SELECT post_url_key, post_published FROM ' . TABLE_POST_TRAVELERS . ' LEFT JOIN ' . TABLE_POSTS . ' ON post_id = pt_post_id WHERE pt_traveler_user_id = ' . $records['user_id'] . ' AND post_user_id != ' . $records['user_id'];
+        $trips_joined_records = $this->db->query($sql)->result_array();
+        $records['trips_joined'] = $trips_joined_records;
+
         return $records;
     }
 
