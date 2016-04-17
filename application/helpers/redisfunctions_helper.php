@@ -285,13 +285,8 @@ class Redisfunctions
 
     public function set_user_profile_data($username, $fields = NULL)
     {
-        if ($fields == NULL)
-        {
-            $fields = 'user_id, user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
-        }
-
-        $model = new Common_model();
-        $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
+        $custom_model = new Custom_model();
+        $records = $custom_model->get_user_profile_data($username, $fields);
         if (!empty($records))
         {
             $records = $records[0];
