@@ -289,7 +289,6 @@ class Redisfunctions
         $records = $custom_model->get_user_profile_data($username, $fields);
         if (!empty($records))
         {
-            $records = $records[0];
             $this->ci->redis->hSet('user_profile', $records['user_username'], json_encode($records));
         }
         return $records;
