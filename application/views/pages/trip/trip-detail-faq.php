@@ -15,12 +15,12 @@ $trip_faqs = $redis_functions->get_trip_faqs();
             <!-- // -->
             <div class="faq-item">
                 <div class="faq-item-a">
-                    <span class="faq-item-left"><?php echo stripslashes($value['faq_question']); ?></span>
+                    <span class="faq-item-left"><?php echo stripslashes($value->faq_question); ?></span>
                     <span class="faq-item-i"></span>
                     <div class="clear"></div>
                 </div>
                 <div class="faq-item-b">
-                    <div class="faq-item-p"><?php echo stripslashes($value['faq_answer']); ?></div>
+                    <div class="faq-item-p"><?php echo stripslashes($value->faq_answer); ?></div>
                 </div>
             </div>
             <!-- \\ -->
