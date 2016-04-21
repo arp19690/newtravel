@@ -162,7 +162,7 @@ if (!empty($post_details['post_regions']))
                             </a>
                             <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
                                 <span class="book-btn-l"><i></i></span>
-                                <span class="book-btn-r">book now</span>
+                                <span class="book-btn-r">I am interested</span>
                                 <div class="clear"></div>
                             </a>
                             <?php
