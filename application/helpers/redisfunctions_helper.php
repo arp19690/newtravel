@@ -23,6 +23,7 @@ class Redisfunctions
         $this->set_static_page_content();
         $this->set_travel_mediums();
         $this->set_all_user_profile_data(1);
+        $this->set_trip_faqs();
     }
 
     public function set_featured_trips()
