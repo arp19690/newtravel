@@ -348,6 +348,10 @@ class Custom_model extends CI_Model
         $trips_joined_records = $this->db->query($sql)->result_array();
         $records['trips_joined'] = $trips_joined_records;
 
+        // to fetch user's wishlist
+        $wishlist_records = $model->getAllDataFromJoin('post_url_key', TABLE_WISHLIST, array(TABLE_POSTS => 'post_id = wishlist_post_id'), 'LEFT', array('wishlist_status' => '1', 'post_published' => '1', 'wishlist_user_id' => $records['user_id']), 'wishlist_id DESC');
+        $records['my_wishlist'] = $wishlist_records;
+
         return $records;
     }
 
