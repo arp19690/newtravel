@@ -152,15 +152,15 @@ if (!empty($post_details['post_regions']))
                             <p><?php echo $post_description; ?></p>
                         </div>
                         <?php
-                        if (isset($this->session->userdata['user_id']) && $this->session->userdata['user_id'] != $post_details['post_user_id'])
+                        if (@$this->session->userdata['user_id'] != $post_details['post_user_id'])
                         {
                             ?>
-                            <a href="#" class="wishlist-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="wishlist-btn">
                                 <span class="wishlist-btn-l"><i></i></span>
                                 <span class="wishlist-btn-r">Add to wish list</span>
                                 <div class="clear"></div>
                             </a>
-                            <a href="#" class="book-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
                                 <span class="book-btn-l"><i></i></span>
                                 <span class="book-btn-r">book now</span>
                                 <div class="clear"></div>
