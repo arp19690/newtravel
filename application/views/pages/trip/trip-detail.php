@@ -160,7 +160,7 @@ if (!empty($post_details['post_regions']))
                                 <span class="wishlist-btn-r">Add to wish list</span>
                                 <div class="clear"></div>
                             </a>
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
                                 <span class="book-btn-l"><i></i></span>
                                 <span class="book-btn-r">I am interested</span>
                                 <div class="clear"></div>

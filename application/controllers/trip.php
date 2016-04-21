@@ -640,7 +640,7 @@ class Trip extends CI_Controller
             {
                 $model->updateData(TABLE_POSTS, array('post_status' => '3'), $where_cond_arr);
                 $this->redis_functions->remove_trip_details($post_url_key);
-                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']), ' successfully deleted');
+                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']) . ' successfully deleted');
             }
             else
             {
@@ -790,6 +790,61 @@ class Trip extends CI_Controller
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
             $this->template->write_view("content", "pages/trip/listing/list-page", $data);
             $this->template->render();
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
+    public function show_interest($trip_url_key)
+    {
+        if (isset($this->session->userdata['user_id']))
+        {
+            $redis_functions = new Redisfunctions();
+            $trip_details = $redis_functions->get_trip_details($trip_url_key);
+            if (!empty($trip_details))
+            {
+                if ($this->session->userdata['user_id'] != $trip_details['post_user_id'])
+                {
+                    $user_details = $redis_functions->get_user_profile_data($this->session->userdata['user_username']);
+
+                    $model = new Common_model();
+                    $data_array = array(
+                        'pt_post_id' => $trip_details['post_id'],
+                        'pt_traveler_name' => addslashes($user_details['user_fullname']),
+                        'pt_traveler_email' => addslashes($user_details['user_email']),
+                        'pt_traveler_gender' => $user_details['user_gender'],
+                        'pt_traveler_user_id' => $this->session->userdata['user_id'],
+                        'pt_traveler_city' => $user_details['user_city'],
+                        'pt_traveler_region' => $user_details['user_region'],
+                        'pt_traveler_country' => $user_details['user_country'],
+                        'pt_traveler_location' => $user_details['user_location'],
+                        'pt_languages_known' => $user_details['user_languages_known'],
+                        'pt_added_by' => $this->session->userdata['user_id'],
+                    );
+                    $is_exists = $model->fetchSelectedData('pt_id', TABLE_POST_TRAVELERS, array('pt_post_id' => $trip_details['post_id'], 'pt_traveler_user_id' => $this->session->userdata['user_id'], 'pt_removed_by' => NULL));
+                    if (!empty($is_exists))
+                    {
+                        $this->session->set_flashdata('error', 'You have already shown your interest in this trip');
+                    }
+                    else
+                    {
+                        $model->insertData(TABLE_POST_TRAVELERS, $data_array);
+                        $this->session->set_flashdata('success', '<strong>Success!</strong> Interest shown');
+                    }
+                    redirect(getTripUrl($trip_url_key));
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'You are not allowed to perform this action');
+                    redirect(getTripUrl($trip_url_key));
+                }
+            }
+            else
+            {
+                display_404_page();
+            }
         }
         else
         {
