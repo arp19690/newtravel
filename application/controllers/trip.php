@@ -550,13 +550,12 @@ class Trip extends CI_Controller
     public function my_posts($view_type = 'list', $page = 1)
     {
         $data = array();
-        $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
+        $redis_functions = new Redisfunctions();
         $page_title = 'Trips I\'ve Posted';
 
-        $whereConsStr = array('post_user_id' => $user_id);
         $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
-        $post_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC', $limit);
+        $user_records = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+        $post_records = $user_records['trips_posted'];
 
         $input_arr = array(
             base_url() => 'Home',
@@ -569,7 +568,7 @@ class Trip extends CI_Controller
         $data["page"] = $page;
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
-        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $data['meta_title'] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
     }
