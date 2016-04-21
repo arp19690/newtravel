@@ -574,6 +574,32 @@ class Trip extends CI_Controller
         $this->template->render();
     }
 
+    public function my_wishlist($view_type = 'list', $page = 1)
+    {
+        $data = array();
+        $redis_functions = new Redisfunctions();
+        $page_title = 'My Wishlist';
+
+        $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
+        $user_records = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+        $post_records = $user_records['my_wishlist'];
+
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
+    }
+
     public function trip_details($post_url_key)
     {
         $post_details = $this->redis_functions->get_trip_details($post_url_key);
@@ -703,7 +729,7 @@ class Trip extends CI_Controller
             $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= ' . $search_travelers;
         }
 
-        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by,$group_by);
+        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by, $group_by);
 
         $input_arr = array(
             base_url() => 'Home',
@@ -748,7 +774,7 @@ class Trip extends CI_Controller
             $order_by = get_post_mysql_sort_by(@$params['sort']);
             $group_by = 'p.post_id';
             $where_cond_str = '1';
-            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by,$group_by);
+            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by, $group_by);
 
             $input_arr = array(
                 base_url() => 'Home',
