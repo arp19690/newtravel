@@ -28,7 +28,7 @@ $redis_functions = new Redisfunctions();
                         </div>
 
                         <div class="clear">
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'some url' : '#'; ?>" class="btn btn-orange" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>"><span class="fa fa-comments-o"></span>&nbsp;&nbsp;Send Message</a>
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('my-chats?username=' . $record['user_username'])) : '#'; ?>" class="btn btn-orange" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>"><span class="fa fa-comments-o"></span>&nbsp;&nbsp;Send Message</a>
                         </div>
                     </div>
 
