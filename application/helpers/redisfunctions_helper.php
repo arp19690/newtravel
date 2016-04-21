@@ -346,4 +346,25 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_trip_faqs()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('faq_id, faq_question, faq_answer', TABLE_FAQ, array('faq_type' => 'trip', 'faq_status' => '1'), 'faq_order');
+        $this->ci->redis->set('trip_faqs', json_encode($records));
+        return $records;
+    }
+
+    public function get_trip_faqs()
+    {
+        if ($this->ci->redis->exists('trip_faqs') == TRUE)
+        {
+            $output = json_decode($this->ci->redis->get('trip_faqs'));
+        }
+        else
+        {
+            $output = $this->set_trip_faqs();
+        }
+        return $output;
+    }
+
 }
