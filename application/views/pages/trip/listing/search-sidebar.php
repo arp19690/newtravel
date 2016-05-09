@@ -145,7 +145,7 @@ if (!isset($count_search_results))
         }
         ?>
 
-        <button type="submit" class="btn btn-orange">Submit</button>
+        <button type="submit" class="btn btn-orange"><span class="fa fa-arrow-up"></span>&nbsp;Submit</button>
     </div>
 </form>
 <script src="<?php echo JS_PATH; ?>/jquery.formstyler.js"></script>
