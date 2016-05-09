@@ -852,4 +852,39 @@ class Trip extends CI_Controller
         }
     }
 
+    public function trips_joined_by_me($view_type = 'list', $page = 1)
+    {
+        $redis_functions = new Redisfunctions();
+        $username = $this->session->userdata['user_username'];
+        $user_profile_data = $redis_functions->get_user_profile_data($username);
+        $trips_joined = $user_profile_data['trips_joined'];
+        $post_records = array();
+        if (!empty($trips_joined))
+        {
+            foreach ($trips_joined as $value)
+            {
+                if ($value->post_published == '1')
+                {
+                    $post_records[] = $redis_functions->get_trip_details($value->post_url_key);
+                }
+            }
+        }
+
+        $page_title = 'Trips I\'ve joined';
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
+    }
+
 }
