@@ -35,29 +35,21 @@
                             <div class="booking-form">
                                 <form id="contact_form" action="" method="post">
                                     <div class="booking-form-i">
-                                        <label>First Name:</label>
-                                        <div class="input"><input type="text" name="FirstName" value="" /></div>
+                                        <label>Full Name:</label>
+                                        <div class="input"><input type="text" name="full_name" required="required" /></div>
                                     </div>
                                     <div class="booking-form-i">
-                                        <label>Last Name:</label>
-                                        <div class="input"><input type="text" name="lastName" value="" /></div>
-                                    </div>
-                                    <div class="booking-form-i">
-                                        <label>Email Adress:</label>
-                                        <div class="input"><input type="text" name="Email" value="" /></div>
-                                    </div>
-                                    <div class="booking-form-i">
-                                        <label>Website:</label>
-                                        <div class="input"><input type="text" name="Website" value="" /></div>
+                                        <label>Email Address:</label>
+                                        <div class="input"><input type="email" name="user_email" required="required" /></div>
                                     </div>
                                     <div class="booking-form-i textarea">
                                         <label>Message:</label>
                                         <div class="textarea-wrapper">
-                                            <textarea name="Message"></textarea>
+                                            <textarea name="message" required="required"></textarea>
                                         </div>
                                     </div>
                                     <div class="clear"></div>
-                                    <button class="contacts-send">Send message</button>
+                                    <button type="submit" name="btn_submit" class="btn btn-orange">Send message</button>
                                 </form>
                             </div>
                         </div>

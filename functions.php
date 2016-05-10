@@ -234,6 +234,21 @@ function checkIfTripURLKeyUnique($trip_url_key, $post_id = NULL)
     return $trip_url_key;
 }
 
+function getUniqueContactRequestID()
+{
+    require_once APPPATH . '/models/common_model.php';
+    $model = new Common_model();
+
+    $request_id = strtoupper(substr(getEncryptedString(time()), 0, 8));
+    $is_exists = $model->is_exists('wc_id', TABLE_WEBSITE_CONTACT, array('wc_request_id' => $request_id));
+    if (!empty($is_exists))
+    {
+        $request_id = getUniqueContactRequestID();
+    }
+
+    return $request_id;
+}
+
 function getUniqueUsernameFromEmail($email, $user_id = NULL)
 {
     require_once APPPATH . '/models/common_model.php';

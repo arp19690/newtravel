@@ -52,41 +52,27 @@ class Staticpage extends CI_Controller
             if (isset($arr["btn_submit"]))
             {
                 $data = array();
-                $captcha_answer_system = $this->session->userdata["captcha_contact_answer_system"];
-                $captcha_answer_user = $arr["captcha_answer_user"];
-                unset($arr["btn_submit"], $arr["captcha_answer_user"], $this->session->userdata["captcha_contact_answer_system"]);
 
-                if ($captcha_answer_system != $captcha_answer_user)
+                $model = new Common_model();
+                $request_id = getUniqueContactRequestID();
+
+                $data_array = array(
+                    'wc_request_id' => $request_id,
+                    'wc_fullname' => addslashes($arr['full_name']),
+                    'wc_email' => addslashes($arr['user_email']),
+                    'wc_message' => addslashes($arr['message']),
+                    'wc_ipaddress' => USER_IP,
+                    'wc_useragent' => USER_AGENT,
+                    'wc_created_on' => date('Y-m-d H:i:s')
+                );
+                $model->insertData(TABLE_WEBSITE_CONTACT, $data_array);
+
+                if (USER_IP != '127.0.0.1')
                 {
-                    // wrong captcha
-                    $this->session->set_flashdata('error', 'Please input correct answer');
-                    $this->session->set_flashdata('post', $arr);
-                    redirect(base_url('contact-us'));
-                }
-                else
-                {
-                    $model = new Common_model();
-                    $request_id = strtoupper(substr(getEncryptedString($arr['user_email'] . USER_IP . time()), 0, 8));
+                    $email_model = new Email_model();
 
-                    $is_request_id_exists = $model->is_exists('wc_id, wc_ipaddress', TABLE_WEBSITE_CONTACT, array('wc_request_id' => $request_id));
-                    if (!empty($is_request_id_exists))
-                    {
-                        $request_id = substr(getEncryptedString($is_request_id_exists[0]['wc_id'] . $is_request_id_exists[0]['wc_ipaddress'] . $arr['user_email'] . USER_IP . time()), 0, 8);
-                    }
-
-                    $arr["wc_request_id"] = strtoupper($request_id);
-                    $arr["wc_ipaddress"] = $this->session->userdata["ip_address"];
-                    $arr["user_agent"] = $this->session->userdata["user_agent"];
-//                        prd($arr);
-
-                    $model->insertData(TABLE_WEBSITE_CONTACT, $arr);
-
-                    if ($_SERVER["REMOTE_ADDR"] != '127.0.0.1')
-                    {
-                        $email_model = new Email_model();
-
-                        // message to the us
-                        $message = '
+                    // message to us
+                    $message = '
                                                 <strong>Full Name: </strong>' . ucwords($arr["full_name"]) . '<br/>
                                                 <strong>Email: </strong>' . $arr["user_email"] . '<br/>
                                                 <strong>Contact: </strong>' . $arr["user_contact"] . '<br/>
@@ -94,18 +80,11 @@ class Staticpage extends CI_Controller
                                                 <strong>Request ID: </strong>' . $request_id . '<br/><br/>
                                                 <strong>Message: </strong>' . $arr["user_message"] . '<br/>
                                                 ';
-                        $email_model->sendMail(SITE_EMAIL, "New message via " . $this->redis_functions->get_site_setting('SITE_NAME'), $message);
-
-                        // message to the user                            
-                        $this->load->library('EmailTemplates');
-                        $emailTemplate = new EmailTemplates();
-                        $messageContent = $emailTemplate->contactUsEmail(ucwords($arr["full_name"]), $request_id);
-                        $email_model->sendMail($arr["user_email"], "Thank you for contacting us - " . $this->redis_functions->get_site_setting('SITE_NAME'), $messageContent);
-                    }
-
-                    $this->session->set_flashdata('success', 'Your message has been delivered successfully');
-                    redirect(base_url('contact-us'));
+                    $email_model->sendMail($this->redis_functions->get_site_setting('SITE_EMAIL'), "New message via " . $this->redis_functions->get_site_setting('SITE_NAME'), $message);
                 }
+
+                $this->session->set_flashdata('success', 'Your message has been delivered successfully');
+                redirect(base_url('static/contact-us'));
             }
         }
         else
@@ -120,7 +99,6 @@ class Staticpage extends CI_Controller
             $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["meta_title"] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
-            ;
             $data["breadcrumbs"] = $breadcrumbs;
 
             $this->template->write_view("content", "pages/staticpage/contact-us", $data);
