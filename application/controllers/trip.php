@@ -951,7 +951,7 @@ class Trip extends CI_Controller
             {
                 $redis_functions = new Redisfunctions();
                 $post_details = $redis_functions->get_trip_details($post_url_key);
-                $is_exists = $model->fetchSelectedData('wishlist_id', TABLE_WISHLIST, array('wishlist_post_id' => $post_details['post_id'], 'wishlist_user_id' => $user_id));
+                $is_exists = $model->fetchSelectedData('wishlist_id', TABLE_WISHLIST, array('wishlist_post_id' => $post_details['post_id'], 'wishlist_user_id' => $user_id, 'wishlist_status' => '1'));
                 if (!empty($is_exists))
                 {
                     $model->updateData(TABLE_WISHLIST, array('wishlist_status' => '0'), array('wishlist_id' => $is_exists[0]['wishlist_id']));
