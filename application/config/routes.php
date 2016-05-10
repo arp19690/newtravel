@@ -46,7 +46,7 @@ $route['404_override'] = 'index/pageNotFound';
 
 $route['home'] = 'index/index';
 $route['static/(:any)'] = 'staticpage/index/$1';
-$route['contact-us'] = 'staticpage/contact';
+$route['static/contact-us'] = 'staticpage/contact';
 $route['facebook-login'] = 'index/login_with_facebook';
 $route['facebook-auth'] = 'index/facebookAuth';
 $route['facebook-connect'] = 'index/facebookConnect';

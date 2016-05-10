@@ -113,7 +113,7 @@ class Staticpage extends CI_Controller
             $data = array();
             $data["meta_title"] = "Contact Us - " . $this->redis_functions->get_site_setting('SITE_NAME');
 
-            $this->template->write_view("content", "pages/staticpage/contact", $data);
+            $this->template->write_view("content", "pages/staticpage/contact-us", $data);
             $this->template->render();
         }
     }

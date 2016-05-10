@@ -22,3 +22,6 @@ img{max-width: 100%;}
 .my-trips .title p{font-size: 12px;line-height: 16px;margin: 0;}
 .clearfix{clear: both;}
 .review-form{display: inline-block;width: 100%;margin: 0;}
+.company-footer{width: auto;}
+.company-footer a{color: #FFFFFF;text-decoration: none;}
+.company-footer a:hover{color: #ff7200;}
