@@ -22,6 +22,8 @@ class Redisfunctions
         $this->set_activity_master();
         $this->set_static_page_content();
         $this->set_travel_mediums();
+        $this->set_all_user_profile_data(1);
+        $this->set_trip_faqs();
     }
 
     public function set_featured_trips()
@@ -70,6 +72,39 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_all_trips()
+    {
+        $key_array = array();
+        $custom_model = new Custom_model();
+        $where_cond_str = 'p.post_published = "1"';
+        $records = $custom_model->get_search_results('p.post_url_key', $where_cond_str);
+        if (count($records) > 0)
+        {
+            foreach ($records as $value)
+            {
+                $key_array[] = $value['post_url_key'];
+            }
+            $this->ci->redis->set('all_trips', json_encode($key_array));
+        }
+
+        return $key_array;
+    }
+
+    public function get_all_trips()
+    {
+        $output = array();
+        if ($this->ci->redis->exists('all_trips') == TRUE)
+        {
+            $output = (array) json_decode($this->ci->redis->get('all_trips'));
+        }
+        else
+        {
+            $output = $this->set_all_trips();
+        }
+
+        return $output;
+    }
+
     public function is_featured_trip($url_key)
     {
         $featured_trips = (array) $this->get_featured_trips();
@@ -109,9 +144,17 @@ class Redisfunctions
         $custom_model = new Custom_model();
         $custom_model->verify_trip_status($url_key);
         $trip_details = $custom_model->get_trip_detail($url_key);
-        if (count($trip_details) > 0)
+        if (!empty($trip_details))
         {
             $this->ci->redis->hSet('trips', $url_key, json_encode($trip_details));
+
+            // now fetch the owner username and update user profiel date redis index key
+            $model = new Common_model();
+            $user_record = $model->fetchSelectedData('user_username', TABLE_USERS, array('user_id' => $trip_details['post_user_id']));
+            if (!empty($user_record))
+            {
+                $this->set_user_profile_data($user_record[0]['user_username']);
+            }
         }
 
         return $trip_details;
@@ -233,18 +276,28 @@ class Redisfunctions
         return $output;
     }
 
-    public function set_user_profile_data($username, $fields = NULL)
+    public function set_all_user_profile_data($user_status = 1)
     {
-        if ($fields == NULL)
-        {
-            $fields = 'user_id, user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
-        }
-
         $model = new Common_model();
-        $records = $model->fetchSelectedData($fields, TABLE_USERS, array('user_username' => $username));
+        $fields = 'user_username';
+        $where_cond_arr = array('user_status' => (string) $user_status);
+        $records = $model->fetchSelectedData($fields, TABLE_USERS, $where_cond_arr);
         if (!empty($records))
         {
-            $records = $records[0];
+            foreach ($records as $value)
+            {
+                $this->set_user_profile_data($value['user_username']);
+            }
+        }
+        return TRUE;
+    }
+
+    public function set_user_profile_data($username, $fields = NULL)
+    {
+        $custom_model = new Custom_model();
+        $records = $custom_model->get_user_profile_data($username, $fields);
+        if (!empty($records))
+        {
             $this->ci->redis->hSet('user_profile', $records['user_username'], json_encode($records));
         }
         return $records;
@@ -290,6 +343,27 @@ class Redisfunctions
         else
         {
             $output = $this->set_unread_chats_username($username);
+        }
+        return $output;
+    }
+
+    public function set_trip_faqs()
+    {
+        $model = new Common_model();
+        $records = $model->fetchSelectedData('faq_id, faq_question, faq_answer', TABLE_FAQ, array('faq_type' => 'trip', 'faq_status' => '1'), 'faq_order');
+        $this->ci->redis->set('trip_faqs', json_encode($records));
+        return $records;
+    }
+
+    public function get_trip_faqs()
+    {
+        if ($this->ci->redis->exists('trip_faqs') == TRUE)
+        {
+            $output = json_decode($this->ci->redis->get('trip_faqs'));
+        }
+        else
+        {
+            $output = $this->set_trip_faqs();
         }
         return $output;
     }

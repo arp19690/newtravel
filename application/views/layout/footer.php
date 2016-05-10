@@ -110,8 +110,8 @@ $latest_trips = $redis_functions->get_latest_trips();
     <div class="wrapper-padding">
         <div class="footer-left">&copy; Copyright <?php echo date('Y'); ?>. All rights reserved.</div>
         <div class="footer-social">
-            <a href="<?php echo get_external_url($redis_functions->get_site_setting('TWITTER_SOCIAL_LINK')); ?>" target="_blank" class="social-twitter"></a>
-            <a href="<?php echo get_external_url($redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK')); ?>" target="_blank" class="social-facebook"></a>
+            <a href="<?php echo $redis_functions->get_site_setting('TWITTER_SOCIAL_LINK'); ?>" target="_blank" class="social-twitter track-external-redirect"></a>
+            <a href="<?php echo $redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK'); ?>" target="_blank" class="social-facebook track-external-redirect"></a>
         </div>
         <div class="clear"></div>
     </div>
@@ -124,7 +124,7 @@ $latest_trips = $redis_functions->get_latest_trips();
 <script src="<?php echo JS_PATH; ?>/script.js"></script>
 <script src="<?php echo JS_PATH; ?>/owl.carousel.min.js"></script>
 <script src="<?php echo JS_PATH; ?>/custom.select.js"></script>  
-<script src="<?php echo JS_PATH; ?>/jquery-ui.min.js"></script>  
+<script src="<?php echo JS_PATH; ?>/jquery-ui.min.js"></script>
 <!--<script type="text/javascript" src="<?php echo JS_PATH; ?>/twitterfeed.js"></script>-->
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>/application.js"></script>

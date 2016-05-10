@@ -94,4 +94,34 @@ $(document).ready(function () {
     setTimeout(function () {
         $('.notification-area').slideUp('slow');
     }, 2500);
+
+    $('.track-external-redirect').click(function (e) {
+        e.preventDefault();
+        var next_url = $(this).attr('href');
+        if (next_url != '#' && next_url != '')
+        {
+            next_url = js_base_url + 'r?url=' + next_url;
+            if ($(this).attr('target') == '_blank')
+            {
+                window.open(next_url);
+            }
+            else
+            {
+                window.location.href = next_url;
+            }
+        }
+    });
+
+    $(document.body).on('appear', '.fly-in', function (e, $affected) {
+        $(this).addClass("appeared");
+        $('.about-percent-a').each(function () {
+            var $value = $(this).attr('data-percentage');
+            if ($(this).is(':in-viewport')) {
+                $(this).find('span').animate({
+                    width: $value + '%'
+                }, 1400);
+            }
+        });
+    });
+    $('.fly-in').appear({force_process: true});
 });

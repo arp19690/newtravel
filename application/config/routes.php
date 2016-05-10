@@ -57,19 +57,25 @@ $route['forgot-password'] = 'index/forgotPassword';
 $route['change-password'] = 'user/changePassword';
 $route['activate'] = 'index/activate';
 $route['my-account'] = 'user/myAccount';
+$route['r'] = 'index/external_redirect';
 
 $route['trip/post/add'] = 'trip/add_new';
 $route['trip/post/edit/(:num)/(:any)'] = 'trip/add_new/$1/$2';
 $route['my-trips/(:any)'] = 'trip/my_posts/$1';
+$route['joined-trips/(:any)'] = 'trip/trips_joined_by_me/$1';
+$route['my-wishlist/(:any)'] = 'trip/my_wishlist/$1';
 $route['trip/view/(:any)'] = 'trip/trip_details/$1';
 $route['trip/delete/(:any)'] = 'trip/delete_trip/$1';
 $route['trip/search/query'] = 'trip/search_query';
+$route['trip/all-trips'] = 'trip/all_posts';
+$route['trip/show-interest/(:any)'] = 'trip/show_interest/$1';
 
 $route['trip/get-featured'] = 'payments/payment_for_featured_post';
 $route['trip/paypal-cancel'] = 'payments/paypal_cancel';
 $route['trip/paypal-success'] = 'payments/paypal_success';
 
 $route['my-chats'] = 'messages/index';
+$route['user/(:any)'] = 'user/public_profile/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -86,8 +86,8 @@ input,select,button,textarea {outline:none;}
 .header-curency .curency-drop div {margin-bottom:8px;}
 .header-curency .curency-drop a {font-size:11px;color:#697374;margin:0px;padding:0px;height:auto;display:inline;text-transform:uppercase;border:0px;}
 .header-b {height:89px;width:100%;background:#fff;-webkit-box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);-moz-box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);}
-.header-logo {float:left;margin:26px 0px 0px 0px;}
-.header-logo img {width:188px;}
+.header-logo {float:left;margin:20px 0px 0px 0px;}
+.header-logo img {width:345px;}
 /*.fixed .header-logo img {width:39px;}*/
 .header-right {float:right; margin-top:37px;}
 .header-nav {float:right;}

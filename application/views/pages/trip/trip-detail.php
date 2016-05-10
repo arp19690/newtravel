@@ -1,4 +1,7 @@
 <?php
+$redis_functions = new Redisfunctions();
+
+$post_owner_records = $redis_functions->get_user_profile_data($post_details['post_user_username']);
 $post_title = stripslashes($post_details['post_title']);
 $post_description = stripslashes($post_details['post_description']);
 $post_primary_image = base_url(getImage($post_details['post_primary_image']));
@@ -136,15 +139,34 @@ if (!empty($post_details['post_regions']))
                             <div class="tour-icon-person"><?php echo count($post_details['post_travelers']) . ' traveler' . (count($post_details['post_travelers']) == 1 ? '' : 's'); ?></div>
                             <div class="clear"></div>
                         </div>
+                        <div class="h-tour">
+                            <div class="tour-icon-txt">Posted by:</div>
+                            <div class="tour-icon-txt"><a href="<?php echo base_url('user/' . stripslashes($post_owner_records['user_username'])); ?>" style="margin-left:10px;"><?php echo stripslashes($post_owner_records['user_fullname']); ?></a></div>
+                            <div class="clear"></div>
+                        </div>
                         <div class="h-detail-stars">
-                            <ul class="h-stars-list">
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-a.png"></a></li>
-                            </ul>
-                            <div class="h-stars-lbl">156 reviews</div>
+                            <?php
+                            if (count($post_details['post_ratings']) > 0)
+                            {
+                                $post_aggregate_ratings = $post_details['post_aggregate_ratings'];
+                                ?>
+                                <ul class="h-stars-list">
+                                    <?php
+                                    for ($aggregate_i = 1; $aggregate_i <= $post_aggregate_ratings; $aggregate_i++)
+                                    {
+                                        echo '<li><img alt="' . $aggregate_i . '" src="' . IMAGES_PATH . '/hd-star-b.png"></li>';
+                                    }
+
+                                    for ($blank_aggregate_i = 1; $blank_aggregate_i <= (5 - $post_aggregate_ratings); $blank_aggregate_i++)
+                                    {
+                                        echo '<li><img alt="' . ($post_aggregate_ratings + $blank_aggregate_i) . '" src="' . IMAGES_PATH . '/hd-star-a.png"></li>';
+                                    }
+                                    ?>
+                                </ul>
+                                <?php
+                            }
+                            ?>
+                            <div class="h-stars-lbl"><?php echo number_format(count($post_details['post_ratings'])); ?> review<?php echo count($post_details['post_ratings']) > 1 ? 's' : ''; ?></div>
                             <a href="#" class="h-add-review">add review</a>
                             <div class="clear"></div>
                         </div>
@@ -152,17 +174,17 @@ if (!empty($post_details['post_regions']))
                             <p><?php echo $post_description; ?></p>
                         </div>
                         <?php
-                        if (isset($this->session->userdata['user_id']) && $this->session->userdata['user_id'] != $post_details['post_user_id'])
+                        if (@$this->session->userdata['user_id'] != $post_details['post_user_id'])
                         {
                             ?>
-                            <a href="#" class="wishlist-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="wishlist-btn">
                                 <span class="wishlist-btn-l"><i></i></span>
                                 <span class="wishlist-btn-r">Add to wish list</span>
                                 <div class="clear"></div>
                             </a>
-                            <a href="#" class="book-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
                                 <span class="book-btn-l"><i></i></span>
-                                <span class="book-btn-r">book now</span>
+                                <span class="book-btn-r">I am interested</span>
                                 <div class="clear"></div>
                             </a>
                             <?php
@@ -170,166 +192,14 @@ if (!empty($post_details['post_regions']))
                         ?>
                     </div>
 
-                    <div class="reasons-rating">
-                        <div id="reasons-slider">
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Gabriela King</b>
-                                        <span>from United Kingdom</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Robert Dowson</b>
-                                        <span>from Austria</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Mike Tyson</b>
-                                        <span>from France</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                        </div>
-                    </div>
+                    <?php
+                    $this->load->view('pages/trip/trip-detail-reasons');
 
-                    <div class="h-liked">
-                        <div class="h-liked-lbl">You May Also Like</div>
-                        <div class="h-liked-row">
-                            <!-- // -->
-                            <div class="h-liked-item">
-                                <div class="h-liked-item-i">
-                                    <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-01.jpg"></a>
-                                    </div>
-                                    <div class="h-liked-item-c">
-                                        <div class="h-liked-item-cb">
-                                            <div class="h-liked-item-p">
-                                                <div class="h-liked-title"><a href="#">Andrassy Thai Hotel</a></div>
-                                                <div class="h-liked-rating">
-                                                    <nav class="stars">
-                                                        <ul>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                                        </ul>
-                                                        <div class="clear"></div>
-                                                    </nav>
-                                                </div>
-                                                <div class="h-liked-foot">
-                                                    <span class="h-liked-price">850$</span>
-                                                    <span class="h-liked-comment">avg/night</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>	
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="h-liked-item">
-                                <div class="h-liked-item-i">
-                                    <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-02.jpg"></a>
-                                    </div>
-                                    <div class="h-liked-item-c">
-                                        <div class="h-liked-item-cb">
-                                            <div class="h-liked-item-p">
-                                                <div class="h-liked-title"><a href="#">Campanile Cracovie</a></div>
-                                                <div class="h-liked-rating">
-                                                    <nav class="stars">
-                                                        <ul>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                                        </ul>
-                                                        <div class="clear"></div>
-                                                    </nav>
-                                                </div>
-                                                <div class="h-liked-foot">
-                                                    <span class="h-liked-price">964$</span>
-                                                    <span class="h-liked-comment">avg/night</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>	
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="h-liked-item">
-                                <div class="h-liked-item-i">
-                                    <div class="h-liked-item-l">
-                                        <a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/like-03.jpg"></a>
-                                    </div>
-                                    <div class="h-liked-item-c">
-                                        <div class="h-liked-item-cb">
-                                            <div class="h-liked-item-p">
-                                                <div class="h-liked-title"><a href="#">Ermin's Hotel</a></div>
-                                                <div class="h-liked-rating">
-                                                    <nav class="stars">
-                                                        <ul>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-b.png" /></a></li>
-                                                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/star-a.png" /></a></li>
-                                                        </ul>
-                                                        <div class="clear"></div>
-                                                    </nav>
-                                                </div>
-                                                <div class="h-liked-foot">
-                                                    <span class="h-liked-price">500$</span>
-                                                    <span class="h-liked-comment">avg/night</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>	
-                            </div>
-                            <!-- \\ -->
-                        </div>			
-                    </div>
+                    if (!empty($post_details['you_may_like']))
+                    {
+                        $this->load->view('pages/trip/you-may-like', array('you_may_like_records' => $post_details['you_may_like']));
+                    }
+                    ?>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -343,37 +213,6 @@ if (!empty($post_details['post_regions']))
 <script type="text/javascript">
     $(document).ready(function () {
         $('.custom-select').customSelect();
-        $('.review-ranger').each(function () {
-            var $this = $(this);
-            var $index = $(this).index();
-            if ($index == '0') {
-                var $val = '3.0'
-            } else if ($index == '1') {
-                var $val = '3.8'
-            } else if ($index == '2') {
-                var $val = '2.8'
-            } else if ($index == '3') {
-                var $val = '4.8'
-            } else if ($index == '4') {
-                var $val = '4.3'
-            } else if ($index == '5') {
-                var $val = '5.0'
-            }
-            $this.find('.slider-range-min').slider({
-                range: "min",
-                step: 0.1,
-                value: $val,
-                min: 0.1,
-                max: 5.1,
-                create: function (event, ui) {
-                    $this.find('.ui-slider-handle').append('<span class="range-holder"><i></i></span>');
-                },
-                slide: function (event, ui) {
-                    $this.find(".range-holder i").text(ui.value);
-                }
-            });
-            $this.find(".range-holder i").text($val);
-        });
 
         $('#reasons-slider').bxSlider({
             infiniteLoop: true,

@@ -11,3 +11,14 @@ img{max-width: 100%;}
 .trip-a-tag{position: relative;display: inline-block;}
 .img-featured-tag{position: absolute;top: 0;left: 0;z-index: 999;}
 .img-featured-text{color: #fff;background: #ff7200;display: inline-block;padding: 7px 8px;margin: 0;border-radius: 0 0 4px 0;font-size: 13px;}
+.my-trips{display: inline-block;width: 100%;list-style: none;margin: 0;padding: 0;}
+.my-trips li a{display: inline-block;width: 100%;padding: 10px;text-decoration: none;border-bottom: 1px solid #e1e1e1;}
+.my-trips li a:first-child{border-top: 1px solid #e1e1e1;}
+.my-trips li a:hover{background-color: #FF7200;color: #FFFFFF;}
+.my-trips li a:hover p{color: #FFFFFF;}
+.my-trips li a > div{display: inline-block;vertical-align: top;}
+.my-trips .image{max-width: 75px;margin-right: 8px;}
+.my-trips .title h4{margin: 0;}
+.my-trips .title p{font-size: 12px;line-height: 16px;margin: 0;}
+.clearfix{clear: both;}
+.review-form{display: inline-block;width: 100%;margin: 0;}

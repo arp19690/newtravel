@@ -29,6 +29,7 @@ if (isset($this->session->userdata['user_username']))
                         <li><a href="<?php echo base_url('my-chats'); ?>">My Chats <?php echo $unread_chats_count > 0 ? '(' . $unread_chats_count . ')' : ''; ?></a></li>
                         <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                         <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                        <li><a href="<?php echo base_url('my-wishlist/list'); ?>">My Wishlist</a></li>
                         <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>	
                     </ul>						
                 </li>	
@@ -84,6 +85,7 @@ if (isset($this->session->userdata['user_username']))
                             <li><a href="<?php echo base_url('my-chats'); ?>">My Chats <?php echo $unread_chats_count > 0 ? '(' . $unread_chats_count . ')' : ''; ?></a></li>
                             <li><a href="<?php echo base_url('my-account'); ?>">My Account</a></li>
                             <li><a href="<?php echo base_url('my-trips/list'); ?>">My Trips</a></li>
+                            <li><a href="<?php echo base_url('my-wishlist/list'); ?>">My Wishlist</a></li>
                             <li><a href="<?php echo base_url('logout'); ?>">Logout</a></li>
                         </ul>
                     </li>

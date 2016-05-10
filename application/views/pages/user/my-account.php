@@ -22,19 +22,19 @@
                         {
                             ?>
                             <div class="clear" style="margin-bottom:20px;">
-                                <a href="<?php echo base_url('facebook-connect'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Connect with Facebook</a>    
+                                <a href="<?php echo base_url('facebook-connect'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;|&nbsp;Connect with Facebook</a>    
                             </div>
                             <?php
                         }
                         ?>
                         <div class="clear">
-                            <img src="<?php echo getImage($record['user_profile_picture']); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
+                            <img src="<?php echo base_url(getImage($record['user_profile_picture'])); ?>" alt="<?php echo stripslashes($record['user_fullname']); ?>" style="width:250px;"/>
                         </div>
 
                         <div class="clear">
                             <form action="<?php echo base_url('user/changeProfilePicture'); ?>" method="post" enctype="multipart/form-data" class="img-upload-form">
                                 <input type="hidden" name="next" value="<?php echo current_url(); ?>"/>
-                                <label for="user_img" class="hightile-a" style="padding:10px;cursor:pointer;margin: 0;">Change Image</label>
+                                <label for="user_img" class="hightile-a" style="padding:10px;cursor:pointer;margin: 0;"><span class="fa fa-photo"></span>&nbsp;Change Image</label>
                                 <input type="file" name="user_img" id="user_img" style="display:none;"/>
                             </form>
                             <div class="clear"></div>
@@ -44,7 +44,7 @@
 
                     <div class="contacts-colls-r">
                         <div class="contacts-colls-rb">
-                            <div class="contact-colls-lbl">Personal Information<span style="display:inline-block;float: right;"><a href='<?php echo base_url('change-password'); ?>' style="text-decoration: none;color: #ff7200;font-weight: normal;font-size: 12px;">Change Password</a></span></div>
+                            <div class="contact-colls-lbl">Personal Information<span style="display:inline-block;float: right;"><a href='<?php echo base_url('change-password'); ?>' style="text-decoration: none;color: #ff7200;font-weight: normal;font-size: 12px;"><span class="fa fa-lock"></span>&nbsp;Change Password</a></span></div>
                             <div class="booking-form">
                                 <form id="contact_form" action="" method="post">
                                     <div class="clear">
@@ -151,7 +151,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" name="btn_submit" class="contacts-send">Update</button>
+                                    <button type="submit" name="btn_submit" class="contacts-send"><span class="fa fa-arrow-up"></span>&nbsp;Update</button>
                                 </form>
                             </div>
                         </div>

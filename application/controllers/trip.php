@@ -515,16 +515,21 @@ class Trip extends CI_Controller
         return TRUE;
     }
 
-    public function my_posts($view_type = 'list', $page = 1)
+    public function all_posts($view_type = 'list', $page = 1)
     {
         $data = array();
-        $user_id = $this->session->userdata["user_id"];
-        $model = new Common_model();
-        $page_title = 'Trips I\'ve Posted';
+        $post_records = array();
+        $redis_functions = new Redisfunctions();
+        $page_title = 'All Trips';
 
-        $whereConsStr = array('post_user_id' => $user_id);
-        $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
-        $post_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, $whereConsStr, 'post_id', 'DESC', $limit);
+        $all_post_url_keys = $redis_functions->get_all_trips();
+        if (!empty($all_post_url_keys))
+        {
+            foreach ($all_post_url_keys as $url_key)
+            {
+                $post_records[] = $redis_functions->get_trip_details($url_key);
+            }
+        }
 
         $input_arr = array(
             base_url() => 'Home',
@@ -538,6 +543,58 @@ class Trip extends CI_Controller
         $data["breadcrumbs"] = $breadcrumbs;
         $data["page_title"] = $page_title;
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
+    }
+
+    public function my_posts($view_type = 'list', $page = 1)
+    {
+        $data = array();
+        $redis_functions = new Redisfunctions();
+        $page_title = 'Trips I\'ve Posted';
+
+        $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
+        $user_records = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+        $post_records = $user_records['trips_posted'];
+
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
+    }
+
+    public function my_wishlist($view_type = 'list', $page = 1)
+    {
+        $data = array();
+        $redis_functions = new Redisfunctions();
+        $page_title = 'My Wishlist';
+
+        $limit = getPaginationLimit($page, TRIPS_PAGINATION_LIMIT);
+        $user_records = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+        $post_records = $user_records['my_wishlist'];
+
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
     }
@@ -583,7 +640,7 @@ class Trip extends CI_Controller
             {
                 $model->updateData(TABLE_POSTS, array('post_status' => '3'), $where_cond_arr);
                 $this->redis_functions->remove_trip_details($post_url_key);
-                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']), ' successfully deleted');
+                $this->session->set_flashdata('success', stripslashes($post_details[0]['post_title']) . ' successfully deleted');
             }
             else
             {
@@ -671,7 +728,7 @@ class Trip extends CI_Controller
             $group_by = 'p.post_id HAVING COUNT(pt_post_id) >= ' . $search_travelers;
         }
 
-        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+        $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by, $group_by);
 
         $input_arr = array(
             base_url() => 'Home',
@@ -716,7 +773,7 @@ class Trip extends CI_Controller
             $order_by = get_post_mysql_sort_by(@$params['sort']);
             $group_by = 'p.post_id';
             $where_cond_str = '1';
-            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $group_by, $order_by);
+            $search_results = $custom_model->get_search_results('p.post_url_key', $where_cond_str, $order_by, $group_by);
 
             $input_arr = array(
                 base_url() => 'Home',
@@ -738,6 +795,96 @@ class Trip extends CI_Controller
         {
             display_404_page();
         }
+    }
+
+    public function show_interest($trip_url_key)
+    {
+        if (isset($this->session->userdata['user_id']))
+        {
+            $redis_functions = new Redisfunctions();
+            $trip_details = $redis_functions->get_trip_details($trip_url_key);
+            if (!empty($trip_details))
+            {
+                if ($this->session->userdata['user_id'] != $trip_details['post_user_id'])
+                {
+                    $user_details = $redis_functions->get_user_profile_data($this->session->userdata['user_username']);
+
+                    $model = new Common_model();
+                    $data_array = array(
+                        'pt_post_id' => $trip_details['post_id'],
+                        'pt_traveler_name' => addslashes($user_details['user_fullname']),
+                        'pt_traveler_email' => addslashes($user_details['user_email']),
+                        'pt_traveler_gender' => $user_details['user_gender'],
+                        'pt_traveler_user_id' => $this->session->userdata['user_id'],
+                        'pt_traveler_city' => $user_details['user_city'],
+                        'pt_traveler_region' => $user_details['user_region'],
+                        'pt_traveler_country' => $user_details['user_country'],
+                        'pt_traveler_location' => $user_details['user_location'],
+                        'pt_languages_known' => $user_details['user_languages_known'],
+                        'pt_added_by' => $this->session->userdata['user_id'],
+                    );
+                    $is_exists = $model->fetchSelectedData('pt_id', TABLE_POST_TRAVELERS, array('pt_post_id' => $trip_details['post_id'], 'pt_traveler_user_id' => $this->session->userdata['user_id'], 'pt_removed_by' => NULL));
+                    if (!empty($is_exists))
+                    {
+                        $this->session->set_flashdata('error', 'You have already shown your interest in this trip');
+                    }
+                    else
+                    {
+                        $model->insertData(TABLE_POST_TRAVELERS, $data_array);
+                        $this->session->set_flashdata('success', '<strong>Success!</strong> Interest shown');
+                    }
+                    redirect(getTripUrl($trip_url_key));
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'You are not allowed to perform this action');
+                    redirect(getTripUrl($trip_url_key));
+                }
+            }
+            else
+            {
+                display_404_page();
+            }
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
+    public function trips_joined_by_me($view_type = 'list', $page = 1)
+    {
+        $redis_functions = new Redisfunctions();
+        $username = $this->session->userdata['user_username'];
+        $user_profile_data = $redis_functions->get_user_profile_data($username);
+        $trips_joined = $user_profile_data['trips_joined'];
+        $post_records = array();
+        if (!empty($trips_joined))
+        {
+            foreach ($trips_joined as $value)
+            {
+                if ($value->post_published == '1')
+                {
+                    $post_records[] = $redis_functions->get_trip_details($value->post_url_key);
+                }
+            }
+        }
+
+        $page_title = 'Trips I\'ve joined';
+        $input_arr = array(
+            base_url() => 'Home',
+            '#' => $page_title,
+        );
+        $breadcrumbs = get_breadcrumbs($input_arr);
+
+        $data["post_records"] = $post_records;
+        $data["view_type"] = $view_type;
+        $data["page"] = $page;
+        $data["breadcrumbs"] = $breadcrumbs;
+        $data["page_title"] = $page_title;
+        $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+        $this->template->write_view("content", "pages/trip/listing/list-page", $data);
+        $this->template->render();
     }
 
 }

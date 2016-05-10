@@ -20,6 +20,8 @@ class Custom_model extends CI_Model
             $post_id = $post_records[0]['post_id'];
             $output = $post_records[0];
 
+            $output['post_user_username'] = $model->fetchSelectedData('user_username', TABLE_USERS, array('user_id' => $post_records[0]['post_user_id']))[0]['user_username'];
+
             $post_activities_records = $model->getAllDataFromJoin('*', TABLE_POST_ACTIVITIES . ' as pa', array(TABLE_ACTIVITIES_MASTER . ' as am' => 'am.am_id = pa.pa_activity_id'), 'INNER', array('pa_post_id' => $post_id, 'am_status' => '1'), 'am_title');
             $output['post_activities'] = $post_activities_records;
 
@@ -66,8 +68,11 @@ class Custom_model extends CI_Model
                 $output['post_total_days'] = round((strtotime($post_start_end_date_record[0]['end_date']) - strtotime($post_start_end_date_record[0]['start_date'])) / (3600 * 24));
             }
 
-            $post_comments_records = $model->fetchSelectedData('*', TABLE_POST_COMMENTS, array('pcm_post_id' => $post_id));
-            $output['post_comments'] = $post_comments_records;
+            $post_comments_records = $model->getAllDataFromJoin('rating_stars, rating_comment, rating_updated_on, rating_status, user_username, user_fullname, user_profile_picture, user_country, rating_recommended', TABLE_POST_RATINGS, array(TABLE_USERS => 'user_id = rating_user_id'), 'LEFT', array('rating_post_id' => $post_id), 'rating_id', 'DESC');
+            $output['post_ratings'] = $post_comments_records;
+
+            $post_aggregate_comments_records = $model->fetchSelectedData('SUM(rating_stars)/COUNT(rating_id) as aggregate_reviews', TABLE_POST_RATINGS, array('rating_post_id' => $post_id));
+            $output['post_aggregate_ratings'] = number_format($post_aggregate_comments_records[0]['aggregate_reviews'], 1);
 
             $post_costs_records = $model->fetchSelectedData('*', TABLE_POST_COSTS, array('cost_post_id' => $post_id));
             $output['post_costs'] = $post_costs_records;
@@ -102,6 +107,10 @@ class Custom_model extends CI_Model
 
             $post_videos_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'video', 'pm_status' => '1'));
             $output['post_media']['videos'] = $post_videos_records;
+
+            // adding you may like data below
+            $you_may_like = $this->get_you_may_like($url_key);
+            $output['you_may_like'] = $you_may_like;
         }
         return $output;
     }
@@ -114,7 +123,7 @@ class Custom_model extends CI_Model
         {
             if (isset($this->session->userdata["user_id"]) && $post_details['post_user_id'] == @$this->session->userdata["user_id"])
             {
-                $post_published = 1;
+                $post_published = '1';
 
                 $required_keys = array(
                     'post_title' => 'Please enter a title',
@@ -124,11 +133,14 @@ class Custom_model extends CI_Model
 
                 foreach ($required_keys as $key => $error_message)
                 {
-                    if (empty($key))
+                    if (isset($post_details[$key]))
                     {
-                        $post_published = 0;
-                        $this->session->set_flashdata('warning', $error_message);
-                        break;
+                        if (empty($post_details[$key]))
+                        {
+                            $post_published = '0';
+                            $this->session->set_flashdata('error', $error_message);
+                            break;
+                        }
                     }
                 }
 
@@ -152,8 +164,18 @@ class Custom_model extends CI_Model
         return $records;
     }
 
-    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $group_by = 'p.post_id', $order_by = 'p.post_title ASC')
+    public function get_search_results($fields = 'p.post_url_key', $where_cond_str = '1', $order_by = NULL, $group_by = NULL, $limit = '0, 1000')
     {
+        if ($order_by == NULL)
+        {
+            $order_by = 'p.post_title ASC';
+        }
+
+        if ($group_by == NULL)
+        {
+            $group_by = 'p.post_id';
+        }
+
         $output = array();
         $sql = 'SELECT ' . $fields . ' FROM `posts` as p 
                     left join post_regions as pr on pr.pr_post_id = p.post_id
@@ -161,7 +183,7 @@ class Custom_model extends CI_Model
                     left join post_travelers as pt on pt.pt_post_id = p.post_id
                     WHERE ' . $where_cond_str . '
                     GROUP BY ' . $group_by . ' 
-                    ORDER BY ' . $order_by;
+                    ORDER BY ' . $order_by . ' LIMIT ' . $limit;
         $records = $this->db->query($sql)->result_array();
 
         if (!empty($records))
@@ -237,6 +259,105 @@ class Custom_model extends CI_Model
         }
 
         return $output;
+    }
+
+    public function get_you_may_like($current_url_key, $max_results = 5)
+    {
+        $redis_functions = new Redisfunctions();
+        $post_details = $redis_functions->get_trip_details($current_url_key);
+        $post_regions = $post_from_dates = $post_to_dates = $post_activities = $where_arr = $output_data = array();
+
+        // Adding post regions to where str
+        if (!empty($post_details['post_regions']))
+        {
+            foreach ($post_details['post_regions'] as $region_key => $region_value)
+            {
+                $post_regions[] = $region_value->pr_source_region;
+                $post_regions[] = $region_value->pr_destination_region;
+
+                // Adding from and to date of the trip to match
+                $post_from_dates[] = $region_value->pr_from_date;
+                $post_to_dates[] = $region_value->pr_to_date;
+            }
+        }
+
+        // Adding post activities
+        if (!empty($post_details['post_activities']))
+        {
+            foreach ($post_details['post_activities'] as $activity_key => $activity_value)
+            {
+                $post_activities[] = $activity_value->pa_activity_id;
+            }
+        }
+
+        if (!empty($post_regions))
+        {
+            $imploded_regions = '"' . implode('", "', array_unique($post_regions)) . '"';
+            $where_arr[] = 'pr.pr_source_region IN (' . $imploded_regions . ')';
+            $where_arr[] = 'pr.pr_destination_region IN (' . $imploded_regions . ')';
+        }
+
+        if (!empty($post_from_dates))
+        {
+            $imploded_from_dates = '"' . implode('", "', array_unique($post_from_dates)) . '"';
+            $where_arr[] = 'pr.pr_from_date IN (' . $imploded_from_dates . ')';
+        }
+
+        if (!empty($post_to_dates))
+        {
+            $imploded_to_dates = '"' . implode('", "', array_unique($post_to_dates)) . '"';
+            $where_arr[] = 'pr.pr_to_date IN (' . $imploded_to_dates . ')';
+        }
+
+        if (!empty($post_activities))
+        {
+            $imploded_activities = '"' . implode('", "', array_unique($post_activities)) . '"';
+            $where_str[] = 'pa.pa_activity_id IN (' . $imploded_activities . ')';
+        }
+
+        if (!empty($where_str))
+        {
+            $where_str = 'p.post_url_key != "' . $current_url_key . '" AND (' . implode(' OR ', $where_arr) . ')';
+            $records = $search_results = $this->get_search_results('p.post_url_key', $where_str, NULL, NULL, $max_results);
+            if (!empty($records))
+            {
+                foreach ($records as $value)
+                {
+                    $output_data[] = $redis_functions->get_trip_details($value['post_url_key']);
+                }
+            }
+        }
+        return $output_data;
+    }
+
+    public function get_user_profile_data($username, $user_fields = NULL)
+    {
+        if ($user_fields == NULL)
+        {
+            $user_fields = 'user_id, user_fullname, user_username, user_email, user_city, user_state, user_country, user_location, user_latitude, user_longitude, user_dob, user_gender, user_relationship_status, user_about, user_tagline, user_profile_picture, user_facebook_id, user_languages_known';
+        }
+
+        $model = new Common_model();
+        $records = $model->fetchSelectedData($user_fields, TABLE_USERS, array('user_username' => $username));
+        if (!empty($records))
+        {
+            $records = $records[0];
+        }
+
+        // to fetch trips posted by the user
+        $trips_posted_records = $model->fetchSelectedData('post_id, post_url_key, post_published', TABLE_POSTS, array('post_user_id' => $records['user_id']), 'post_id', 'DESC');
+        $records['trips_posted'] = $trips_posted_records;
+
+        // to fetch the trips owner has joined
+        $sql = 'SELECT post_url_key, post_published FROM ' . TABLE_POST_TRAVELERS . ' LEFT JOIN ' . TABLE_POSTS . ' ON post_id = pt_post_id WHERE pt_traveler_user_id = ' . $records['user_id'] . ' AND post_user_id != ' . $records['user_id'];
+        $trips_joined_records = $this->db->query($sql)->result_array();
+        $records['trips_joined'] = $trips_joined_records;
+
+        // to fetch user's wishlist
+        $wishlist_records = $model->getAllDataFromJoin('post_url_key', TABLE_WISHLIST, array(TABLE_POSTS => 'post_id = wishlist_post_id'), 'LEFT', array('wishlist_status' => '1', 'post_published' => '1', 'wishlist_user_id' => $records['user_id']), 'wishlist_id', 'DESC');
+        $records['my_wishlist'] = $wishlist_records;
+
+        return $records;
     }
 
 }
