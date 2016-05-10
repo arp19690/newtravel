@@ -170,60 +170,9 @@ if (!empty($post_details['post_regions']))
                         ?>
                     </div>
 
-                    <div class="reasons-rating">
-                        <div id="reasons-slider">
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Gabriela King</b>
-                                        <span>from United Kingdom</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Robert Dowson</b>
-                                        <span>from Austria</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                            <!-- // -->
-                            <div class="reasons-rating-i">
-                                <div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div>
-                                <div class="reasons-rating-user">
-                                    <div class="reasons-rating-user-l">
-                                        <img alt="" src="<?php echo IMAGES_PATH; ?>/r-user.png">
-                                        <span>5.0</span>
-                                    </div>
-                                    <div class="reasons-rating-user-r">
-                                        <b>Mike Tyson</b>
-                                        <span>from France</span>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-                            <!-- \\ -->
-                        </div>
-                    </div>
-
                     <?php
+                    $this->load->view('pages/trip/trip-detail-reasons');
+
                     if (!empty($post_details['you_may_like']))
                     {
                         $this->load->view('pages/trip/you-may-like', array('you_may_like_records' => $post_details['you_may_like']));
