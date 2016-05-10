@@ -955,7 +955,7 @@ class Trip extends CI_Controller
                 if (!empty($is_exists))
                 {
                     $model->updateData(TABLE_WISHLIST, array('wishlist_status' => '0'), array('wishlist_id' => $is_exists[0]['wishlist_id']));
-                    $this->session->set_flashdata('success', 'Trip removed from your wishlist');
+                    $this->session->set_flashdata('error', 'Trip removed from your wishlist');
                 }
                 else
                 {
