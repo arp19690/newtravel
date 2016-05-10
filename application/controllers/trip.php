@@ -601,11 +601,47 @@ class Trip extends CI_Controller
 
     public function trip_details($post_url_key)
     {
+        $redis_functions = new Redisfunctions();
+        $user_id = NULL;
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $user_id = $this->session->userdata["user_id"];
+        }
+
         $post_details = $this->redis_functions->get_trip_details($post_url_key);
         if (!empty($post_details))
         {
             $data = array();
             $page_title = stripslashes($post_details['post_title']);
+
+            $is_interested = $in_wishlist = FALSE;
+            if ($user_id != NULL)
+            {
+                if (!empty($post_details['post_travelers']))
+                {
+                    foreach ($post_details['post_travelers'] as $traveler_info)
+                    {
+                        if ($user_id == $traveler_info->pt_traveler_user_id)
+                        {
+                            $is_interested = TRUE;
+                            break;
+                        }
+                    }
+                }
+
+                $user_profile_data = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+                if (!empty($user_profile_data['my_wishlist']))
+                {
+                    foreach ($user_profile_data['my_wishlist'] as $wish_value)
+                    {
+                        if ($wish_value->post_url_key == $post_url_key)
+                        {
+                            $in_wishlist = TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
 
             $input_arr = array(
                 base_url() => 'Home',
@@ -614,6 +650,8 @@ class Trip extends CI_Controller
             );
             $breadcrumbs = get_breadcrumbs($input_arr);
 
+            $data["is_interested"] = $is_interested;
+            $data["in_wishlist"] = $in_wishlist;
             $data["post_details"] = $post_details;
             $data["breadcrumbs"] = $breadcrumbs;
             $data["page_title"] = $page_title;

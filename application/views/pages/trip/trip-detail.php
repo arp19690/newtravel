@@ -176,15 +176,30 @@ if (!empty($post_details['post_regions']))
                         <?php
                         if (@$this->session->userdata['user_id'] != $post_details['post_user_id'])
                         {
+                            $wishlist_class_prefix = 'wishlist';
+                            $wishlist_text = 'Add to wishlist';
+                            if ($in_wishlist == TRUE)
+                            {
+                                $wishlist_class_prefix = 'book';
+                                $wishlist_text = 'In your wishlist';
+                            }
+
+                            $interested_class_prefix = 'wishlist';
+                            $interested_text = 'I am interested';
+                            if ($is_interested == TRUE)
+                            {
+                                $interested_class_prefix = 'book';
+                                $interested_text = 'You are in';
+                            }
                             ?>
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/add-to-wishlist/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="wishlist-btn">
-                                <span class="wishlist-btn-l"><i></i></span>
-                                <span class="wishlist-btn-r">Add to wish list</span>
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/add-to-wishlist/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="<?php echo $wishlist_class_prefix; ?>-btn">
+                                <span class="<?php echo $wishlist_class_prefix; ?>-btn-l"><i></i></span>
+                                <span class="<?php echo $wishlist_class_prefix; ?>-btn-r"><?php echo $wishlist_text; ?></span>
                                 <div class="clear"></div>
                             </a>
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="book-btn">
-                                <span class="book-btn-l"><i></i></span>
-                                <span class="book-btn-r">I am interested</span>
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="<?php echo $interested_class_prefix; ?>-btn">
+                                <span class="<?php echo $interested_class_prefix; ?>-btn-l"><i></i></span>
+                                <span class="<?php echo $interested_class_prefix; ?>-btn-r"><?php echo $interested_text; ?></span>
                                 <div class="clear"></div>
                             </a>
                             <?php
