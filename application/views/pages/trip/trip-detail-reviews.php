@@ -1,5 +1,6 @@
 <?php
-$post_comments = $post_details['post_comments'];
+$post_ratings = $post_details['post_ratings'];
+$post_aggregate_ratings = number_format($post_details['post_aggregate_ratings'], 1);
 ?>
 <!-- // content-tabs-i // -->
 <div class="content-tabs-i">
@@ -7,14 +8,20 @@ $post_comments = $post_details['post_comments'];
 
         <div class="reviews-c">
             <div class="reviews-l">
-                <div class="reviews-total">4.7/5.0</div>
+                <div class="reviews-total"><?php echo $post_aggregate_ratings; ?>/5.0</div>
                 <nav class="reviews-total-stars">
                     <ul>
-                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
-                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
-                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
-                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-b.png"></a></li>
-                        <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/r-stars-total-a.png"></a></li>
+                        <?php
+                        for ($aggregate_i = 1; $aggregate_i <= $post_aggregate_ratings; $aggregate_i++)
+                        {
+                            echo '<li><img alt="' . $aggregate_i . '" src="' . IMAGES_PATH . '/r-stars-total-b.png"></li>';
+                        }
+
+                        for ($blank_aggregate_i = 1; $blank_aggregate_i <= (5 - $post_aggregate_ratings); $blank_aggregate_i++)
+                        {
+                            echo '<li><img alt="' . ($post_aggregate_ratings + $blank_aggregate_i) . '" src="' . IMAGES_PATH . '/r-stars-total-a.png"></li>';
+                        }
+                        ?>
                     </ul>
                     <div class="clear"></div>
                 </nav>
@@ -66,18 +73,18 @@ $post_comments = $post_details['post_comments'];
             <h2>User Reviews:</h2>
             <div class="guest-reviews-row">
                 <?php
-                if (!empty($post_comments))
+                if (!empty($post_ratings))
                 {
-                    foreach ($post_comments as $value)
+                    foreach ($post_ratings as $value)
                     {
                         $value = (array) $value;
                         $user_profile_picture = base_url(getImage($value['user_profile_picture']));
                         $user_fullname = stripslashes($value['user_fullname']);
                         $user_username = stripslashes($value['user_username']);
                         $user_country = stripslashes($value['user_country']);
-                        $review_comment = stripslashes($value['pcm_text']);
-                        $review_stars = number_format(stripslashes($value['pcm_stars']), 1);
-                        $recommended = stripslashes($value['pcm_recommended']);
+                        $review_comment = stripslashes($value['rating_comment']);
+                        $review_stars = number_format(stripslashes($value['rating_stars']), 1);
+                        $recommended = stripslashes($value['rating_recommended']);
                         $blank_stars = 5 - $review_stars;
                         ?>
                         <!-- // -->
