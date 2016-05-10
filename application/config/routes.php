@@ -45,8 +45,8 @@ $route['default_controller'] = "index";
 $route['404_override'] = 'index/pageNotFound';
 
 $route['home'] = 'index/index';
-$route['company/(:any)'] = 'staticpage/index/$1';
-$route['contact-us'] = 'staticpage/contact';
+$route['static/(:any)'] = 'staticpage/index/$1';
+$route['static/contact-us'] = 'staticpage/contact';
 $route['facebook-login'] = 'index/login_with_facebook';
 $route['facebook-auth'] = 'index/facebookAuth';
 $route['facebook-connect'] = 'index/facebookConnect';
@@ -69,6 +69,8 @@ $route['trip/delete/(:any)'] = 'trip/delete_trip/$1';
 $route['trip/search/query'] = 'trip/search_query';
 $route['trip/all-trips'] = 'trip/all_posts';
 $route['trip/show-interest/(:any)'] = 'trip/show_interest/$1';
+$route['trip/post-review/(:any)'] = 'trip/store_review/$1';
+$route['trip/add-to-wishlist/(:any)'] = 'trip/add_to_wishlist/$1';
 
 $route['trip/get-featured'] = 'payments/payment_for_featured_post';
 $route['trip/paypal-cancel'] = 'payments/paypal_cancel';

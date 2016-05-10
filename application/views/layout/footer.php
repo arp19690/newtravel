@@ -94,13 +94,28 @@ $latest_trips = $redis_functions->get_latest_trips();
             </div>
         </div>
         <div class="section">
-            <div class="footer-lbl">newsletter sign up</div>
-            <div class="footer-subscribe">
-                <div class="footer-subscribe-a">
-                    <input type="text" placeholder="you email" value="" />
+            <div class="footer-lbl">Company</div>
+            <?php
+            $company_arr = array(
+                base_url('static/about-us') => 'About us',
+                base_url('static/how-it-works') => 'How it works',
+                base_url('static/terms-and-conditions') => 'Terms &amp; Conditions',
+                base_url('static/privacy-policy') => 'Privacy Policy',
+                base_url('static/contact-us') => 'Contact us',
+            );
+
+            foreach ($company_arr as $url => $text)
+            {
+                ?>
+                <div class="footer-tour">
+                    <div class="footer-tour-l company-footer">
+                        <div class="footer-tour-a"><a href="<?php echo $url; ?>"><?php echo $text; ?></a></div>
+                    </div>
+                    <div class="clear"></div>
                 </div>
-            </div>
-            <button class="footer-subscribe-btn">Sign up</button>
+                <?php
+            }
+            ?>
         </div>
     </div>
     <div class="clear"></div>

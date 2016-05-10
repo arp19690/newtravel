@@ -245,15 +245,15 @@ class Redisfunctions
     public function set_static_page_content()
     {
         $model = new Common_model();
-        $records = $model->fetchSelectedData('sp_key, sp_text', TABLE_STATIC_PAGES);
+        $records = $model->fetchSelectedData('sp_key, sp_title, sp_text', TABLE_STATIC_PAGES);
         if (count($records) > 0)
         {
             foreach ($records as $value)
             {
                 $sp_key = $value["sp_key"];
-                $sp_text = $value["sp_text"];
+                $output_data = array('page_title' => stripslashes($value["sp_title"]), 'content' => stripslashes($value["sp_text"]));
 
-                $this->ci->redis->hSet('static_pages', strtolower($sp_key), json_encode($sp_text));
+                $this->ci->redis->hSet('static_pages', strtolower($sp_key), json_encode($output_data));
             }
         }
 

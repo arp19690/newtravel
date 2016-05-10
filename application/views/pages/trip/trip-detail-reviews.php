@@ -34,7 +34,7 @@ $post_aggregate_ratings = number_format($post_details['post_aggregate_ratings'],
         <div class="review-form">
             <h2>Your Review:</h2>
 
-            <form action="" method="post">
+            <form action="<?php echo base_url('trip/post-review/' . $post_details['post_url_key']); ?>" method="post">
                 <div class="review-rangers-row">
                     <div class="review-ranger">
                         <label>Review</label>
@@ -49,8 +49,8 @@ $post_aggregate_ratings = number_format($post_details['post_aggregate_ratings'],
                 <div class="clearfix" style="margin-bottom: 20px;">
                     <label style="display: inline-block;">Recommended</label>
                     <div class="input" style="margin-left: 20px;display: inline-block;">
-                        <input type="radio" name="recommended" value="1" id="recom_yes" checked="checked"/>&nbsp;<label for="recom_yes" style="display: inline-block;">Yes</label>
-                        <input type="radio" name="recommended" value="0" id="recom_no" style="margin-left: 20px;"/>&nbsp;<label for="recom_no" style="display: inline-block;">No</label>
+                        <input type="radio" name="is_recommended" value="1" id="recom_yes" checked="checked"/>&nbsp;<label for="recom_yes" style="display: inline-block;">Yes</label>
+                        <input type="radio" name="is_recommended" value="0" id="recom_no" style="margin-left: 20px;"/>&nbsp;<label for="recom_no" style="display: inline-block;">No</label>
                     </div>
                 </div>
 

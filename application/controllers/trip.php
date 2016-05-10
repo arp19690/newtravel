@@ -601,11 +601,47 @@ class Trip extends CI_Controller
 
     public function trip_details($post_url_key)
     {
+        $redis_functions = new Redisfunctions();
+        $user_id = NULL;
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $user_id = $this->session->userdata["user_id"];
+        }
+
         $post_details = $this->redis_functions->get_trip_details($post_url_key);
         if (!empty($post_details))
         {
             $data = array();
             $page_title = stripslashes($post_details['post_title']);
+
+            $is_interested = $in_wishlist = FALSE;
+            if ($user_id != NULL)
+            {
+                if (!empty($post_details['post_travelers']))
+                {
+                    foreach ($post_details['post_travelers'] as $traveler_info)
+                    {
+                        if ($user_id == $traveler_info->pt_traveler_user_id)
+                        {
+                            $is_interested = TRUE;
+                            break;
+                        }
+                    }
+                }
+
+                $user_profile_data = $redis_functions->get_user_profile_data($this->session->userdata["user_username"]);
+                if (!empty($user_profile_data['my_wishlist']))
+                {
+                    foreach ($user_profile_data['my_wishlist'] as $wish_value)
+                    {
+                        if ($wish_value->post_url_key == $post_url_key)
+                        {
+                            $in_wishlist = TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
 
             $input_arr = array(
                 base_url() => 'Home',
@@ -614,6 +650,8 @@ class Trip extends CI_Controller
             );
             $breadcrumbs = get_breadcrumbs($input_arr);
 
+            $data["is_interested"] = $is_interested;
+            $data["in_wishlist"] = $in_wishlist;
             $data["post_details"] = $post_details;
             $data["breadcrumbs"] = $breadcrumbs;
             $data["page_title"] = $page_title;
@@ -826,13 +864,18 @@ class Trip extends CI_Controller
                     $is_exists = $model->fetchSelectedData('pt_id', TABLE_POST_TRAVELERS, array('pt_post_id' => $trip_details['post_id'], 'pt_traveler_user_id' => $this->session->userdata['user_id'], 'pt_removed_by' => NULL));
                     if (!empty($is_exists))
                     {
-                        $this->session->set_flashdata('error', 'You have already shown your interest in this trip');
+                        $model->updateData(TABLE_POST_TRAVELERS, array('pt_removed_by' => $this->session->userdata['user_id']), array('pt_id' => $is_exists[0]['pt_id']));
+                        $this->session->set_flashdata('success', 'You have opted out of this trip');
                     }
                     else
                     {
                         $model->insertData(TABLE_POST_TRAVELERS, $data_array);
-                        $this->session->set_flashdata('success', '<strong>Success!</strong> Interest shown');
+                        $this->session->set_flashdata('success', 'Congratulations! You are a part of this trip');
                     }
+
+                    // updating trip redis key
+                    $redis_functions->set_trip_details($trip_url_key);
+
                     redirect(getTripUrl($trip_url_key));
                 }
                 else
@@ -885,6 +928,100 @@ class Trip extends CI_Controller
         $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/trip/listing/list-page", $data);
         $this->template->render();
+    }
+
+    public function store_review($post_url_key)
+    {
+        if (isset($this->session->userdata['user_id']) && $this->input->post())
+        {
+            $user_id = $this->session->userdata['user_id'];
+            $model = new Common_model();
+            $is_owner = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_user_id' => $user_id, 'post_url_key' => $post_url_key));
+            if (!empty($is_owner))
+            {
+                $this->session->set_flashdata('error', 'Sorry, you cannot post review your own trip');
+            }
+            else
+            {
+                $redis_functions = new Redisfunctions();
+                $post_details = $redis_functions->get_trip_details($post_url_key);
+                $is_exists = $model->fetchSelectedData('rating_id', TABLE_POST_RATINGS, array('rating_post_id' => $post_details['post_id'], 'rating_user_id' => $user_id));
+                if (!empty($is_exists))
+                {
+                    $this->session->set_flashdata('error', 'You have already posted your review for this trip');
+                }
+                else
+                {
+                    $arr = $this->input->post();
+                    $data_array = array(
+                        'rating_post_id' => $post_details['post_id'],
+                        'rating_user_id' => $user_id,
+                        'rating_stars' => $arr['review_stars'],
+                        'rating_comment' => addslashes($arr['review_comment']),
+                        'rating_recommended' => $arr['is_recommended'],
+                        'rating_ipaddress' => USER_IP,
+                        'rating_useragent' => USER_AGENT,
+                        'rating_updated_on' => date('Y-m-d H:i:s'),
+                    );
+                    $model->insertData(TABLE_POST_RATINGS, $data_array);
+                    $this->session->set_flashdata('success', 'You successfully posted a review');
+
+                    // Now updating the redis key for trip details
+                    $redis_functions->set_trip_details($post_url_key);
+                }
+            }
+            redirect(getTripUrl($post_url_key));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
+    public function add_to_wishlist($post_url_key)
+    {
+        if (isset($this->session->userdata['user_id']))
+        {
+            $user_id = $this->session->userdata['user_id'];
+            $model = new Common_model();
+
+            $is_owner = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_user_id' => $user_id, 'post_url_key' => $post_url_key));
+            if (!empty($is_owner))
+            {
+                $this->session->set_flashdata('error', 'Sorry, you cannot add your own trip to your wishlist');
+            }
+            else
+            {
+                $redis_functions = new Redisfunctions();
+                $post_details = $redis_functions->get_trip_details($post_url_key);
+                $is_exists = $model->fetchSelectedData('wishlist_id', TABLE_WISHLIST, array('wishlist_post_id' => $post_details['post_id'], 'wishlist_user_id' => $user_id, 'wishlist_status' => '1'));
+                if (!empty($is_exists))
+                {
+                    $model->updateData(TABLE_WISHLIST, array('wishlist_status' => '0'), array('wishlist_id' => $is_exists[0]['wishlist_id']));
+                    $this->session->set_flashdata('error', 'Trip removed from your wishlist');
+                }
+                else
+                {
+                    $data_array = array(
+                        'wishlist_user_id' => $user_id,
+                        'wishlist_post_id' => $post_details['post_id'],
+                        'wishlist_created_on' => date('Y-m-d H:i:s'),
+                        'wishlist_ipaddress' => USER_IP,
+                        'wishlist_useragent' => USER_AGENT
+                    );
+                    $model->insertData(TABLE_WISHLIST, $data_array);
+                    $this->session->set_flashdata('success', 'Trip added to your wishlist');
+                }
+
+                // updating user redis key
+                $redis_functions->set_user_profile_data($this->session->userdata['user_username']);
+            }
+            redirect(getTripUrl($post_url_key));
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
 }

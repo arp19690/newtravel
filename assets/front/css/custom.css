@@ -3,7 +3,7 @@
 .notification-area{position: absolute;width: 100%;display: inline-block;z-index: 999;}
 .hover-cursor-disabled:hover{cursor: not-allowed;}
 #gallery .gallery-i img{display: inline-block;width: 100%;max-width: 108px;max-height: 75px;}
-.tab-gallery-big{text-align: center;}
+.tab-gallery-big{text-align: center;background-color: #FFFFFF;}
 .tab-gallery-big img{width: 100%;max-width: 550px;}
 .facebook-btn{background-color: #3B5998;color: #FFFFFF;}
 .facebook-btn:hover{background-color: #2d4373;}
@@ -22,3 +22,6 @@ img{max-width: 100%;}
 .my-trips .title p{font-size: 12px;line-height: 16px;margin: 0;}
 .clearfix{clear: both;}
 .review-form{display: inline-block;width: 100%;margin: 0;}
+.company-footer{width: auto;}
+.company-footer a{color: #FFFFFF;text-decoration: none;}
+.company-footer a:hover{color: #ff7200;}
