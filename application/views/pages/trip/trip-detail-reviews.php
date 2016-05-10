@@ -34,107 +34,44 @@
 
         <div class="reviews-devider"></div>
 
-        <div class="hotel-reviews">
-            <h2>Hotel Facilities</h2>
-            <div class="hotel-reviews-row">
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Cleanlines</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                        </ul>
-                    </nav>
+        <div class="review-form">
+            <h2>Your Review:</h2>
+
+            <div class="review-rangers-row">
+                <div class="review-ranger">
+                    <label>Review</label>
+                    <div class="review-ranger-r">
+                        <div class="slider-range-min"></div>
+                        <input type="hidden" name="review_stars" class="review_stars"/>
+                    </div>
                     <div class="clear"></div>
                 </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Price</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                        </ul>
-                    </nav>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Sleep Quality</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                        </ul>
-                    </nav>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Service & Stuff</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                        </ul>
-                    </nav>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Location</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                        </ul>
-                    </nav>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-                <!-- // -->
-                <div class="hotel-reviews-i">
-                    <div class="hotel-reviews-left">Comfort</div>
-                    <nav class="hotel-reviews-right">
-                        <ul>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-b.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                            <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/sstar-a.png"></a></li>
-                        </ul>
-                    </nav>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
             </div>
-            <div class="clear"></div>
-        </div>
+
+            <div class="clearfix" style="margin-bottom: 20px;">
+                <label style="display: inline-block;">Recommended</label>
+                <div class="input" style="margin-left: 20px;display: inline-block;">
+                    <input type="radio" name="recommended" value="1" id="recom_yes" checked="checked"/>&nbsp;<label for="recom_yes" style="display: inline-block;">Yes</label>
+                    <input type="radio" name="recommended" value="0" id="recom_no" style="margin-left: 20px;"/>&nbsp;<label for="recom_no" style="display: inline-block;">No</label>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <div class="booking-form-i">
+                    <label>Comment:</label>
+                    <div class="textarea"><textarea name="review_comment" placeholder="Write your review comment"/></textarea></div>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <button class="review-send">Submit Review</button>
+            </div>              
+        </div>   
 
         <div class="hotel-reviews-devider"></div>
 
         <div class="guest-reviews">
-            <h2>Guest Reviews</h2>
+            <h2>User Reviews</h2>
             <div class="guest-reviews-row">
                 <!-- // -->
                 <div class="guest-reviews-i">
@@ -313,72 +250,48 @@
                 </div>
                 <!-- \\ -->
             </div>
-            <a href="#" class="guest-reviews-more">load more reviews</a>
-
-            <div class="review-form">
-                <h2>Live Review</h2>
-                <label>User Name:</label>
-                <input type="text" value="" />
-                <label>Your Review:</label>
-                <textarea></textarea>
-
-                <div class="review-rangers-row">
-                    <div class="review-ranger">
-                        <label>Cleanlines</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="review-ranger">
-                        <label>Service & Stuff</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="review-ranger">
-                        <label>Price</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="review-ranger">
-                        <label>Location</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="review-ranger">
-                        <label>Sleep Quality</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="review-ranger">
-                        <label>Comfort</label>
-                        <div class="review-ranger-r">
-                            <div class="slider-range-min"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <label>Evaluation</label>
-                <select class="custom-select">
-                    <option>&nbsp;</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-                <label>When did you travel?</label>
-                <input type="text" value="" />
-                <button class="review-send">Submit Review</button>
-            </div>              
+            <a href="#" class="guest-reviews-more">load more reviews</a>           
         </div>		
     </div>
 </div>
 <!-- \\ content-tabs-i \\ -->
+
+<script>
+
+    $(document).ready(function () {
+        $('.review-ranger').each(function () {
+            var $this = $(this);
+            var $index = $(this).index();
+            if ($index == '0') {
+                var $val = '3.0'
+            } 
+//            else if ($index == '1') {
+//                var $val = '3.8'
+//            } else if ($index == '2') {
+//                var $val = '2.8'
+//            } else if ($index == '3') {
+//                var $val = '4.8'
+//            } else if ($index == '4') {
+//                var $val = '4.3'
+//            } else if ($index == '5') {
+//                var $val = '5.0'
+//            }
+            $this.find('.slider-range-min').slider({
+                range: "min",
+                step: 0.5,
+                value: $val,
+                min: 0.5,
+                max: 5.0,
+                create: function (event, ui) {
+                    $this.find('.ui-slider-handle').append('<span class="range-holder"><i></i></span>');
+                },
+                slide: function (event, ui) {
+                    $this.find(".range-holder i").text(ui.value);
+                    $this.find(".review_stars").val(ui.value);
+                }
+            });
+            $this.find(".range-holder i").text($val);
+            $this.find(".review_stars").val($val);
+        });
+    });
+</script>

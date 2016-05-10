@@ -242,37 +242,6 @@ if (!empty($post_details['post_regions']))
 <script type="text/javascript">
     $(document).ready(function () {
         $('.custom-select').customSelect();
-        $('.review-ranger').each(function () {
-            var $this = $(this);
-            var $index = $(this).index();
-            if ($index == '0') {
-                var $val = '3.0'
-            } else if ($index == '1') {
-                var $val = '3.8'
-            } else if ($index == '2') {
-                var $val = '2.8'
-            } else if ($index == '3') {
-                var $val = '4.8'
-            } else if ($index == '4') {
-                var $val = '4.3'
-            } else if ($index == '5') {
-                var $val = '5.0'
-            }
-            $this.find('.slider-range-min').slider({
-                range: "min",
-                step: 0.1,
-                value: $val,
-                min: 0.1,
-                max: 5.1,
-                create: function (event, ui) {
-                    $this.find('.ui-slider-handle').append('<span class="range-holder"><i></i></span>');
-                },
-                slide: function (event, ui) {
-                    $this.find(".range-holder i").text(ui.value);
-                }
-            });
-            $this.find(".range-holder i").text($val);
-        });
 
         $('#reasons-slider').bxSlider({
             infiniteLoop: true,

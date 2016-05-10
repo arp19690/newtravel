@@ -20,3 +20,5 @@ img{max-width: 100%;}
 .my-trips .image{max-width: 75px;margin-right: 8px;}
 .my-trips .title h4{margin: 0;}
 .my-trips .title p{font-size: 12px;line-height: 16px;margin: 0;}
+.clearfix{clear: both;}
+.review-form{display: inline-block;width: 100%;margin: 0;}
