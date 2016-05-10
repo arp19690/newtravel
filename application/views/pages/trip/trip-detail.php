@@ -1,4 +1,7 @@
 <?php
+$redis_functions = new Redisfunctions();
+
+$post_owner_records = $redis_functions->get_user_profile_data($post_details['post_user_username']);
 $post_title = stripslashes($post_details['post_title']);
 $post_description = stripslashes($post_details['post_description']);
 $post_primary_image = base_url(getImage($post_details['post_primary_image']));
@@ -134,6 +137,11 @@ if (!empty($post_details['post_regions']))
                         <div class="h-tour">
                             <div class="tour-icon-txt"><?php echo $post_details['post_travel_mediums_string']; ?></div>
                             <div class="tour-icon-person"><?php echo count($post_details['post_travelers']) . ' traveler' . (count($post_details['post_travelers']) == 1 ? '' : 's'); ?></div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="h-tour">
+                            <div class="tour-icon-txt">Posted by:</div>
+                            <div class="tour-icon-txt"><a href="<?php echo base_url('user/' . stripslashes($post_owner_records['user_username'])); ?>" style="margin-left:10px;"><?php echo stripslashes($post_owner_records['user_fullname']); ?></a></div>
                             <div class="clear"></div>
                         </div>
                         <div class="h-detail-stars">

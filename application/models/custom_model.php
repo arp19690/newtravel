@@ -20,6 +20,8 @@ class Custom_model extends CI_Model
             $post_id = $post_records[0]['post_id'];
             $output = $post_records[0];
 
+            $output['post_user_username'] = $model->fetchSelectedData('user_username', TABLE_USERS, array('user_id' => $post_records[0]['post_user_id']))[0]['user_username'];
+
             $post_activities_records = $model->getAllDataFromJoin('*', TABLE_POST_ACTIVITIES . ' as pa', array(TABLE_ACTIVITIES_MASTER . ' as am' => 'am.am_id = pa.pa_activity_id'), 'INNER', array('pa_post_id' => $post_id, 'am_status' => '1'), 'am_title');
             $output['post_activities'] = $post_activities_records;
 
