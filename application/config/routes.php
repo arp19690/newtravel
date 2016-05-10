@@ -69,6 +69,7 @@ $route['trip/delete/(:any)'] = 'trip/delete_trip/$1';
 $route['trip/search/query'] = 'trip/search_query';
 $route['trip/all-trips'] = 'trip/all_posts';
 $route['trip/show-interest/(:any)'] = 'trip/show_interest/$1';
+$route['trip/post-review/(:any)'] = 'trip/store_review/$1';
 
 $route['trip/get-featured'] = 'payments/payment_for_featured_post';
 $route['trip/paypal-cancel'] = 'payments/paypal_cancel';

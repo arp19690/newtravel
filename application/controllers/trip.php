@@ -887,4 +887,52 @@ class Trip extends CI_Controller
         $this->template->render();
     }
 
+    public function store_review($post_url_key)
+    {
+        if (isset($this->session->userdata['user_id']) && $this->input->post())
+        {
+            $user_id = $this->session->userdata['user_id'];
+            $model = new Common_model();
+            $is_owner = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_user_id' => $user_id, 'post_url_key' => $post_url_key));
+            if (!empty($is_owner))
+            {
+                $this->session->set_flashdata('error', 'Sorry, you cannot post review your own trip');
+            }
+            else
+            {
+                $redis_functions = new Redisfunctions();
+                $post_details = $redis_functions->get_trip_details($post_url_key);
+                $is_exists = $model->fetchSelectedData('rating_id', TABLE_POST_RATINGS, array('rating_post_id' => $post_details['post_id'], 'rating_user_id' => $user_id));
+                if (!empty($is_exists))
+                {
+                    $this->session->set_flashdata('error', 'You have already posted your review for this trip');
+                }
+                else
+                {
+                    $arr = $this->input->post();
+                    $data_array = array(
+                        'rating_post_id' => $post_details['post_id'],
+                        'rating_user_id' => $user_id,
+                        'rating_stars' => $arr['review_stars'],
+                        'rating_comment' => addslashes($arr['review_comment']),
+                        'rating_recommended' => $arr['is_recommended'],
+                        'rating_ipaddress' => USER_IP,
+                        'rating_useragent' => USER_AGENT,
+                        'rating_updated_on' => date('Y-m-d H:i:s'),
+                    );
+                    $model->insertData(TABLE_POST_RATINGS, $data_array);
+                    $this->session->set_flashdata('success', 'You successfully posted a review');
+
+                    // Now updating the redis key for trip details
+                    $redis_functions->set_trip_details($post_url_key);
+                }
+            }
+            redirect(getTripUrl($post_url_key));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }
