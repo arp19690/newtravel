@@ -28,12 +28,12 @@
                     <div class="contacts-colls-l">
                         <?php echo get_google_ad(); ?>
                     </div>
-                    
+
                     <div class="contacts-colls-r">
                         <div class="contacts-colls-rb">
                             <div class="contact-colls-lbl">Contact Us</div>
                             <div class="booking-form">
-                                <form id="contact_form" action="php/contact_form.php">
+                                <form id="contact_form" action="" method="post">
                                     <div class="booking-form-i">
                                         <label>First Name:</label>
                                         <div class="input"><input type="text" name="FirstName" value="" /></div>
