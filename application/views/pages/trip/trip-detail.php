@@ -137,14 +137,28 @@ if (!empty($post_details['post_regions']))
                             <div class="clear"></div>
                         </div>
                         <div class="h-detail-stars">
-                            <ul class="h-stars-list">
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-b.png"></a></li>
-                                <li><a href="#"><img alt="" src="<?php echo IMAGES_PATH; ?>/hd-star-a.png"></a></li>
-                            </ul>
-                            <div class="h-stars-lbl">156 reviews</div>
+                            <?php
+                            if (count($post_details['post_ratings']) > 0)
+                            {
+                                $post_aggregate_ratings = $post_details['post_aggregate_ratings'];
+                                ?>
+                                <ul class="h-stars-list">
+                                    <?php
+                                    for ($aggregate_i = 1; $aggregate_i <= $post_aggregate_ratings; $aggregate_i++)
+                                    {
+                                        echo '<li><img alt="' . $aggregate_i . '" src="' . IMAGES_PATH . '/hd-star-b.png"></li>';
+                                    }
+
+                                    for ($blank_aggregate_i = 1; $blank_aggregate_i <= (5 - $post_aggregate_ratings); $blank_aggregate_i++)
+                                    {
+                                        echo '<li><img alt="' . ($post_aggregate_ratings + $blank_aggregate_i) . '" src="' . IMAGES_PATH . '/hd-star-a.png"></li>';
+                                    }
+                                    ?>
+                                </ul>
+                                <?php
+                            }
+                            ?>
+                            <div class="h-stars-lbl"><?php echo number_format(count($post_details['post_ratings'])); ?> review<?php echo count($post_details['post_ratings']) > 1 ? 's' : ''; ?></div>
                             <a href="#" class="h-add-review">add review</a>
                             <div class="clear"></div>
                         </div>
