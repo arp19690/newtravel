@@ -935,4 +935,50 @@ class Trip extends CI_Controller
         }
     }
 
+    public function add_to_wishlist($post_url_key)
+    {
+        if (isset($this->session->userdata['user_id']))
+        {
+            $user_id = $this->session->userdata['user_id'];
+            $model = new Common_model();
+
+            $is_owner = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_user_id' => $user_id, 'post_url_key' => $post_url_key));
+            if (!empty($is_owner))
+            {
+                $this->session->set_flashdata('error', 'Sorry, you cannot add your own trip to your wishlist');
+            }
+            else
+            {
+                $redis_functions = new Redisfunctions();
+                $post_details = $redis_functions->get_trip_details($post_url_key);
+                $is_exists = $model->fetchSelectedData('wishlist_id', TABLE_WISHLIST, array('wishlist_post_id' => $post_details['post_id'], 'wishlist_user_id' => $user_id));
+                if (!empty($is_exists))
+                {
+                    $model->updateData(TABLE_WISHLIST, array('wishlist_status' => '0'), array('wishlist_id' => $is_exists[0]['wishlist_id']));
+                    $this->session->set_flashdata('success', 'Trip removed from your wishlist');
+                }
+                else
+                {
+                    $data_array = array(
+                        'wishlist_user_id' => $user_id,
+                        'wishlist_post_id' => $post_details['post_id'],
+                        'wishlist_created_on' => date('Y-m-d H:i:s'),
+                        'wishlist_ipaddress' => USER_IP,
+                        'wishlist_useragent' => USER_AGENT
+                    );
+                    $model->insertData(TABLE_WISHLIST, $data_array);
+                    $this->session->set_flashdata('success', 'Trip added to your wishlist');
+                }
+
+                // updating user redis key
+                $redis_functions->set_user_profile_data($this->session->userdata['user_username']);
+            }
+            redirect(getTripUrl($post_url_key));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }

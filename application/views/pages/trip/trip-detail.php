@@ -177,7 +177,7 @@ if (!empty($post_details['post_regions']))
                         if (@$this->session->userdata['user_id'] != $post_details['post_user_id'])
                         {
                             ?>
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? 'someurl' : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="wishlist-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/add-to-wishlist/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="wishlist-btn">
                                 <span class="wishlist-btn-l"><i></i></span>
                                 <span class="wishlist-btn-r">Add to wish list</span>
                                 <div class="clear"></div>
