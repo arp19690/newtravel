@@ -185,11 +185,11 @@ if (!empty($post_details['post_regions']))
                             }
 
                             $interested_class_prefix = 'wishlist';
-                            $interested_text = 'I am interested';
+                            $interested_text = 'I am interested to joined';
                             if ($is_interested == TRUE)
                             {
                                 $interested_class_prefix = 'book';
-                                $interested_text = 'You are in';
+                                $interested_text = 'You have joined';
                             }
                             ?>
                             <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/add-to-wishlist/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="<?php echo $wishlist_class_prefix; ?>-btn">
@@ -197,7 +197,7 @@ if (!empty($post_details['post_regions']))
                                 <span class="<?php echo $wishlist_class_prefix; ?>-btn-r"><?php echo $wishlist_text; ?></span>
                                 <div class="clear"></div>
                             </a>
-                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? '' : 'open_authorize_popup();'; ?>" class="<?php echo $interested_class_prefix; ?>-btn">
+                            <a href="<?php echo isset($this->session->userdata['user_id']) == TRUE ? (base_url('trip/show-interest/' . $post_details['post_url_key'])) : '#'; ?>" onclick="<?php echo isset($this->session->userdata['user_id']) == TRUE ? ($is_interested == TRUE ? 'return confirm(\'Sure you want to opt out?\');' : '') : 'open_authorize_popup();'; ?>" class="<?php echo $interested_class_prefix; ?>-btn">
                                 <span class="<?php echo $interested_class_prefix; ?>-btn-l"><i></i></span>
                                 <span class="<?php echo $interested_class_prefix; ?>-btn-r"><?php echo $interested_text; ?></span>
                                 <div class="clear"></div>

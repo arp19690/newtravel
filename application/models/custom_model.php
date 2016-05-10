@@ -87,7 +87,7 @@ class Custom_model extends CI_Model
             }
             $output['post_total_cost'] = $total_cost;
 
-            $post_travelers_records = $model->fetchSelectedData('*', TABLE_POST_TRAVELERS, array('pt_post_id' => $post_id));
+            $post_travelers_records = $model->fetchSelectedData('*', TABLE_POST_TRAVELERS, array('pt_post_id' => $post_id, 'pt_removed_by' => NULL));
             $output['post_travelers'] = $post_travelers_records;
 
             $post_images_records = $model->fetchSelectedData('*', TABLE_POST_MEDIA, array('pm_post_id' => $post_id, 'pm_media_type' => 'image', 'pm_status' => '1'));

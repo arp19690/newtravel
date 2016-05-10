@@ -864,13 +864,18 @@ class Trip extends CI_Controller
                     $is_exists = $model->fetchSelectedData('pt_id', TABLE_POST_TRAVELERS, array('pt_post_id' => $trip_details['post_id'], 'pt_traveler_user_id' => $this->session->userdata['user_id'], 'pt_removed_by' => NULL));
                     if (!empty($is_exists))
                     {
-                        $this->session->set_flashdata('error', 'You have already shown your interest in this trip');
+                        $model->updateData(TABLE_POST_TRAVELERS, array('pt_removed_by' => $this->session->userdata['user_id']), array('pt_id' => $is_exists[0]['pt_id']));
+                        $this->session->set_flashdata('success', 'You have opted out of this trip');
                     }
                     else
                     {
                         $model->insertData(TABLE_POST_TRAVELERS, $data_array);
-                        $this->session->set_flashdata('success', '<strong>Success!</strong> Interest shown');
+                        $this->session->set_flashdata('success', 'Congratulations! You are a part of this trip');
                     }
+
+                    // updating trip redis key
+                    $redis_functions->set_trip_details($trip_url_key);
+
                     redirect(getTripUrl($trip_url_key));
                 }
                 else
