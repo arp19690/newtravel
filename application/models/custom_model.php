@@ -66,7 +66,7 @@ class Custom_model extends CI_Model
                 $output['post_total_days'] = round((strtotime($post_start_end_date_record[0]['end_date']) - strtotime($post_start_end_date_record[0]['start_date'])) / (3600 * 24));
             }
 
-            $post_comments_records = $model->getAllDataFromJoin('pcm_stars, pcm_text, pcm_updated_on, pcm_status, user_username, user_fullname, user_profile_picture', TABLE_POST_COMMENTS.' as pcm', array(TABLE_USERS.' as u'=>'user_id = pcm_user_id'), 'LEFT', array('pcm_post_id' => $post_id), 'pcm_id', 'DESC');
+            $post_comments_records = $model->getAllDataFromJoin('pcm_stars, pcm_text, pcm_updated_on, pcm_status, user_username, user_fullname, user_profile_picture, user_country, pcm_recommended', TABLE_POST_COMMENTS.' as pcm', array(TABLE_USERS.' as u'=>'user_id = pcm_user_id'), 'LEFT', array('pcm_post_id' => $post_id), 'pcm_id', 'DESC');
             $output['post_comments'] = $post_comments_records;
 
             $post_costs_records = $model->fetchSelectedData('*', TABLE_POST_COSTS, array('cost_post_id' => $post_id));
