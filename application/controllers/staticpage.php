@@ -12,51 +12,34 @@ class Staticpage extends CI_Controller
         $this->redis_functions = new Redisfunctions();
     }
 
-    public function index($pageName = 'about-us')
+    public function index($page_key = 'about-us')
     {
         $data = array();
-        switch ($pageName)
+        $content_data = $this->redis_functions->get_static_page_content($page_key);
+        if (!empty($content_data))
         {
-            case "about-us":
-                {
-                    $page_title = 'About us';
-                    $content = stripslashes($this->redis_functions->get_static_page_content('about-us'));
-                    break;
-                }
-            case "how-it-works":
-                {
-                    $page_title = 'How it works';
-                    $content = stripslashes($this->redis_functions->get_static_page_content('how-it-works'));
-                    break;
-                }
-            case "privacy":
-                {
-                    $page_title = 'Privacy Policy';
-                    $content = stripslashes($this->redis_functions->get_static_page_content('privacy-policy'));
-                    break;
-                }
-            case "terms":
-                {
-                    $page_title = 'Terms &amp; Conditions';
-                    $content = stripslashes($this->redis_functions->get_static_page_content('terms'));
-                    break;
-                }
+            $page_title = stripslashes($content_data->page_title);
+            $page_content = stripslashes($content_data->content);
+
+            $input_arr = array(
+                base_url() => 'Home',
+                '#' => $page_title,
+            );
+            $breadcrumbs = get_breadcrumbs($input_arr);
+
+            $data["content"] = $page_content;
+            $data["breadcrumbs"] = $breadcrumbs;
+            $data["page_title"] = $page_title;
+            $data['meta_title'] = $page_title . " - " . $this->redis_functions->get_site_setting('SITE_NAME');
+            $data['meta_description'] = getNWordsFromString($page_content, 50);
+
+            $this->template->write_view("content", "pages/staticpage/static-content", $data);
+            $this->template->render();
         }
-
-        $input_arr = array(
-            base_url() => 'Home',
-            '#' => $page_title,
-        );
-        $breadcrumbs = get_breadcrumbs($input_arr);
-
-        $data["content"] = $content;
-        $data["breadcrumbs"] = $breadcrumbs;
-        $data["page_title"] = $page_title;
-        $data['meta_title'] = $page_title . " - " . $this->redis_functions->get_site_setting('SITE_NAME');
-        $data['meta_description'] = getNWordsFromString($content, 200);
-
-        $this->template->write_view("content", "pages/staticpage/static-content", $data);
-        $this->template->render();
+        else
+        {
+            display_404_page();
+        }
     }
 
     public function contact()
