@@ -24,12 +24,12 @@ class Payments extends CI_Controller
 
     public function payment_for_featured_post()
     {
-        if ($this->input->get('trip_url_key') && $this->input->get('plan_key'))
+        if ($this->input->get('tkey') && $this->input->get('fkey'))
         {
             $model = new Common_model();
             $redis_functions = new Redisfunctions();
-            $trip_url_key = $this->input->get('trip_url_key');
-            $featured_plan_key = $this->input->get('plan_key');
+            $trip_url_key = $this->input->get('tkey');
+            $featured_plan_key = $this->input->get('fkey');
             $post_details = $redis_functions->get_trip_details($trip_url_key);
             $feature_plan_details = $model->fetchSelectedData('pfm_amount, pfm_currency', TABLE_FEATURED_MASTER, array('pfm_key' => $featured_plan_key));
 
@@ -69,8 +69,8 @@ class Payments extends CI_Controller
                                         $(document).ready(function () {
                                             submit_form();
 
-                                            // re-submitting form in 20 seconds
-                                            setInterval(function(){submit_form();}, 20000);
+                                            // re-submitting form in 40 seconds
+                                            setInterval(function(){submit_form();}, 40000);
                                         });
                                     </script>';
 
