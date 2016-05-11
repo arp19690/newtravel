@@ -5,7 +5,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
 <style>
     .chat-l-div,.chat-r-div{height: calc(100%);display: inline-block;width: 100%;vertical-align: top;}
-    .chat-l-div{max-width: 35%;height: 585px;overflow: auto;}
+    .chat-l-div{max-width: 35%;height: 585px;overflow: auto;background: #fff;}
     .chat-r-div{max-width: 64%;}
     .input-message-div textarea{resize: none;width: 100%;border: 1px #e1e1e1 solid;box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);border-radius: 3px;font-size: 13px;padding: 5px 10px;}
     .input-message-div{width: 100%;display: inline-flex;margin-top: 30px;}
@@ -38,7 +38,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
             <div class="sp-page">
                 <div class="chat-l-div">
-                    <div class="h-liked" style="height: calc(100%);">
+                    <div class="h-liked">
                         <div class="h-liked-lbl">All Chats</div>
                         <div class="h-liked-row">
                             <?php
