@@ -23,7 +23,7 @@
                         <span class="chk-l">
                             <a href="#" class="a-no-underline" style="color: #4a90a4;"><?php echo stripslashes($value['pfm_title']) ?>:</a>
                         </span>
-                        <span class="chk-r"><a href="#" class="accordeon-a a-no-underline"><?php echo get_currency_symbol($value['pfm_currency']) . $value['pfm_amount']; ?></a></span>
+                        <span class="chk-r"><a href="#" class="btn"><?php echo get_currency_symbol($value['pfm_currency']) . ' ' . $value['pfm_amount']; ?></a></span>
                         <div class="clear"></div>
                     </div>
                     <?php
