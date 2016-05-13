@@ -214,8 +214,8 @@ class Custom_model extends CI_Model
                             if(to_user.user_id = ' . $user_id . ', from_user.user_profile_picture, to_user.user_profile_picture) as from_profile_picture';
         }
 
-        $sql = 'SELECT * FROM (SELECT ' . $fields . ' FROM `messages` as m1 
-                    left join messages as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.`message_user_to` = m1.`message_user_to` and m2.message_id > m1.message_id
+        $sql = 'SELECT * FROM (SELECT ' . $fields . ' FROM '.TABLE_MESSAGES.' as m1 
+                    left join '.TABLE_MESSAGES.' as m2 on m2.`message_user_from` = m1.`message_user_from` and m2.`message_user_to` = m1.`message_user_to` and m2.message_id > m1.message_id
                     left join users as to_user on to_user.user_id = m1.`message_user_to`
                     left join users as from_user on from_user.user_id = m1.`message_user_from`
                     WHERE (m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"
@@ -236,7 +236,7 @@ class Custom_model extends CI_Model
             $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0"';
         }
 
-        $sql = 'SELECT ' . $fields . ' FROM `messages` as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE ' . $where_str . ' ORDER BY message_id DESC LIMIT ' . $limit;
+        $sql = 'SELECT ' . $fields . ' FROM '.TABLE_MESSAGES.' as m1 left join users as from_user on from_user.user_id = m1.`message_user_from` left join users as to_user on to_user.user_id = m1.`message_user_to` WHERE ' . $where_str . ' ORDER BY message_id DESC LIMIT ' . $limit;
         $records = $this->db->query($sql)->result_array();
         if (!empty($records))
         {
@@ -248,7 +248,7 @@ class Custom_model extends CI_Model
     public function get_unread_chats_username($me_user_id)
     {
         $output = array();
-        $sql = 'select distinct user_username as from_username from `messages` left join `users` on user_id = `message_user_from` where `message_user_to` = ' . $me_user_id . ' and `message_read` = "0"';
+        $sql = 'select distinct user_username as from_username from '.TABLE_MESSAGES.' left join `users` on user_id = `message_user_from` where `message_user_to` = ' . $me_user_id . ' and `message_read` = "0"';
         $records = $this->db->query($sql)->result_array();
         if (!empty($records))
         {
