@@ -217,6 +217,7 @@ class Messages extends CI_Controller
             $redis_functions = new Redisfunctions();
 
             $user_id = $this->session->userdata["user_id"];
+            $me_username = $this->session->userdata["user_username"];
             $other_user_records = $redis_functions->get_user_profile_data($other_username);
             if (!empty($other_user_records))
             {
@@ -228,21 +229,17 @@ class Messages extends CI_Controller
                     'message_user_to' => $other_user_id,
                     'message_user_from' => $user_id,
                 );
-                
+
                 $chat_records = $model->fetchSelectedData('message_id', TABLE_MESSAGES, $where_cond_arr);
                 if (!empty($chat_records))
                 {
+                    $message_id_arr = array();
                     foreach ($chat_records as $chat_value)
                     {
-                        $data_array = array(
-                            'md_user_id' => $user_id,
-                            'md_message_id' => $chat_value['message_id'],
-                            'md_ipaddress' => USER_IP,
-                            'md_useragent' => USER_AGENT
-                        );
-                        @$model->insertData(TABLE_MESSAGE_DELETED, $data_array);
+                        $message_id_arr[] = $chat_value['message_id'];
                     }
-
+                    
+                    $redis_functions->set_deleted_message_ids($me_username, $message_id_arr);
                     $this->session->set_flashdata('success', 'Your conversation with ' . stripslashes($other_user_records['user_fullname']) . ' marked as deleted');
                 }
             }

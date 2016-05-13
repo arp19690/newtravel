@@ -368,4 +368,16 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_deleted_message_ids($username, $message_id_array)
+    {
+        $new_array = $message_id_array;
+        if ($this->ci->redis->hExists('unread_chats_username', $username) == TRUE)
+        {
+            $records = (array) json_decode($this->ci->redis->hGet('deleted_message_ids', $username));
+            $new_array = array_merge($records, $message_id_array);
+        }
+
+        return $this->ci->redis->hSet('deleted_message_ids', $username, json_encode($new_array));
+    }
+
 }
