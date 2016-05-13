@@ -223,14 +223,9 @@ class Messages extends CI_Controller
             {
                 $other_user_id = $other_user_records['user_id'];
                 $model = new Common_model();
-                $where_cond_arr = array(
-                    'message_user_from' => $other_user_id,
-                    'message_user_to' => $user_id,
-                    'message_user_to' => $other_user_id,
-                    'message_user_from' => $user_id,
-                );
 
-                $chat_records = $model->fetchSelectedData('message_id', TABLE_MESSAGES, $where_cond_arr);
+                $sql = 'SELECT message_id FROM ' . TABLE_MESSAGES . ' WHERE ((message_user_from=' . $other_user_id . ' AND message_user_to=' . $user_id . ') OR (message_user_to=' . $other_user_id . ' AND message_user_from=' . $user_id . '))';
+                $chat_records = $model->query($sql);
                 if (!empty($chat_records))
                 {
                     $message_id_arr = array();
@@ -238,7 +233,7 @@ class Messages extends CI_Controller
                     {
                         $message_id_arr[] = $chat_value['message_id'];
                     }
-                    
+
                     $redis_functions->set_deleted_message_ids($me_username, $message_id_arr);
                     $this->session->set_flashdata('success', 'Your conversation with ' . stripslashes($other_user_records['user_fullname']) . ' marked as deleted');
                 }
