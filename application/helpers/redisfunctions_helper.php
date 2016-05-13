@@ -374,7 +374,7 @@ class Redisfunctions
         $existing_message_id_arr = $this->get_deleted_message_ids($username);
         if ($existing_message_id_arr != FALSE)
         {
-            $new_array = array_merge($existing_message_id_arr, $message_id_array);
+            $new_array = array_unique(array_merge($existing_message_id_arr, $message_id_array));
         }
 
         return $this->ci->redis->hSet('deleted_message_ids', $username, json_encode($new_array));
