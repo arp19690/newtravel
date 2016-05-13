@@ -59,7 +59,7 @@ class Messages extends CI_Controller
         $data["chat_list_records"] = $records;
         $data["unread_chats_username"] = $unread_chats_username;
         $data["page_title"] = $page_title;
-        $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
+        $data['meta_title'] = $page_title . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/messages/list", $data);
         $this->template->render();
     }
