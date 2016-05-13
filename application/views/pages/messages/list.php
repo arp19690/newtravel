@@ -5,7 +5,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
 <style>
     .chat-l-div,.chat-r-div{height: calc(100%);display: inline-block;width: 100%;vertical-align: top;}
-    .chat-l-div{max-width: 35%;height: 585px;overflow: auto;}
+    .chat-l-div{max-width: 35%;height: 585px;overflow: auto;background: #fff;}
     .chat-r-div{max-width: 64%;}
     .input-message-div textarea{resize: none;width: 100%;border: 1px #e1e1e1 solid;box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.11);border-radius: 3px;font-size: 13px;padding: 5px 10px;}
     .input-message-div{width: 100%;display: inline-flex;margin-top: 30px;}
@@ -38,7 +38,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
 
             <div class="sp-page">
                 <div class="chat-l-div">
-                    <div class="h-liked" style="height: calc(100%);">
+                    <div class="h-liked">
                         <div class="h-liked-lbl">All Chats</div>
                         <div class="h-liked-row">
                             <?php
@@ -105,7 +105,9 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                     ?>
                     <div class="chat-r-div">
                         <div class="h-liked">
-                            <div class="h-liked-lbl"><?php echo $to_user_fullname; ?></div>
+                            <div class="h-liked-lbl"><?php echo $to_user_fullname; ?>
+                                <div class="pull-right"><a href="<?php echo base_url('delete-chat/' . $to_user_username); ?>" class="msg-del-icon" onclick="return confirm('Sure to delete this conversation? Action cannot be undone!')"><span class="fa fa-trash"></span></a></div>
+                            </div>
                             <div class="h-liked-row">
                                 <div class="h-liked-item">
                                     <div class="h-liked-item-i">
@@ -152,8 +154,14 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                             {
                                                 ?>
                                                 <div class="h-liked-item">
-                                                    <p class="text-center">No chat records found between You &amp; <?php echo $to_user_fullname; ?></p>
+                                                    <p class="text-center">No chat records found between You &amp; <strong><?php echo $to_user_fullname; ?></strong>. Say Hi to <strong><?php echo $to_user_fullname; ?></strong></p>
                                                 </div>
+
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        $('.my-message').focus();
+                                                    });
+                                                </script>
                                                 <?php
                                             }
                                             ?>
@@ -337,9 +345,12 @@ else
     ?>
     <script>
         $(document).ready(function () {
-            window.location.href = $('.conversation-link:first').attr('href');
+            var redirect_url = $('.conversation-link:first').attr('href');
+            if (redirect_url != null and redirect_url != '')
+            {
+                window.location.href = redirect_url;
+            }
         });
     </script>
     <?php
 }
-?>

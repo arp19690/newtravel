@@ -59,7 +59,7 @@ class Messages extends CI_Controller
         $data["chat_list_records"] = $records;
         $data["unread_chats_username"] = $unread_chats_username;
         $data["page_title"] = $page_title;
-        $data['meta_title'] = $page_title . ' | ' . SITE_NAME;
+        $data['meta_title'] = $page_title . ' | ' . $this->redis_functions->get_site_setting('SITE_NAME');
         $this->template->write_view("content", "pages/messages/list", $data);
         $this->template->render();
     }
@@ -184,7 +184,7 @@ class Messages extends CI_Controller
             if (!empty($other_user_records))
             {
                 $other_user_id = $other_user_records['user_id'];
-                $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_deleted = "0" AND m1.message_timestamp > ' . $latest_timestamp;
+                $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_timestamp > ' . $latest_timestamp;
                 $chat_records = $custom_model->get_chat_history($user_id, $other_user_id, $fields = NULL, $where_str);
 
                 $str = $latest_message_timestamp = NULL;
@@ -208,6 +208,46 @@ class Messages extends CI_Controller
         $json_data = json_encode($json_data);
         echo $json_data;
         return $json_data;
+    }
+
+    public function delete_conversation($other_username)
+    {
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $redis_functions = new Redisfunctions();
+
+            $user_id = $this->session->userdata["user_id"];
+            $me_username = $this->session->userdata["user_username"];
+            $other_user_records = $redis_functions->get_user_profile_data($other_username);
+            if (!empty($other_user_records))
+            {
+                $other_user_id = $other_user_records['user_id'];
+                $model = new Common_model();
+
+                $sql = 'SELECT message_id FROM ' . TABLE_MESSAGES . ' WHERE ((message_user_from=' . $other_user_id . ' AND message_user_to=' . $user_id . ') OR (message_user_to=' . $other_user_id . ' AND message_user_from=' . $user_id . '))';
+                $chat_records = $model->query($sql);
+                if (!empty($chat_records))
+                {
+                    $message_id_arr = array();
+                    foreach ($chat_records as $chat_value)
+                    {
+                        $message_id_arr[] = $chat_value['message_id'];
+                    }
+
+                    $redis_functions->set_deleted_message_ids($me_username, $message_id_arr);
+                    $this->session->set_flashdata('success', 'Your conversation with ' . stripslashes($other_user_records['user_fullname']) . ' marked as deleted');
+                }
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'An error occurred. Please try again later.');
+            }
+            redirect(base_url('my-chats'));
+        }
+        else
+        {
+            display_404_page();
+        }
     }
 
 }

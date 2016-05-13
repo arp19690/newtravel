@@ -90,7 +90,21 @@ function modify_url($base_url, $param_array = NULL, $separator = '&amp;')
 
 function get_google_ad()
 {
-    return NULL;
+    $str = NULL;
+    if (USER_IP != '127.0.0.1')
+    {
+        $str = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- GoBacPac - Live website -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-7594968339633253"
+                         data-ad-slot="3984546122"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>';
+    }
+    return $str;
 }
 
 function getImage($image_path_filename)

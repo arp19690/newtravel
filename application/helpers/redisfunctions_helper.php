@@ -368,4 +368,26 @@ class Redisfunctions
         return $output;
     }
 
+    public function set_deleted_message_ids($username, $message_id_array)
+    {
+        $new_array = $message_id_array;
+        $existing_message_id_arr = $this->get_deleted_message_ids($username);
+        if ($existing_message_id_arr != FALSE)
+        {
+            $new_array = array_unique(array_merge($existing_message_id_arr, $message_id_array));
+        }
+
+        return $this->ci->redis->hSet('deleted_message_ids', $username, json_encode($new_array));
+    }
+
+    public function get_deleted_message_ids($username)
+    {
+        $records = FALSE;
+        if ($this->ci->redis->hExists('deleted_message_ids', $username) == TRUE)
+        {
+            $records = (array) json_decode($this->ci->redis->hGet('deleted_message_ids', $username));
+        }
+        return $records;
+    }
+
 }

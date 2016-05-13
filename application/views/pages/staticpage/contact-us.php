@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
                                     <div class="clear"></div>
-                                    <button type="submit" name="btn_submit" class="btn btn-orange">Send message</button>
+                                    <button type="submit" name="btn_submit" class="btn btn-orange"><span class="fa fa-envelope-o"></span>&nbsp;Send message</button>
                                 </form>
                             </div>
                         </div>

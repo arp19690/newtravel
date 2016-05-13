@@ -18,12 +18,13 @@
             {
                 foreach ($featured_master_records as $key => $value)
                 {
+                    $get_featured_url = base_url('trip/get-featured?tkey=' . $post_details['post_url_key'] . '&amp;fkey=' . $value['pfm_key']);
                     ?>
                     <div class="chk-line">
                         <span class="chk-l">
-                            <a href="#" class="a-no-underline" style="color: #4a90a4;"><?php echo stripslashes($value['pfm_title']) ?>:</a>
+                            <a href="<?php echo $get_featured_url;?>" class="a-no-underline" style="color: #4a90a4;"><?php echo stripslashes($value['pfm_title']) ?>:</a>
                         </span>
-                        <span class="chk-r"><a href="#" class="accordeon-a a-no-underline"><?php echo get_currency_symbol($value['pfm_currency']) . $value['pfm_amount']; ?></a></span>
+                        <span class="chk-r"><a href="<?php echo $get_featured_url;?>" class="btn"><?php echo get_currency_symbol($value['pfm_currency']) . ' ' . $value['pfm_amount']; ?></a></span>
                         <div class="clear"></div>
                     </div>
                     <?php

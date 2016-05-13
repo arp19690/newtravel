@@ -99,6 +99,7 @@ class Staticpage extends CI_Controller
             $breadcrumbs = get_breadcrumbs($input_arr);
 
             $data["meta_title"] = $page_title . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $data["meta_description"] = 'Get in touch with us if you have any queries or feedback for us. We would love to hear from you.';
             $data["breadcrumbs"] = $breadcrumbs;
 
             $this->template->write_view("content", "pages/staticpage/contact-us", $data);

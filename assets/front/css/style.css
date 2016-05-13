@@ -1954,9 +1954,11 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .chk-left {float:left;}
 .chk-right {float:right; margin-top:2px;}
 .chk-lines {margin-bottom:21px;}
-.chk-line {font-weight:500; font-size:11px; padding:15px 0px 15px 0px; text-transform:uppercase; color:#777777; border-top:1px solid #f2f2f2;}
+.chk-line {font-weight:500; font-size:11px; padding:15px 0px 15px 0px; text-transform:uppercase; color:#777777;}
 .chk-line.chk-fligth-info {padding:8px 0px 8px 0px;}
-.chk-line:last-child {border-bottom:1px solid #f2f2f2;}
+/*.chk-line:last-child {border-bottom:1px solid #f2f2f2;}*/
+.chk-line {border-bottom:1px solid #f2f2f2;}
+.chk-line:last-child {border-bottom:none;}
 .chk-nights {background:url(../img/icon-nights.png) left top no-repeat; margin-right:16px; color:#4a90a4; padding:0px 0px 0px 16px; background-position:left 2px;}
 .chk-persons {color:#ff6739;}
 .chk-details h2 {font-weight:600; margin-bottom:14px; text-transform:uppercase; font-size:12px; color:#3a4142;}
