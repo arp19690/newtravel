@@ -218,7 +218,7 @@ class Custom_model extends CI_Model
                             if(to_user.user_id = ' . $user_id . ', from_user.user_profile_picture, to_user.user_profile_picture) as from_profile_picture';
         }
 
-        $where_str = '(m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL AND m1.message_deleted = "0"';
+        $where_str = '(m1.`message_user_from` = ' . $user_id . ' OR m1.`message_user_to` = ' . $user_id . ') AND m2.message_id is NULL';
         if (!empty($deleted_message_ids))
         {
             $imploded_message_id = implode(',', $deleted_message_ids);
@@ -249,7 +249,7 @@ class Custom_model extends CI_Model
 
         if ($where_str == NULL)
         {
-            $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ') AND m1.message_deleted = "0"';
+            $where_str = 'm1.`message_user_from` in (' . $user_from . ',' . $user_to . ') and m1.`message_user_to` in (' . $user_from . ',' . $user_to . ')';
         }
 
         if (!empty($deleted_message_ids))

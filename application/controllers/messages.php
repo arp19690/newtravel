@@ -184,7 +184,7 @@ class Messages extends CI_Controller
             if (!empty($other_user_records))
             {
                 $other_user_id = $other_user_records['user_id'];
-                $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_deleted = "0" AND m1.message_timestamp > ' . $latest_timestamp;
+                $where_str = 'm1.`message_user_from` = ' . $other_user_id . ' and m1.`message_user_to` = ' . $user_id . ' AND m1.message_timestamp > ' . $latest_timestamp;
                 $chat_records = $custom_model->get_chat_history($user_id, $other_user_id, $fields = NULL, $where_str);
 
                 $str = $latest_message_timestamp = NULL;
