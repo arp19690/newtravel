@@ -106,7 +106,7 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                     <div class="chat-r-div">
                         <div class="h-liked">
                             <div class="h-liked-lbl"><?php echo $to_user_fullname; ?>
-                                <div class="pull-right"><a href="<?php echo base_url('delete-chat/'.$to_user_username);?>" class="msg-del-icon" onclick="return confirm('Sure to delete this conversation?')"><span class="fa fa-trash"></span></a></div>
+                                <div class="pull-right"><a href="<?php echo base_url('delete-chat/' . $to_user_username); ?>" class="msg-del-icon" onclick="return confirm('Sure to delete this conversation?')"><span class="fa fa-trash"></span></a></div>
                             </div>
                             <div class="h-liked-row">
                                 <div class="h-liked-item">
@@ -154,8 +154,14 @@ $my_profile = $redis_functions->get_user_profile_data($this->session->userdata['
                                             {
                                                 ?>
                                                 <div class="h-liked-item">
-                                                    <p class="text-center">No chat records found between You &amp; <?php echo $to_user_fullname; ?></p>
+                                                    <p class="text-center">No chat records found between You &amp; <strong><?php echo $to_user_fullname; ?></strong>. Say Hi to <strong><?php echo $to_user_fullname; ?></strong></p>
                                                 </div>
+
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        $('.my-message').focus();
+                                                    });
+                                                </script>
                                                 <?php
                                             }
                                             ?>
