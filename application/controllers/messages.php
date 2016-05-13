@@ -210,4 +210,52 @@ class Messages extends CI_Controller
         return $json_data;
     }
 
+    public function delete_conversation($other_username)
+    {
+        if (isset($this->session->userdata["user_id"]))
+        {
+            $redis_functions = new Redisfunctions();
+
+            $user_id = $this->session->userdata["user_id"];
+            $other_user_records = $redis_functions->get_user_profile_data($other_username);
+            if (!empty($other_user_records))
+            {
+                $other_user_id = $other_user_records['user_id'];
+                $model = new Common_model();
+                $where_cond_arr = array(
+                    'message_user_from' => $other_user_id,
+                    'message_user_to' => $user_id,
+                    'message_user_to' => $other_user_id,
+                    'message_user_from' => $user_id,
+                );
+                
+                $chat_records = $model->fetchSelectedData('message_id', TABLE_MESSAGES, $where_cond_arr);
+                if (!empty($chat_records))
+                {
+                    foreach ($chat_records as $chat_value)
+                    {
+                        $data_array = array(
+                            'md_user_id' => $user_id,
+                            'md_message_id' => $chat_value['message_id'],
+                            'md_ipaddress' => USER_IP,
+                            'md_useragent' => USER_AGENT
+                        );
+                        @$model->insertData(TABLE_MESSAGE_DELETED, $data_array);
+                    }
+
+                    $this->session->set_flashdata('success', 'Your conversation with ' . stripslashes($other_user_records['user_fullname']) . ' marked as deleted');
+                }
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'An error occurred. Please try again later.');
+            }
+            redirect(base_url('my-chats'));
+        }
+        else
+        {
+            display_404_page();
+        }
+    }
+
 }
