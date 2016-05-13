@@ -383,7 +383,7 @@ class Redisfunctions
     public function get_deleted_message_ids($username)
     {
         $records = FALSE;
-        if ($this->ci->redis->hExists('unread_chats_username', $username) == TRUE)
+        if ($this->ci->redis->hExists('deleted_message_ids', $username) == TRUE)
         {
             $records = (array) json_decode($this->ci->redis->hGet('deleted_message_ids', $username));
         }
