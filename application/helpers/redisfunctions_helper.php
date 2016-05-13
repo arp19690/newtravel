@@ -371,7 +371,7 @@ class Redisfunctions
     public function set_deleted_message_ids($username, $message_id_array)
     {
         $new_array = $message_id_array;
-        $existing_message_id_arr = get_deleted_message_ids($username);
+        $existing_message_id_arr = $this->get_deleted_message_ids($username);
         if ($existing_message_id_arr != FALSE)
         {
             $new_array = array_merge($existing_message_id_arr, $message_id_array);
