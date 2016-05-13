@@ -345,9 +345,12 @@ else
     ?>
     <script>
         $(document).ready(function () {
-            window.location.href = $('.conversation-link:first').attr('href');
+            var redirect_url = $('.conversation-link:first').attr('href');
+            if (redirect_url != null and redirect_url != '')
+            {
+                window.location.href = redirect_url;
+            }
         });
     </script>
     <?php
 }
-?>
