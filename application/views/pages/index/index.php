@@ -57,7 +57,7 @@ $redis_functions = new Redisfunctions();
                                             </div>
                                         </a>
                                         <div class="offer-slider-txt">
-                                            <div class="offer-slider-link" itemprop="name"><a href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
+                                            <div class="offer-slider-link"><a href="<?php echo $trip_url; ?>"><span itemprop="name"><?php echo $trip_title; ?></span></a></div>
                                             <div class="offer-slider-l">
                                                 <div class="hidden">
                                                     <span itemprop="validFrom" content="<?php echo $trip_details['post_start_date']; ?>T00:01"></span>
