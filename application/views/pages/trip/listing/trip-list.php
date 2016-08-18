@@ -88,7 +88,7 @@
                                         <div class="cat-list-content-r">
                                             <div class="cat-list-content-p">
                                                 <?php
-                                                count($post_details['post_comments']) > 0 ? '<div class="cat-list-review">' . number_format(count($post_details['post_comments'])) . ' reviews</div>' : ''
+                                                count($post_details['post_ratings']) > 0 ? ('<div class="cat-list-review">' . number_format(count($post_details['post_ratings'])) . ' reviews</div>') : ''
                                                 ?>
                                                 <div class="offer-slider-r" itemscope itemtype="http://schema.org/Offer">
                                                     <div itemprop="priceCurrency" content="<?php echo strtoupper($post_details['post_currency']); ?>">
