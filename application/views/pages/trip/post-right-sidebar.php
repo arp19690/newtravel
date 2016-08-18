@@ -25,14 +25,14 @@ if (!empty($post_records['post_regions']))
 }
 ?>
 
-<div class="checkout-coll" itemscope itemtype="http://schema.org/Event">
+<div class="checkout-coll">
     <div class="checkout-head">
-        <div class="checkout-headl" itemscope itemtype="http://schema.org/Product">
+        <div class="checkout-headl" itemscope itemtype="http://schema.org/Event">
             <?php
             if (!empty($post_records['post_primary_image']) && file_exists($post_records['post_primary_image']))
             {
                 ?>
-            <a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>" style="display: inline-block;width: 100%;"></a>
+                <a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><img itemprop="image" alt="<?php echo $post_title; ?>" src="<?php echo base_url($post_records['post_primary_image']); ?>" style="display: inline-block;width: 100%;"></a>
                 <?php
             }
             ?>
@@ -41,7 +41,7 @@ if (!empty($post_records['post_regions']))
             <div class="checkout-headrb">
                 <div class="checkout-headrp">
                     <div class="chk-left">
-                        <div class="chk-lbl"><a itemprop="url" href="<?php echo $post_url; ?>" target="_blank"><span itemprop="name"><?php echo $post_title; ?></span></a></div>
+                        <div class="chk-lbl"><a href="<?php echo $post_url; ?>" target="_blank"><span itemprop="name"><?php echo $post_title; ?></span></a></div>
                         <div class="chk-lbl-a"><?php echo implode(' > ', $post_region_cities); ?></div>
                     </div>
 
@@ -57,6 +57,10 @@ if (!empty($post_records['post_regions']))
 
     <div class="chk-lines">
         <div class="chk-line">
+            <div class="hidden">
+                <span itemprop="validFrom" content="<?php echo $post_records['post_start_date']; ?>T00:01"></span>
+                <span itemprop="validThrough" content="<?php echo $post_records['post_end_date']; ?>T23:59"></span>
+            </div>
             <meta itemprop="duration" content="<?php echo $post_total_days; ?>D" />
             <span class="chk-nights"><?php echo number_format($post_total_days); ?> days</span>
             <span class="chk-dates"><?php echo $post_start_end_date_string; ?></span>
@@ -135,7 +139,7 @@ if (!empty($post_records['post_regions']))
         }
         ?>
         <div class="clear"></div>
-        <div class="chk-total" itemscope itemtype="http://schema.org/Offer">
+        <div class="chk-total" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <div class="chk-total-l">Budget:</div>
             <div class="chk-total-r" itemprop="price" content="<?php echo number_format($post_records['post_total_cost'], 2); ?>"><?php echo $post_total_cost; ?></div>
             <div class="clear"></div>

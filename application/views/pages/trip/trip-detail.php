@@ -31,7 +31,7 @@ if (!empty($post_details['post_regions']))
 
 <!-- main-cont -->
 <div class="main-cont">
-    <div class="body-wrapper" itemscope itemtype="http://schema.org/Event">
+    <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
                 <div class="page-title" itemprop="name"><?php echo $page_title; ?></div>
@@ -56,7 +56,7 @@ if (!empty($post_details['post_regions']))
                                             <img alt="<?php echo $page_title; ?>" src="<?php echo base_url(getImage($post_details['post_primary_image'])); ?>">
                                         </div>
                                         <div class="tab-gallery-preview">
-                                            <div id="gallery" itemscope itemtype="http://schema.org/Product">
+                                            <div id="gallery" itemscope itemtype="http://schema.org/Event">
                                                 <?php
                                                 if (!empty($post_details['post_media']->images))
                                                 {
@@ -94,9 +94,7 @@ if (!empty($post_details['post_regions']))
                                         <div class="content-tabs-i">
                                             <div class="clear">
                                                 <h2>Description:</h2>
-                                                <div itemprop="description">
-                                                    <?php echo $post_description; ?>
-                                                </div>
+                                                <div itemprop="description"><?php echo $post_description; ?></div>
                                             </div>
 
                                             <div class="clear" style="margin-top:40px;">
@@ -138,6 +136,10 @@ if (!empty($post_details['post_regions']))
                     <div class="h-detail-r">
                         <div class="h-detail-lbl">
                             <div class="h-detail-lbl-a"><?php echo $page_title; ?></div>
+                            <div class="hidden">
+                                <span itemprop="validFrom" content="<?php echo $post_details['post_start_date']; ?>T00:01"></span>
+                                <span itemprop="validThrough" content="<?php echo $post_details['post_end_date']; ?>T23:59"></span>
+                            </div>
                             <div class="h-detail-lbl-b"><?php echo $post_start_end_date_string; ?></div>
                             <div class="h-detail-lbl-b" style="margin-top:5px;"><?php echo implode(' > ', $post_region_cities); ?></div>
                         </div>

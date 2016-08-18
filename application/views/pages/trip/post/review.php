@@ -37,7 +37,7 @@ $redis_functions = new Redisfunctions();
                                                 <img alt="<?php echo $post_details['post_title']; ?>" src="<?php echo base_url(getImage($post_details['post_primary_image'])); ?>">
                                             </div>
                                             <div class="tab-gallery-preview">
-                                                <div id="gallery" itemscope itemtype="http://schema.org/Product">
+                                                <div id="gallery">
                                                     <?php
                                                     if (!empty($post_details['post_media']->images))
                                                     {
@@ -46,7 +46,7 @@ $redis_functions = new Redisfunctions();
                                                             $image_src = base_url(getImage($value->pm_media_url));
                                                             ?>
                                                             <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
-                                                                <a href="<?php echo $image_src; ?>"><img itemprop="image" alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
+                                                                <a href="<?php echo $image_src; ?>"><img alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
                                                             </div>
                                                             <?php
                                                         }
