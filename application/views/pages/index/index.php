@@ -43,7 +43,7 @@ $redis_functions = new Redisfunctions();
                         }
                         ?>
                         <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
-                            <div class="fly-in offer-slider-c" itemscope itemtype="http://schema.org/Product">
+                            <div class="fly-in offer-slider-c">
                                 <div id="offers-a" class="owl-slider">
                                     <!-- // -->
                                     <div class="offer-slider-i">
@@ -57,12 +57,16 @@ $redis_functions = new Redisfunctions();
                                             </div>
                                         </a>
                                         <div class="offer-slider-txt">
-                                            <div class="offer-slider-link" itemprop="name"><a itemprop="url" href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
+                                            <div class="offer-slider-link" itemprop="name"><a href="<?php echo $trip_url; ?>"><?php echo $trip_title; ?></a></div>
                                             <div class="offer-slider-l">
+                                                <div class="hidden">
+                                                    <span itemprop="validFrom" content="<?php echo $trip_details['post_start_date']; ?>T00:01"></span>
+                                                    <span itemprop="validThrough" content="<?php echo $trip_details['post_end_date']; ?>T23:59"></span>
+                                                </div>
                                                 <div class="offer-slider-location"><?php echo $trip_start_end_date_string; ?></div>
                                                 <div class="offer-slider-location"><?php echo implode(' > ', $post_region_cities); ?></div>
                                             </div>
-                                            <div class="offer-slider-r align-right" itemscope itemtype="http://schema.org/Offer">
+                                            <div class="offer-slider-r align-right" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                                 <div itemprop="priceCurrency" content="<?php echo strtoupper($trip_details['post_currency']); ?>">
                                                     <div itemprop="price" content="<?php echo number_format($trip_details['post_total_cost'], 2); ?>"><b><?php echo $trip_total_cost; ?></b></div>
                                                     <span>budget</span>
