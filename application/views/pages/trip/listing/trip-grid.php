@@ -10,6 +10,7 @@
             {
                 foreach ($post_records as $key => $value)
                 {
+                    $value = (array) $value;
                     $post_url_key = $value['post_url_key'];
                     $post_details = $redis_functions->get_trip_details($post_url_key);
                     $post_title = stripslashes($post_details['post_title']);
