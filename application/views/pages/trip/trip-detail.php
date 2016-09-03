@@ -194,7 +194,7 @@ if (!empty($post_details['post_regions']))
                             }
 
                             $interested_class_prefix = 'wishlist';
-                            $interested_text = 'I am interested to joined';
+                            $interested_text = 'I am interested to join';
                             if ($is_interested == TRUE)
                             {
                                 $interested_class_prefix = 'book';
