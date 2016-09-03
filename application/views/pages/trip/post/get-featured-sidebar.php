@@ -28,7 +28,7 @@ if (isset($this->session->userdata["user_id"]))
                             <span class="chk-l">
                                 <a href="<?php echo $get_featured_url; ?>" class="a-no-underline" target="_blank" style="color: #4a90a4;"><?php echo stripslashes($value['pfm_title']) ?>:</a>
                             </span>
-                            <span class="chk-r"><a href="<?php echo $get_featured_url; ?>" class="btn"><?php echo get_currency_symbol($value['pfm_currency']) . ' ' . $value['pfm_amount']; ?></a></span>
+                            <span class="chk-r"><a href="<?php echo $get_featured_url; ?>" class="btn" target="_blank"><?php echo get_currency_symbol($value['pfm_currency']) . ' ' . $value['pfm_amount']; ?></a></span>
                             <div class="clear"></div>
                         </div>
                         <?php
