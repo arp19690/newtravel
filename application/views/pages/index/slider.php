@@ -58,11 +58,11 @@
                             <div class="srch-tab-line" style="margin-bottom:0;">
                                 <div class="srch-tab-left">
                                     <label>Check in</label>
-                                    <div class="input-a"><input type="text" name="search_date_start" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                                    <div class="input-a"><input type="text" name="search_date_start" class="date-inpt" id="dt1" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                                 </div>
                                 <div class="srch-tab-right">
                                     <label>Check out</label>
-                                    <div class="input-a"><input type="text" name="search_date_end" class="date-inpt" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
+                                    <div class="input-a"><input type="text" name="search_date_end" class="date-inpt" id="dt2" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                                 </div>
                                 <div class="clear"></div>
                             </div>
