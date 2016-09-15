@@ -21,11 +21,13 @@ if (!empty($post_ratings))
                     <div class="reasons-rating-txt"><?php echo $review_comment; ?></div>
                     <div class="reasons-rating-user">
                         <div class="reasons-rating-user-l">
-                            <img alt="<?php echo $user_fullname; ?>" src="<?php echo $user_profile_picture; ?>">
+                            <a href="<?php echo base_url('user/' . stripslashes($user_username)); ?>" title="<?php echo $user_fullname; ?>">
+                                <img alt="<?php echo $user_fullname; ?>" src="<?php echo $user_profile_picture; ?>">
+                            </a>
                             <span><?php echo $review_stars; ?></span>
                         </div>
                         <div class="reasons-rating-user-r">
-                            <b><?php echo $user_fullname; ?></b>
+                            <b><a href="<?php echo base_url('user/' . stripslashes($user_username)); ?>" title="<?php echo $user_fullname; ?>"><?php echo $user_fullname; ?></a></b>
                             <span>from <?php echo $user_country; ?></span>
                         </div>
                         <div class="clear"></div>
