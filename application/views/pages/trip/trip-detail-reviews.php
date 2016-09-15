@@ -93,7 +93,9 @@ $post_aggregate_ratings = number_format($post_details['post_aggregate_ratings'],
                                 <div class="guest-reviews-l">
                                     <div class="guest-reviews-img">
                                         <span><?php echo $review_stars; ?></span>
-                                        <img alt="<?php echo $user_fullname; ?>" src="<?php echo $user_profile_picture; ?>">
+                                        <a href="<?php echo base_url('user/' . stripslashes($user_username)); ?>" title="<?php echo $user_fullname; ?>">
+                                            <img alt="<?php echo $user_fullname; ?>" src="<?php echo $user_profile_picture; ?>">
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="guest-reviews-r">
@@ -101,7 +103,7 @@ $post_aggregate_ratings = number_format($post_details['post_aggregate_ratings'],
                                         <div class="guest-reviews-b">
                                             <div class="guest-reviews-bl">
                                                 <div class="guest-reviews-blb">
-                                                    <div class="guest-reviews-lbl"><?php echo $user_fullname; ?></div>
+                                                    <div class="guest-reviews-lbl"><a href="<?php echo base_url('user/' . stripslashes($user_username)); ?>" title="<?php echo $user_fullname; ?>"><?php echo $user_fullname; ?></a></div>
                                                     <div class="guest-reviews-lbl-a">from <?php echo $user_country; ?></div>
                                                     <div class="guest-reviews-txt"><?php echo $review_comment; ?></div>
                                                 </div>
