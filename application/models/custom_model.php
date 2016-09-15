@@ -383,15 +383,30 @@ class Custom_model extends CI_Model
         $records['trips_posted'] = $trips_posted_records;
 
         // to fetch the trips owner has joined
-        $sql = 'SELECT post_url_key, post_published FROM ' . TABLE_POST_TRAVELERS . ' LEFT JOIN ' . TABLE_POSTS . ' ON post_id = pt_post_id WHERE pt_traveler_user_id = ' . $records['user_id'] . ' AND post_user_id != ' . $records['user_id'];
-        $trips_joined_records = $this->db->query($sql)->result_array();
-        $records['trips_joined'] = $trips_joined_records;
+        $records['trips_joined'] = $this->get_joined_trips($username);
 
         // to fetch user's wishlist
         $wishlist_records = $model->getAllDataFromJoin('post_url_key', TABLE_WISHLIST, array(TABLE_POSTS => 'post_id = wishlist_post_id'), 'LEFT', array('wishlist_status' => '1', 'post_published' => '1', 'wishlist_user_id' => $records['user_id']), 'wishlist_id', 'DESC');
         $records['my_wishlist'] = $wishlist_records;
 
         return $records;
+    }
+
+    public function get_joined_trips($username)
+    {
+        $output_arr = array();
+        $redis_functions = new Redisfunctions();
+        $user_profile_data = $redis_functions->get_user_profile_data($username);
+        if (!empty($user_profile_data))
+        {
+            $user_id = $user_profile_data['user_id'];
+            $sql = 'SELECT p.post_url_key, p.post_published, p.post_status FROM ' . TABLE_POSTS . ' as p 
+                    left join ' . TABLE_POST_TRAVELERS . ' as pt on pt.pt_post_id = p.post_id
+                    WHERE pt_traveler_user_id = ' . $user_id . ' AND p.post_user_id != ' . $user_id . ' 
+                    GROUP BY p.post_id';
+            $output_arr = $this->db->query($sql)->result_array();
+        }
+        return $output_arr;
     }
 
 }
