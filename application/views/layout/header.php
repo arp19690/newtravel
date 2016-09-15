@@ -137,7 +137,7 @@ $path = $controller . "/" . $action;
                         </div>
                     </div>
                     <div class="header-social">
-                        <a href="<?php echo $redis_functions->get_site_setting('TWITTER_SOCIAL_LINK'); ?>" target="_blank" class="social-twitter track-external-redirect"></a>
+                        <!--<a href="<?php echo $redis_functions->get_site_setting('TWITTER_SOCIAL_LINK'); ?>" target="_blank" class="social-twitter track-external-redirect"></a>-->
                         <a href="<?php echo $redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK'); ?>" target="_blank" class="social-facebook track-external-redirect"></a>
                     </div>
                     <div class="clear"></div>
