@@ -602,11 +602,7 @@ class Trip extends CI_Controller
     public function trip_details($post_url_key)
     {
         $redis_functions = new Redisfunctions();
-        $user_id = NULL;
-        if (isset($this->session->userdata["user_id"]))
-        {
-            $user_id = $this->session->userdata["user_id"];
-        }
+        $user_id = isset($this->session->userdata["user_id"]) == TRUE ? $this->session->userdata["user_id"] : NULL;
 
         $post_details = $this->redis_functions->get_trip_details($post_url_key);
         if (!empty($post_details))
