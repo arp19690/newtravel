@@ -1,5 +1,11 @@
 <?php
 
+function base_url_admin($request_uri = NULL)
+{
+    $url = SITE_BASE_URL . 'admin/' . $request_uri;
+    return $url;
+}
+
 function get_message_timestamp_readable($timestamp)
 {
     return date('d M Y G:i a', $timestamp);
