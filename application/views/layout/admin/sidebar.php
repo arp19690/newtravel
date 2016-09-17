@@ -19,16 +19,12 @@
                             <li><a href="<?php echo base_url_admin('users/userLog/user'); ?>"><i class="icon-footprint"></i> User Logs</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url_admin('pricing'); ?>"><i class="icon-credit-card"></i> <span>Pricing Plans</span></a></li>
                     <li>
                         <a href="#"><i class="icon-cog3"></i> <span>Settings</span></a>
                         <ul>
                             <li><a href="<?php echo base_url_admin('faq'); ?>"><i class="icon-envelop2"></i> FAQs</a></li>
-                            <li><a href="<?php echo base_url_admin('testimonial'); ?>"><i class="icon-pencil"></i> Testimonials</a></li>
-                            <li><a href="<?php echo base_url_admin('staticcontent/sample_report'); ?>"><i class="icon-file-empty"></i> Upload Sample Report</a></li>
                             <li><a href="<?php echo base_url_admin('staticcontent/configurations'); ?>"><i class="icon-wrench2"></i> Configurations</a></li>
                             <li><a href="<?php echo base_url_admin('staticcontent'); ?>"><i class="icon-copy2"></i> Static Pages</a></li>
-                            <!--<li><a href="<?php echo base_url_admin('staticcontent/updatelogo'); ?>"><i class="icon-image3"></i> Update Logo</a></li>-->
                         </ul>
                     </li>
                 </ul>

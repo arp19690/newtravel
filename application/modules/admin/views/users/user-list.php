@@ -33,7 +33,6 @@
                                     <th>Name</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -57,7 +56,6 @@
                                         </td>
                                         <td><?php echo $user_username; ?></td>
                                         <td><?php echo $value['user_email']; ?></td>
-                                        <td><?php echo $value['user_phone'] == NULL ? 'NA' : $value['user_phone']; ?></td>
                                         <td class="text-<?php echo $value['user_status'] == '1' ? 'success' : 'danger'; ?>"><?php echo $value['user_status'] == '1' ? 'Active' : (($value['user_status'] == '0') ? 'Inactive' : (($value['user_status'] == '2') ? 'Banned' : 'NA')); ?></td>
                                         <td><a href="<?php echo base_url_admin('users/updateUserStatus/' . $value['user_id'] . '/' . ($value['user_status'] == '1' ? '0' : '1')); ?>" class="btn btn-<?php echo $value['user_status'] == '1' ? 'danger' : 'success'; ?>" onclick="return confirm('Sure to change <?php echo $user_fullname; ?>\'s status');"><?php echo $value['user_status'] == '1' ? 'Inactivate' : 'Activate'; ?></a></td>
                                     </tr>
