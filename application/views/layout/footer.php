@@ -98,7 +98,7 @@ $latest_trips = $redis_functions->get_latest_trips();
             <?php
             $company_arr = array(
                 base_url('static/about-us') => 'About us',
-                base_url('static/how-it-works') => 'How it works',
+//                base_url('static/how-it-works') => 'How it works',
                 base_url('static/terms-and-conditions') => 'Terms &amp; Conditions',
                 base_url('static/privacy-policy') => 'Privacy Policy',
                 base_url('static/contact-us') => 'Contact us',
