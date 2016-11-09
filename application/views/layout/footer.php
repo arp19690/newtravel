@@ -94,10 +94,10 @@ $latest_trips = $redis_functions->get_latest_trips();
             </div>
         </div>
         <div class="section">
-            <div class="footer-lbl">Company</div>
+            <div class="footer-lbl"><?php echo $redis_functions->get_site_setting('SITE_NAME'); ?></div>
             <?php
             $company_arr = array(
-                base_url('static/about-us') => 'About us',
+//                base_url('static/about-us') => 'About us',
 //                base_url('static/how-it-works') => 'How it works',
                 base_url('static/terms-and-conditions') => 'Terms &amp; Conditions',
                 base_url('static/privacy-policy') => 'Privacy Policy',
