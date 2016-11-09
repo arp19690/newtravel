@@ -31,7 +31,7 @@ class Staticpage extends CI_Controller
             $data["breadcrumbs"] = $breadcrumbs;
             $data["page_title"] = $page_title;
             $data['meta_title'] = $page_title . " - " . $this->redis_functions->get_site_setting('SITE_NAME');
-            $data['meta_description'] = getNWordsFromString($page_content, 50);
+            $data['meta_description'] = strip_tags(getNWordsFromString($page_content, 50));
 
             $this->template->write_view("content", "pages/staticpage/static-content", $data);
             $this->template->render();
