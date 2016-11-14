@@ -14,22 +14,19 @@
                 <div class="swiper-slide">
                     <div class="slide-section" style="background:url(<?php echo IMAGES_PATH; ?>/sider-01.jpg) center top no-repeat;">
                         <div class="mp-slider-lbl">Great journey begins with a small step</div>
-                        <div class="mp-slider-lbl-a">Make Your Life Better and Bright!  You must trip with Us!</div>
-                        <div class="mp-slider-btn"><a href="#" class="btn-a">Learn more</a></div>
+                        <div class="mp-slider-lbl-a">“We travel, some of us forever, to seek other places, other lives, other souls.” – Anais Nin</div>
                     </div>
                 </div>
                 <div class="swiper-slide"> 
                     <div class="slide-section slide-b" style="background:url(<?php echo IMAGES_PATH; ?>/sider-02.jpg) center top no-repeat;">
-                        <div class="mp-slider-lbl">Relax with us. we love our clients</div>
-                        <div class="mp-slider-lbl-a">Make Your Life Better and Bright!  You must trip with Us!</div>
-                        <div class="mp-slider-btn"><a href="#" class="btn-a">Learn more</a></div>
+                        <div class="mp-slider-lbl">Once a year, go someplace you’ve never been before</div>
+                        <div class="mp-slider-lbl-a">“The gladdest moment in human life, me thinks, is a departure into unknown lands.” – Sir Richard Burton</div>
                     </div>
                 </div>
                 <div class="swiper-slide"> 
                     <div class="slide-section slide-b" style="background:url(<?php echo IMAGES_PATH; ?>/sider-03.jpg) center top no-repeat;">
-                        <div class="mp-slider-lbl">the best relax with us</div>
-                        <div class="mp-slider-lbl-a">Make Your Life Better and Bright!  You must trip with Us!</div>
-                        <div class="mp-slider-btn"><a href="#" class="btn-a">Learn more</a></div>
+                        <div class="mp-slider-lbl">You don’t have to be rich to travel well</div>
+                        <div class="mp-slider-lbl-a">“Travel makes one modest. You see what a tiny place you occupy in the world.” – Gustave Flaubert</div>
                     </div>
                 </div>            
             </div>
@@ -50,18 +47,18 @@
                         <div class="page-search-p">
                             <!-- // -->
                             <div class="srch-tab-line">
-                                <label>Place / hotel name</label>
+                                <label>Place / Destination name</label>
                                 <div class="input-a"><input type="text" name="search_location" placeholder="Example: France" class="gMapLocation-cities"></div>
                             </div>
                             <!-- // -->
                             <!-- // -->
                             <div class="srch-tab-line" style="margin-bottom:0;">
                                 <div class="srch-tab-left">
-                                    <label>Check in</label>
+                                    <label>Departure</label>
                                     <div class="input-a"><input type="text" name="search_date_start" class="date-inpt" id="dt1" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                                 </div>
                                 <div class="srch-tab-right">
-                                    <label>Check out</label>
+                                    <label>Return</label>
                                     <div class="input-a"><input type="text" name="search_date_end" class="date-inpt" id="dt2" placeholder="mm/dd/yy"> <span class="date-icon"></span></div>	
                                 </div>
                                 <div class="clear"></div>
