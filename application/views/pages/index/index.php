@@ -9,7 +9,6 @@ $redis_functions = new Redisfunctions();
             <div class="wrapper-padding-a">
                 <header class="fly-in" style="margin-bottom: 40px;text-align: center;">
                     <div class="offer-slider-lbl">Our featured trips</div>
-                    <p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui.</p>
                 </header>
                 <?php
                 if (!empty($featured_trip_keys))
@@ -95,7 +94,7 @@ $redis_functions = new Redisfunctions();
         <div class="mp-b">
             <div class="wrapper-padding">
                 <div class="fly-in mp-b-left">
-                    <div class="mp-b-lbl">choose hotel by region</div>
+                    <div class="mp-b-lbl">Making World A Smaller Place</div>
                     <!-- // regions // -->
                     <div class="regions">
                         <div class="regions-holder">					
@@ -112,31 +111,31 @@ $redis_functions = new Redisfunctions();
                         <ul>
                             <li><a class="europe" href="#">Europe</a></li>
                             <li><a class="asia" href="#">Asia</a></li>
-                            <li><a class="north-america" href="#">North america</a></li>
-                            <li><a class="south-america" href="#">south america</a></li>
-                            <li><a class="africa" href="#">africa</a></li>
-                            <li><a class="austalia" href="#">australia</a></li>		
+                            <li><a class="north-america" href="#">North America</a></li>
+                            <li><a class="south-america" href="#">South America</a></li>
+                            <li><a class="africa" href="#">Africa</a></li>
+                            <li><a class="austalia" href="#">Australia</a></li>		
                         </ul>
                     </nav>
                 </div>
                 <div class="fly-in mp-b-right">
-                    <div class="mp-b-lbl">reasons to book with us</div>
+                    <div class="mp-b-lbl">reasons to backpack with us</div>
                     <div class="reasons-item-a">
-                        <div class="reasons-lbl">Awesome design</div>
-                        <div class="reasons-txt">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui. </div>
+                        <div class="reasons-lbl">It is easier than you think</div>
+                        <div class="reasons-txt">When you are happy, wherever you are in the world, your emotional guard and walls will inevitably lower down.</div>
                     </div>
                     <div class="reasons-item-b">
-                        <div class="reasons-lbl">carefully handcrafted</div>
-                        <div class="reasons-txt">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui. </div>
+                        <div class="reasons-lbl">Learn new languages</div>
+                        <div class="reasons-txt">There is no language-learning gene. Such wonderful experiences are well within the reach of many of you.</div>
                     </div>
                     <div class="clear"></div>
                     <div class="reasons-item-c">
-                        <div class="reasons-lbl">fully responsive</div>
-                        <div class="reasons-txt">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui. </div>
+                        <div class="reasons-lbl">The World is on Sale</div>
+                        <div class="reasons-txt">Just pack your bags, put it on like a Jetpack and get ready to go. Find the perfect itinerary here on GoBacPac and join them.</div>
                     </div>
                     <div class="reasons-item-d">
-                        <div class="reasons-lbl">fully responsive</div>
-                        <div class="reasons-txt">Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui. </div>
+                        <div class="reasons-lbl">Every turn makes a new memory</div>
+                        <div class="reasons-txt">Every experience you have when traveling, good or bad, is a memory that you will have forever. You never know!</div>
                     </div>
                     <div class="clear"></div>
                 </div>
