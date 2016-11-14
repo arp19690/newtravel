@@ -245,7 +245,7 @@ class Redisfunctions
     public function set_static_page_content()
     {
         $model = new Common_model();
-        $records = $model->fetchSelectedData('sp_key, sp_title, sp_text', TABLE_STATIC_PAGES);
+        $records = $model->fetchSelectedData('sp_key, sp_title, sp_text', TABLE_STATIC_PAGES, array('sp_status' => '1'));
         if (count($records) > 0)
         {
             foreach ($records as $value)
