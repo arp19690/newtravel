@@ -27,9 +27,9 @@ require_once 'db-constants.php';
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-//    $environment = 'production';
-//    if ($_SERVER["REMOTE_ADDR"] == '127.0.0.1')
-$environment = 'development';
+$environment = 'production';
+if ($_SERVER["REMOTE_ADDR"] == '127.0.0.1')
+    $environment = 'development';
 
 define('ENVIRONMENT', $environment);
 /*
