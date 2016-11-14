@@ -219,6 +219,7 @@ if ( ! function_exists('get_config'))
 
 		if (isset($_config))
 		{
+                                                                    $_config[0] =& $config;
 			return $_config[0];
 		}
 
