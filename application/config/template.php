@@ -72,7 +72,7 @@
     
     //  Admin Template
     
-    $template['admin']['template'] = 'layout/admin/admin-template';
+    $template['admin']['template'] = 'layout/admin/admin';
     $template['admin']['regions'] = array (
         'header',
         'content',
