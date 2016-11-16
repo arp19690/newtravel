@@ -72,6 +72,28 @@
 
     }
 
+    if (!function_exists('base_url_admin'))
+    {
+
+        function base_url_admin($uri = '')
+        {
+            $CI = & get_instance();
+            return $CI->config->base_url('admin/' . $uri);
+        }
+
+    }
+
+    if (!function_exists('base_url_seller'))
+    {
+
+        function base_url_seller($uri = '')
+        {
+            $CI = & get_instance();
+            return $CI->config->base_url('seller/' . $uri);
+        }
+
+    }
+
 // ------------------------------------------------------------------------
 
     /**
@@ -92,10 +114,16 @@
             $current_url = $CI->config->site_url($CI->uri->uri_string());
 
             // BEGIN MODIFICATION
-            if (isset($_GET) && !empty($_GET))
+            if (isset($_GET))
             {
                 // Use your preferred method of fetching the query string
-                $current_url .= '?' . http_build_query($_GET);
+                $get_url = '?' . http_build_query($_GET);
+                if ($get_url == "?")
+                {
+                    $get_url = "";
+                }
+
+                $current_url .= $get_url;
             }
             // END MODIFICATION
 
@@ -370,21 +398,21 @@
             $x = array_reverse($x);
             ob_start();
             ?><script type="text/javascript">
-                //<![CDATA[
-                var l = new Array();
+                            //<![CDATA[
+                            var l = new Array();
             <?php
             $i = 0;
             foreach ($x as $val)
             {
                 ?>l[<?php echo $i++; ?>] = '<?php echo $val; ?>';<?php } ?>
 
-                    for (var i = l.length - 1; i >= 0; i = i - 1) {
-                        if (l[i].substring(0, 1) == '|')
-                            document.write("&#" + unescape(l[i].substring(1)) + ";");
-                        else
-                            document.write(unescape(l[i]));
-                    }
-                    //]]>
+                            for (var i = l.length - 1; i >= 0; i = i - 1) {
+                                if (l[i].substring(0, 1) == '|')
+                                    document.write("&#" + unescape(l[i].substring(1)) + ";");
+                                else
+                                    document.write(unescape(l[i]));
+                            }
+                            //]]>
             </script><?php
             $buffer = ob_get_contents();
             ob_end_clean();
@@ -487,7 +515,7 @@
 
             $url = parse_url($str);
 
-            if (!$url OR !isset($url['scheme']))
+            if (!$url OR ! isset($url['scheme']))
             {
                 $str = 'http://' . $str;
             }
