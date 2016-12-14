@@ -127,13 +127,13 @@ if (!isset($count_search_results))
                             $checked = '';
                             if (isset($_GET['search_travel_medium']))
                             {
-                                if (in_array($value->tm_id, $_GET['search_travel_medium']))
+                                if (in_array($value['tm_id'], $_GET['search_travel_medium']))
                                 {
                                     $checked = 'checked="checked"';
                                 }
                             }
                             ?>
-                            <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value->tm_id; ?>" <?php echo $checked; ?>/><?php echo stripslashes($value->tm_title); ?></label></div>
+                            <div class="checkbox"><label><input type="checkbox" name="search_travel_medium[]" value="<?php echo $value['tm_id']; ?>" <?php echo $checked; ?>/><?php echo stripslashes($value['tm_title']); ?></label></div>
                             <?php
                         }
                         ?>

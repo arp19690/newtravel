@@ -83,8 +83,8 @@ class Redisfunctions
     public function get_user_profile_data($username, $fields = NULL)
     {
         $custom_model = new Custom_model();
-        $records = $custom_model->get_user_profile_data($username, ($fields == NULL ? '*' : $fields));
-        return $records[0];
+        $records = $custom_model->get_user_profile_data($username, $fields);
+        return $records;
     }
 
     public function get_unread_chats_username($username)
@@ -100,6 +100,11 @@ class Redisfunctions
         $model = new Common_model();
         $records = $model->fetchSelectedData('faq_id, faq_question, faq_answer', TABLE_FAQ, array('faq_type' => 'trip', 'faq_status' => '1'), 'faq_order');
         return $records;
+    }
+
+    public function get_deleted_message_ids($username)
+    {
+        return NULL;
     }
 
 }
