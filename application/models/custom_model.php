@@ -109,8 +109,8 @@ class Custom_model extends CI_Model
             $output['post_media']['videos'] = $post_videos_records;
 
             // adding you may like data below
-            $you_may_like = $this->get_you_may_like($url_key);
-            $output['you_may_like'] = $you_may_like;
+//            $you_may_like = $this->get_you_may_like($url_key);
+//            $output['you_may_like'] = $you_may_like;
         }
         return $output;
     }

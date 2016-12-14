@@ -11,19 +11,6 @@ class Redisfunctions
         $this->ci = & get_instance();
         $this->ci->load->database();
         $this->ci->load->model('Common_model');
-        $this->ci->redis = new CI_Redis();
-    }
-
-    public function auto_set_redis_keys()
-    {
-        $this->set_featured_trips();
-        $this->set_latest_trips();
-        $this->set_site_settings();
-        $this->set_activity_master();
-        $this->set_static_page_content();
-        $this->set_travel_mediums();
-        $this->set_all_user_profile_data(1);
-        $this->set_trip_faqs();
     }
 
     public function get_featured_trips()
@@ -67,7 +54,7 @@ class Redisfunctions
         $custom_model = new Custom_model();
         $custom_model->verify_trip_status($url_key);
         $trip_details = $custom_model->get_trip_detail($url_key);
-        return $output;
+        return $trip_details;
     }
 
     public function get_activity_master()
@@ -82,7 +69,7 @@ class Redisfunctions
         $key_name = strtoupper($key_name);
         $model = new Common_model();
         $records = $model->fetchSelectedData('setting_key, setting_value', TABLE_SETTINGS, array('setting_key' => $key_name));
-        return $records[0];
+        return $records[0]['setting_value'];
     }
 
     public function get_static_page_content($key_name)
@@ -90,7 +77,7 @@ class Redisfunctions
         $key_name = strtolower($key_name);
         $model = new Common_model();
         $records = $model->fetchSelectedData('sp_key, sp_title, sp_text', TABLE_STATIC_PAGES, array('sp_status' => '1', 'sp_key' => $key_name));
-        return $records;
+        return $records[0];
     }
 
     public function get_user_profile_data($username, $fields = NULL)

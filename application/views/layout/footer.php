@@ -15,7 +15,7 @@ $latest_trips = $redis_functions->get_latest_trips();
                     $i = 0;
                     foreach ($featured_trips as $post_url_key)
                     {
-                        $trip_details = $redis_functions->get_trip_details($post_url_key);
+                        $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
                         $trip_title = stripslashes($trip_details['post_title']);
                         $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
                         $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
@@ -56,7 +56,7 @@ $latest_trips = $redis_functions->get_latest_trips();
                     $i = 0;
                     foreach ($latest_trips as $post_url_key)
                     {
-                        $trip_details = $redis_functions->get_trip_details($post_url_key);
+                        $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
                         $trip_title = stripslashes($trip_details['post_title']);
                         $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
                         $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));

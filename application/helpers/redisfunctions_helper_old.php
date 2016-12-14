@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Redisfunctions
+class RedisfunctionsOLD
 {
 
     public function __construct()
