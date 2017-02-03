@@ -109,8 +109,8 @@ class Custom_model extends CI_Model
             $output['post_media']['videos'] = $post_videos_records;
 
             // adding you may like data below
-            $you_may_like = $this->get_you_may_like($url_key);
-            $output['you_may_like'] = $you_may_like;
+//            $you_may_like = $this->get_you_may_like($url_key);
+//            $output['you_may_like'] = $you_may_like;
         }
         return $output;
     }
@@ -383,7 +383,7 @@ class Custom_model extends CI_Model
         $records['trips_posted'] = $trips_posted_records;
 
         // to fetch the trips owner has joined
-        $records['trips_joined'] = $this->get_joined_trips($username);
+//        $records['trips_joined'] = $this->get_joined_trips($username);
 
         // to fetch user's wishlist
         $wishlist_records = $model->getAllDataFromJoin('post_url_key', TABLE_WISHLIST, array(TABLE_POSTS => 'post_id = wishlist_post_id'), 'LEFT', array('wishlist_status' => '1', 'post_published' => '1', 'wishlist_user_id' => $records['user_id']), 'wishlist_id', 'DESC');

@@ -31,9 +31,9 @@
                     {
                         foreach ($post_details['post_regions'] as $region_key => $region_value)
                         {
-                            if (!in_array($region_value->pr_source_city, $post_region_cities))
+                            if (!in_array($region_value['pr_source_city'], $post_region_cities))
                             {
-                                $post_region_cities[] = $region_value->pr_source_city;
+                                $post_region_cities[] = $region_value['pr_source_city'];
                             }
                         }
                     }

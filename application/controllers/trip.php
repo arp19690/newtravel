@@ -617,7 +617,7 @@ class Trip extends CI_Controller
                 {
                     foreach ($post_details['post_travelers'] as $traveler_info)
                     {
-                        if ($user_id == $traveler_info->pt_traveler_user_id)
+                        if ($user_id == $traveler_info['pt_traveler_user_id'])
                         {
                             $is_interested = TRUE;
                             break;
@@ -630,7 +630,7 @@ class Trip extends CI_Controller
                 {
                     foreach ($user_profile_data['my_wishlist'] as $wish_value)
                     {
-                        if ($wish_value->post_url_key == $post_url_key)
+                        if ($wish_value['post_url_key'] == $post_url_key)
                         {
                             $in_wishlist = TRUE;
                             break;
@@ -893,10 +893,11 @@ class Trip extends CI_Controller
 
     public function trips_joined_by_me($view_type = 'list', $page = 1)
     {
+        $custom_model=new Custom_model();
         $redis_functions = new Redisfunctions();
         $username = $this->session->userdata['user_username'];
         $user_profile_data = $redis_functions->get_user_profile_data($username);
-        $trips_joined = $user_profile_data['trips_joined'];
+        $trips_joined = $custom_model->get_joined_trips($username);
         $post_records = array();
         if (!empty($trips_joined))
         {

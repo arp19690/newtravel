@@ -79,7 +79,7 @@ class Messages extends CI_Controller
                 $chat_list_records = $custom_model->get_inbox_list($user_id);
 
 //            Setting and getting unread chats username to redis 
-                $redis_functions->set_unread_chats_username($this->session->userdata["user_username"]);
+//                $redis_functions->set_unread_chats_username($this->session->userdata["user_username"]);
                 $unread_chats_username = $redis_functions->get_unread_chats_username($this->session->userdata["user_username"]);
 
 //            Marking previous messages as read

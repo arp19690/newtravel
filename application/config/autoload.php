@@ -55,7 +55,7 @@ $autoload['packages'] = array();
   |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
  */
 
-$autoload['libraries'] = array('template', 'session', 'Login_auth', 'AdminLogin_auth', 'redis');
+$autoload['libraries'] = array('template', 'session', 'Login_auth', 'AdminLogin_auth');
 
 
 /*
