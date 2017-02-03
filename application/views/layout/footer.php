@@ -47,7 +47,7 @@ $latest_trips = $redis_functions->get_latest_trips();
             </div>
         </div>
         <div class="section">
-            <div class="footer-lbl">Facebook Page</div>
+            <div class="footer-lbl">Like us on Facebook</div>
             <div class="twitter-wiget">
                 <div class="fb-page" data-href="<?php echo $redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK'); ?>" data-tabs="timeline" data-height="280" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="<?php echo $redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK'); ?>"><a href="<?php echo $redis_functions->get_site_setting('FACEBOOK_SOCIAL_LINK'); ?>"><?php echo $redis_functions->get_site_setting('SITE_NAME'); ?></a></blockquote></div></div>
             </div>
@@ -77,7 +77,7 @@ $latest_trips = $redis_functions->get_latest_trips();
             ?>
         </div>
         <div class="section">
-            <div class="footer-lbl"></div>
+            <div class="footer-lbl">You may like</div>
             <div class="twitter-wiget">
                 <div class="clearfix"><?php echo get_google_ad(); ?></div>
             </div>
