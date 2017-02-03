@@ -402,6 +402,7 @@ class Index extends CI_Controller
                                 $user_password = $is_exists[0]['user_password'];
                             }
 
+                            // deciding the next url here
                             $next_url = base_url('my-account');
                             if (isset($this->session->userdata["next_url"]))
                             {
