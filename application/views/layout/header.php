@@ -11,7 +11,7 @@ if (!isset($meta_description))
     $meta_description = $redis_functions->get_site_setting('SEO_DESCRIPTION');
 
 if (!isset($meta_logo_image))
-    $meta_logo_image = IMAGES_PATH . "/logo.jpg";
+    $meta_logo_image = IMAGES_PATH . "/logo-a.png";
 
 //clearstatcache();
 //$this->output->set_header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
@@ -37,13 +37,20 @@ $path = $controller . "/" . $action;
         <meta name="keywords" content="<?php echo $meta_keywords; ?>" />
         <meta name="description" content="<?php echo $meta_description; ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/> 
+
+        <meta property="fb:app_id" content="<?php echo FACEBOOK_APP_ID; ?>" />
         <meta property="og:url" content="<?php echo current_url(); ?>" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="<?php echo $meta_title; ?>" />
         <meta property="og:description" content="<?php echo $meta_description; ?>" />
-        <meta property="og:image" content="<?php echo $meta_logo_image; ?>" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="<?php echo $redis_functions->get_site_setting('SITE_NAME'); ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image1.jpg"; ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image2.jpg"; ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image3.jpg"; ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image4.jpg"; ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image5.jpg"; ?>" />
+        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image6.jpg"; ?>" />
 
         <!-- Google Tag Manager -->
         <script>(function (w, d, s, l, i) {
