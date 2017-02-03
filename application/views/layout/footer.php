@@ -106,7 +106,7 @@ $latest_trips = $redis_functions->get_latest_trips();
 <script src="<?php echo JS_PATH; ?>/custom.select.js"></script>  
 <script src="<?php echo JS_PATH; ?>/jquery-ui.min.js"></script>
 <!--<script type="text/javascript" src="<?php echo JS_PATH; ?>/twitterfeed.js"></script>-->
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBJA_VFdfzTHdYKPJTeecPpRf7k49cErbk"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>/application.js"></script>
 <!-- \\ scripts \\ --> 
 
