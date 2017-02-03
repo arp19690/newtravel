@@ -342,6 +342,12 @@ class Index extends CI_Controller
     {
         $this->load->library("SocialLib");
         $socialLib = new SocialLib();
+        $next_url = base_url("my-account");
+        if ($this->input->get("next"))
+        {
+            $next_url = $this->input->get("next");
+        }
+        $this->session->set_userdata("next_url", $next_url);
         redirect($socialLib->getFacebookLoginUrl());
     }
 
@@ -396,10 +402,17 @@ class Index extends CI_Controller
                                 $user_password = $is_exists[0]['user_password'];
                             }
 
+                            $next_url = base_url('my-account');
+                            if (isset($this->session->userdata["next_url"]))
+                            {
+                                $next_url = $this->session->userdata["next_url"];
+                                unset($this->session->userdata["next_url"]);
+                            }
+
                             // loggin user in
                             $this->load->library('Login_auth');
                             $login_auth = new Login_auth();
-                            $login_auth->login($facebook_email, $user_password, base_url('my-account'), base_url('login'));
+                            $login_auth->login($facebook_email, $user_password, $next_url, base_url('login'));
                         }
                         else
                         {
