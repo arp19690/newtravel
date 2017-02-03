@@ -58,6 +58,7 @@ class Login_auth
                 if ($success_redirect_to == NULL)
                     $success_redirect_to = base_url();
 
+                $this->ci->session->set_flashdata('success', 'Logged in successfully');
                 redirect($success_redirect_to);
             }
             else
