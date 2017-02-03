@@ -45,6 +45,20 @@ $path = $controller . "/" . $action;
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="<?php echo $redis_functions->get_site_setting('SITE_NAME'); ?>" />
 
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'});
+                var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-W5SPHJZ');</script>
+        <!-- End Google Tag Manager -->
+
         <!--Adding Favicons below-->
         <link rel="apple-touch-icon" sizes="57x57" href="<?php echo IMAGES_PATH; ?>/favicons/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?php echo IMAGES_PATH; ?>/favicons/apple-icon-60x60.png">
@@ -93,6 +107,11 @@ $path = $controller . "/" . $action;
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
+
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5SPHJZ"
+                          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
         <?php
         if (!isset($this->session->userdata['user_id']))
