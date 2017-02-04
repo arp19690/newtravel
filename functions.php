@@ -1,9 +1,9 @@
 <?php
 
-function create_fake_users()
+function create_fake_users($men = true, $women = true)
 {
     $women_url = "resources/fake-people/women";
-    $men_url = "resources/fake-people/women";
+    $men_url = "resources/fake-people/men";
 
     function db_insert_users($data_array)
     {
@@ -18,13 +18,13 @@ function create_fake_users()
         $all_women = scandir($women_url);
         foreach ($all_women as $value)
         {
-            if (is_file($value))
+            if (is_file($women_url . "/" . $value))
             {
                 $ext = getFileExtension($value);
                 if (in_array($ext, array("jpeg", "jpg", "png", "gif")))
                 {
                     $full_name = str_replace("." . $ext, "", $value);
-                    $insert_data = get_insert_array($full_name, $women_url . "/" . $value);
+                    $insert_data = get_insert_array($full_name, $value, $women_url);
                     db_insert_users($insert_data);
                 }
             }
@@ -37,28 +37,31 @@ function create_fake_users()
         $all_men = scandir($men_url);
         foreach ($all_men as $value)
         {
-            if (is_file($value))
+            if (is_file($men_url . "/" . $value))
             {
                 $ext = getFileExtension($value);
                 if (in_array($ext, array("jpeg", "jpg", "png", "gif")))
                 {
                     $full_name = str_replace("." . $ext, "", $value);
-                    $insert_data = get_insert_array($full_name, $men_url . "/" . $value);
+                    $insert_data = get_insert_array($full_name, $value, $men_url, "male");
                     db_insert_users($insert_data);
                 }
             }
         }
     }
 
-    function get_insert_array($full_name, $image_file, $gender = "female")
+    function get_insert_array($full_name, $image_file, $image_base_path, $gender = "female")
     {
+        $locations = array("California, USA");
+        $location_name = $locations[rand(0, count($locations) - 1)];
+
         $username = str_replace(" ", "", strtolower($full_name));
         $location_data = get_location_details_from_google($location_name);
         $lat_lon_data = getLatLonByAddress($location_name);
 
         $ext = getFileExtension($image_file);
         $dest_file_path = USER_IMG_PATH . "/" . getEncryptedString($username . time()) . "." . $ext;
-        uploadImage($image_file, $dest_file_path, USER_IMG_WIDTH);
+        echo uploadImage($image_base_path . "/" . $image_file, $dest_file_path, USER_IMG_WIDTH);
         $tmparr = array(
             "user_fullname" => $full_name,
             "user_username" => $username,
@@ -78,10 +81,18 @@ function create_fake_users()
         return $tmparr;
     }
 
-    die;
-}
+    if ($women)
+    {
+        insert_women_users($women_url);
+    }
 
-create_fake_users();
+    if ($men)
+    {
+        insert_men_users($men_url);
+    }
+    
+    return True;
+}
 
 function base_url_admin($request_uri = NULL)
 {
