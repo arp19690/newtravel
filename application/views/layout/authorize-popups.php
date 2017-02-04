@@ -9,7 +9,7 @@
     <section class="autorize-tab-content">
         <div class="autorize-padding">
             <div class="clear text-center">
-                <a href="<?php echo base_url('facebook-login'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Login with Facebook</a>
+                <a href="<?php echo base_url('facebook-login?next=' . current_url()); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Login with Facebook</a>
                 <p style="margin: 10px 0;"><small>or,</small></p>
             </div>
 
@@ -30,7 +30,7 @@
     <section class="autorize-tab-content">
         <div class="autorize-padding">
             <div class="clear text-center">
-                <a href="<?php echo base_url('facebook-login'); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Register with Facebook</a>
+                <a href="<?php echo base_url('facebook-login?next=' . current_url()); ?>" class="btn facebook-btn"><span class="fa fa-facebook"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Register with Facebook</a>
                 <p style="margin: 10px 0;"><small>or,</small></p>
             </div>
 

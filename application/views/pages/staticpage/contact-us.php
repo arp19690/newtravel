@@ -21,7 +21,7 @@
             <div class="contacts-page">
                 <header class="page-lbl">
                     <div class="offer-slider-lbl">GET IN TOUCH WITH US</div>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit</p>
+                    <!--<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit</p>-->
                 </header> 	
 
                 <div class="contacts-colls">

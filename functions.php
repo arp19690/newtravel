@@ -1,5 +1,110 @@
 <?php
 
+function create_fake_users($men = true, $women = true)
+{
+    $women_url = "resources/fake-people/women";
+    $men_url = "resources/fake-people/men";
+
+    function db_insert_users($data_array)
+    {
+        require_once APPPATH . '/models/common_model.php';
+        $model = new Common_model();
+        return $model->insertData(TABLE_USERS, $data_array);
+    }
+
+    // to add all women users
+    function insert_women_users($women_url)
+    {
+        $all_women = scandir($women_url);
+        foreach ($all_women as $value)
+        {
+            if (is_file($women_url . "/" . $value))
+            {
+                $ext = getFileExtension($value);
+                if (in_array($ext, array("jpeg", "jpg", "png", "gif")))
+                {
+                    $full_name = str_replace("." . $ext, "", $value);
+                    $insert_data = get_insert_array($full_name, $value, $women_url);
+                    db_insert_users($insert_data);
+                }
+            }
+        }
+    }
+
+    // to add all men users
+    function insert_men_users($men_url)
+    {
+        $all_men = scandir($men_url);
+        foreach ($all_men as $value)
+        {
+            if (is_file($men_url . "/" . $value))
+            {
+                $ext = getFileExtension($value);
+                if (in_array($ext, array("jpeg", "jpg", "png", "gif")))
+                {
+                    $full_name = str_replace("." . $ext, "", $value);
+                    $insert_data = get_insert_array($full_name, $value, $men_url, "male");
+                    db_insert_users($insert_data);
+                }
+            }
+        }
+    }
+
+    function get_insert_array($full_name, $image_file, $image_base_path, $gender = "female")
+    {
+        $locations = array(
+            "California, USA",
+            "Berlin, Germany",
+            "London, United Kingdom",
+            "Rome, Italy",
+            "Naples, Italy",
+            "Paris, France",
+            "Amsterdam, Netherlands",
+            "New York, USA",
+            "New Zealand, Australia",
+            "Sydney, Australia",
+        );
+        $location_name = $locations[rand(0, count($locations) - 1)];
+
+        $username = str_replace(" ", "", strtolower($full_name));
+        $location_data = get_location_details_from_google($location_name);
+        $lat_lon_data = getLatLonByAddress($location_name);
+
+        $ext = getFileExtension($image_file);
+        $dest_file_path = USER_IMG_PATH . "/" . getEncryptedString($username . time()) . "." . $ext;
+        echo uploadImage($image_base_path . "/" . $image_file, $dest_file_path, USER_IMG_WIDTH);
+        $tmparr = array(
+            "user_fullname" => $full_name,
+            "user_username" => $username,
+            "user_email" => $username . "@gmmail.com",
+            "user_password" => md5($username),
+            "user_gender" => $gender,
+            "user_city" => $location_data["city"],
+            "user_state" => $location_data["state"],
+            "user_country" => $location_data["country"],
+            "user_location" => $location_name,
+            "user_latitude" => $lat_lon_data["latitude"],
+            "user_longitude" => $lat_lon_data["longitude"],
+            "user_profile_picture" => $dest_file_path,
+            "user_ipaddress" => "127.0.0.1",
+            "user_created_on" => date("Y-m-d H:i:s"),
+        );
+        return $tmparr;
+    }
+
+    if ($women)
+    {
+        insert_women_users($women_url);
+    }
+
+    if ($men)
+    {
+        insert_men_users($men_url);
+    }
+
+    return True;
+}
+
 function base_url_admin($request_uri = NULL)
 {
     $url = SITE_BASE_URL . 'admin/' . $request_uri;

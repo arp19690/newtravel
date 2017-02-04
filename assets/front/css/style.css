@@ -109,7 +109,7 @@ input,select,button,textarea {outline:none;}
 .swiper-container {position:relative;}
 .swiper-preloader-bg {width:100%; height:100%; background:#fcf8f5; position:absolute; left:0px; top:0px; z-index:99;}
 .swiper-preloader {position:absolute; z-index:999; left:50%; top:50%; width:30px; height:30px; margin-left:-15px; margin-top:-15px;}
-.swiper-container, .swiper-slide {width:100%;height:807px;}
+.swiper-container, .swiper-slide {width:100%;height:550px;}
 .swiper-pagination {position:absolute; right:40px; bottom:32px; z-index:999;}
 .swiper-pagination-switch {display:block; cursor:pointer; width:6px; height:6px; margin-top:4px; border:1px solid #fff; border-radius:10000px;}
 .swiper-visible-switch.swiper-active-switch {background:#fff;}
@@ -2848,6 +2848,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
         .tweeter-item-r {width:96%;}
         .reasons-item-a,.reasons-item-b,.reasons-item-c,.reasons-item-d {width:36%;}
         /*.mp-slider-lbl {padding-top:100px;}*/
+        .swiper-container, .swiper-slide{height: 680px;}
         .footer-a .section {width:23%; margin-right: 8%;}
         .footer-a .section:nth-child(3) {margin:0px; width:140px;}
         .page-search.full-width-search {width:100%;}
@@ -3095,6 +3096,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
         .list-rows .cat-list-content-lpadding {border-right: 0px ;}
     }
     @media screen and (max-width:435px) { 
+        .header-logo img{width: 315px;}
         .form-sex {float: none; width:100%; margin-bottom: 17px;}
         .form-calendar {float: none; width: 100%; margin: 0px;}
         .tab-calendar-colls table tbody td {height:40px;} 
@@ -3106,6 +3108,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
     }
 
     @media screen and (max-width:390px) {
+        .header-logo img{width: 225px;}
         .about-slider-txt {line-height: 22px;}
         .mp-slider-lbl {font-size:22px; font-weight:300; line-height:30px;}
         .mp-slider-lbl-a {font-size:15px; line-height:24px; padding-top:11px; padding-bottom:19px;}

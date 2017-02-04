@@ -21,9 +21,9 @@ if (!empty($post_details['post_regions']))
 {
     foreach ($post_details['post_regions'] as $region_key => $region_value)
     {
-        if (!in_array($region_value->pr_source_city, $post_region_cities))
+        if (!in_array($region_value['pr_source_city'], $post_region_cities))
         {
-            $post_region_cities[] = $region_value->pr_source_city;
+            $post_region_cities[] = $region_value['pr_source_city'];
         }
     }
 }
@@ -58,13 +58,13 @@ if (!empty($post_details['post_regions']))
                                         <div class="tab-gallery-preview">
                                             <div id="gallery" itemscope itemtype="http://schema.org/Event">
                                                 <?php
-                                                if (!empty($post_details['post_media']->images))
+                                                if (!empty($post_details['post_media']['images']))
                                                 {
-                                                    foreach ($post_details['post_media']->images as $key => $value)
+                                                    foreach ($post_details['post_media']['images'] as $key => $value)
                                                     {
-                                                        $image_src = base_url(getImage($value->pm_media_url));
+                                                        $image_src = base_url(getImage($value['pm_media_url']));
                                                         ?>
-                                                        <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
+                                                        <div class="gallery-i <?php echo $value['pm_primary'] == '1' ? 'active' : ''; ?>">
                                                             <a href="<?php echo $image_src; ?>"><img itemprop="image" alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
                                                         </div>
                                                         <?php
@@ -103,7 +103,7 @@ if (!empty($post_details['post_regions']))
                                                     <?php
                                                     foreach ($post_details['post_activities'] as $key => $value)
                                                     {
-                                                        echo '<li class="' . $value->am_icon . '">' . stripslashes($value->am_title) . '</li>';
+                                                        echo '<li class="' . $value['am_icon'] . '">' . stripslashes($value['am_title']) . '</li>';
                                                     }
                                                     ?>
                                                 </ul>

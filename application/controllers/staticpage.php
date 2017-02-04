@@ -15,11 +15,11 @@ class Staticpage extends CI_Controller
     public function index($page_key = 'about-us')
     {
         $data = array();
-        $content_data = $this->redis_functions->get_static_page_content($page_key);
+        $content_data = (object) $this->redis_functions->get_static_page_content($page_key);
         if (!empty($content_data))
         {
-            $page_title = stripslashes($content_data->page_title);
-            $page_content = stripslashes($content_data->content);
+            $page_title = stripslashes($content_data->sp_title);
+            $page_content = stripslashes($content_data->sp_text);
 
             $input_arr = array(
                 base_url() => 'Home',

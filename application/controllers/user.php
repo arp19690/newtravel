@@ -103,7 +103,7 @@ class User extends CI_Controller
                     $model->updateData(TABLE_USERS, $data_array, array("user_id" => $user_id));
 
                     // updating redis keys now
-                    $this->redis_functions->set_user_profile_data($username);
+//                    $this->redis_functions->set_user_profile_data($username);
 
                     @$this->session->set_userdata("user_fullname", trim($arr["user_fullname"]));
                     @$this->session->set_userdata("user_username", $username);
