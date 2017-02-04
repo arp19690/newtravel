@@ -161,7 +161,7 @@ if (!isset($count_search_results))
             $("#slider-range").slider({
                 range: true,
                 min: <?php echo round($min_and_max_costs['min_cost']); ?>,
-                max: <?php echo round($min_and_max_costs['max_cost']); ?>,
+                max: <?php echo $min_and_max_costs['max_cost'] <= 500 ? 500 : round($min_and_max_costs['max_cost']); ?>,
                 values: [<?php echo isset($_GET['search_budget_min']) == TRUE ? $_GET['search_budget_min'] : round($min_and_max_costs['min_cost']); ?>, <?php echo isset($_GET['search_budget_max']) == TRUE ? $_GET['search_budget_max'] : round($min_and_max_costs['max_cost']); ?>],
                 slide: function (event, ui) {
                     $("#ammount-from").val(ui.values[0]);
