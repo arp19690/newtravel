@@ -20,6 +20,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#"><i class="glyphicon glyphicon-plane"></i> <span>Trips</span></a>
+                        <ul>
+                            <li><a href="<?php echo base_url_admin('trips'); ?>"><i class="glyphicon glyphicon-list-alt"></i> View All</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#"><i class="icon-cog3"></i> <span>Settings</span></a>
                         <ul>
                             <li><a href="<?php echo base_url_admin('faq'); ?>"><i class="icon-envelop2"></i> FAQs</a></li>
