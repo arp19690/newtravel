@@ -30,6 +30,7 @@
                         <table class="table datatable-pagination dataTable no-footer">
                             <thead>
                                 <tr>
+                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Username</th>
                                     <th>Email</th>
@@ -43,8 +44,10 @@
                                 {
                                     $user_fullname = stripslashes($value['user_fullname']);
                                     $user_username = stripslashes($value['user_username']);
+                                    $user_image = base_url(getImage($value["user_profile_picture"]));
                                     ?>
                                     <tr>
+                                        <td><img src="<?php echo $user_image; ?>" alt="<?php echo $user_fullname; ?>" class="img-circle" style="max-width:75px;"/></td>
                                         <td>
                                             <?php echo $user_fullname; ?>
                                             <?php
