@@ -527,7 +527,7 @@ class Trip extends CI_Controller
         {
             foreach ($all_post_url_keys as $url_key)
             {
-                $post_records[] = $redis_functions->get_trip_details($url_key);
+                $post_records[] = $redis_functions->get_trip_details($url_key["post_url_key"]);
             }
         }
 
