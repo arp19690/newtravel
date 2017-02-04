@@ -52,7 +52,18 @@ function create_fake_users($men = true, $women = true)
 
     function get_insert_array($full_name, $image_file, $image_base_path, $gender = "female")
     {
-        $locations = array("California, USA");
+        $locations = array(
+            "California, USA",
+            "Berlin, Germany",
+            "London, United Kingdom",
+            "Rome, Italy",
+            "Naples, Italy",
+            "Paris, France",
+            "Amsterdam, Netherlands",
+            "New York, USA",
+            "New Zealand, Australia",
+            "Sydney, Australia",
+        );
         $location_name = $locations[rand(0, count($locations) - 1)];
 
         $username = str_replace(" ", "", strtolower($full_name));
@@ -90,7 +101,7 @@ function create_fake_users($men = true, $women = true)
     {
         insert_men_users($men_url);
     }
-    
+
     return True;
 }
 
