@@ -47,7 +47,7 @@
                                     $user_image = base_url(getImage($value["user_profile_picture"]));
                                     ?>
                                     <tr>
-                                        <td><img src="<?php echo $user_image; ?>" alt="<?php echo $user_fullname; ?>" class="img-circle" style="max-width:75px;"/></td>
+                                        <td><img src="<?php echo $user_image; ?>" alt="<?php echo $user_fullname; ?>" class="img-rounded" style="max-width:75px;width: 100%;"/></td>
                                         <td>
                                             <?php echo $user_fullname; ?>
                                             <?php
