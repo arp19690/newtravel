@@ -112,7 +112,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($trip_url_key);
+            // $this->redis_functions->set_trip_details($trip_url_key);
 
             redirect(base_url('trip/post/edit/2/' . $trip_url_key));
         }
