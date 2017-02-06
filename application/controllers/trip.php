@@ -206,7 +206,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
 
             redirect(base_url('trip/post/edit/3/' . $url_key));
         }
@@ -262,7 +262,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
 
             redirect(base_url('trip/post/edit/4/' . $url_key));
         }
@@ -361,7 +361,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
             redirect(base_url('trip/review/' . $url_key));
         }
         else
@@ -487,7 +487,7 @@ class Trip extends CI_Controller
             }
 
             // Updating trip's redis data here
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
         }
         return TRUE;
     }
@@ -870,7 +870,7 @@ class Trip extends CI_Controller
                     }
 
                     // updating trip redis key
-                    $redis_functions->set_trip_details($trip_url_key);
+//                    $redis_functions->set_trip_details($trip_url_key);
 
                     redirect(getTripUrl($trip_url_key));
                 }
@@ -964,7 +964,7 @@ class Trip extends CI_Controller
                     $this->session->set_flashdata('success', 'You successfully posted a review');
 
                     // Now updating the redis key for trip details
-                    $redis_functions->set_trip_details($post_url_key);
+//                    $redis_functions->set_trip_details($post_url_key);
                 }
             }
             redirect(getTripUrl($post_url_key));

@@ -17,9 +17,9 @@ if (!empty($post_records['post_regions']))
 {
     foreach ($post_records['post_regions'] as $region_key => $region_value)
     {
-        if (!in_array($region_value->pr_source_city, $post_region_cities))
+        if (!in_array($region_value['pr_source_city'], $post_region_cities))
         {
-            $post_region_cities[] = $region_value->pr_source_city;
+            $post_region_cities[] = $region_value['pr_source_city'];
         }
     }
 }
@@ -80,7 +80,7 @@ if (!empty($post_records['post_regions']))
                 {
                     ?>
                     <div class="chk-line">
-                        <span class="chk-l"><a href="<?php echo base_url('activities/' . $activity_value->am_url_key); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $activity_value->am_title; ?></a></span>
+                        <span class="chk-l"><a href="<?php echo base_url('activities/' . $activity_value['am_url_key']); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $activity_value['am_title']; ?></a></span>
                         <div class="clear"></div>
                     </div>
                     <?php
@@ -103,8 +103,8 @@ if (!empty($post_records['post_regions']))
                 {
                     ?>
                     <div class="chk-line">
-                        <span class="chk-l"><a href="<?php echo base_url('cities/' . $region_value->pr_source_city); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $region_value->pr_source_city; ?></a></span>
-                        <span class="chk-r"><a href="<?php echo base_url('countries/' . $region_value->pr_source_country); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;"><?php echo $region_value->pr_source_country; ?></a></span>
+                        <span class="chk-l"><a href="<?php echo base_url('cities/' . $region_value['pr_source_city']); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;font-weight: bold;"><?php echo $region_value['pr_source_city']; ?></a></span>
+                        <span class="chk-r"><a href="<?php echo base_url('countries/' . $region_value['pr_source_country']); ?>" target="_blank" style="text-decoration: none;color: #4a90a4;"><?php echo $region_value['pr_source_country']; ?></a></span>
                         <div class="clear"></div>
                     </div>
                     <?php
@@ -127,8 +127,8 @@ if (!empty($post_records['post_regions']))
                 {
                     ?>
                     <div class="chk-line">
-                        <span class="chk-l" style="font-weight: bold;"><?php echo $traveler_value->pt_traveler_name; ?></span>
-                        <span class="chk-r" style="font-weight: bold;"><?php echo ucwords($traveler_value->pt_traveler_gender) . ' (' . $traveler_value->pt_traveler_age . ')'; ?></span>
+                        <span class="chk-l" style="font-weight: bold;"><?php echo $traveler_value['pt_traveler_name']; ?></span>
+                        <span class="chk-r" style="font-weight: bold;"><?php echo ucwords($traveler_value['pt_traveler_gender']) . ' (' . $traveler_value['pt_traveler_age'] . ')'; ?></span>
                         <div class="clear"></div>
                     </div>
                     <?php
