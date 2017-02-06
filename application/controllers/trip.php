@@ -495,7 +495,7 @@ class Trip extends CI_Controller
     public function add_user_as_traveler_to_post($post_id, $user_id)
     {
         $model = new Common_model();
-        $fields = 'user_fullname, user_email, user_dob, user_gender, user_city, user_region, user_country, user_location, user_languages_known';
+        $fields = 'user_fullname, user_email, user_dob, user_gender, user_city, user_state, user_country, user_location, user_languages_known';
         $user_record = $model->fetchSelectedData($fields, TABLE_USERS, array('user_id' => $user_id));
         $data_array = array(
             'pt_post_id' => $post_id,
@@ -505,10 +505,10 @@ class Trip extends CI_Controller
             'pt_traveler_gender' => $user_record[0]['user_gender'],
             'pt_traveler_user_id' => $user_id,
             'pt_traveler_city' => $user_record[0]['user_city'],
-            'pt_traveler_region' => $user_record[0]['user_region'],
+            'pt_traveler_region' => $user_record[0]['user_state'],
             'pt_traveler_country' => $user_record[0]['user_country'],
             'pt_traveler_location' => $user_record[0]['user_location'],
-            'pt_traveler_languages_known' => $user_record[0]['user_languages_known'],
+            'pt_languages_known' => $user_record[0]['user_languages_known'],
             'pt_added_by' => $user_id
         );
         $model->insertData(TABLE_POST_TRAVELERS, $data_array);
@@ -851,7 +851,7 @@ class Trip extends CI_Controller
                         'pt_traveler_gender' => $user_details['user_gender'],
                         'pt_traveler_user_id' => $this->session->userdata['user_id'],
                         'pt_traveler_city' => $user_details['user_city'],
-                        'pt_traveler_region' => $user_details['user_region'],
+                        'pt_traveler_region' => $user_details['user_state'],
                         'pt_traveler_country' => $user_details['user_country'],
                         'pt_traveler_location' => $user_details['user_location'],
                         'pt_languages_known' => $user_details['user_languages_known'],
