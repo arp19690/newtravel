@@ -1666,7 +1666,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .content-tabs-head ul li a {display:block; height:27px; padding:15px 20px 0px 20px; border-radius:3px 3px 0px 0px; font-family:sans-serif; font-weight:bold; text-decoration:none; color:#73716f; font-size:11px; text-transform:uppercase; background:#ede9e6;}
 .content-tabs-head ul li a.active {background:#fff; color:#ff7200;}
 .content-tabs-head.last-item ul li:last-child a.active {background: #fff url(../img/icon-lamp.png) left top no-repeat; background-position: left -42px;}
-.content-tabs-body {background:#fff; padding:37px 20px 39px 20px;}
+.content-tabs-body {background:#fff; padding:37px 20px 39px 20px;display: inline-block;}
 .content-tabs-i {font-family:sans-serif; display:none;}
 .content-tabs-i:nth-child(1) {display:block;}
 .content-tabs-i h2 {font-family:'Montserrat'; font-weight:normal; font-size:16px; color:#4c4c4c; margin-bottom:19px;}
