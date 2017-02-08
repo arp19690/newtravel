@@ -40,11 +40,14 @@ class Admin extends CI_Controller
     public function dashboard()
     {
         $model = new Common_model();
-        $custom_model=new Custom_model();
         $total_users = $model->getTotalCount('user_id', TABLE_USERS, array('user_status !=' => '2', 'user_role_id' => '2'))[0]['totalcount'];
+        $total_trips = $model->getTotalCount('post_id', TABLE_POSTS, array('post_status' => '1', 'post_published' => '1'))[0]['totalcount'];
+        $total_earnings= $model->fetchSelectedData("SUM(payment_amount) as total", TABLE_PAYMENTS)[0]["total"];
 
         $data = array(
-            'total_users' => $total_users
+            'total_users' => $total_users,
+            'total_trips' => $total_trips,
+            'total_earnings' => $total_earnings,
         );
 
         $this->template->write_view("content", "index/dashboard", $data);

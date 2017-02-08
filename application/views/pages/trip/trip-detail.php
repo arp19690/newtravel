@@ -150,7 +150,14 @@ if (!empty($post_details['post_regions']))
                         </div>
                         <div class="h-tour">
                             <div class="tour-icon-txt">Posted by:</div>
-                            <div class="tour-icon-txt"><a href="<?php echo base_url('user/' . stripslashes($post_owner_records['user_username'])); ?>" style="margin-left:10px;"><?php echo stripslashes($post_owner_records['user_fullname']); ?></a></div>
+                            <div class="tour-icon-txt text-center">
+                                <div class="tour-owner-img-block">
+                                    <a href="<?php echo base_url('user/' . stripslashes($post_owner_records['user_username'])); ?>" title="<?php echo stripslashes($post_owner_records['user_fullname']); ?>">
+                                        <img src="<?php echo base_url(getImage($post_owner_records['user_profile_picture'])); ?>" alt="<?php echo $post_owner_records['user_fullname']; ?>" width="100"/>
+                                        <p><?php echo stripslashes($post_owner_records['user_fullname']); ?></p>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="clear"></div>
                         </div>
                         <div class="h-detail-stars">
@@ -223,6 +230,8 @@ if (!empty($post_details['post_regions']))
                     {
                         $this->load->view('pages/trip/you-may-like', array('you_may_like_records' => $post_details['you_may_like']));
                     }
+
+                    echo get_google_ad();
                     ?>
                 </div>
                 <div class="clear"></div>

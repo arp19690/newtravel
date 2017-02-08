@@ -22,8 +22,8 @@ $post_travelers = $post_records['post_travelers'];
                 {
                     ?>
                     <div class="chk-line">
-                        <span class="chk-l"><?php echo stripslashes($value->pt_traveler_name) ?>:</span>
-                        <span class="chk-r"><?php echo $value->pt_traveler_country; ?></span>
+                        <span class="chk-l"><?php echo stripslashes($value['pt_traveler_name']) ?>:</span>
+                        <span class="chk-r"><?php echo $value['pt_traveler_country']; ?></span>
                         <div class="clear"></div>
                     </div>
                     <?php

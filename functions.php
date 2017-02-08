@@ -302,6 +302,7 @@ function get_trip_url_key($trip_title, $post_id = NULL)
     $trip_title = str_replace('%', '', $trip_title);
     $trip_title = str_replace('*', '', $trip_title);
     $trip_title = str_replace('$', '', $trip_title);
+    $trip_title = str_replace(',', '', $trip_title);
 
     $trip_title = strtolower($trip_title);
     $trip_url_key = checkIfTripURLKeyUnique($trip_title, $post_id);

@@ -31,18 +31,18 @@ $redis_functions = new Redisfunctions();
                                         {
                                             foreach ($post_records['post_regions'] as $key => $post_value)
                                             {
-                                                $exploded_from_date = explode('-', $post_value->pr_from_date);
-                                                $exploded_to_date = explode('-', $post_value->pr_to_date);
+                                                $exploded_from_date = explode('-', $post_value['pr_from_date']);
+                                                $exploded_to_date = explode('-', $post_value['pr_to_date']);
                                                 ?>
                                                 <div class="region-info">
                                                     <div class="booking-form">
                                                         <div class="booking-form-i">
                                                             <label>Origin:</label>
-                                                            <div class="input"><input type="text" name="post_source[]" required="required" placeholder="Enter your Origin" class="gMapLocation-cities" value="<?php echo stripslashes($post_value->pr_source_location); ?>"/></div>
+                                                            <div class="input"><input type="text" name="post_source[]" required="required" placeholder="Enter your Origin" class="gMapLocation-cities" value="<?php echo stripslashes($post_value['pr_source_location']); ?>"/></div>
                                                         </div>
                                                         <div class="booking-form-i">
                                                             <label>Destination:</label>
-                                                            <div class="input"><input type="text" name="post_destination[]" required="required" placeholder="Enter your Destination" class="gMapLocation-cities" value="<?php echo stripslashes($post_value->pr_destination_location); ?>"/></div>
+                                                            <div class="input"><input type="text" name="post_destination[]" required="required" placeholder="Enter your Destination" class="gMapLocation-cities" value="<?php echo stripslashes($post_value['pr_destination_location']); ?>"/></div>
                                                         </div>
                                                         <div class="clear"></div>
                                                         <div class="bookin-three-coll">
@@ -171,12 +171,12 @@ $redis_functions = new Redisfunctions();
                                                                             foreach ($travel_mediums as $key => $value)
                                                                             {
                                                                                 $selected = '';
-                                                                                if ($value->tm_id == $post_value->pr_travel_medium)
+                                                                                if ($value['tm_id'] == $post_value['pr_travel_medium'])
                                                                                 {
                                                                                     $selected = 'selected="selected"';
                                                                                 }
 
-                                                                                echo '<option value="' . $value->tm_id . '" ' . $selected . '>' . $value->tm_title . '</option>';
+                                                                                echo '<option value="' . $value['tm_id'] . '" ' . $selected . '>' . $value['tm_title'] . '</option>';
                                                                             }
                                                                             ?>
                                                                         </select>
@@ -298,7 +298,7 @@ $redis_functions = new Redisfunctions();
                                                                         $travel_mediums = $redis_functions->get_travel_mediums();
                                                                         foreach ($travel_mediums as $key => $value)
                                                                         {
-                                                                            echo '<option value="' . $value->tm_title . '">' . $value->tm_title . '</option>';
+                                                                            echo '<option value="' . $value['tm_title'] . '">' . $value['tm_title'] . '</option>';
                                                                         }
                                                                         ?>
                                                                     </select>

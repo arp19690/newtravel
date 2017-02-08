@@ -112,7 +112,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($trip_url_key);
+            // $this->redis_functions->set_trip_details($trip_url_key);
 
             redirect(base_url('trip/post/edit/2/' . $trip_url_key));
         }
@@ -206,7 +206,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
 
             redirect(base_url('trip/post/edit/3/' . $url_key));
         }
@@ -262,7 +262,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
 
             redirect(base_url('trip/post/edit/4/' . $url_key));
         }
@@ -361,7 +361,7 @@ class Trip extends CI_Controller
             }
 
             // setting post details to redis
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
             redirect(base_url('trip/review/' . $url_key));
         }
         else
@@ -388,6 +388,11 @@ class Trip extends CI_Controller
         if (isset($this->session->userdata["user_id"]))
         {
             $user_id = $this->session->userdata["user_id"];
+
+//            Verify trip status here
+            $custom_model = new Custom_model();
+            $custom_model->verify_trip_status($url_key);
+
             $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
             if (!empty($is_valid))
             {
@@ -487,7 +492,7 @@ class Trip extends CI_Controller
             }
 
             // Updating trip's redis data here
-            $this->redis_functions->set_trip_details($url_key);
+//            $this->redis_functions->set_trip_details($url_key);
         }
         return TRUE;
     }
@@ -495,7 +500,7 @@ class Trip extends CI_Controller
     public function add_user_as_traveler_to_post($post_id, $user_id)
     {
         $model = new Common_model();
-        $fields = 'user_fullname, user_email, user_dob, user_gender, user_city, user_region, user_country, user_location, user_languages_known';
+        $fields = 'user_fullname, user_email, user_dob, user_gender, user_city, user_state, user_country, user_location, user_languages_known';
         $user_record = $model->fetchSelectedData($fields, TABLE_USERS, array('user_id' => $user_id));
         $data_array = array(
             'pt_post_id' => $post_id,
@@ -505,10 +510,10 @@ class Trip extends CI_Controller
             'pt_traveler_gender' => $user_record[0]['user_gender'],
             'pt_traveler_user_id' => $user_id,
             'pt_traveler_city' => $user_record[0]['user_city'],
-            'pt_traveler_region' => $user_record[0]['user_region'],
+            'pt_traveler_region' => $user_record[0]['user_state'],
             'pt_traveler_country' => $user_record[0]['user_country'],
             'pt_traveler_location' => $user_record[0]['user_location'],
-            'pt_traveler_languages_known' => $user_record[0]['user_languages_known'],
+            'pt_languages_known' => $user_record[0]['user_languages_known'],
             'pt_added_by' => $user_id
         );
         $model->insertData(TABLE_POST_TRAVELERS, $data_array);
@@ -527,7 +532,7 @@ class Trip extends CI_Controller
         {
             foreach ($all_post_url_keys as $url_key)
             {
-                $post_records[] = $redis_functions->get_trip_details($url_key);
+                $post_records[] = $redis_functions->get_trip_details($url_key["post_url_key"]);
             }
         }
 
@@ -652,6 +657,7 @@ class Trip extends CI_Controller
             $data["breadcrumbs"] = $breadcrumbs;
             $data["page_title"] = $page_title;
             $data['meta_title'] = $data["page_title"] . ' - ' . $this->redis_functions->get_site_setting('SITE_NAME');
+            $data['meta_logo_image'] = base_url(getImage($post_details['post_primary_image']));
             $data['meta_description'] = getNWordsFromString(stripslashes($post_details['post_description']), 150);
             $this->template->write_view("content", "pages/trip/trip-detail", $data);
             $this->template->render();
@@ -851,7 +857,7 @@ class Trip extends CI_Controller
                         'pt_traveler_gender' => $user_details['user_gender'],
                         'pt_traveler_user_id' => $this->session->userdata['user_id'],
                         'pt_traveler_city' => $user_details['user_city'],
-                        'pt_traveler_region' => $user_details['user_region'],
+                        'pt_traveler_region' => $user_details['user_state'],
                         'pt_traveler_country' => $user_details['user_country'],
                         'pt_traveler_location' => $user_details['user_location'],
                         'pt_languages_known' => $user_details['user_languages_known'],
@@ -870,7 +876,7 @@ class Trip extends CI_Controller
                     }
 
                     // updating trip redis key
-                    $redis_functions->set_trip_details($trip_url_key);
+//                    $redis_functions->set_trip_details($trip_url_key);
 
                     redirect(getTripUrl($trip_url_key));
                 }
@@ -893,7 +899,7 @@ class Trip extends CI_Controller
 
     public function trips_joined_by_me($view_type = 'list', $page = 1)
     {
-        $custom_model=new Custom_model();
+        $custom_model = new Custom_model();
         $redis_functions = new Redisfunctions();
         $username = $this->session->userdata['user_username'];
         $user_profile_data = $redis_functions->get_user_profile_data($username);
@@ -964,7 +970,7 @@ class Trip extends CI_Controller
                     $this->session->set_flashdata('success', 'You successfully posted a review');
 
                     // Now updating the redis key for trip details
-                    $redis_functions->set_trip_details($post_url_key);
+//                    $redis_functions->set_trip_details($post_url_key);
                 }
             }
             redirect(getTripUrl($post_url_key));

@@ -106,7 +106,7 @@ $redis_functions = new Redisfunctions();
                                 echo '<h3>My Trips:</h3><ul class="my-trips">';
                                 foreach ($record['trips_posted'] as $key => $value)
                                 {
-                                    $post_details = $redis_functions->get_trip_details($value->post_url_key);
+                                    $post_details = $redis_functions->get_trip_details($value['post_url_key']);
                                     $post_title = stripslashes($post_details['post_title']);
                                     $post_image = base_url(getImage($post_details['post_primary_image']));
                                     $post_url = getTripUrl($post_details['post_url_key']);
@@ -115,9 +115,9 @@ $redis_functions = new Redisfunctions();
                                     {
                                         foreach ($post_details['post_regions'] as $region_key => $region_value)
                                         {
-                                            if (!in_array($region_value->pr_source_city, $post_region_cities))
+                                            if (!in_array($region_value['pr_source_city'], $post_region_cities))
                                             {
-                                                $post_region_cities[] = $region_value->pr_source_city;
+                                                $post_region_cities[] = $region_value['pr_source_city'];
                                             }
                                         }
                                     }

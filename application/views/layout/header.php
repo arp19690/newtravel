@@ -10,8 +10,19 @@ if (!isset($meta_keywords))
 if (!isset($meta_description))
     $meta_description = $redis_functions->get_site_setting('SEO_DESCRIPTION');
 
+$og_image_arr = array($meta_logo_image);
 if (!isset($meta_logo_image))
+{
     $meta_logo_image = IMAGES_PATH . "/logo-a.png";
+    $og_image_arr = array(
+        IMAGES_PATH . "/og-images/og-image1.jpg",
+        IMAGES_PATH . "/og-images/og-image2.jpg",
+        IMAGES_PATH . "/og-images/og-image3.jpg",
+        IMAGES_PATH . "/og-images/og-image4.jpg",
+        IMAGES_PATH . "/og-images/og-image5.jpg",
+        IMAGES_PATH . "/og-images/og-image6.jpg",
+    );
+}
 
 //clearstatcache();
 //$this->output->set_header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
@@ -45,12 +56,15 @@ $path = $controller . "/" . $action;
         <meta property="og:description" content="<?php echo $meta_description; ?>" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="<?php echo $redis_functions->get_site_setting('SITE_NAME'); ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image1.jpg"; ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image2.jpg"; ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image3.jpg"; ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image4.jpg"; ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image5.jpg"; ?>" />
-        <meta property="og:image" content="<?php echo IMAGES_PATH . "/og-images/og-image6.jpg"; ?>" />
+
+        <?php
+        foreach ($og_image_arr as $ogimage_url)
+        {
+            ?>
+            <meta property="og:image" content="<?php echo $ogimage_url; ?>" />
+            <?php
+        }
+        ?>
 
         <!-- Google Tag Manager -->
         <script>(function (w, d, s, l, i) {
