@@ -598,6 +598,7 @@ button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; fon
 .mp-popular header p, .page-lbl p {font-style:italic;	display:inline-block; width:640px; font-family:'Lora';}
 .offer-slider-i {
     /*	width:254px;*/
+    max-width:254px;
 }
 .offer-slider-i.catalog-i {width:32%; float: left; margin: 0px 2% 2% 0px; font-family: sans-serif;}
 .offer-slider-i.catalog-i:nth-child(3n) {margin-right: 0px; float: right;}

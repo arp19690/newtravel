@@ -14,38 +14,39 @@ $redis_functions = new Redisfunctions();
                     <header class="fly-in" style="margin-bottom: 40px;text-align: center;">
                         <div class="offer-slider-lbl">Our featured trips</div>
                     </header>
-                    <?php
-                    $i = 1;
-                    foreach ($featured_trip_keys as $post_url_key)
-                    {
-                        $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
-                        $trip_title = stripslashes($trip_details['post_title']);
-                        $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
-                        $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
-                        $trip_url = getTripUrl($trip_details['post_url_key']);
-                        $trip_total_cost = get_currency_symbol($trip_details['post_currency']) . $trip_details['post_total_cost'];
-                        $trip_start_end_date_string = '--';
-                        if (!empty($trip_details['post_start_date']) && !empty($trip_details['post_end_date']))
-                        {
-                            $trip_date_format = 'd M Y';
-                            $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
-                        }
 
-                        $post_region_cities = array();
-                        if (!empty($trip_details['post_regions']))
-                        {
-                            foreach ($trip_details['post_regions'] as $region_key => $region_value)
-                            {
-                                if (!in_array($region_value['pr_source_city'], $post_region_cities))
+                    <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
+                        <div class="fly-in offer-slider-c">
+                            <div id="offers-a" class="owl-slider">
+                                <?php
+                                $i = 1;
+                                foreach ($featured_trip_keys as $post_url_key)
                                 {
-                                    $post_region_cities[] = $region_value['pr_source_city'];
-                                }
-                            }
-                        }
-                        ?>
-                        <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
-                            <div class="fly-in offer-slider-c">
-                                <div id="offers-a" class="owl-slider">
+                                    $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
+                                    $trip_title = stripslashes($trip_details['post_title']);
+                                    $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
+                                    $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
+                                    $trip_url = getTripUrl($trip_details['post_url_key']);
+                                    $trip_total_cost = get_currency_symbol($trip_details['post_currency']) . $trip_details['post_total_cost'];
+                                    $trip_start_end_date_string = '--';
+                                    if (!empty($trip_details['post_start_date']) && !empty($trip_details['post_end_date']))
+                                    {
+                                        $trip_date_format = 'd M Y';
+                                        $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
+                                    }
+
+                                    $post_region_cities = array();
+                                    if (!empty($trip_details['post_regions']))
+                                    {
+                                        foreach ($trip_details['post_regions'] as $region_key => $region_value)
+                                        {
+                                            if (!in_array($region_value['pr_source_city'], $post_region_cities))
+                                            {
+                                                $post_region_cities[] = $region_value['pr_source_city'];
+                                            }
+                                        }
+                                    }
+                                    ?>
                                     <!-- // -->
                                     <div class="offer-slider-i">
                                         <a itemprop="url" class="offer-slider-img trip-a-tag" href="<?php echo $trip_url; ?>">
@@ -78,17 +79,17 @@ $redis_functions = new Redisfunctions();
                                         </div>
                                     </div>
                                     <!-- \\ -->
-                                </div>
+                                    <?php
+                                    $i++;
+                                    if ($i > 12)
+                                    {
+                                        break;
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
-                        <?php
-                        $i++;
-                        if ($i > 12)
-                        {
-                            break;
-                        }
-                    }
-                    ?>
+                    </div>
                 </div>
             </div>
             <?php
@@ -104,38 +105,39 @@ $redis_functions = new Redisfunctions();
                     <header class="fly-in" style="margin-bottom: 40px;text-align: center;">
                         <div class="offer-slider-lbl">Our latest trips</div>
                     </header>
-                    <?php
-                    $i = 1;
-                    foreach ($latest_trip_keys as $post_url_key)
-                    {
-                        $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
-                        $trip_title = stripslashes($trip_details['post_title']);
-                        $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
-                        $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
-                        $trip_url = getTripUrl($trip_details['post_url_key']);
-                        $trip_total_cost = get_currency_symbol($trip_details['post_currency']) . $trip_details['post_total_cost'];
-                        $trip_start_end_date_string = '--';
-                        if (!empty($trip_details['post_start_date']) && !empty($trip_details['post_end_date']))
-                        {
-                            $trip_date_format = 'd M Y';
-                            $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
-                        }
 
-                        $post_region_cities = array();
-                        if (!empty($trip_details['post_regions']))
-                        {
-                            foreach ($trip_details['post_regions'] as $region_key => $region_value)
-                            {
-                                if (!in_array($region_value['pr_source_city'], $post_region_cities))
+                    <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
+                        <div class="fly-in offer-slider-c">
+                            <div id="offers-a" class="owl-slider">
+                                <?php
+                                $i = 1;
+                                foreach ($latest_trip_keys as $post_url_key)
                                 {
-                                    $post_region_cities[] = $region_value['pr_source_city'];
-                                }
-                            }
-                        }
-                        ?>
-                        <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
-                            <div class="fly-in offer-slider-c">
-                                <div id="offers-a" class="owl-slider">
+                                    $trip_details = $redis_functions->get_trip_details($post_url_key['post_url_key']);
+                                    $trip_title = stripslashes($trip_details['post_title']);
+                                    $trip_description = getNWordsFromString(stripslashes($trip_details['post_description']), 20);
+                                    $trip_primary_image = base_url(getImage($trip_details['post_primary_image']));
+                                    $trip_url = getTripUrl($trip_details['post_url_key']);
+                                    $trip_total_cost = get_currency_symbol($trip_details['post_currency']) . $trip_details['post_total_cost'];
+                                    $trip_start_end_date_string = '--';
+                                    if (!empty($trip_details['post_start_date']) && !empty($trip_details['post_end_date']))
+                                    {
+                                        $trip_date_format = 'd M Y';
+                                        $trip_start_end_date_string = date($trip_date_format, strtotime($trip_details['post_start_date'])) . ' - ' . date($trip_date_format, strtotime($trip_details['post_end_date']));
+                                    }
+
+                                    $post_region_cities = array();
+                                    if (!empty($trip_details['post_regions']))
+                                    {
+                                        foreach ($trip_details['post_regions'] as $region_key => $region_value)
+                                        {
+                                            if (!in_array($region_value['pr_source_city'], $post_region_cities))
+                                            {
+                                                $post_region_cities[] = $region_value['pr_source_city'];
+                                            }
+                                        }
+                                    }
+                                    ?>
                                     <!-- // -->
                                     <div class="offer-slider-i">
                                         <a itemprop="url" class="offer-slider-img trip-a-tag" href="<?php echo $trip_url; ?>">
@@ -165,17 +167,17 @@ $redis_functions = new Redisfunctions();
                                         </div>
                                     </div>
                                     <!-- \\ -->
-                                </div>
+                                    <?php
+                                    $i++;
+                                    if ($i > 12)
+                                    {
+                                        break;
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
-                        <?php
-                        $i++;
-                        if ($i > 12)
-                        {
-                            break;
-                        }
-                    }
-                    ?>
+                    </div>
                 </div>
             </div>
             <?php
