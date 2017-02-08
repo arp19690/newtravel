@@ -120,10 +120,18 @@ class Staticpage extends CI_Controller
         $xml .= '<url><loc>' . base_url() . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>1.00</priority></url>' . "\n";
 
         // all the static links
-        $static_links_without_base_url = array('contact-us', 'about-us', 'how-it-works', 'privacy-policy', 'terms', 'login', 'register', 'forgot-password');
+        $static_links_without_base_url = array('contact-us', 'login', 'register', 'forgot-password');
         foreach ($static_links_without_base_url as $slKey => $slValue)
         {
             $xml .= '<url><loc>' . base_url($slValue) . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
+        }
+
+        // all the static page links
+        $staticpage_records = $model->fetchSelectedData('sp_key', TABLE_STATIC_PAGES, array('sp_status' => '1'));
+        foreach ($staticpage_records as $spKey => $spValue)
+        {
+            $staticpage_url = base_url("static/" . $spValue['sp_key']);
+            $xml .= '<url><loc>' . $staticpage_url . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
         }
 
         // all the active posts
