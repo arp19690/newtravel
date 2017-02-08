@@ -223,6 +223,8 @@ if (!empty($post_details['post_regions']))
                     {
                         $this->load->view('pages/trip/you-may-like', array('you_may_like_records' => $post_details['you_may_like']));
                     }
+
+                    echo get_google_ad();
                     ?>
                 </div>
                 <div class="clear"></div>
