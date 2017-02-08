@@ -143,9 +143,6 @@ $redis_functions = new Redisfunctions();
                                             <span class="offer-slider-overlay">
                                                 <span class="offer-slider-btn">view details</span>
                                             </span>
-                                            <div class="img-latest-tag">
-                                                <p class="img-latest-text"><span class="fa fa-star"></span>&nbsp;Featured</p>
-                                            </div>
                                         </a>
                                         <div class="offer-slider-txt">
                                             <div class="offer-slider-link"><a href="<?php echo $trip_url; ?>"><span itemprop="name"><?php echo $trip_title; ?></span></a></div>
