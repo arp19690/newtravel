@@ -52,7 +52,7 @@ class Redisfunctions
     public function get_trip_details($url_key)
     {
         $custom_model = new Custom_model();
-        $custom_model->verify_trip_status($url_key);
+//        $custom_model->verify_trip_status($url_key);
         $trip_details = $custom_model->get_trip_detail($url_key);
         return $trip_details;
     }
