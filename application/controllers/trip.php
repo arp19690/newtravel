@@ -388,6 +388,11 @@ class Trip extends CI_Controller
         if (isset($this->session->userdata["user_id"]))
         {
             $user_id = $this->session->userdata["user_id"];
+
+//            Verify trip status here
+            $custom_model = new Custom_model();
+            $custom_model->verify_trip_status($url_key);
+
             $is_valid = $model->fetchSelectedData('post_id', TABLE_POSTS, array('post_url_key' => $url_key, 'post_user_id' => $user_id));
             if (!empty($is_valid))
             {
@@ -893,7 +898,7 @@ class Trip extends CI_Controller
 
     public function trips_joined_by_me($view_type = 'list', $page = 1)
     {
-        $custom_model=new Custom_model();
+        $custom_model = new Custom_model();
         $redis_functions = new Redisfunctions();
         $username = $this->session->userdata['user_username'];
         $user_profile_data = $redis_functions->get_user_profile_data($username);
