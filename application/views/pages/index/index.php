@@ -17,7 +17,7 @@ $redis_functions = new Redisfunctions();
 
                     <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
                         <div class="fly-in offer-slider-c">
-                            <div id="offers-a" class="owl-slider">
+                            <div id="offers-a" class="">
                                 <?php
                                 $i = 1;
                                 foreach ($featured_trip_keys as $post_url_key)
@@ -108,7 +108,7 @@ $redis_functions = new Redisfunctions();
 
                     <div class="offer-slider" itemscope itemtype="http://schema.org/Event">
                         <div class="fly-in offer-slider-c">
-                            <div id="offers-a" class="owl-slider">
+                            <div id="offers-a" class="">
                                 <?php
                                 $i = 1;
                                 foreach ($latest_trip_keys as $post_url_key)
