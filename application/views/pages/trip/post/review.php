@@ -27,7 +27,7 @@ $redis_functions = new Redisfunctions();
                                     <div class="comlete-alert" style="margin-top: 0;">
                                         <div class="comlete-alert-a">
                                             <b>Kindly review your post.</b>
-                                            <span>&amp; let your friends know about it. <a href="#" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
+                                            <span>&amp; let your friends know about it. <a href="#" class="btn" onclick="fb_share_dialog('<?php echo current_url(); ?>');"><span class="fa fa-share"></span> Share now.</a></span>
                                         </div>
                                     </div>
                                     <div class="mm-tabs-wrapper">
@@ -39,13 +39,13 @@ $redis_functions = new Redisfunctions();
                                             <div class="tab-gallery-preview">
                                                 <div id="gallery">
                                                     <?php
-                                                    if (!empty($post_details['post_media']->images))
+                                                    if (!empty($post_details['post_media']['images']))
                                                     {
-                                                        foreach ($post_details['post_media']->images as $key => $value)
+                                                        foreach ($post_details['post_media']['images'] as $key => $value)
                                                         {
-                                                            $image_src = base_url(getImage($value->pm_media_url));
+                                                            $image_src = base_url(getImage($value['pm_media_url']));
                                                             ?>
-                                                            <div class="gallery-i <?php echo $value->pm_primary == '1' ? 'active' : ''; ?>">
+                                                            <div class="gallery-i <?php echo $value['pm_primary'] == '1' ? 'active' : ''; ?>">
                                                                 <a href="<?php echo $image_src; ?>"><img alt="<?php echo $page_title; ?>" src="<?php echo $image_src; ?>"><span></span></a>
                                                             </div>
                                                             <?php
@@ -62,7 +62,7 @@ $redis_functions = new Redisfunctions();
                                         <div class="complete-txt">
                                             <div class="clear">
                                                 <h2 class="pull-left"><?php echo $page_title; ?></h2>
-                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details['post_url_key']); ?>" class="pull-right a-no-underline"><span class="fa fa-pencil"></span> Edit Post</a>
+                                                <a href="<?php echo base_url('trip/post/edit/1/' . $post_details['post_url_key']); ?>" class="pull-right a-no-underline btn"><span class="fa fa-pencil"></span> Edit Post</a>
                                             </div>
 
                                             <div class="clear">
@@ -84,11 +84,11 @@ $redis_functions = new Redisfunctions();
                                                     ?>
                                                     <div class="complete-info-i">
                                                         <div class="complete-info-l" style="width: 250px;">
-                                                            <p style="margin: 0;">From: <strong><?php echo stripslashes($value->pr_source_location); ?></strong></p>
+                                                            <p style="margin: 0;">From: <strong><?php echo stripslashes($value['pr_source_location']); ?></strong></p>
                                                             <p style="margin: 0 0 0 35px;">(23-12-2015)</p>
                                                         </div>
                                                         <div class="complete-info-r" style="display: inline-block;">
-                                                            <p style="margin: 0;">To: <strong><?php echo stripslashes($value->pr_destination_location); ?></strong></p>
+                                                            <p style="margin: 0;">To: <strong><?php echo stripslashes($value['pr_destination_location']); ?></strong></p>
                                                             <p style="margin: 0 0 0 20px;">(23-12-2015)</p>
                                                         </div>
                                                         <div class="clear"></div>
@@ -111,8 +111,8 @@ $redis_functions = new Redisfunctions();
                                                 {
                                                     ?>
                                                     <div class="complete-info-i">
-                                                        <div class="complete-info-l"><?php echo get_currency_symbol($value->cost_currency) . $value->cost_amount; ?></div>
-                                                        <div class="complete-info-r"><?php echo stripslashes($value->cost_title); ?></div>
+                                                        <div class="complete-info-l"><?php echo get_currency_symbol($value['cost_currency']) . $value['cost_amount']; ?></div>
+                                                        <div class="complete-info-r"><?php echo stripslashes($value['cost_title']); ?></div>
                                                         <div class="clear"></div>
                                                     </div>
                                                     <div class="complete-devider"></div>

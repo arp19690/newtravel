@@ -598,6 +598,7 @@ button.srch-btn {cursor: pointer; font-family: 'Montserrat'; font-size:11px; fon
 .mp-popular header p, .page-lbl p {font-style:italic;	display:inline-block; width:640px; font-family:'Lora';}
 .offer-slider-i {
     /*	width:254px;*/
+    max-width:254px;
 }
 .offer-slider-i.catalog-i {width:32%; float: left; margin: 0px 2% 2% 0px; font-family: sans-serif;}
 .offer-slider-i.catalog-i:nth-child(3n) {margin-right: 0px; float: right;}
@@ -1666,7 +1667,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .content-tabs-head ul li a {display:block; height:27px; padding:15px 20px 0px 20px; border-radius:3px 3px 0px 0px; font-family:sans-serif; font-weight:bold; text-decoration:none; color:#73716f; font-size:11px; text-transform:uppercase; background:#ede9e6;}
 .content-tabs-head ul li a.active {background:#fff; color:#ff7200;}
 .content-tabs-head.last-item ul li:last-child a.active {background: #fff url(../img/icon-lamp.png) left top no-repeat; background-position: left -42px;}
-.content-tabs-body {background:#fff; padding:37px 20px 39px 20px;}
+.content-tabs-body {background:#fff; padding:37px 20px 39px 20px;display: inline-block;}
 .content-tabs-i {font-family:sans-serif; display:none;}
 .content-tabs-i:nth-child(1) {display:block;}
 .content-tabs-i h2 {font-family:'Montserrat'; font-weight:normal; font-size:16px; color:#4c4c4c; margin-bottom:19px;}
@@ -3096,6 +3097,7 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
         .list-rows .cat-list-content-lpadding {border-right: 0px ;}
     }
     @media screen and (max-width:435px) { 
+        .offer-slider-i{width: 100%;max-width: 100%;}
         .header-logo img{width: 315px;}
         .form-sex {float: none; width:100%; margin-bottom: 17px;}
         .form-calendar {float: none; width: 100%; margin: 0px;}

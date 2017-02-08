@@ -36,8 +36,8 @@
                 <!-- Current server load -->
                 <div class="panel bg-pink-400">
                     <div class="panel-body">
-                        <h3 class="no-margin">0</h3>
-                        Total Reports Generated
+                        <h3 class="no-margin"><?php echo $total_trips; ?></h3>
+                        Total Trips Published
                     </div>
                 </div>
                 <!-- /current server load -->
@@ -49,7 +49,7 @@
                 <!-- Today's revenue -->
                 <div class="panel bg-blue-400">
                     <div class="panel-body">
-                        <h3 class="no-margin">$18,390</h3>
+                        <h3 class="no-margin">$<?php echo number_format($total_earnings, 2); ?></h3>
                         Total Earnings
                     </div>
                 </div>

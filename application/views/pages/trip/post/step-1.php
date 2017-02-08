@@ -46,7 +46,7 @@
                                                     {
                                                         foreach ($post_records['post_activities'] as $value)
                                                         {
-                                                            $post_activity_ids[] = $value->am_id;
+                                                            $post_activity_ids[] = $value['am_id'];
                                                         }
                                                     }
                                                 }
@@ -54,10 +54,10 @@
                                                 if (isset($activity_master) && !empty($activity_master))
                                                 {
                                                     foreach ($activity_master as $key => $value)
-                                                    {
+                                                    {   
                                                         ?>
                                                         <div class="checkbox">
-                                                            <label><input name="activities[]" type="checkbox" value="<?php echo $value->am_id; ?>" <?php echo in_array($value->am_id, $post_activity_ids) == TRUE ? 'checked="checked"' : ''; ?>/><?php echo $value->am_title; ?></label>
+                                                            <label><input name="activities[]" type="checkbox" value="<?php echo $value['am_id']; ?>" <?php echo in_array($value['am_id'], $post_activity_ids) == TRUE ? 'checked="checked"' : ''; ?>/><?php echo $value['am_title']; ?></label>
                                                         </div> 
                                                         <?php
                                                     }

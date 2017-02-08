@@ -77,14 +77,16 @@ class Custom_model extends CI_Model
             $post_costs_records = $model->fetchSelectedData('*', TABLE_POST_COSTS, array('cost_post_id' => $post_id));
             $output['post_costs'] = $post_costs_records;
             $total_cost = 0;
+            $post_currency = DEFAULT_CURRENCY;
             if (!empty($post_costs_records))
             {
-                $output['post_currency'] = $post_costs_records[0]['cost_currency'];
+                $post_currency = $post_costs_records[0]['cost_currency'];
                 foreach ($post_costs_records as $value)
                 {
                     $total_cost = $total_cost + $value['cost_amount'];
                 }
             }
+            $output['post_currency'] = $post_currency;
             $output['post_total_cost'] = $total_cost;
 
             $post_travelers_records = $model->fetchSelectedData('*', TABLE_POST_TRAVELERS, array('pt_post_id' => $post_id, 'pt_removed_by' => NULL));
@@ -384,7 +386,6 @@ class Custom_model extends CI_Model
 
         // to fetch the trips owner has joined
 //        $records['trips_joined'] = $this->get_joined_trips($username);
-
         // to fetch user's wishlist
         $wishlist_records = $model->getAllDataFromJoin('post_url_key', TABLE_WISHLIST, array(TABLE_POSTS => 'post_id = wishlist_post_id'), 'LEFT', array('wishlist_status' => '1', 'post_published' => '1', 'wishlist_user_id' => $records['user_id']), 'wishlist_id', 'DESC');
         $records['my_wishlist'] = $wishlist_records;
