@@ -126,36 +126,20 @@ class Staticpage extends CI_Controller
             $xml .= '<url><loc>' . base_url($slValue) . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
         }
 
-        // all the active trips
-        $trip_records = $model->fetchSelectedData('url_key', TABLE_TRIPS, array('trip_status' => '1'));
+        // all the active posts
+        $trip_records = $model->fetchSelectedData('post_url_key', TABLE_POSTS, array('post_status' => '1'));
         foreach ($trip_records as $trKey => $trValue)
         {
-            $trip_url = getTripUrl($trValue['url_key']);
+            $trip_url = getTripUrl($trValue['post_url_key']);
             $xml .= '<url><loc>' . $trip_url . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
         }
 
         // all the active users
-        $user_records = $model->fetchSelectedData('username', TABLE_USERS, array('user_status' => '1'));
+        $user_records = $model->fetchSelectedData('user_username', TABLE_USERS, array('user_status' => '1'));
         foreach ($user_records as $urKey => $urValue)
         {
-            $public_profile_url = getPublicProfileUrl($urValue['username']);
+            $public_profile_url = getPublicProfileUrl($urValue['user_username']);
             $xml .= '<url><loc>' . $public_profile_url . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
-        }
-
-        // all the active blogs
-        $blog_records = $model->fetchSelectedData('blog_url_key', TABLE_BLOGS, array('blog_status' => '1'));
-        foreach ($blog_records as $brKey => $brValue)
-        {
-            $blog_url = base_url('blog/read/' . $brValue['blog_url_key']);
-            $xml .= '<url><loc>' . $blog_url . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
-        }
-
-        // all the view photo pages
-        $photo_records = $model->fetchSelectedData('image_name', TABLE_PHOTOS, array('image_name !=' => '', 'album_key !=' => ''));
-        foreach ($photo_records as $prKey => $prValue)
-        {
-            $photo_url = base_url('view/album/' . $prValue['image_name']);
-            $xml .= '<url><loc>' . $photo_url . '</loc><lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . '+00:00</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>' . "\n";
         }
 
         $xml .= '</urlset>';
@@ -164,6 +148,7 @@ class Staticpage extends CI_Controller
         $file = fopen((APPPATH . '/../sitemap.xml'), 'w');
         fwrite($file, $xml);
         fclose($file);
+        echo "Sitemap generated successfully";
         die;
     }
 
